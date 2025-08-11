@@ -5,7 +5,6 @@ import { motion } from 'framer-motion';
 import { Search, Star, RefreshCw, ArrowDown, Mail, X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { toolsData } from '../app/data/toolsData';
-// import '../app/globals.css';
 
 const page = () => {
   const [email, setEmail] = useState('');
@@ -26,7 +25,7 @@ const page = () => {
   };
 
   const handleExploreTools = () => {
-    router.push('/tools');
+    router.push('/tool');
   };
 
   const featuredTools = toolsData
@@ -161,7 +160,7 @@ const page = () => {
 
   const handleCategoryClick = (categoryName: string) => {
     localStorage.setItem('selectedCategory', categoryName);
-    router.push('/tools');
+    router.push('/tool');
   };
 
   const categoriesData = [

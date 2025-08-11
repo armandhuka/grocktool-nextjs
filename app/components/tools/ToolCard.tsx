@@ -1,7 +1,9 @@
+'use client';
+
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Heart, Info, ExternalLink } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 
 interface Tool {
   id: number;
@@ -15,39 +17,30 @@ interface Tool {
 
 interface ToolCardProps {
   tool: Tool;
+  onFavorite?: (toolId: number) => void;
+  isFavorite?: boolean;
 }
 
-const ToolCard: React.FC<ToolCardProps> = ({ tool }) => {
-  const navigate = useNavigate();
+const ToolCard: React.FC<ToolCardProps> = ({ tool, onFavorite, isFavorite = false }) => {
+  const router = useRouter();
 
-  const getCategoryIcon = (category: string) => {
-    const icons: { [key: string]: string } = {
-      'Unit Converter Tools': '📏',
-      'Text Tools': '📝',
-      'Date & Time Tools': '📅',
-      'Number Tools': '🔢',
-      'Math Tools': '🧮',
-      'Health Tools': '💪'
-    };
-    return icons[category] || tool.icon;
-  };
-
-  const getCategoryColor = (category: string) => {
-    const colors: { [key: string]: string } = {
-      'Unit Converter Tools': 'bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400',
-      'Text Tools': 'bg-green-100 text-green-600 dark:bg-green-900/30 dark:text-green-400',
-      'Date & Time Tools': 'bg-purple-100 text-purple-600 dark:bg-purple-900/30 dark:text-purple-400',
-      'Number Tools': 'bg-yellow-100 text-yellow-600 dark:bg-yellow-900/30 dark:text-yellow-400',
-      'Math Tools': 'bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-400',
-      'Health Tools': 'bg-cyan-100 text-cyan-600 dark:bg-cyan-900/30 dark:text-cyan-400'
-    };
-    return colors[category] || 'bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400';
+  const handleToolClick = () => {
+    if (tool.status === 'available') {
+      // Navigate to the tool page based on category and name
+      const route = getToolRoute(tool.name, tool.category);
+      if (route) {
+        // Save the selected category to localStorage for persistence
+        if (typeof window !== 'undefined') {
+          localStorage.setItem('selectedCategory', tool.category);
+        }
+        router.push(route);
+      }
+    }
   };
 
   const getToolRoute = (toolName: string, category: string) => {
-    // Text Tools routes
-    if (category === 'Text Tools') {
-      const routeMap: { [key: string]: string } = {
+    const routes: Record<string, Record<string, string>> = {
+      'Text Tools': {
         'Word Counter': '/text-tools/word-counter',
         'Remove Duplicates': '/text-tools/remove-duplicates',
         'Case Converter': '/text-tools/case-converter',
@@ -58,13 +51,8 @@ const ToolCard: React.FC<ToolCardProps> = ({ tool }) => {
         'Palindrome Checker': '/text-tools/palindrome-checker',
         'Remove Special Characters': '/text-tools/remove-special-chars',
         'Text Limiter': '/text-tools/text-limiter'
-      };
-      return routeMap[toolName] || null;
-    }
-
-    // Unit Converter Tools routes - Fixed to match exact tool names
-    if (category === 'Unit Converter Tools') {
-      const routeMap: { [key: string]: string } = {
+      },
+      'Unit Converter Tools': {
         'Length Converter': '/unit-tools/length-converter',
         'Weight Converter': '/unit-tools/weight-converter',
         'Temperature Converter': '/unit-tools/temperature-converter',
@@ -73,13 +61,8 @@ const ToolCard: React.FC<ToolCardProps> = ({ tool }) => {
         'Area Converter': '/unit-tools/area-converter',
         'Volume Converter': '/unit-tools/volume-converter',
         'Data Size Converter': '/unit-tools/data-size-converter'
-      };
-      return routeMap[toolName] || null;
-    }
-
-    // Date & Time Tools routes - Fixed to match exact tool names
-    if (category === 'Date & Time Tools') {
-      const routeMap: { [key: string]: string } = {
+      },
+      'Date & Time Tools': {
         'Age Calculator': '/date-tools/age-calculator',
         'Date Difference': '/date-tools/date-difference',
         'Countdown Timer': '/date-tools/countdown',
@@ -87,13 +70,8 @@ const ToolCard: React.FC<ToolCardProps> = ({ tool }) => {
         'Next Birthday Countdown': '/date-tools/birthday-countdown',
         'Leap Year Checker': '/date-tools/leap-year',
         'Current Week Number Checker': '/date-tools/week-number'
-      };
-      return routeMap[toolName] || null;
-    }
-
-    // Number Tools routes - Added for Number Tools category
-    if (category === 'Number Tools') {
-      const routeMap: { [key: string]: string } = {
+      },
+      'Number Tools': {
         'Percentage Calculator': '/number-tools/percentage-calculator',
         'Interest Calculator': '/number-tools/simple-interest',
         'EMI Calculator': '/number-tools/emi',
@@ -104,13 +82,8 @@ const ToolCard: React.FC<ToolCardProps> = ({ tool }) => {
         'Base Converter': '/number-tools/number-base-converter',
         'Number Rounding': '/number-tools/rounding',
         'Random Generator': '/number-tools/random-generator'
-      };
-      return routeMap[toolName] || null;
-    }
-
-    // Math Tools routes
-    if (category === 'Math Tools') {
-      const routeMap: { [key: string]: string } = {
+      },
+      'Math Tools': {
         'Advanced Calculator': '/math-tools/basic-calculator',
         'Prime Number Checker': '/math-tools/prime-checker',
         'Factorial Calculator': '/math-tools/factorial',
@@ -121,13 +94,8 @@ const ToolCard: React.FC<ToolCardProps> = ({ tool }) => {
         'Circle Area Calculator': '/math-tools/circle-calculator',
         'Logarithm Calculator': '/math-tools/exponent-log',
         'Statistics Calculator': '/math-tools/statistics-calculator'
-      };
-      return routeMap[toolName] || null;
-    }
-
-    // Health Tools routes
-    if (category === 'Health Tools') {
-      const routeMap: { [key: string]: string } = {
+      },
+      'Health Tools': {
         'BMI Calculator': '/health-tools/bmi-calculator',
         'Calorie Calculator': '/health-tools/calorie-calculator',
         'Water Intake Calculator': '/health-tools/water-intake',
@@ -135,101 +103,73 @@ const ToolCard: React.FC<ToolCardProps> = ({ tool }) => {
         'Ideal Weight Calculator': '/health-tools/ideal-weight',
         'BMR Calculator': '/health-tools/bmr-calculator',
         'Macro Split Calculator': '/health-tools/macro-splitter'
-      };
-      return routeMap[toolName] || null;
-    }
-
-    return null;
+      }
+    };
+    return routes[category]?.[toolName] || null;
   };
-
-  const handleOpenTool = () => {
-    const route = getToolRoute(tool.name, tool.category);
-    if (route && tool.status === 'available') {
-      // Save the current category for persistent filtering
-      localStorage.setItem('selectedCategory', tool.category);
-      navigate(route);
-    }
-  };
-
-  const isImplementedCategory = tool.category === 'Text Tools' || 
-                                tool.category === 'Unit Converter Tools' ||
-                                tool.category === 'Date & Time Tools' ||
-                                tool.category === 'Number Tools' ||
-                                tool.category === 'Math Tools' ||
-                                tool.category === 'Health Tools';
-  const hasRoute = getToolRoute(tool.name, tool.category) !== null;
 
   return (
     <motion.div
-      className="bg-white dark:bg-toolnest-accent rounded-3xl shadow-lg hover:shadow-xl transition-all duration-300 p-6 h-full flex flex-col"
-      whileHover={{ y: -5, scale: 1.02 }}
-      whileTap={{ scale: 0.98 }}
+      className={`bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer ${
+        tool.status === 'coming-soon' ? 'opacity-60' : 'hover:scale-105'
+      }`}
+      whileHover={{ y: -5 }}
+      onClick={handleToolClick}
     >
-      {/* Header with Icon and Category */}
-      <div className="flex items-start justify-between mb-4">
-        <div className={`w-12 h-12 rounded-2xl flex items-center justify-center text-2xl ${getCategoryColor(tool.category)} shadow-sm`}>
-          {getCategoryIcon(tool.category)}
-        </div>
-        <div className="flex gap-2">
-          <motion.button
-            className="w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 flex items-center justify-center transition-colors duration-200"
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
+      <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center space-x-3">
+          <div 
+            className="w-12 h-12 rounded-2xl flex items-center justify-center text-2xl"
+            style={{ backgroundColor: tool.iconColor + '20', color: tool.iconColor }}
           >
-            <Info size={14} className="text-gray-600 dark:text-gray-300" />
-          </motion.button>
-          <motion.button
-            className="w-8 h-8 rounded-full bg-gray-100 hover:bg-red-100 dark:bg-gray-700 dark:hover:bg-red-900/30 flex items-center justify-center transition-colors duration-200"
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-          >
-            <Heart size={14} className="text-gray-600 hover:text-red-500 dark:text-gray-300 dark:hover:text-red-400" />
-          </motion.button>
+            {tool.icon}
+          </div>
+          <div>
+            <h3 className="text-lg font-semibold text-gray-800">{tool.name}</h3>
+            <span className="text-sm text-gray-500">{tool.category}</span>
+          </div>
         </div>
+        
+        {onFavorite && (
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              onFavorite(tool.id);
+            }}
+            className="text-gray-400 hover:text-red-500 transition-colors"
+          >
+            <Heart 
+              size={20} 
+              className={isFavorite ? 'fill-red-500 text-red-500' : ''} 
+            />
+          </button>
+        )}
       </div>
-
-      {/* Tool Name */}
-      <h3 className="text-xl font-bold text-toolnest-text mb-3 line-clamp-2">
-        {tool.name}
-      </h3>
-
-      {/* Description */}
-      <p className="text-toolnest-text/70 text-sm leading-relaxed mb-6 flex-grow line-clamp-3">
+      
+      <p className="text-gray-600 text-sm mb-4 line-clamp-2">
         {tool.description}
       </p>
-
-      {/* Category Badge */}
-      <div className="mb-4">
-        <span className={`px-3 py-1 rounded-full text-xs font-medium ${getCategoryColor(tool.category)}`}>
-          {tool.category}
+      
+      <div className="flex items-center justify-between">
+        <span className={`px-3 py-1 rounded-full text-xs font-medium ${
+          tool.status === 'available' 
+            ? 'bg-green-100 text-green-600' 
+            : 'bg-yellow-100 text-yellow-600'
+        }`}>
+          {tool.status === 'available' ? 'Available' : 'Coming Soon'}
         </span>
-      </div>
-
-      {/* Action Button */}
-      <motion.button
-        className={`w-full py-3 px-4 rounded-2xl font-medium transition-all duration-300 flex items-center justify-center gap-2 ${
-          (tool.status === 'available' && isImplementedCategory && hasRoute)
-            ? 'bg-toolnest-text text-white hover:bg-toolnest-text/90 hover:shadow-lg cursor-pointer dark:bg-toolnest-text dark:text-toolnest-bg'
-            : tool.status === 'available'
-            ? 'bg-toolnest-accent/50 text-toolnest-text/70 cursor-not-allowed'
-            : 'bg-toolnest-accent/50 text-toolnest-text/70 cursor-not-allowed'
-        }`}
-        whileHover={(tool.status === 'available' && isImplementedCategory && hasRoute) ? { scale: 1.02 } : {}}
-        whileTap={(tool.status === 'available' && isImplementedCategory && hasRoute) ? { scale: 0.98 } : {}}
-        onClick={handleOpenTool}
-        disabled={!(tool.status === 'available' && isImplementedCategory && hasRoute)}
-      >
-        {(tool.status === 'available' && isImplementedCategory && hasRoute) ? (
-          <>
-            Open Tool
-            <ExternalLink size={16} />
-          </>
-        ) : tool.status === 'available' ? (
-          'Coming Soon'
-        ) : (
-          'Coming Soon'
+        
+        {tool.status === 'available' && (
+          <div className="flex space-x-2">
+            <button className="p-2 text-gray-400 hover:text-blue-500 transition-colors">
+              <Info size={16} />
+            </button>
+            <button className="p-2 text-gray-400 hover:text-green-500 transition-colors">
+              <ExternalLink size={16} />
+            </button>
+          </div>
         )}
-      </motion.button>
+      </div>
     </motion.div>
   );
 };
