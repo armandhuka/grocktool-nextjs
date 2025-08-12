@@ -197,7 +197,3 @@ const DataSizeConverter = () => {
 };
 
 export default DataSizeConverter;
-  );
-};
-
-export default DataSizeConverter;
