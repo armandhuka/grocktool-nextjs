@@ -23,7 +23,7 @@ export default function WaterIntake() {
     if (!w) return;
     
     // Base water intake: 35ml per kg of body weight
-    let baseIntake = w * 35;
+    const baseIntake = w * 35;
     
     // Add for exercise: 12oz (355ml) per 30 minutes of exercise
     const exerciseIntake = (activityMins / 30) * 355;
