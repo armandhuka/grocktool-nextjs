@@ -7,10 +7,7 @@ export interface ButtonProps
   size?: "default" | "sm" | "lg" | "icon"
 }
 
-export const buttonVariants = (
-  variant: ButtonProps["variant"] = "default",
-  size: ButtonProps["size"] = "default"
-) => {
+export const buttonVariants = ({ variant = "default", size = "default" }: { variant?: ButtonProps["variant"], size?: ButtonProps["size"] }) => {
   const variantClasses = {
     default: "bg-primary text-primary-foreground hover:bg-primary/90",
     destructive: "bg-destructive text-destructive-foreground hover:bg-destructive/90",
@@ -30,17 +27,14 @@ export const buttonVariants = (
   return `${variantClasses[variant]} ${sizeClasses[size]}`
 }
 
+
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant = "default", size = "default", ...props }, ref) => {
     const baseClasses = "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
 
     return (
       <button
-        className={cn(
-          baseClasses,
-          buttonVariants(variant, size),
-          className
-        )}
+        className={cn(buttonVariants({ variant, size }), className)}
         ref={ref}
         {...props}
       />
