@@ -54,7 +54,7 @@ const About = () => {
   ];
 
   const handleStartUsingTools = () => {
-    router.push('/tool');
+    router.push('/tools');
   };
 
   return (

@@ -25,7 +25,7 @@ const page = () => {
   };
 
   const handleExploreTools = () => {
-    router.push('/tool');
+    router.push('/tools');
   };
 
   const featuredTools = toolsData
@@ -160,7 +160,7 @@ const page = () => {
 
   const handleCategoryClick = (categoryName: string) => {
     localStorage.setItem('selectedCategory', categoryName);
-    router.push('/tool');
+    router.push('/tools');
   };
 
   const categoriesData = [
