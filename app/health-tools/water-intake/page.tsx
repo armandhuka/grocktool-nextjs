@@ -4,12 +4,11 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Droplets, Calculator, RotateCcw } from 'lucide-react';
 import Link from 'next/link';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import Header from '@/components/Header';
-
+import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/card';
+import { Button } from '../../components/ui/button';
+import { Input } from '../../components/ui/input';
+import { Label } from '../../components/ui/label';
+import Header from '../../components/Header';
 export default function WaterIntake() {
   const [weight, setWeight] = useState('');
   const [activity, setActivity] = useState('30');

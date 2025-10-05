@@ -4,14 +4,16 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowLeft, ArrowLeftRight, Copy, RotateCcw } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { useToast } from '@/hooks/use-toast';
-import Link from 'next/link';
-
+// import { useToast } from '@/hooks/use-toast';
+// Replace with a valid toast hook import or remove if not available
+// Example using 'react-hot-toast':
+import { toast } from 'react-hot-toast';
+  const [inputValue, setInputValue] = useState<string>('');
 const AreaConverter = () => {
   const router = useRouter();
   const [inputValue, setInputValue] = useState<string>('');
   const [fromUnit, setFromUnit] = useState('sqmeter');
-  const [toUnit, setToUnit] = useState('sqfeet');
+  // const { toast } = useToast();
   const [result, setResult] = useState<string>('');
   const { toast } = useToast();
 
@@ -60,10 +62,7 @@ const AreaConverter = () => {
   };
 
   const copyResult = async () => {
-    if (result) {
-      await navigator.clipboard.writeText(result);
-      toast({
-        title: "Copied!",
+      toast('Result copied to clipboard');
         description: "Result copied to clipboard",
       });
     }

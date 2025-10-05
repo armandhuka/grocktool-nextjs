@@ -6,8 +6,8 @@ import { useState, useEffect, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { Search } from 'lucide-react';
 import { useSearchParams, useRouter } from 'next/navigation';
-import ToolCard from '@/components/tools/ToolCard';
-import { toolsData } from '@/data/toolsData';
+import { toolsData } from '../data/toolsData';
+import ToolCard from '../components/tools/ToolCard';
 
 export default function Tools() {
   const [searchTerm, setSearchTerm] = useState('');

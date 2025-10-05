@@ -3,11 +3,11 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Calendar, Copy, RotateCcw, ArrowLeft } from 'lucide-react';
-import { useToast } from '@/hooks/use-toast';
+import { useToast } from '../../components/ui/use-toast';
 import Link from 'next/link';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '../../components/ui/button';
+import { Input } from '../../components/ui/input';
+import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/card';
 
 const AgeCalculator = () => {
   const [birthDate, setBirthDate] = useState('');

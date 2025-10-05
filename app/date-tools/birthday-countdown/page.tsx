@@ -4,10 +4,10 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Gift, Copy, RotateCcw, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
-import Header from '@/components/Header';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import Header from '../../components/Header';
+import { Button } from '../../components/ui/button';
+import { Input } from '../../components/ui/input';
+import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/card';
 
 export default function BirthdayCountdown() {
   const [birthDate, setBirthDate] = useState('');
