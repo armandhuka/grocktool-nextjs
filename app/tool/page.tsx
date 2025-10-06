@@ -1,13 +1,14 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import { motion } from 'framer-motion';
 import { Search, Filter, Grid, List } from 'lucide-react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { toolsData } from '../data/toolsData';
 import ToolCard from '../components/tools/ToolCard';
 
-const ToolsPage = () => {
+// Separate component that uses useSearchParams
+function ToolContent() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
@@ -209,6 +210,22 @@ const ToolsPage = () => {
         </div>
       </section>
     </div>
+  );
+}
+
+// Main component with Suspense boundary
+const ToolsPage = () => {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-toolnest-bg font-inter pt-20 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-toolnest-text mx-auto"></div>
+          <p className="mt-4 text-toolnest-text">Loading tools...</p>
+        </div>
+      </div>
+    }>
+      <ToolContent />
+    </Suspense>
   );
 };
 

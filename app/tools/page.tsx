@@ -1,58 +1,21 @@
-// app/tools/page.tsx  (Next.js 13+ App Router example)
-
 'use client';
 
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useMemo, Suspense } from 'react';
 import { motion } from 'framer-motion';
 import { Search } from 'lucide-react';
-import { useSearchParams, useRouter } from 'next/navigation';
 import { toolsData } from '../data/toolsData';
 import ToolCard from '../components/tools/ToolCard';
 
-export default function Tools() {
+// Separate component that doesn't use useSearchParams
+function ToolsContent() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
-
-  const searchParams = useSearchParams();
-  const router = useRouter();
 
   // Get unique categories from tools data
   const categories = useMemo(() => {
     const cats = [...new Set(toolsData.map(tool => tool.category))];
     return ['All', ...cats];
   }, []);
-
-  // Initialize filter state from URL params or localStorage
-  useEffect(() => {
-    const urlCategory = searchParams.get('category');
-    const savedCategory = typeof window !== 'undefined'
-      ? localStorage.getItem('selectedCategory')
-      : null;
-
-    if (urlCategory && categories.includes(urlCategory)) {
-      setSelectedCategory(urlCategory);
-    } else if (savedCategory && categories.includes(savedCategory)) {
-      setSelectedCategory(savedCategory);
-      router.replace(`?category=${encodeURIComponent(savedCategory)}`);
-    }
-  }, [searchParams, categories, router]);
-
-  // Update URL and localStorage when category changes
-  const handleCategoryChange = (category: string) => {
-    setSelectedCategory(category);
-
-    if (category === 'All') {
-      router.replace('/tools');
-      if (typeof window !== 'undefined') {
-        localStorage.removeItem('selectedCategory');
-      }
-    } else {
-      router.replace(`?category=${encodeURIComponent(category)}`);
-      if (typeof window !== 'undefined') {
-        localStorage.setItem('selectedCategory', category);
-      }
-    }
-  };
 
   // Filter tools based on search and category
   const filteredTools = useMemo(() => {
@@ -90,8 +53,6 @@ export default function Tools() {
 
   return (
     <div className="min-h-screen bg-toolnest-bg font-inter">
-      {/* Header & Footer ab Layout me hain */}
-
       {/* Title Section */}
       <section className="pt-32 pb-12 px-4">
         <div className="toolnest-container">
@@ -105,7 +66,7 @@ export default function Tools() {
               className="text-5xl md:text-6xl font-bold text-toolnest-text mb-6"
               variants={itemVariants}
             >
-              Explore 50+ Free Tools
+              Explore Free Tools
             </motion.h1>
 
             <motion.p
@@ -139,7 +100,7 @@ export default function Tools() {
                 {/* Category Filter */}
                 <select
                   value={selectedCategory}
-                  onChange={(e) => handleCategoryChange(e.target.value)}
+                  onChange={(e) => setSelectedCategory(e.target.value)}
                   className="px-6 py-3 rounded-full border-2 border-transparent bg-white shadow-lg focus:outline-none focus:border-toolnest-text transition-all duration-300 capitalize"
                 >
                   {categories.map(category => (
@@ -196,7 +157,7 @@ export default function Tools() {
                 <button
                   onClick={() => {
                     setSearchTerm('');
-                    handleCategoryChange('All');
+                    setSelectedCategory('All');
                   }}
                   className="px-6 py-3 bg-toolnest-text text-white rounded-full hover:bg-toolnest-text/90 transition-colors duration-200"
                 >
@@ -208,5 +169,34 @@ export default function Tools() {
         </div>
       </section>
     </div>
+  );
+}
+
+// Main component with Suspense
+export default function Tools() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-toolnest-bg font-inter">
+        <section className="pt-32 pb-20 px-4">
+          <div className="toolnest-container">
+            <div className="text-center">
+              <div className="h-16 bg-gray-200 rounded-full w-64 mx-auto mb-6 animate-pulse"></div>
+              <div className="h-6 bg-gray-200 rounded w-96 mx-auto mb-12 animate-pulse"></div>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
+                  <div key={i} className="bg-white rounded-2xl p-6 shadow-lg animate-pulse">
+                    <div className="h-8 bg-gray-200 rounded w-1/2 mb-4"></div>
+                    <div className="h-4 bg-gray-200 rounded w-full mb-2"></div>
+                    <div className="h-4 bg-gray-200 rounded w-3/4"></div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    }>
+      <ToolsContent />
+    </Suspense>
   );
 }

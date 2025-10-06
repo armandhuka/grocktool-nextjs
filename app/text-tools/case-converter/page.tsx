@@ -4,8 +4,8 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { ArrowLeft, Copy, Trash2, RotateCcw } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Textarea } from '@/components/ui/textarea';
+import { Button } from '../../components/ui/button';
+import { Textarea } from '../../components/ui/textarea';
 
 export default function CaseConverterPage() {
   const [inputText, setInputText] = useState('');

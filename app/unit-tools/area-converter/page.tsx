@@ -3,19 +3,16 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowLeft, ArrowLeftRight, Copy, RotateCcw } from 'lucide-react';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-// import { useToast } from '@/hooks/use-toast';
-// Replace with a valid toast hook import or remove if not available
-// Example using 'react-hot-toast':
 import { toast } from 'react-hot-toast';
-  const [inputValue, setInputValue] = useState<string>('');
+
 const AreaConverter = () => {
   const router = useRouter();
   const [inputValue, setInputValue] = useState<string>('');
   const [fromUnit, setFromUnit] = useState('sqmeter');
-  // const { toast } = useToast();
+  const [toUnit, setToUnit] = useState('sqfeet');
   const [result, setResult] = useState<string>('');
-  const { toast } = useToast();
 
   const areaUnits = {
     sqmeter: { name: 'Square Meter (m²)', factor: 1 },
@@ -28,8 +25,6 @@ const AreaConverter = () => {
     hectare: { name: 'Hectare (ha)', factor: 10000 }
   };
 
-
-
   const convertArea = () => {
     if (!inputValue || isNaN(Number(inputValue))) {
       setResult('');
@@ -39,10 +34,10 @@ const AreaConverter = () => {
     const value = Number(inputValue);
     const fromFactor = areaUnits[fromUnit as keyof typeof areaUnits].factor;
     const toFactor = areaUnits[toUnit as keyof typeof areaUnits].factor;
-    
+
     const sqMeters = value * fromFactor;
     const converted = sqMeters / toFactor;
-    
+
     setResult(converted.toFixed(8).replace(/\.?0+$/, ''));
   };
 
@@ -51,9 +46,8 @@ const AreaConverter = () => {
   }, [inputValue, fromUnit, toUnit]);
 
   const swapUnits = () => {
-    const temp = fromUnit;
     setFromUnit(toUnit);
-    setToUnit(temp);
+    setToUnit(fromUnit);
   };
 
   const clearAll = () => {
@@ -62,10 +56,9 @@ const AreaConverter = () => {
   };
 
   const copyResult = async () => {
-      toast('Result copied to clipboard');
-        description: "Result copied to clipboard",
-      });
-    }
+    if (!result) return;
+    await navigator.clipboard.writeText(result);
+    toast.success('Result copied to clipboard!');
   };
 
   return (
@@ -79,7 +72,7 @@ const AreaConverter = () => {
             <ArrowLeft size={20} />
             Back to Tools
           </Link>
-          
+
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}

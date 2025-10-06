@@ -29,8 +29,8 @@ const RemoveDuplicates = () => {
     }
 
     const lines = inputText.split('\n');
-    const uniqueLines = [];
-    const seen = new Set();
+    const uniqueLines: string[] = []; // ✅ Added explicit type
+    const seen = new Set<string>(); // ✅ Added explicit type
 
     lines.forEach(line => {
       const checkLine = caseSensitive ? line : line.toLowerCase();
