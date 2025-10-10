@@ -1,7 +1,7 @@
 'use client';
 
-import React from 'react';
-import { Star, ExternalLink } from 'lucide-react';
+import React, { useState, useCallback } from 'react';
+import { Star, ExternalLink, Sparkles } from 'lucide-react';
 import { useToolNavigation } from '../../hooks/useToolNavigation';
 
 interface ToolCardProps {
@@ -22,67 +22,97 @@ const ToolCard: React.FC<ToolCardProps> = ({
   categoryColor
 }) => {
   const { handleToolClick } = useToolNavigation();
+  const [isHovered, setIsHovered] = useState(false);
+  const [isPressed, setIsPressed] = useState(false);
 
-  // Mobile detection hook
+  // Mobile detection
   const isMobile = typeof window !== 'undefined' ? window.innerWidth < 768 : false;
 
-  const handleCardClick = () => {
+  const handleCardClick = useCallback(() => {
     handleToolClick(tool);
-  };
+  }, [handleToolClick, tool]);
 
-  const handleFavoriteClick = (e: React.MouseEvent) => {
+  const handleFavoriteClick = useCallback((e: React.MouseEvent) => {
     e.stopPropagation();
     onFavorite(tool.id);
-  };
+  }, [onFavorite, tool.id]);
 
-  const handleTryNowClick = (e: React.MouseEvent) => {
+  const handleTryNowClick = useCallback((e: React.MouseEvent) => {
     e.stopPropagation();
     handleToolClick(tool);
-  };
+  }, [handleToolClick, tool]);
 
-  // List View - Optimized for mobile
+  // List View - Premium Mobile Design
   if (viewMode === 'list') {
     return (
       <div 
-        className="bg-white border border-gray-200 p-4 rounded-xl hover:shadow-lg transition-all duration-300 cursor-pointer group hover:border-toolnest-text/30 active:scale-95"
+        className="group relative bg-white/80 backdrop-blur-sm border border-gray-100/80 p-4 rounded-2xl hover:shadow-2xl transition-all duration-500 cursor-pointer hover:scale-[1.02] active:scale-[0.99] hover:border-toolnest-text/20"
         onClick={handleCardClick}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        onMouseDown={() => setIsPressed(true)}
+        onMouseUp={() => setIsPressed(false)}
         role="button"
         tabIndex={0}
         onKeyDown={(e) => e.key === 'Enter' && handleCardClick()}
+        style={{
+          transform: isPressed ? 'scale(0.99)' : isHovered ? 'scale(1.02)' : 'scale(1)',
+          transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
+        }}
       >
-        <div className="flex items-start gap-3">
-          {/* Category Icon */}
-          <div className={`w-10 h-10 rounded-xl flex items-center justify-center text-xl ${categoryColor} shadow-sm flex-shrink-0 mt-1`}>
-            {categoryIcon}
+        {/* Animated Background Gradient */}
+        <div className="absolute inset-0 bg-gradient-to-br from-white/50 to-gray-50/30 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+        
+        <div className="relative flex items-start gap-4">
+          {/* Animated Category Icon */}
+          <div 
+            className={`w-12 h-12 rounded-xl flex items-center justify-center text-xl ${categoryColor} shadow-lg group-hover:shadow-xl transition-all duration-500 flex-shrink-0 mt-1 group-hover:scale-110`}
+            style={{
+              transform: isHovered ? 'scale(1.1) rotate(5deg)' : 'scale(1)',
+            }}
+          >
+            <span className="relative">
+              {categoryIcon}
+              {isHovered && (
+                <Sparkles 
+                  size={12} 
+                  className="absolute -top-2 -right-2 text-yellow-500 animate-ping" 
+                />
+              )}
+            </span>
           </div>
 
           {/* Content */}
           <div className="flex-1 min-w-0">
-            <div className="flex items-start justify-between gap-2 mb-2">
+            <div className="flex items-start justify-between gap-3 mb-3">
               <div className="flex-1 min-w-0">
-                <h3 className="text-base font-semibold text-toolnest-text truncate">
+                <h3 className="text-lg font-bold text-gray-900 truncate mb-1 group-hover:text-toolnest-text transition-colors duration-300">
                   {tool.name}
                 </h3>
-                <span className={`inline-block px-2 py-1 rounded-full text-xs font-medium ${categoryColor} mt-1`}>
+                <span className={`inline-block px-3 py-1.5 rounded-full text-xs font-semibold ${categoryColor} border border-transparent group-hover:border-current/20 transition-all duration-300`}>
                   {tool.category}
                 </span>
               </div>
               
-              {/* Favorite Button - Mobile Optimized */}
+              {/* Animated Favorite Button */}
               <button 
                 onClick={handleFavoriteClick}
-                className="p-1.5 hover:bg-gray-100 rounded-lg transition-colors flex-shrink-0 touch-manipulation"
+                className="p-2 hover:bg-yellow-50 rounded-xl transition-all duration-300 flex-shrink-0 touch-manipulation hover:scale-110 active:scale-95 group/fav"
                 aria-label={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
               >
                 <Star 
-                  size={18} 
-                  className={isFavorite ? 'text-yellow-500 fill-yellow-500' : 'text-gray-400'} 
+                  size={20} 
+                  className={`transition-all duration-300 ${
+                    isFavorite 
+                      ? 'text-yellow-500 fill-yellow-500 scale-110' 
+                      : 'text-gray-400 group-hover/fav:text-yellow-400'
+                  }`} 
                 />
               </button>
             </div>
 
             {/* Description */}
-            <p className="text-gray-600 text-sm leading-relaxed line-clamp-2 mb-3">
+            <p className="text-gray-600 text-sm leading-relaxed line-clamp-2 mb-4 group-hover:text-gray-700 transition-colors duration-300">
               {tool.description}
             </p>
 
@@ -90,17 +120,19 @@ const ToolCard: React.FC<ToolCardProps> = ({
             <div className="flex items-center justify-between">
               <button 
                 onClick={handleTryNowClick}
-                className="bg-toolnest-text text-white py-2 px-4 rounded-lg font-medium hover:bg-toolnest-text/90 transition-colors text-sm flex items-center gap-1.5 touch-manipulation active:scale-95"
+                className="relative bg-gradient-to-r from-toolnest-text to-toolnest-text/90 text-white py-2.5 px-5 rounded-xl font-semibold hover:shadow-lg transition-all duration-300 text-sm flex items-center gap-2 touch-manipulation hover:scale-105 active:scale-95 group/btn overflow-hidden"
               >
+                {/* Shine effect */}
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12 translate-x-[-100%] group-hover/btn:translate-x-[100%] transition-transform duration-1000" />
                 <span>Try Now</span>
-                <ExternalLink size={14} />
+                <ExternalLink size={16} className="group-hover/btn:translate-x-0.5 transition-transform duration-300" />
               </button>
               
-              {/* Mobile-only quick access */}
+              {/* Mobile Quick Access */}
               {isMobile && (
                 <button 
                   onClick={handleCardClick}
-                  className="text-toolnest-text text-sm font-medium hover:underline touch-manipulation"
+                  className="text-toolnest-text text-sm font-semibold hover:underline touch-manipulation transition-all duration-300 hover:scale-105"
                 >
                   Open
                 </button>
@@ -112,45 +144,73 @@ const ToolCard: React.FC<ToolCardProps> = ({
     );
   }
 
-  // Grid View - Mobile Optimized
+  // Grid View - Premium Design
   return (
     <div 
-      className="bg-white border border-gray-200 p-4 rounded-xl hover:shadow-lg transition-all duration-300 cursor-pointer group hover:border-toolnest-text/30 active:scale-95 h-full flex flex-col"
+      className="group relative bg-white/80 backdrop-blur-sm border border-gray-100/80 p-5 rounded-2xl hover:shadow-2xl transition-all duration-500 cursor-pointer hover:scale-[1.02] active:scale-[0.99] hover:border-toolnest-text/20 h-full flex flex-col"
       onClick={handleCardClick}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      onMouseDown={() => setIsPressed(true)}
+      onMouseUp={() => setIsPressed(false)}
       role="button"
       tabIndex={0}
       onKeyDown={(e) => e.key === 'Enter' && handleCardClick()}
+      style={{
+        transform: isPressed ? 'scale(0.99)' : isHovered ? 'scale(1.02)' : 'scale(1)',
+        transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
+      }}
     >
+      {/* Animated Background Gradient */}
+      <div className="absolute inset-0 bg-gradient-to-br from-white/50 to-gray-50/30 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+      
       {/* Header with Icon and Favorite */}
-      <div className="flex items-start justify-between mb-3">
-        <div className={`w-12 h-12 rounded-xl flex items-center justify-center text-2xl ${categoryColor} shadow-sm`}>
-          {categoryIcon}
+      <div className="relative flex items-start justify-between mb-4">
+        <div 
+          className={`w-14 h-14 rounded-xl flex items-center justify-center text-2xl ${categoryColor} shadow-lg group-hover:shadow-xl transition-all duration-500 group-hover:scale-110`}
+          style={{
+            transform: isHovered ? 'scale(1.1) rotate(5deg)' : 'scale(1)',
+          }}
+        >
+          <span className="relative">
+            {categoryIcon}
+            {isHovered && (
+              <Sparkles 
+                size={12} 
+                className="absolute -top-2 -right-2 text-yellow-500 animate-ping" 
+              />
+            )}
+          </span>
         </div>
         
-        {/* Favorite Button */}
+        {/* Animated Favorite Button */}
         <button 
           onClick={handleFavoriteClick}
-          className="p-1.5 hover:bg-gray-100 rounded-lg transition-colors flex-shrink-0 touch-manipulation"
+          className="p-2 hover:bg-yellow-50 rounded-xl transition-all duration-300 flex-shrink-0 touch-manipulation hover:scale-110 active:scale-95 group/fav"
           aria-label={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
         >
           <Star 
-            size={18} 
-            className={isFavorite ? 'text-yellow-500 fill-yellow-500' : 'text-gray-400'} 
+            size={20} 
+            className={`transition-all duration-300 ${
+              isFavorite 
+                ? 'text-yellow-500 fill-yellow-500 scale-110' 
+                : 'text-gray-400 group-hover/fav:text-yellow-400'
+            }`} 
           />
         </button>
       </div>
 
       {/* Content */}
-      <div className="flex-1">
-        <h3 className="text-lg font-semibold text-toolnest-text mb-2 line-clamp-2 leading-tight">
+      <div className="relative flex-1 mb-4">
+        <h3 className="text-xl font-bold text-gray-900 mb-3 line-clamp-2 leading-tight group-hover:text-toolnest-text transition-colors duration-300">
           {tool.name}
         </h3>
         
-        <span className={`inline-block px-2 py-1 rounded-full text-xs font-medium ${categoryColor} mb-3`}>
+        <span className={`inline-block px-3 py-1.5 rounded-full text-xs font-semibold ${categoryColor} border border-transparent group-hover:border-current/20 transition-all duration-300 mb-4`}>
           {tool.category}
         </span>
         
-        <p className="text-gray-600 text-sm leading-relaxed line-clamp-3 mb-4 flex-1">
+        <p className="text-gray-600 text-sm leading-relaxed line-clamp-3 group-hover:text-gray-700 transition-colors duration-300">
           {tool.description}
         </p>
       </div>
@@ -158,13 +218,15 @@ const ToolCard: React.FC<ToolCardProps> = ({
       {/* Action Button */}
       <button 
         onClick={handleTryNowClick}
-        className="w-full bg-toolnest-text text-white py-2.5 px-4 rounded-lg font-medium hover:bg-toolnest-text/90 transition-colors text-sm flex items-center justify-center gap-2 touch-manipulation active:scale-95 group-hover:shadow-md"
+        className="relative w-full bg-gradient-to-r from-toolnest-text to-toolnest-text/90 text-white py-3 px-4 rounded-xl font-semibold hover:shadow-lg transition-all duration-300 text-sm flex items-center justify-center gap-2 touch-manipulation hover:scale-105 active:scale-95 group/btn overflow-hidden"
       >
+        {/* Shine effect */}
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12 translate-x-[-100%] group-hover/btn:translate-x-[100%] transition-transform duration-1000" />
         <span>Try Now</span>
-        <ExternalLink size={14} />
+        <ExternalLink size={16} className="group-hover/btn:translate-x-0.5 transition-transform duration-300" />
       </button>
     </div>
   );
 };
 
-export default ToolCard;
+export default React.memo(ToolCard);

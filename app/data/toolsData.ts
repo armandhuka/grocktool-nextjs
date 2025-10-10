@@ -3,6 +3,7 @@ export interface Tool {
   name: string;
   description: string;
   category: string;
+  path: string; // Added path property
   iconColor: string;
   icon: string;
   status: 'available' | 'coming-soon';
@@ -15,6 +16,7 @@ export const toolsData: Tool[] = [
     name: "Length Converter",
     description: "Convert between different units of length (meters, feet, inches, etc.)",
     category: "Unit Converter Tools",
+    path: "/tools/length-converter",
     iconColor: "#3B82F6",
     icon: "📏",
     status: "available"
@@ -24,6 +26,7 @@ export const toolsData: Tool[] = [
     name: "Weight Converter",
     description: "Convert between different units of weight (kg, lbs, grams, etc.)",
     category: "Unit Converter Tools",
+    path: "/tools/weight-converter",
     iconColor: "#3B82F6",
     icon: "⚖️",
     status: "available"
@@ -33,6 +36,7 @@ export const toolsData: Tool[] = [
     name: "Temperature Converter",
     description: "Convert between Celsius, Fahrenheit, and Kelvin",
     category: "Unit Converter Tools",
+    path: "/tools/temperature-converter",
     iconColor: "#3B82F6",
     icon: "🌡️",
     status: "available"
@@ -42,6 +46,7 @@ export const toolsData: Tool[] = [
     name: "Time Converter",
     description: "Convert between different time units (hours, minutes, seconds)",
     category: "Unit Converter Tools",
+    path: "/tools/time-converter",
     iconColor: "#3B82F6",
     icon: "⏰",
     status: "available"
@@ -51,6 +56,7 @@ export const toolsData: Tool[] = [
     name: "Speed Converter",
     description: "Convert between different speed units (mph, km/h, m/s)",
     category: "Unit Converter Tools",
+    path: "/tools/speed-converter",
     iconColor: "#3B82F6",
     icon: "🏃",
     status: "available"
@@ -60,6 +66,7 @@ export const toolsData: Tool[] = [
     name: "Area Converter",
     description: "Convert between different area units (sq ft, sq m, acres)",
     category: "Unit Converter Tools",
+    path: "/tools/area-converter",
     iconColor: "#3B82F6",
     icon: "📐",
     status: "available"
@@ -69,6 +76,7 @@ export const toolsData: Tool[] = [
     name: "Volume Converter",
     description: "Convert between different volume units (liters, gallons, cups)",
     category: "Unit Converter Tools",
+    path: "/tools/volume-converter",
     iconColor: "#3B82F6",
     icon: "🥤",
     status: "available"
@@ -78,6 +86,7 @@ export const toolsData: Tool[] = [
     name: "Data Size Converter",
     description: "Convert between bytes, KB, MB, GB, TB",
     category: "Unit Converter Tools",
+    path: "/tools/data-size-converter",
     iconColor: "#3B82F6",
     icon: "💾",
     status: "available"
@@ -89,6 +98,7 @@ export const toolsData: Tool[] = [
     name: "Word Counter",
     description: "Count words, characters, sentences, and paragraphs in your text",
     category: "Text Tools",
+    path: "/tools/word-counter",
     iconColor: "#10B981",
     icon: "📝",
     status: "available"
@@ -98,6 +108,7 @@ export const toolsData: Tool[] = [
     name: "Remove Duplicates",
     description: "Remove duplicate lines or words from your text",
     category: "Text Tools",
+    path: "/tools/remove-duplicates",
     iconColor: "#10B981",
     icon: "🔄",
     status: "available"
@@ -107,6 +118,7 @@ export const toolsData: Tool[] = [
     name: "Case Converter",
     description: "Convert text to uppercase, lowercase, title case, or sentence case",
     category: "Text Tools",
+    path: "/tools/case-converter",
     iconColor: "#10B981",
     icon: "🔤",
     status: "available"
@@ -116,6 +128,7 @@ export const toolsData: Tool[] = [
     name: "Text Sorter",
     description: "Sort lines of text alphabetically or numerically",
     category: "Text Tools",
+    path: "/tools/text-sorter",
     iconColor: "#10B981",
     icon: "🔢",
     status: "available"
@@ -125,6 +138,7 @@ export const toolsData: Tool[] = [
     name: "Text Reverser",
     description: "Reverse text, words, or lines in your content",
     category: "Text Tools",
+    path: "/tools/text-reverser",
     iconColor: "#10B981",
     icon: "↩️",
     status: "available"
@@ -134,6 +148,7 @@ export const toolsData: Tool[] = [
     name: "Slug Generator",
     description: "Generate URL-friendly slugs from your text",
     category: "Text Tools",
+    path: "/tools/slug-generator",
     iconColor: "#10B981",
     icon: "🔗",
     status: "available"
@@ -143,6 +158,7 @@ export const toolsData: Tool[] = [
     name: "Find & Replace",
     description: "Find and replace text patterns in your content",
     category: "Text Tools",
+    path: "/tools/find-replace",
     iconColor: "#10B981",
     icon: "🔍",
     status: "available"
@@ -152,6 +168,7 @@ export const toolsData: Tool[] = [
     name: "Palindrome Checker",
     description: "Check if text reads the same forwards and backwards",
     category: "Text Tools",
+    path: "/tools/palindrome-checker",
     iconColor: "#10B981",
     icon: "🔄",
     status: "available"
@@ -161,6 +178,7 @@ export const toolsData: Tool[] = [
     name: "Remove Special Characters",
     description: "Remove or filter special characters from text",
     category: "Text Tools",
+    path: "/tools/remove-special-characters",
     iconColor: "#10B981",
     icon: "🧹",
     status: "available"
@@ -170,17 +188,19 @@ export const toolsData: Tool[] = [
     name: "Text Limiter",
     description: "Limit text to a specific number of characters or words",
     category: "Text Tools",
+    path: "/tools/text-limiter",
     iconColor: "#10B981",
     icon: "✂️",
     status: "available"
   },
 
-  // Date & Time Tools - Updated to match exact page names
+  // Date & Time Tools
   {
     id: 19,
     name: "Age Calculator",
     description: "Calculate exact age in years, months, and days",
     category: "Date & Time Tools",
+    path: "/tools/age-calculator",
     iconColor: "#8B5CF6",
     icon: "🎂",
     status: "available"
@@ -190,6 +210,7 @@ export const toolsData: Tool[] = [
     name: "Date Difference",
     description: "Calculate the difference between two dates",
     category: "Date & Time Tools",
+    path: "/tools/date-difference",
     iconColor: "#8B5CF6",
     icon: "📅",
     status: "available"
@@ -199,6 +220,7 @@ export const toolsData: Tool[] = [
     name: "Countdown Timer",
     description: "Create countdown timers for events and deadlines",
     category: "Date & Time Tools",
+    path: "/tools/countdown-timer",
     iconColor: "#8B5CF6",
     icon: "⏳",
     status: "available"
@@ -208,6 +230,7 @@ export const toolsData: Tool[] = [
     name: "Work Days Calculator",
     description: "Calculate working days between two dates",
     category: "Date & Time Tools",
+    path: "/tools/work-days-calculator",
     iconColor: "#8B5CF6",
     icon: "💼",
     status: "available"
@@ -217,6 +240,7 @@ export const toolsData: Tool[] = [
     name: "Next Birthday Countdown",
     description: "Count days until your next birthday",
     category: "Date & Time Tools",
+    path: "/tools/next-birthday-countdown",
     iconColor: "#8B5CF6",
     icon: "🎉",
     status: "available"
@@ -226,6 +250,7 @@ export const toolsData: Tool[] = [
     name: "Leap Year Checker",
     description: "Check if a year is a leap year",
     category: "Date & Time Tools",
+    path: "/tools/leap-year-checker",
     iconColor: "#8B5CF6",
     icon: "📆",
     status: "available"
@@ -235,6 +260,7 @@ export const toolsData: Tool[] = [
     name: "Current Week Number Checker",
     description: "Find the week number for any date",
     category: "Date & Time Tools",
+    path: "/tools/current-week-number-checker",
     iconColor: "#8B5CF6",
     icon: "📊",
     status: "available"
@@ -246,6 +272,7 @@ export const toolsData: Tool[] = [
     name: "Percentage Calculator",
     description: "Calculate percentages, percentage increase/decrease",
     category: "Number Tools",
+    path: "/tools/percentage-calculator",
     iconColor: "#F59E0B",
     icon: "💯",
     status: "available"
@@ -255,6 +282,7 @@ export const toolsData: Tool[] = [
     name: "Interest Calculator",
     description: "Calculate simple and compound interest",
     category: "Number Tools",
+    path: "/tools/interest-calculator",
     iconColor: "#F59E0B",
     icon: "💰",
     status: "available"
@@ -264,6 +292,7 @@ export const toolsData: Tool[] = [
     name: "EMI Calculator",
     description: "Calculate loan EMI and payment schedules",
     category: "Number Tools",
+    path: "/tools/emi-calculator",
     iconColor: "#F59E0B",
     icon: "🏦",
     status: "available"
@@ -273,6 +302,7 @@ export const toolsData: Tool[] = [
     name: "Roman Number Converter",
     description: "Convert between Arabic and Roman numerals",
     category: "Number Tools",
+    path: "/tools/roman-number-converter",
     iconColor: "#F59E0B",
     icon: "🏛️",
     status: "available"
@@ -282,6 +312,7 @@ export const toolsData: Tool[] = [
     name: "LCM/HCF Calculator",
     description: "Find Least Common Multiple and Highest Common Factor",
     category: "Number Tools",
+    path: "/tools/lcm-hcf-calculator",
     iconColor: "#F59E0B",
     icon: "🔢",
     status: "available"
@@ -291,6 +322,7 @@ export const toolsData: Tool[] = [
     name: "Number to Words",
     description: "Convert numbers to written words",
     category: "Number Tools",
+    path: "/tools/number-to-words",
     iconColor: "#F59E0B",
     icon: "📖",
     status: "available"
@@ -300,6 +332,7 @@ export const toolsData: Tool[] = [
     name: "Scientific Notation",
     description: "Convert numbers to and from scientific notation",
     category: "Number Tools",
+    path: "/tools/scientific-notation",
     iconColor: "#F59E0B",
     icon: "🔬",
     status: "available"
@@ -309,6 +342,7 @@ export const toolsData: Tool[] = [
     name: "Base Converter",
     description: "Convert between binary, decimal, octal, and hexadecimal",
     category: "Number Tools",
+    path: "/tools/base-converter",
     iconColor: "#F59E0B",
     icon: "💻",
     status: "available"
@@ -318,6 +352,7 @@ export const toolsData: Tool[] = [
     name: "Number Rounding",
     description: "Round numbers to specified decimal places",
     category: "Number Tools",
+    path: "/tools/number-rounding",
     iconColor: "#F59E0B",
     icon: "🎯",
     status: "available"
@@ -327,6 +362,7 @@ export const toolsData: Tool[] = [
     name: "Random Generator",
     description: "Generate random numbers within specified ranges",
     category: "Number Tools",
+    path: "/tools/random-generator",
     iconColor: "#F59E0B",
     icon: "🎲",
     status: "available"
@@ -338,6 +374,7 @@ export const toolsData: Tool[] = [
     name: "Advanced Calculator",
     description: "Scientific calculator with advanced functions",
     category: "Math Tools",
+    path: "/tools/advanced-calculator",
     iconColor: "#EF4444",
     icon: "🧮",
     status: "available"
@@ -347,6 +384,7 @@ export const toolsData: Tool[] = [
     name: "Prime Number Checker",
     description: "Check if a number is prime and find prime factors",
     category: "Math Tools",
+    path: "/tools/prime-number-checker",
     iconColor: "#EF4444",
     icon: "🔍",
     status: "available"
@@ -356,6 +394,7 @@ export const toolsData: Tool[] = [
     name: "Factorial Calculator",
     description: "Calculate factorial of any number",
     category: "Math Tools",
+    path: "/tools/factorial-calculator",
     iconColor: "#EF4444",
     icon: "❗",
     status: "available"
@@ -365,6 +404,7 @@ export const toolsData: Tool[] = [
     name: "Multiplication Tables",
     description: "Generate multiplication tables for any number",
     category: "Math Tools",
+    path: "/tools/multiplication-tables",
     iconColor: "#EF4444",
     icon: "✖️",
     status: "available"
@@ -374,6 +414,7 @@ export const toolsData: Tool[] = [
     name: "Quadratic Equation Solver",
     description: "Solve quadratic equations and find roots",
     category: "Math Tools",
+    path: "/tools/quadratic-equation-solver",
     iconColor: "#EF4444",
     icon: "📈",
     status: "available"
@@ -383,6 +424,7 @@ export const toolsData: Tool[] = [
     name: "Percentage Increase/Decrease Calculator",
     description: "Calculate percentage change between values",
     category: "Math Tools",
+    path: "/tools/percentage-increase-decrease-calculator",
     iconColor: "#EF4444",
     icon: "📊",
     status: "available"
@@ -392,6 +434,7 @@ export const toolsData: Tool[] = [
     name: "Triangle Area Calculator",
     description: "Calculate area and perimeter of triangles",
     category: "Math Tools",
+    path: "/tools/triangle-area-calculator",
     iconColor: "#EF4444",
     icon: "📐",
     status: "available"
@@ -401,6 +444,7 @@ export const toolsData: Tool[] = [
     name: "Circle Area Calculator",
     description: "Calculate area and circumference of circles",
     category: "Math Tools",
+    path: "/tools/circle-area-calculator",
     iconColor: "#EF4444",
     icon: "⭕",
     status: "available"
@@ -410,6 +454,7 @@ export const toolsData: Tool[] = [
     name: "Logarithm Calculator",
     description: "Calculate logarithms and exponentials",
     category: "Math Tools",
+    path: "/tools/logarithm-calculator",
     iconColor: "#EF4444",
     icon: "📊",
     status: "available"
@@ -419,6 +464,7 @@ export const toolsData: Tool[] = [
     name: "Statistics Calculator",
     description: "Calculate mean, median, mode, and standard deviation",
     category: "Math Tools",
+    path: "/tools/statistics-calculator",
     iconColor: "#EF4444",
     icon: "📈",
     status: "available"
@@ -430,6 +476,7 @@ export const toolsData: Tool[] = [
     name: "BMI Calculator",
     description: "Calculate your Body Mass Index and health category",
     category: "Health Tools",
+    path: "/tools/bmi-calculator",
     iconColor: "#06B6D4",
     icon: "💪",
     status: "available"
@@ -439,6 +486,7 @@ export const toolsData: Tool[] = [
     name: "Calorie Calculator",
     description: "Calculate daily calorie needs based on activity level",
     category: "Health Tools",
+    path: "/tools/calorie-calculator",
     iconColor: "#06B6D4",
     icon: "🍎",
     status: "available"
@@ -448,6 +496,7 @@ export const toolsData: Tool[] = [
     name: "Water Intake Calculator",
     description: "Calculate your daily water intake requirements",
     category: "Health Tools",
+    path: "/tools/water-intake-calculator",
     iconColor: "#06B6D4",
     icon: "💧",
     status: "available"
@@ -457,6 +506,7 @@ export const toolsData: Tool[] = [
     name: "Body Fat Percentage",
     description: "Calculate body fat percentage using various methods",
     category: "Health Tools",
+    path: "/tools/body-fat-percentage",
     iconColor: "#06B6D4",
     icon: "📏",
     status: "available"
@@ -466,6 +516,7 @@ export const toolsData: Tool[] = [
     name: "Ideal Weight Calculator",
     description: "Calculate your ideal weight based on height and age",
     category: "Health Tools",
+    path: "/tools/ideal-weight-calculator",
     iconColor: "#06B6D4",
     icon: "⚖️",
     status: "available"
@@ -475,6 +526,7 @@ export const toolsData: Tool[] = [
     name: "BMR Calculator",
     description: "Calculate Basal Metabolic Rate and daily energy expenditure",
     category: "Health Tools",
+    path: "/tools/bmr-calculator",
     iconColor: "#06B6D4",
     icon: "🔥",
     status: "available"
@@ -484,6 +536,7 @@ export const toolsData: Tool[] = [
     name: "Macro Split Calculator",
     description: "Calculate optimal macronutrient distribution",
     category: "Health Tools",
+    path: "/tools/macro-split-calculator",
     iconColor: "#06B6D4",
     icon: "🥗",
     status: "available"
