@@ -29,19 +29,30 @@ const ToolCard: React.FC<ToolCardProps> = ({
   const isMobile = typeof window !== 'undefined' ? window.innerWidth < 768 : false;
 
   const handleCardClick = useCallback(() => {
+    // Save current scroll position before navigation
+    const scrollY = window.scrollY;
+    sessionStorage.setItem('toolPageScrollPosition', scrollY.toString());
     handleToolClick(tool);
   }, [handleToolClick, tool]);
 
   const handleFavoriteClick = useCallback((e: React.MouseEvent) => {
     e.stopPropagation();
+    // Save scroll position before state update
+    const scrollY = window.scrollY;
     onFavorite(tool.id);
+    // Restore scroll position
+    setTimeout(() => window.scrollTo(0, scrollY), 0);
   }, [onFavorite, tool.id]);
 
   const handleTryNowClick = useCallback((e: React.MouseEvent) => {
     e.stopPropagation();
+    // Save current scroll position before navigation
+    const scrollY = window.scrollY;
+    sessionStorage.setItem('toolPageScrollPosition', scrollY.toString());
     handleToolClick(tool);
   }, [handleToolClick, tool]);
 
+  // ... (rest of the component remains the same, just use the updated handlers)
   // List View - Premium Mobile Design
   if (viewMode === 'list') {
     return (

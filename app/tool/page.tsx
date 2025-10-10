@@ -119,21 +119,51 @@ async function getToolData(toolId: string): Promise<Tool> {
   };
 }
 
-// ✅ Page Component
+// ✅ Scroll Restoration Component
+function ScrollRestoration() {
+  return (
+    <script
+      dangerouslySetInnerHTML={{
+        __html: `
+          if (typeof window !== 'undefined') {
+            // Restore scroll position when returning to tools page
+            const savedScrollPosition = sessionStorage.getItem('toolPageScrollPosition');
+            if (savedScrollPosition) {
+              setTimeout(() => {
+                window.scrollTo(0, parseInt(savedScrollPosition));
+                sessionStorage.removeItem('toolPageScrollPosition');
+              }, 100);
+            }
+            
+            // Disable automatic scroll restoration
+            if ('scrollRestoration' in history) {
+              history.scrollRestoration = 'manual';
+            }
+          }
+        `,
+      }}
+    />
+  );
+}
+
+// ✅ Main Page Component
 export default async function ToolPage({ searchParams }: ToolPageProps) {
-  // Await the searchParams promise
   const params = await searchParams;
   const toolId = params.toolId as string | undefined;
+  const category = params.category as string | undefined;
 
   return (
     <>
-      <div className="sr-only" aria-hidden="true">
-        <div id="seo-content"></div>
-      </div>
-
+      <ScrollRestoration />
       <Suspense fallback={<LoadingSpinner />}>
         <ToolContent toolId={toolId} />
       </Suspense>
+      
+      {/* SEO Content */}
+      <div id="seo-content" className="hidden" aria-hidden="true">
+        <h1>Online Tools Collection - GrockTool</h1>
+        <p>Browse and discover 150+ free online tools for developers, designers, students, and creators. GrockTool offers a comprehensive collection of utilities for various needs.</p>
+      </div>
     </>
   );
 }

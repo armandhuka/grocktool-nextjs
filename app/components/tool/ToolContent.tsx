@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { toolsData } from '../../data/toolsData';
 import ToolHeader from './ToolHeader';
@@ -28,8 +28,10 @@ const ToolContent: React.FC<ToolContentProps> = ({ toolId }) => {
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [favorites, setFavorites] = useState<string[]>([]); // Changed to string array
+  const [isInitialLoad, setIsInitialLoad] = useState<boolean>(true);
   
   const router = useRouter();
+  const mainContentRef = useRef<HTMLDivElement>(null);
 
   // Get unique categories
   const categories = ['All', ...Array.from(new Set(toolsData.map((tool: Tool) => tool.category)))];
@@ -42,40 +44,75 @@ const ToolContent: React.FC<ToolContentProps> = ({ toolId }) => {
     return matchesSearch && matchesCategory;
   });
 
+  // Disable automatic scroll restoration
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      // Disable Next.js automatic scroll restoration
+      if ('scrollRestoration' in history) {
+        history.scrollRestoration = 'manual';
+      }
+    }
+  }, []);
+
   // Initialize filter state from URL params or localStorage
   useEffect(() => {
-    if (!toolId) {
+    if (!toolId && isInitialLoad) {
       const savedCategory = typeof window !== 'undefined'
         ? localStorage.getItem('selectedCategory')
         : null;
 
       if (savedCategory && categories.includes(savedCategory)) {
         setSelectedCategory(savedCategory);
-        router.replace(`/tool?category=${encodeURIComponent(savedCategory)}`);
+        // Use push instead of replace to avoid scroll issues
+        router.push(`/tool?category=${encodeURIComponent(savedCategory)}`);
       }
+      setIsInitialLoad(false);
     }
-  }, [toolId, categories, router]);
+  }, [toolId, categories, router, isInitialLoad]);
 
   // Update SEO content when filters change
   useEffect(() => {
     updateSEOContent();
   }, [selectedCategory, searchTerm, filteredTools.length]);
 
-  // Update URL and localStorage when category changes
+  // Preserve scroll position during category changes
   const handleCategoryChange = (category: string) => {
+    // Save current scroll position
+    const scrollY = typeof window !== 'undefined' ? window.scrollY : 0;
+    
     setSelectedCategory(category);
 
     if (category === 'All') {
-      router.replace('/tool');
+      router.push('/tool');
       if (typeof window !== 'undefined') {
         localStorage.removeItem('selectedCategory');
       }
     } else {
-      router.replace(`/tool?category=${encodeURIComponent(category)}`);
+      router.push(`/tool?category=${encodeURIComponent(category)}`);
       if (typeof window !== 'undefined') {
         localStorage.setItem('selectedCategory', category);
       }
     }
+
+    // Restore scroll position after a brief delay
+    setTimeout(() => {
+      if (typeof window !== 'undefined') {
+        window.scrollTo(0, scrollY);
+      }
+    }, 50);
+  };
+
+  // Handle search with scroll preservation
+  const handleSearchChange = (term: string) => {
+    const scrollY = typeof window !== 'undefined' ? window.scrollY : 0;
+    setSearchTerm(term);
+    
+    // Restore scroll position
+    setTimeout(() => {
+      if (typeof window !== 'undefined') {
+        window.scrollTo(0, scrollY);
+      }
+    }, 50);
   };
 
   const handleFavorite = (toolId: string | number) => {
@@ -263,12 +300,16 @@ const ToolContent: React.FC<ToolContentProps> = ({ toolId }) => {
 
   // Default tools listing view
   return (
-    <div className="min-h-screen bg-toolnest-bg font-inter pt-20">
+    <div 
+      ref={mainContentRef}
+      className="min-h-screen bg-toolnest-bg font-inter pt-20"
+      style={{ overflowAnchor: 'none' }} // Prevent browser auto-scroll
+    >
       <ToolHeader />
       
       <ToolSearchFilters
         searchTerm={searchTerm}
-        setSearchTerm={setSearchTerm}
+        setSearchTerm={handleSearchChange}
         selectedCategory={selectedCategory}
         handleCategoryChange={handleCategoryChange}
         categories={categories}

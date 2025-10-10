@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Search, Filter, ChevronDown, Check } from 'lucide-react';
 import ViewModeToggle from '../shared/ViewModeToggle';
 
@@ -24,6 +24,22 @@ const ToolSearchFilters: React.FC<ToolSearchFiltersProps> = ({
   setViewMode
 }) => {
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
+  const searchInputRef = useRef<HTMLInputElement>(null);
+
+  // Handle search without causing scroll issues
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    
+    // Save current scroll position
+    const scrollY = window.scrollY;
+    
+    setSearchTerm(value);
+    
+    // Restore scroll position after state update
+    setTimeout(() => {
+      window.scrollTo(0, scrollY);
+    }, 0);
+  };
 
   return (
     <div className="px-4 md:px-6 mb-8">
@@ -40,11 +56,18 @@ const ToolSearchFilters: React.FC<ToolSearchFiltersProps> = ({
               <div className="relative">
                 <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-toolnest-text/40" size={20} />
                 <input
+                  ref={searchInputRef}
                   type="text"
                   placeholder="Find the perfect tool for your needs..."
                   value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
+                  onChange={handleSearchChange}
                   className="w-full pl-12 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:border-toolnest-text focus:ring-2 focus:ring-toolnest-text/20 outline-none transition-all duration-200 text-toolnest-text placeholder-toolnest-text/40"
+                  onKeyDown={(e) => {
+                    // Prevent form submission that might cause page reload
+                    if (e.key === 'Enter') {
+                      e.preventDefault();
+                    }
+                  }}
                 />
               </div>
             </div>
@@ -52,7 +75,12 @@ const ToolSearchFilters: React.FC<ToolSearchFiltersProps> = ({
             {/* Category Dropdown */}
             <div className="relative flex-shrink-0 w-full md:w-48">
               <button
-                onClick={() => setIsCategoryOpen(!isCategoryOpen)}
+                onClick={() => {
+                  const scrollY = window.scrollY;
+                  setIsCategoryOpen(!isCategoryOpen);
+                  // Restore scroll position
+                  setTimeout(() => window.scrollTo(0, scrollY), 0);
+                }}
                 className="w-full flex items-center justify-between px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl hover:bg-gray-100 transition-colors text-toolnest-text"
               >
                 <span className="text-sm font-medium">
@@ -71,8 +99,11 @@ const ToolSearchFilters: React.FC<ToolSearchFiltersProps> = ({
                     <button
                       key={category}
                       onClick={() => {
+                        const scrollY = window.scrollY;
                         handleCategoryChange(category);
                         setIsCategoryOpen(false);
+                        // Restore scroll position
+                        setTimeout(() => window.scrollTo(0, scrollY), 0);
                       }}
                       className="w-full flex items-center justify-between px-4 py-3 hover:bg-gray-50 transition-colors text-left"
                     >
