@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { useSearchParams, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { toolsData } from '../../data/toolsData';
 import ToolHeader from './ToolHeader';
 import ToolSearchFilters from './ToolSearchFilters';
@@ -9,20 +9,33 @@ import ToolResultsCount from './ToolResultsCount';
 import ToolGrid from './ToolGrid';
 import NoToolsFound from './NoToolsFound';
 
-const ToolContent = () => {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('All');
+// Define tool type
+interface Tool {
+  id: string | number;
+  name: string;
+  description: string;
+  category: string;
+  path: string;
+}
+
+// Define props interface
+interface ToolContentProps {
+  toolId?: string;
+}
+
+const ToolContent: React.FC<ToolContentProps> = ({ toolId }) => {
+  const [searchTerm, setSearchTerm] = useState<string>('');
+  const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
-  const [favorites, setFavorites] = useState<number[]>([]);
+  const [favorites, setFavorites] = useState<string[]>([]); // Changed to string array
   
-  const searchParams = useSearchParams();
   const router = useRouter();
 
   // Get unique categories
-  const categories = ['All', ...Array.from(new Set(toolsData.map(tool => tool.category)))];
+  const categories = ['All', ...Array.from(new Set(toolsData.map((tool: Tool) => tool.category)))];
   
   // Filter tools based on search and category
-  const filteredTools = toolsData.filter(tool => {
+  const filteredTools = toolsData.filter((tool: Tool) => {
     const matchesSearch = tool.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          tool.description.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesCategory = selectedCategory === 'All' || tool.category === selectedCategory;
@@ -31,18 +44,17 @@ const ToolContent = () => {
 
   // Initialize filter state from URL params or localStorage
   useEffect(() => {
-    const urlCategory = searchParams.get('category');
-    const savedCategory = typeof window !== 'undefined'
-      ? localStorage.getItem('selectedCategory')
-      : null;
+    if (!toolId) {
+      const savedCategory = typeof window !== 'undefined'
+        ? localStorage.getItem('selectedCategory')
+        : null;
 
-    if (urlCategory && categories.includes(urlCategory)) {
-      setSelectedCategory(urlCategory);
-    } else if (savedCategory && categories.includes(savedCategory)) {
-      setSelectedCategory(savedCategory);
-      router.replace(`?category=${encodeURIComponent(savedCategory)}`);
+      if (savedCategory && categories.includes(savedCategory)) {
+        setSelectedCategory(savedCategory);
+        router.replace(`/tool?category=${encodeURIComponent(savedCategory)}`);
+      }
     }
-  }, [searchParams, categories, router]);
+  }, [toolId, categories, router]);
 
   // Update SEO content when filters change
   useEffect(() => {
@@ -59,18 +71,20 @@ const ToolContent = () => {
         localStorage.removeItem('selectedCategory');
       }
     } else {
-      router.replace(`?category=${encodeURIComponent(category)}`);
+      router.replace(`/tool?category=${encodeURIComponent(category)}`);
       if (typeof window !== 'undefined') {
         localStorage.setItem('selectedCategory', category);
       }
     }
   };
 
-  const handleFavorite = (toolId: number) => {
+  const handleFavorite = (toolId: string | number) => {
+    // Convert toolId to string for consistent comparison
+    const toolIdStr = toolId.toString();
     setFavorites(prev => 
-      prev.includes(toolId) 
-        ? prev.filter(id => id !== toolId)
-        : [...prev, toolId]
+      prev.includes(toolIdStr) 
+        ? prev.filter(id => id !== toolIdStr)
+        : [...prev, toolIdStr]
     );
   };
 
@@ -176,7 +190,7 @@ const ToolContent = () => {
       "mainEntity": {
         "@type": "ItemList",
         "numberOfItems": filteredTools.length,
-        "itemListElement": filteredTools.slice(0, 20).map((tool, index) => ({
+        "itemListElement": filteredTools.slice(0, 20).map((tool: Tool, index: number) => ({
           "@type": "ListItem",
           "position": index + 1,
           "item": {
@@ -219,6 +233,35 @@ const ToolContent = () => {
     document.head.appendChild(script);
   };
 
+  // If toolId is provided, show individual tool view
+  if (toolId) {
+    const tool = toolsData.find((t: Tool) => t.id.toString() === toolId);
+    if (!tool) {
+      return (
+        <div className="min-h-screen bg-toolnest-bg font-inter pt-20">
+          <div className="container mx-auto px-4 py-8">
+            <h1 className="text-2xl font-bold text-gray-900">Tool Not Found</h1>
+            <p className="text-gray-600 mt-2">The requested tool could not be found.</p>
+          </div>
+        </div>
+      );
+    }
+
+    return (
+      <div className="min-h-screen bg-toolnest-bg font-inter pt-20">
+        <div className="container mx-auto px-4 py-8">
+          <h1 className="text-3xl font-bold text-gray-900">{tool.name}</h1>
+          <p className="text-gray-600 mt-2">{tool.description}</p>
+          {/* Add your individual tool component here */}
+          <div className="mt-8 p-6 bg-white rounded-lg shadow-md">
+            <p className="text-gray-700">Individual tool interface for {tool.name} will be displayed here.</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Default tools listing view
   return (
     <div className="min-h-screen bg-toolnest-bg font-inter pt-20">
       <ToolHeader />

@@ -8,7 +8,7 @@ import { getCategoryIcon, getCategoryColor } from '../../utils/categoryUtils';
 interface ToolGridProps {
   filteredTools: any[];
   viewMode: 'grid' | 'list';
-  favorites: number[];
+  favorites: string[];
   handleFavorite: (toolId: number) => void;
 }
 
