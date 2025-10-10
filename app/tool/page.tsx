@@ -13,14 +13,19 @@ interface Tool {
   longDescription?: string;
 }
 
+// Define page props type
+interface ToolPageProps {
+  searchParams: Record<string, string | string[] | undefined>;
+}
+
 // This function generates dynamic metadata based on the tool
 export async function generateMetadata(
-  { searchParams }: { searchParams: { [key: string]: string | string[] | undefined } },
-  parent: ResolvingMetadata
+  { searchParams }: ToolPageProps,
+  parent: Promise<ResolvingMetadata>
 ): Promise<Metadata> {
   // Get toolId from search parameters
   const toolId = searchParams.toolId as string;
-  
+
   // If no toolId, return default metadata
   if (!toolId) {
     return {
@@ -30,12 +35,11 @@ export async function generateMetadata(
   }
 
   // In a real app, you would fetch tool data from your database or API
-  // For now, we'll create dynamic metadata based on toolId
   const toolData = await getToolData(toolId);
-  
+
   // Get previous metadata from parent
   const previousImages = (await parent).openGraph?.images || [];
-  
+
   return {
     title: `${toolData.name} - Free Online Tool | GrockTool`,
     description: toolData.description,
@@ -87,7 +91,6 @@ export async function generateMetadata(
 
 // Mock function to fetch tool data - replace with your actual data source
 async function getToolData(toolId: string): Promise<Tool> {
-  // This would typically come from your database or API
   const tools: { [key: string]: Tool } = {
     'text-case-converter': {
       id: 'text-case-converter',
@@ -138,7 +141,6 @@ export default function ToolPage() {
     <>
       {/* Hidden SEO Content that will be populated dynamically */}
       <div className="sr-only" aria-hidden="true">
-        {/* This content will be populated by the ToolContent component based on the specific tool */}
         <div id="seo-content"></div>
       </div>
 
@@ -146,8 +148,6 @@ export default function ToolPage() {
       <Suspense fallback={<LoadingSpinner />}>
         <ToolContent />
       </Suspense>
-
-      {/* Dynamic Structured Data will be added by ToolContent component */}
     </>
   );
 }
