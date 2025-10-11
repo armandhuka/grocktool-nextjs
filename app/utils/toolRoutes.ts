@@ -63,6 +63,15 @@ export const getToolRoute = (toolName: string, category: string) => {
       'Ideal Weight Calculator': '/health-tools/ideal-weight',
       'BMR Calculator': '/health-tools/bmr-calculator',
       'Macro Split Calculator': '/health-tools/macro-splitter'
+    },
+    'QR & Barcode Tools': {
+      'QR Code Generator': '/QR-Barcode/qr-code-generator',
+      'QR Code Scanner': '/QR-Barcode/qr-code-scanner',
+      'Barcode Generator': '/QR-Barcode/barcode-generator',
+      'Barcode Scanner': '/QR-Barcode/barcode-scanner',
+      'vCard QR Generator': '/QR-Barcode/vcard-qr-generator',
+      'WiFi QR Code Generator': '/QR-Barcode/wifi-qr-generator',
+      'Event QR Generator': '/QR-Barcode/event-qr-generator',
     }
   };
   return routes[category]?.[toolName] || null;

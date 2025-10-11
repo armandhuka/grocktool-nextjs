@@ -3,7 +3,7 @@ export interface Tool {
   name: string;
   description: string;
   category: string;
-  path: string; // Added path property
+  path: string;
   iconColor: string;
   icon: string;
   status: 'available' | 'coming-soon';
@@ -539,6 +539,78 @@ export const toolsData: Tool[] = [
     path: "/tools/macro-split-calculator",
     iconColor: "#06B6D4",
     icon: "🥗",
+    status: "available"
+  },
+
+  // QR & Barcode Tools
+  {
+    id: 53,
+    name: "QR Code Generator",
+    description: "Create custom QR codes for URLs, text, phone numbers, and WiFi information",
+    category: "QR & Barcode Tools",
+    path: "/QR-Barcode/qr-code-generator",
+    iconColor: "#10B981",
+    icon: "📱",
+    status: "available"
+  },
+  {
+    id: 54,
+    name: "QR Code Scanner",
+    description: "Upload QR code images and decode them to extract information",
+    category: "QR & Barcode Tools",
+    path: "/tools/qr-code-scanner",
+    iconColor: "#10B981",
+    icon: "🔍",
+    status: "available"
+  },
+  {
+    id: 55,
+    name: "Barcode Generator",
+    description: "Generate barcodes in EAN, UPC, Code128, ISBN and other formats",
+    category: "QR & Barcode Tools",
+    path: "/tools/barcode-generator",
+    iconColor: "#10B981",
+    icon: "📊",
+    status: "available"
+  },
+  {
+    id: 56,
+    name: "Barcode Scanner",
+    description: "Upload barcode images and extract encoded information",
+    category: "QR & Barcode Tools",
+    path: "/tools/barcode-scanner",
+    iconColor: "#10B981",
+    icon: "📷",
+    status: "available"
+  },
+  {
+    id: 57,
+    name: "vCard QR Generator",
+    description: "Create QR codes containing contact details and business card information",
+    category: "QR & Barcode Tools",
+    path: "/tools/vcard-qr-generator",
+    iconColor: "#10B981",
+    icon: "📇",
+    status: "available"
+  },
+  {
+    id: 58,
+    name: "WiFi QR Code Generator",
+    description: "Generate QR codes for WiFi network credentials and easy sharing",
+    category: "QR & Barcode Tools",
+    path: "/tools/wifi-qr-generator",
+    iconColor: "#10B981",
+    icon: "📶",
+    status: "available"
+  },
+  {
+    id: 59,
+    name: "Event QR Generator",
+    description: "Create QR codes for calendar events with name, date, and location details",
+    category: "QR & Barcode Tools",
+    path: "/tools/event-qr-generator",
+    iconColor: "#10B981",
+    icon: "📅",
     status: "available"
   }
 ];

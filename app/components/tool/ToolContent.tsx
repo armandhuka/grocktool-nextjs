@@ -199,7 +199,8 @@ const ToolContent: React.FC<ToolContentProps> = ({ toolId }) => {
       'Image Tools': 'MultimediaApplication',
       'Health Tools': 'HealthApplication',
       'Math Tools': 'UtilityApplication',
-      'Number Tools': 'UtilityApplication'
+      'Number Tools': 'UtilityApplication',
+      'QR & Barcode Tools': 'UtilityApplication',
     };
     return categoryMap[category] || 'UtilityApplication';
   };
