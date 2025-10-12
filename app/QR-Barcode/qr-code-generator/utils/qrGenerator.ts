@@ -131,24 +131,37 @@ export const downloadQRCode = (qrCanvasRef: React.RefObject<HTMLCanvasElement | 
 
 export const shareQRCode = async (qrCodeUrl: string) => {
   if (!qrCodeUrl) return;
+  
   try {
-    if ((navigator as any).canShare && navigator.share) {
-      const res = await fetch(qrCodeUrl);
-      const blob = await res.blob();
+    // Check if Web Share API is available and supports files
+    if (navigator.share && navigator.canShare) {
+      const response = await fetch(qrCodeUrl);
+      const blob = await response.blob();
       const file = new File([blob], 'qrcode.png', { type: 'image/png' });
-      if ((navigator as any).canShare({ files: [file] })) {
-        await (navigator as any).share({ title: 'QR Code', files: [file] });
+      
+      // Check if the file can be shared
+      if (navigator.canShare({ files: [file] })) {
+        await navigator.share({
+          title: 'QR Code',
+          files: [file],
+        });
         return;
       }
     }
+    
+    // Fallback: Copy URL to clipboard
     await navigator.clipboard.writeText(qrCodeUrl);
-    alert('QR Code data URL copied to clipboard!');
+    alert('QR Code URL copied to clipboard!');
+    
   } catch (err) {
-    console.error('Share failed', err);
+    console.error('Share failed:', err);
+    
+    // Final fallback
     try {
       await navigator.clipboard.writeText(qrCodeUrl);
-      alert('QR Code data URL copied to clipboard!');
-    } catch {
+      alert('QR Code URL copied to clipboard!');
+    } catch (clipboardError) {
+      console.error('Clipboard also failed:', clipboardError);
       alert('Unable to share. Please download the QR code instead.');
     }
   }
