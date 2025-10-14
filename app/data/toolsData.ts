@@ -583,34 +583,4 @@ export const toolsData: Tool[] = [
     icon: "📷",
     status: "available"
   },
-  {
-    id: 57,
-    name: "vCard QR Generator",
-    description: "Create QR codes containing contact details and business card information",
-    category: "QR & Barcode Tools",
-    path: "/tools/vcard-qr-generator",
-    iconColor: "#10B981",
-    icon: "📇",
-    status: "available"
-  },
-  {
-    id: 58,
-    name: "WiFi QR Code Generator",
-    description: "Generate QR codes for WiFi network credentials and easy sharing",
-    category: "QR & Barcode Tools",
-    path: "/tools/wifi-qr-generator",
-    iconColor: "#10B981",
-    icon: "📶",
-    status: "available"
-  },
-  {
-    id: 59,
-    name: "Event QR Generator",
-    description: "Create QR codes for calendar events with name, date, and location details",
-    category: "QR & Barcode Tools",
-    path: "/tools/event-qr-generator",
-    iconColor: "#10B981",
-    icon: "📅",
-    status: "available"
-  }
 ];
