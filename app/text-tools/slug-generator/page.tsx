@@ -87,7 +87,7 @@ const SlugGenerator = () => {
             className="max-w-4xl mx-auto"
           >
             <button
-              onClick={() => router.push('/tools')}
+              onClick={() => router.push('/tool')}
               className="inline-flex items-center gap-2 text-toolnest-text/70 hover:text-toolnest-text mb-8 transition-colors"
             >
               <ArrowLeft size={20} />

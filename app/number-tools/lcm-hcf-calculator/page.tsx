@@ -207,7 +207,7 @@ const LCMHCFCalculator = () => {
 
           <div className="mt-8 text-center">
             <button 
-              onClick={() => router.push('/tools')}
+              onClick={() => router.push('/tool')}
               className="bg-toolnest-text hover:bg-toolnest-text/90 text-white px-6 py-3 rounded-lg font-medium transition-colors"
             >
               Back to Tools

@@ -68,7 +68,7 @@ export default function PercentageCalculatorPage() {
           >
             {/* Back Link */}
             <Link
-              href="/tools"
+              href="/tool"
               className="inline-flex items-center gap-2 text-toolnest-text/70 hover:text-toolnest-text mb-8 transition-colors"
             >
               <ArrowLeft size={20} />

@@ -72,7 +72,7 @@ const RandomGenerator = () => {
 
       <main className="pt-32 pb-16 px-4">
         <div className="toolnest-container max-w-4xl mx-auto">
-          <button onClick={() => router.push('/tools')} className="inline-flex items-center gap-2 text-toolnest-text/70 hover:text-toolnest-text mb-8 transition-colors">
+          <button onClick={() => router.push('/tool')} className="inline-flex items-center gap-2 text-toolnest-text/70 hover:text-toolnest-text mb-8 transition-colors">
             ← Back to Tools
           </button>
 
