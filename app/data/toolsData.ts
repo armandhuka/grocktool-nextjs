@@ -555,32 +555,12 @@ export const toolsData: Tool[] = [
   },
   {
     id: 54,
-    name: "QR Code Scanner",
-    description: "Upload QR code images and decode them to extract information",
-    category: "QR & Barcode Tools",
-    path: "/tools/qr-code-scanner",
-    iconColor: "#10B981",
-    icon: "🔍",
-    status: "available"
-  },
-  {
-    id: 55,
     name: "Barcode Generator",
     description: "Generate barcodes in EAN, UPC, Code128, ISBN and other formats",
     category: "QR & Barcode Tools",
     path: "/tools/barcode-generator",
     iconColor: "#10B981",
     icon: "📊",
-    status: "available"
-  },
-  {
-    id: 56,
-    name: "Barcode Scanner",
-    description: "Upload barcode images and extract encoded information",
-    category: "QR & Barcode Tools",
-    path: "/tools/barcode-scanner",
-    iconColor: "#10B981",
-    icon: "📷",
     status: "available"
   },
 ];
