@@ -8,7 +8,10 @@ import { getCategoryIcon } from '../../utils/categoryUtils';
 
 export default function FeaturedTools() {
   const { handleToolClick } = useToolNavigation();
-  const containerRef = useRef(null);
+
+  // FIXED: Type the ref properly
+  const containerRef = useRef<HTMLDivElement | null>(null);
+
   const [activeIndex, setActiveIndex] = useState(0);
 
   const featured = toolsData
@@ -16,7 +19,7 @@ export default function FeaturedTools() {
     .slice(0, 8);
 
   useEffect(() => {
-    const el = containerRef.current;
+    const el = containerRef.current as HTMLDivElement | null;
     if (!el) return;
 
     const update = () => {
@@ -28,9 +31,10 @@ export default function FeaturedTools() {
     return () => el.removeEventListener('scroll', update);
   }, []);
 
-  const scrollToIndex = (i) => {
-    const el = containerRef.current;
+  const scrollToIndex = (i: number) => {
+    const el = containerRef.current as HTMLDivElement | null;
     if (!el) return;
+
     const cardWidth = 280 + 28;
     el.scrollTo({ left: i * cardWidth, behavior: 'smooth' });
   };
@@ -72,7 +76,7 @@ export default function FeaturedTools() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.45, delay: i * 0.08 }}
                 viewport={{ once: true }}
-                whileHover={{ scale: 1.05  }}
+                whileHover={{ scale: 1.05 }}
                 onClick={() => handleToolClick(tool)}
                 className="snap-start mt-5 min-w-[280px] backdrop-blur-xl bg-[#ffffff0a] border border-[#ffffff20] rounded-2xl p-7 cursor-pointer 
                 transition-all shadow-[0_0_0_0_rgba(0,0,0,0)]

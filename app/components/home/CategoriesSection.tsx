@@ -7,11 +7,14 @@ import { useToolNavigation } from '../../hooks/useToolNavigation';
 
 const CategoriesSection = () => {
   const { handleCategoryClick } = useToolNavigation();
-  const containerRef = useRef(null);
+
+  // FIXED: Added proper type
+  const containerRef = useRef<HTMLDivElement | null>(null);
+
   const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {
-    const el = containerRef.current;
+    const el = containerRef.current as HTMLDivElement | null;
     if (!el) return;
 
     const update = () => {
@@ -23,9 +26,10 @@ const CategoriesSection = () => {
     return () => el.removeEventListener('scroll', update);
   }, []);
 
-  const scrollToIndex = (i) => {
-    const el = containerRef.current;
+  const scrollToIndex = (i: number) => {
+    const el = containerRef.current as HTMLDivElement | null;
     if (!el) return;
+
     const cardWidth = 280 + 28;
     el.scrollTo({ left: i * cardWidth, behavior: 'smooth' });
   };

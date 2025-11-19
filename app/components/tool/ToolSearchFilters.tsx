@@ -4,7 +4,18 @@ import React, { useState, useRef } from 'react';
 import { Search, ChevronDown, Check } from 'lucide-react';
 import ViewModeToggle from '../shared/ViewModeToggle';
 
-const ToolSearchFilters = ({
+// ✅ Props interface
+interface ToolSearchFiltersProps {
+  searchTerm: string;
+  setSearchTerm: (value: string) => void;
+  selectedCategory: string;
+  handleCategoryChange: (category: string) => void;
+  categories: string[];
+  viewMode: 'grid' | 'list';
+  setViewMode: (mode: 'grid' | 'list') => void;
+}
+
+const ToolSearchFilters: React.FC<ToolSearchFiltersProps> = ({
   searchTerm,
   setSearchTerm,
   selectedCategory,
@@ -14,9 +25,9 @@ const ToolSearchFilters = ({
   setViewMode
 }) => {
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
-  const searchInputRef = useRef(null);
+  const searchInputRef = useRef<HTMLInputElement | null>(null);
 
-  const handleSearchChange = (e) => {
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     const scrollY = window.scrollY;
     setSearchTerm(value);
@@ -31,6 +42,7 @@ const ToolSearchFilters = ({
 
           <div className="flex flex-col md:flex-row gap-4 items-center">
 
+            {/* Search Input */}
             <div className="flex-1 relative">
               <Search
                 className="absolute left-4 top-1/2 -translate-y-1/2 text-[hsl(var(--muted-foreground))]"
@@ -47,6 +59,7 @@ const ToolSearchFilters = ({
               />
             </div>
 
+            {/* Category Dropdown */}
             <div className="relative w-full md:w-48">
               <button
                 onClick={() => {
@@ -66,7 +79,7 @@ const ToolSearchFilters = ({
               </button>
 
               {isCategoryOpen && (
-                <div className="absolute top-full left-0 right-0 mt-2 rounded-xl bg-[hsl(var(--secondary))] border border-[hsl(var(--border))] shadow-lg max-h-60 overflow-y-auto z-10">
+                <div className="absolute top-full left-0 right-0 mt-2 rounded-xl bg-[hsl(var(--secondary))] border border-[hsl(var(--border))] shadow-lg max-height-60 overflow-y-auto z-10">
                   {categories.map((category) => (
                     <button
                       key={category}
@@ -81,15 +94,14 @@ const ToolSearchFilters = ({
                       <span className="text-sm">
                         {category === 'All' ? 'All Categories' : category.replace(' Tools', '')}
                       </span>
-                      {selectedCategory === category && (
-                        <Check size={16} />
-                      )}
+                      {selectedCategory === category && <Check size={16} />}
                     </button>
                   ))}
                 </div>
               )}
             </div>
 
+            {/* View Mode Toggle */}
             <ViewModeToggle viewMode={viewMode} setViewMode={setViewMode} />
           </div>
 

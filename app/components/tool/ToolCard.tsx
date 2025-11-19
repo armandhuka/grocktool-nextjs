@@ -1,10 +1,29 @@
 'use client';
 
-import React, { useState, useCallback } from 'react';
-import { Star, ExternalLink, Sparkles } from 'lucide-react';
+import React, { useState } from 'react';
+import { Star, Sparkles } from 'lucide-react';
 import { useToolNavigation } from '../../hooks/useToolNavigation';
 
-const ToolCard = ({
+// ✅ Tool type define karein (toolsData structure ke hisaab se)
+interface Tool {
+  id: string;
+  name: string;
+  description: string;
+  category: string;
+  status?: string;
+}
+
+// ✅ Props type
+interface ToolCardProps {
+  tool: Tool;
+  onFavorite: (id: string) => void;
+  isFavorite: boolean;
+  viewMode: 'grid' | 'list';
+  categoryIcon: React.ReactNode;
+  categoryColor: string;
+}
+
+const ToolCard: React.FC<ToolCardProps> = ({
   tool,
   onFavorite,
   isFavorite,
@@ -12,6 +31,7 @@ const ToolCard = ({
   categoryIcon,
   categoryColor
 }) => {
+
   const { handleToolClick } = useToolNavigation();
   const [hover, setHover] = useState(false);
 
@@ -21,14 +41,14 @@ const ToolCard = ({
     handleToolClick(tool);
   };
 
-  const fav = (e) => {
+  const fav = (e: React.MouseEvent) => {
     e.stopPropagation();
     const y = window.scrollY;
     onFavorite(tool.id);
     setTimeout(() => window.scrollTo(0, y), 0);
   };
 
-  const tryNow = (e) => {
+  const tryNow = (e: React.MouseEvent) => {
     e.stopPropagation();
     const y = window.scrollY;
     sessionStorage.setItem('toolPageScrollPosition', y.toString());
