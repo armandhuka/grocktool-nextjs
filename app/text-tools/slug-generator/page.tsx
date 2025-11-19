@@ -1,27 +1,14 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Copy, Trash2, Link as LinkIcon } from 'lucide-react';
-import { useRouter } from 'next/navigation';
-import Header from '../../components/Header';
-import Footer from '../../components/Footer';
-import { Button } from '../../components/ui/button';
-import { Textarea } from '../../components/ui/textarea';
+import { ArrowLeft, Copy, RotateCcw, Link as LinkIcon } from 'lucide-react';
+import Link from 'next/link';
 
 const SlugGenerator = () => {
-  const router = useRouter();
   const [inputText, setInputText] = useState('');
   const [outputText, setOutputText] = useState('');
   const [separator, setSeparator] = useState('-');
   const [lowercase, setLowercase] = useState(true);
-
-  useEffect(() => {
-    document.title = 'Slug Generator - GrockTool';
-    const metaDescription = document.querySelector('meta[name="description"]');
-    if (metaDescription) {
-      metaDescription.setAttribute('content', 'Generate URL-friendly slugs from your text. Convert titles and phrases to clean, SEO-friendly URLs instantly.');
-    }
-  }, []);
 
   const generateSlug = () => {
     if (!inputText.trim()) {
@@ -75,150 +62,191 @@ const SlugGenerator = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-toolnest-bg font-inter">
-      <Header />
-
-      <section className="pt-32 pb-20 px-4">
-        <div className="toolnest-container">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="max-w-4xl mx-auto"
-          >
-            <button
-              onClick={() => router.push('/tool')}
-              className="inline-flex items-center gap-2 text-toolnest-text/70 hover:text-toolnest-text mb-8 transition-colors"
+    <div className="min-h-screen bg-background font-inter">
+      <div className="pt-20 pb-8 px-4 sm:pt-24 sm:pb-12 sm:px-6 lg:pt-28">
+        <div className="max-w-lg mx-auto lg:max-w-4xl">
+          {/* Header */}
+          <div className="mb-8 sm:mb-10">
+            <Link
+              href="/tool"
+              className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground mb-6 transition-colors group text-sm sm:text-base"
             >
-              <ArrowLeft size={20} />
+              <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
               Back to Tools
-            </button>
-
-            <div className="text-center mb-12">
-              <h1 className="text-4xl md:text-5xl font-bold text-toolnest-text mb-4">
+            </Link>
+            
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="text-center"
+            >
+              <h1 className="text-2xl sm:text-3xl font-bold text-foreground mb-3">
                 Slug Generator
               </h1>
-              <p className="text-xl text-toolnest-text/80 max-w-2xl mx-auto">
+              <p className="text-muted-foreground text-sm sm:text-base">
                 Generate URL-friendly slugs from your text for SEO-optimized URLs
               </p>
-            </div>
+            </motion.div>
+          </div>
 
-            <div className="bg-white rounded-3xl shadow-lg p-8">
-              <div className="space-y-6">
-                <div>
-                  <label className="block text-toolnest-text font-medium mb-4">
-                    Input Text:
-                  </label>
-                  <Textarea
-                    value={inputText}
-                    onChange={(e) => setInputText(e.target.value)}
-                    placeholder="Enter your text or title here..."
-                    className="min-h-[120px] resize-none"
-                  />
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <h4 className="font-medium text-toolnest-text mb-3">Separator:</h4>
-                    <div className="space-y-2">
-                      {separatorOptions.map((option) => (
-                        <label
-                          key={option.value}
-                          className="flex items-center gap-3 cursor-pointer"
-                        >
-                          <input
-                            type="radio"
-                            name="separator"
-                            value={option.value}
-                            checked={separator === option.value}
-                            onChange={(e) => setSeparator(e.target.value)}
-                          />
-                          <div>
-                            <span className="text-toolnest-text">{option.label}</span>
-                            <span className="text-toolnest-text/50 text-sm ml-2">({option.example})</span>
-                          </div>
-                        </label>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div>
-                    <h4 className="font-medium text-toolnest-text mb-3">Options:</h4>
-                    <label className="flex items-center gap-2">
-                      <input
-                        type="checkbox"
-                        checked={lowercase}
-                        onChange={(e) => setLowercase(e.target.checked)}
-                        className="rounded"
-                      />
-                      <span className="text-toolnest-text/70">Convert to lowercase</span>
-                    </label>
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-toolnest-text font-medium mb-4">
-                    Generated Slug:
-                  </label>
-                  <div className="relative">
-                    <Textarea
-                      value={outputText}
-                      readOnly
-                      placeholder="URL-friendly slug will appear here..."
-                      className="min-h-[80px] resize-none bg-gray-50 font-mono"
-                    />
-                    {outputText && (
-                      <div className="absolute top-2 right-2">
-                        <Button
-                          onClick={handleCopy}
-                          size="sm"
-                          variant="outline"
-                          className="flex items-center gap-2"
-                        >
-                          <Copy size={14} />
-                          Copy
-                        </Button>
-                      </div>
-                    )}
-                  </div>
-                </div>
-
-                <div className="flex gap-3">
-                  <Button
-                    onClick={handleClear}
-                    variant="outline"
-                    className="flex items-center gap-2"
-                  >
-                    <Trash2 size={16} />
-                    Clear
-                  </Button>
-                </div>
-
-                {outputText && (
-                  <div className="p-4 bg-green-50 rounded-2xl border border-green-200">
-                    <h4 className="font-medium text-green-800 mb-2">Preview URL:</h4>
-                    <code className="text-green-700 text-sm break-all">
-                      https://yourwebsite.com/{outputText}
-                    </code>
-                  </div>
-                )}
+          {/* Main Tool Card */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="bg-card rounded-xl sm:rounded-2xl border border-border p-4 sm:p-6 mb-6 shadow-sm"
+          >
+            <div className="space-y-6">
+              {/* Input Section */}
+              <div className="space-y-4">
+                <label className="block text-sm font-medium text-foreground">
+                  Input Text
+                </label>
+                <textarea
+                  value={inputText}
+                  onChange={(e) => setInputText(e.target.value)}
+                  placeholder="Enter your text or title here..."
+                  className="w-full min-h-[120px] p-4 bg-input border border-border rounded-lg sm:rounded-xl focus:outline-none focus:ring-1 sm:focus:ring-2 focus:ring-ring focus:ring-opacity-50 resize-none text-foreground placeholder-muted-foreground"
+                />
               </div>
 
-              <div className="mt-8 p-6 bg-toolnest-bg/20 rounded-2xl">
-                <h4 className="font-medium text-toolnest-text mb-2">How to use:</h4>
-                <ul className="text-toolnest-text/70 text-sm space-y-1">
-                  <li>• Enter your title or text that you want to convert to a slug</li>
-                  <li>• Choose your preferred separator (hyphen is most common)</li>
-                  <li>• The slug will be generated automatically as you type</li>
-                  <li>• Use the generated slug in your URLs for better SEO</li>
-                </ul>
+              {/* Options Section */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* Separator Options */}
+                <div className="space-y-4">
+                  <h4 className="text-sm font-medium text-foreground">Separator</h4>
+                  <div className="space-y-3">
+                    {separatorOptions.map((option) => (
+                      <label
+                        key={option.value}
+                        className="flex items-center gap-3 cursor-pointer"
+                      >
+                        <input
+                          type="radio"
+                          name="separator"
+                          value={option.value}
+                          checked={separator === option.value}
+                          onChange={(e) => setSeparator(e.target.value)}
+                          className="w-4 h-4 text-accent bg-input border-border focus:ring-accent focus:ring-2"
+                        />
+                        <div className="flex-1">
+                          <span className="text-foreground text-sm">{option.label}</span>
+                          <span className="text-muted-foreground text-xs ml-2">({option.example})</span>
+                        </div>
+                      </label>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Additional Options */}
+                <div className="space-y-4">
+                  <h4 className="text-sm font-medium text-foreground">Options</h4>
+                  <label className="flex items-center gap-2">
+                    <input
+                      type="checkbox"
+                      checked={lowercase}
+                      onChange={(e) => setLowercase(e.target.checked)}
+                      className="w-4 h-4 text-accent bg-input border-border rounded focus:ring-accent focus:ring-2"
+                    />
+                    <span className="text-foreground text-sm">Convert to lowercase</span>
+                  </label>
+                </div>
+              </div>
+
+              {/* Output Section */}
+              <div className="space-y-4">
+                <label className="block text-sm font-medium text-foreground">
+                  Generated Slug
+                </label>
+                <div className="relative">
+                  <textarea
+                    value={outputText}
+                    readOnly
+                    placeholder="URL-friendly slug will appear here..."
+                    className="w-full min-h-[80px] p-4 bg-muted border border-border rounded-lg sm:rounded-xl focus:outline-none resize-none text-foreground placeholder-muted-foreground font-mono text-sm"
+                  />
+                  {outputText && (
+                    <button
+                      onClick={handleCopy}
+                      className="absolute top-3 right-3 p-2 text-muted-foreground hover:text-foreground transition-colors"
+                    >
+                      <Copy size={16} className="sm:w-4 sm:h-4" />
+                    </button>
+                  )}
+                </div>
+              </div>
+
+              {/* Action Buttons */}
+              <button
+                onClick={handleClear}
+                className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-secondary text-secondary-foreground rounded-lg sm:rounded-xl hover:bg-secondary/80 transition-colors text-sm sm:text-base"
+              >
+                <RotateCcw size={16} className="sm:w-4 sm:h-4" />
+                Clear All
+              </button>
+
+              {/* URL Preview */}
+              {outputText && (
+                <div className="p-4 bg-accent/10 rounded-lg border border-accent/20">
+                  <h4 className="font-medium text-foreground mb-2 text-sm">Preview URL</h4>
+                  <code className="text-foreground text-xs break-all font-mono">
+                    https://yourwebsite.com/{outputText}
+                  </code>
+                </div>
+              )}
+            </div>
+          </motion.div>
+
+          {/* Info Section */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="bg-card rounded-xl sm:rounded-2xl border border-border p-4 sm:p-6 shadow-sm"
+          >
+            <h3 className="text-base sm:text-lg font-semibold text-foreground mb-3">How to Use</h3>
+            <div className="space-y-2 text-muted-foreground text-sm">
+              <p>
+                Generate clean, SEO-friendly URL slugs from your text titles and phrases.
+              </p>
+              <div className="text-xs sm:text-sm space-y-1 pt-2">
+                <div className="flex items-center gap-2">
+                  <div className="w-1 h-1 bg-muted-foreground rounded-full"></div>
+                  <span>Enter your title or text that you want to convert to a slug</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-1 h-1 bg-muted-foreground rounded-full"></div>
+                  <span>Choose your preferred separator (hyphen is most common for URLs)</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-1 h-1 bg-muted-foreground rounded-full"></div>
+                  <span>The slug will be generated automatically as you type</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-1 h-1 bg-muted-foreground rounded-full"></div>
+                  <span>Use the generated slug in your URLs for better SEO and readability</span>
+                </div>
+              </div>
+              <div className="text-xs sm:text-sm space-y-2 pt-3">
+                <div className="font-medium text-foreground">Best Practices:</div>
+                <div className="flex items-center gap-2">
+                  <div className="w-1 h-1 bg-accent rounded-full"></div>
+                  <span>Keep slugs short and descriptive</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-1 h-1 bg-accent rounded-full"></div>
+                  <span>Use hyphens for better SEO (search engines treat them as spaces)</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-1 h-1 bg-accent rounded-full"></div>
+                  <span>Avoid special characters and uppercase letters</span>
+                </div>
               </div>
             </div>
           </motion.div>
         </div>
-      </section>
-
-      <Footer />
+      </div>
     </div>
   );
 };

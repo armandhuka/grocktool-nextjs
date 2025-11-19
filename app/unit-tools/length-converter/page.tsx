@@ -1,416 +1,265 @@
 'use client';
 
-import React, { useState, useEffect, useCallback } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, RotateCcw, Zap, Ruler, History, Copy, Check } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
+import { ArrowLeft, ArrowLeftRight, Copy, RotateCcw } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import { useToast } from '../../hooks/use-toast';
 import Link from 'next/link';
 
-// Debounce hook for performance
-const useDebounce = (value: string, delay: number) => {
-  const [debouncedValue, setDebouncedValue] = useState(value);
-
-  useEffect(() => {
-    const handler = setTimeout(() => {
-      setDebouncedValue(value);
-    }, delay);
-
-    return () => {
-      clearTimeout(handler);
-    };
-  }, [value, delay]);
-
-  return debouncedValue;
-};
-
 const LengthConverter = () => {
+  const router = useRouter();
+  const [inputValue, setInputValue] = useState<string>('');
   const [fromUnit, setFromUnit] = useState('meters');
   const [toUnit, setToUnit] = useState('feet');
-  const [fromValue, setFromValue] = useState('1');
-  const [toValue, setToValue] = useState('3.28084');
-  const [isSwapping, setIsSwapping] = useState(false);
-  const [copied, setCopied] = useState(false);
-  const [conversionHistory, setConversionHistory] = useState<Array<{
-    from: string;
-    to: string;
-    value: string;
-    result: string;
-    timestamp: number;
-  }>>([]);
-  
-  const router = useRouter();
-  const debouncedFromValue = useDebounce(fromValue, 300);
+  const [result, setResult] = useState<string>('');
+  const { toast } = useToast();
 
-  const units = [
-    { value: 'kilometers', label: 'Kilometers', symbol: 'km', category: 'metric' },
-    { value: 'meters', label: 'Meters', symbol: 'm', category: 'metric' },
-    { value: 'centimeters', label: 'Centimeters', symbol: 'cm', category: 'metric' },
-    { value: 'millimeters', label: 'Millimeters', symbol: 'mm', category: 'metric' },
-    { value: 'miles', label: 'Miles', symbol: 'mi', category: 'imperial' },
-    { value: 'yards', label: 'Yards', symbol: 'yd', category: 'imperial' },
-    { value: 'feet', label: 'Feet', symbol: 'ft', category: 'imperial' },
-    { value: 'inches', label: 'Inches', symbol: 'in', category: 'imperial' }
-  ];
-
-  // Conversion factors to meters (base unit)
-  const conversionFactors: { [key: string]: number } = {
-    kilometers: 1000,
-    meters: 1,
-    centimeters: 0.01,
-    millimeters: 0.001,
-    miles: 1609.344,
-    yards: 0.9144,
-    feet: 0.3048,
-    inches: 0.0254
+  const lengthUnits = {
+    meters: { name: 'Meters', abbreviation: 'm', factor: 1 },
+    centimeters: { name: 'Centimeters', abbreviation: 'cm', factor: 0.01 },
+    millimeters: { name: 'Millimeters', abbreviation: 'mm', factor: 0.001 },
+    kilometers: { name: 'Kilometers', abbreviation: 'km', factor: 1000 },
+    feet: { name: 'Feet', abbreviation: 'ft', factor: 0.3048 },
+    inches: { name: 'Inches', abbreviation: 'in', factor: 0.0254 },
+    yards: { name: 'Yards', abbreviation: 'yd', factor: 0.9144 },
+    miles: { name: 'Miles', abbreviation: 'mi', factor: 1609.344 }
   };
 
-  // Optimized conversion function
-  const convert = useCallback((value: string, from: string, to: string): string => {
-    if (!value || isNaN(Number(value)) || Number(value) === 0) {
-      return '0';
+  const convertLength = () => {
+    if (!inputValue || isNaN(Number(inputValue))) {
+      setResult('');
+      return;
     }
 
-    const numValue = Number(value);
-    const fromMeters = numValue * conversionFactors[from];
-    const result = fromMeters / conversionFactors[to];
+    const value = Number(inputValue);
+    const fromFactor = lengthUnits[fromUnit as keyof typeof lengthUnits].factor;
+    const toFactor = lengthUnits[toUnit as keyof typeof lengthUnits].factor;
     
-    // Smart formatting based on magnitude
-    if (Math.abs(result) < 0.0001 || Math.abs(result) > 999999) {
-      return result.toExponential(4);
-    } else if (Math.abs(result) < 0.01) {
-      return result.toFixed(6).replace(/\.?0+$/, '');
-    } else if (Math.abs(result) < 1) {
-      return result.toFixed(4).replace(/\.?0+$/, '');
-    } else if (Math.abs(result) < 100) {
-      return result.toFixed(3).replace(/\.?0+$/, '');
-    } else {
-      return result.toFixed(2).replace(/\.?0+$/, '');
-    }
-  }, []);
+    const meters = value * fromFactor;
+    const converted = meters / toFactor;
+    
+    setResult(converted.toFixed(6).replace(/\.?0+$/, ''));
+  };
 
-  // Perform conversion when inputs change
   useEffect(() => {
-    const result = convert(debouncedFromValue, fromUnit, toUnit);
-    setToValue(result);
+    convertLength();
+  }, [inputValue, fromUnit, toUnit]);
 
-    // Add to history if valid conversion
-    if (debouncedFromValue && !isNaN(Number(debouncedFromValue)) && Number(debouncedFromValue) !== 0) {
-      setConversionHistory(prev => [
-        {
-          from: `${debouncedFromValue} ${getUnitSymbol(fromUnit)}`,
-          to: `${result} ${getUnitSymbol(toUnit)}`,
-          value: debouncedFromValue,
-          result,
-          timestamp: Date.now()
-        },
-        ...prev.slice(0, 4) // Keep only last 5 conversions
-      ]);
-    }
-  }, [debouncedFromValue, fromUnit, toUnit, convert]);
-
-  const handleSwap = async () => {
-    setIsSwapping(true);
-    await new Promise(resolve => setTimeout(resolve, 300));
-    
+  const swapUnits = () => {
     setFromUnit(toUnit);
     setToUnit(fromUnit);
-    setFromValue(toValue);
-    
-    setTimeout(() => setIsSwapping(false), 100);
   };
 
-  const handleClear = () => {
-    setFromValue('1');
-    setToValue('3.28084');
-    setFromUnit('meters');
-    setToUnit('feet');
+  const clearAll = () => {
+    setInputValue('');
+    setResult('');
   };
 
-  const handleCopy = async () => {
-    try {
-      await navigator.clipboard.writeText(`${toValue} ${getUnitSymbol(toUnit)}`);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch (err) {
-      console.error('Failed to copy:', err);
+  const copyResult = async () => {
+    if (result) {
+      await navigator.clipboard.writeText(result);
+      toast({
+        title: "Copied!",
+        description: "Result copied to clipboard",
+      });
     }
   };
 
-  const getUnitSymbol = (unit: string) => {
-    return units.find(u => u.value === unit)?.symbol || '';
-  };
-
-  const getUnitCategory = (unit: string) => {
-    return units.find(u => u.value === unit)?.category || 'metric';
-  };
-
-  const quickConversions = [
-    { from: '1 km', to: '0.621 mi', description: 'Kilometers to Miles' },
-    { from: '1 m', to: '3.281 ft', description: 'Meters to Feet' },
-    { from: '1 cm', to: '0.394 in', description: 'Centimeters to Inches' },
-    { from: '1 mi', to: '1.609 km', description: 'Miles to Kilometers' }
-  ];
-
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 font-inter pt-20">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="mb-8"
-        >
-          <Link
-            href="/tool"
-            className="inline-flex items-center gap-2 text-slate-600 hover:text-slate-800 transition-colors mb-6 group"
-          >
-            <ArrowLeft size={20} className="group-hover:-translate-x-1 transition-transform" />
-            Back to Tools
-          </Link>
-          
-          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6 mb-8">
-            <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-purple-600 rounded-3xl flex items-center justify-center text-3xl shadow-lg">
-              📏
-            </div>
-            <div className="flex-1">
-              <h1 className="text-4xl sm:text-5xl font-bold bg-gradient-to-r from-slate-800 to-slate-600 bg-clip-text text-transparent mb-2">
+    <div className="min-h-screen bg-background font-inter">
+      <div className="pt-20 pb-8 px-4 sm:pt-24 sm:pb-12 sm:px-6 lg:pt-28">
+        <div className="max-w-lg mx-auto lg:max-w-2xl">
+          {/* Header - Adjusted spacing */}
+          <div className="mb-8 sm:mb-10">
+            <Link
+              href="/tool"
+              className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground mb-6 transition-colors group text-sm sm:text-base"
+            >
+              <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
+              Back to Tools
+            </Link>
+            
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="text-center"
+            >
+              <h1 className="text-2xl sm:text-3xl font-bold text-foreground mb-3">
                 Length Converter
               </h1>
-              <p className="text-slate-600 text-lg">Precise, instant length conversions with beautiful design</p>
-            </div>
+              <p className="text-muted-foreground text-sm sm:text-base">
+                Convert between length units easily
+              </p>
+            </motion.div>
           </div>
-        </motion.div>
 
-        {/* Main Converter */}
-        <div className="grid lg:grid-cols-3 gap-8">
-          {/* Converter Card */}
+          {/* Main Converter Card */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="lg:col-span-2 bg-white rounded-3xl p-6 sm:p-8 shadow-xl border border-slate-100"
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="bg-card rounded-xl sm:rounded-2xl border border-border p-4 sm:p-6 mb-6 shadow-sm"
           >
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-2xl font-bold text-slate-800">Convert Length</h2>
-              <div className="flex items-center gap-2 text-sm text-slate-500">
-                <Zap size={16} className="text-yellow-500" />
-                Instant Results
-              </div>
-            </div>
-
-            <div className="space-y-6">
+            {/* Input Section */}
+            <div className="space-y-4 sm:space-y-6">
               {/* From Unit */}
-              <div className="bg-slate-50 rounded-2xl p-6">
-                <label className="block text-sm font-semibold text-slate-700 mb-3 uppercase tracking-wide">
-                  From
-                </label>
-                <div className="space-y-4">
+              <div className="space-y-2">
+                <label className="block text-sm font-medium text-foreground">From</label>
+                <div className="flex gap-2 sm:gap-3">
+                  <input
+                    type="number"
+                    value={inputValue}
+                    onChange={(e) => setInputValue(e.target.value)}
+                    placeholder="Enter value"
+                    className="flex-1 p-3 sm:p-4 text-base bg-input border border-border rounded-lg sm:rounded-xl focus:outline-none focus:ring-1 sm:focus:ring-2 focus:ring-ring focus:ring-opacity-50"
+                  />
                   <select
                     value={fromUnit}
                     onChange={(e) => setFromUnit(e.target.value)}
-                    className="w-full p-4 bg-white border-2 border-slate-200 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition-all text-slate-800 font-medium"
+                    className="w-24 sm:w-28 p-3 sm:p-4 bg-input border border-border rounded-lg sm:rounded-xl focus:outline-none focus:ring-1 sm:focus:ring-2 focus:ring-ring focus:ring-opacity-50 text-sm sm:text-base"
                   >
-                    {units.map(unit => (
-                      <option key={unit.value} value={unit.value}>
-                        {unit.label} ({unit.symbol})
-                      </option>
+                    {Object.entries(lengthUnits).map(([key, unit]) => (
+                      <option key={key} value={key}>{unit.abbreviation}</option>
                     ))}
                   </select>
-                  
-                  <div className="relative">
-                    <input
-                      type="text"
-                      value={fromValue}
-                      onChange={(e) => setFromValue(e.target.value)}
-                      placeholder="Enter value"
-                      className="w-full p-4 bg-white border-2 border-slate-200 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition-all text-3xl font-bold text-slate-800 placeholder-slate-400"
-                    />
-                    <div className="absolute right-4 top-1/2 transform -translate-y-1/2 text-slate-500 font-medium">
-                      {getUnitSymbol(fromUnit)}
-                    </div>
-                  </div>
                 </div>
               </div>
 
               {/* Swap Button */}
               <div className="flex justify-center">
-                <motion.button
-                  onClick={handleSwap}
-                  disabled={isSwapping}
-                  className={`p-4 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 rounded-2xl transition-all duration-300 shadow-lg hover:shadow-xl ${
-                    isSwapping ? 'opacity-50' : ''
-                  }`}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  title="Swap units"
+                <button
+                  onClick={swapUnits}
+                  className="p-2 sm:p-3 bg-accent text-accent-foreground rounded-lg sm:rounded-xl hover:bg-accent/80 transition-all duration-200 transform hover:scale-105"
+                  aria-label="Swap units"
                 >
-                  <motion.div
-                    animate={{ rotate: isSwapping ? 180 : 0 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
-                    </svg>
-                  </motion.div>
-                </motion.button>
+                  <ArrowLeftRight size={18} className="sm:w-5 sm:h-5" />
+                </button>
               </div>
 
               {/* To Unit */}
-              <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-6 border-2 border-blue-100">
-                <label className="block text-sm font-semibold text-slate-700 mb-3 uppercase tracking-wide">
-                  To
-                </label>
-                <div className="space-y-4">
+              <div className="space-y-2">
+                <label className="block text-sm font-medium text-foreground">To</label>
+                <div className="flex gap-2 sm:gap-3">
+                  <div className="flex-1 relative">
+                    <input
+                      type="text"
+                      value={result}
+                      readOnly
+                      placeholder="Result"
+                      className="w-full p-3 sm:p-4 text-base bg-muted border border-border rounded-lg sm:rounded-xl focus:outline-none"
+                    />
+                    {result && (
+                      <button
+                        onClick={copyResult}
+                        className="absolute right-2 sm:right-3 top-1/2 transform -translate-y-1/2 p-1 sm:p-2 hover:bg-secondary rounded transition-colors"
+                        aria-label="Copy result"
+                      >
+                        <Copy size={16} className="sm:w-4 sm:h-4 text-muted-foreground" />
+                      </button>
+                    )}
+                  </div>
                   <select
                     value={toUnit}
                     onChange={(e) => setToUnit(e.target.value)}
-                    className="w-full p-4 bg-white border-2 border-blue-200 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition-all text-slate-800 font-medium"
+                    className="w-24 sm:w-28 p-3 sm:p-4 bg-input border border-border rounded-lg sm:rounded-xl focus:outline-none focus:ring-1 sm:focus:ring-2 focus:ring-ring focus:ring-opacity-50 text-sm sm:text-base"
                   >
-                    {units.map(unit => (
-                      <option key={unit.value} value={unit.value}>
-                        {unit.label} ({unit.symbol})
-                      </option>
+                    {Object.entries(lengthUnits).map(([key, unit]) => (
+                      <option key={key} value={key}>{unit.abbreviation}</option>
                     ))}
                   </select>
-                  
-                  <div className="relative">
-                    <input
-                      type="text"
-                      value={toValue}
-                      readOnly
-                      className="w-full p-4 bg-white border-2 border-blue-200 rounded-xl text-3xl font-bold text-slate-800 pr-20"
-                    />
-                    <div className="absolute right-4 top-1/2 transform -translate-y-1/2 text-slate-500 font-medium">
-                      {getUnitSymbol(toUnit)}
-                    </div>
-                    <button
-                      onClick={handleCopy}
-                      className="absolute right-20 top-1/2 transform -translate-y-1/2 p-2 text-slate-400 hover:text-slate-600 transition-colors"
-                    >
-                      {copied ? <Check size={20} className="text-green-500" /> : <Copy size={20} />}
-                    </button>
-                  </div>
                 </div>
               </div>
             </div>
 
             {/* Action Buttons */}
-            <div className="flex flex-col sm:flex-row gap-3 mt-8">
+            <div className="flex gap-3 mt-4 sm:mt-6 pt-4 sm:pt-6 border-t border-border">
               <button
-                onClick={handleClear}
-                className="flex-1 flex items-center justify-center gap-3 px-6 py-4 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl transition-all duration-200 font-semibold group"
+                onClick={clearAll}
+                className="flex-1 flex items-center justify-center gap-2 px-3 sm:px-4 py-2 sm:py-3 bg-secondary text-secondary-foreground rounded-lg sm:rounded-xl hover:bg-secondary/80 transition-colors text-sm sm:text-base"
               >
-                <RotateCcw size={20} className="group-hover:rotate-180 transition-transform" />
-                Reset All
+                <RotateCcw size={16} className="sm:w-4 sm:h-4" />
+                Clear All
               </button>
             </div>
           </motion.div>
 
-          {/* Sidebar */}
-          <div className="space-y-6">
-            {/* Quick Conversions */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              className="bg-white rounded-3xl p-6 shadow-xl border border-slate-100"
-            >
-              <h3 className="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
-                <Zap size={20} className="text-yellow-500" />
-                Quick Conversions
-              </h3>
-              <div className="space-y-3">
-                {quickConversions.map((conv, index) => (
-                  <motion.div
+          {/* Quick Conversions */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="bg-card rounded-xl sm:rounded-2xl border border-border p-4 sm:p-6 mb-6 shadow-sm"
+          >
+            <h3 className="text-base sm:text-lg font-semibold text-foreground mb-3">Common Conversions</h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
+              {[
+                { from: 'meters', to: 'feet', value: 1 },
+                { from: 'feet', to: 'meters', value: 1 },
+                { from: 'centimeters', to: 'inches', value: 100 },
+                { from: 'inches', to: 'centimeters', value: 1 },
+                { from: 'kilometers', to: 'miles', value: 1 },
+                { from: 'miles', to: 'kilometers', value: 1 }
+              ].map((conversion, index) => {
+                const fromUnitData = lengthUnits[conversion.from as keyof typeof lengthUnits];
+                const toUnitData = lengthUnits[conversion.to as keyof typeof lengthUnits];
+                const fromFactor = fromUnitData.factor;
+                const toFactor = toUnitData.factor;
+                const meters = conversion.value * fromFactor;
+                const result = (meters / toFactor).toFixed(4);
+                
+                return (
+                  <button
                     key={index}
-                    whileHover={{ scale: 1.02 }}
-                    className="p-3 bg-slate-50 rounded-lg cursor-pointer hover:bg-blue-50 transition-colors"
                     onClick={() => {
-                      setFromValue('1');
-                      setFromUnit(conv.from.split(' ')[1] === 'km' ? 'kilometers' : 
-                                 conv.from.split(' ')[1] === 'm' ? 'meters' :
-                                 conv.from.split(' ')[1] === 'cm' ? 'centimeters' : 'miles');
-                      setToUnit(conv.to.split(' ')[1] === 'mi' ? 'miles' :
-                               conv.to.split(' ')[1] === 'ft' ? 'feet' :
-                               conv.to.split(' ')[1] === 'in' ? 'inches' : 'kilometers');
+                      setFromUnit(conversion.from);
+                      setToUnit(conversion.to);
+                      setInputValue(conversion.value.toString());
                     }}
+                    className="p-2 sm:p-3 bg-secondary text-left rounded-lg hover:bg-secondary/80 transition-colors text-xs sm:text-sm"
                   >
-                    <div className="flex justify-between items-center">
-                      <span className="font-medium text-slate-700">{conv.from}</span>
-                      <span className="text-slate-400">→</span>
-                      <span className="font-semibold text-blue-600">{conv.to}</span>
+                    <div className="text-foreground font-medium">
+                      {conversion.value} {fromUnitData.abbreviation} = {result} {toUnitData.abbreviation}
                     </div>
-                    <div className="text-xs text-slate-500 mt-1">{conv.description}</div>
-                  </motion.div>
-                ))}
-              </div>
-            </motion.div>
+                  </button>
+                );
+              })}
+            </div>
+          </motion.div>
 
-            {/* Conversion History */}
-            {conversionHistory.length > 0 && (
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 }}
-                className="bg-white rounded-3xl p-6 shadow-xl border border-slate-100"
-              >
-                <h3 className="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
-                  <History size={20} className="text-purple-500" />
-                  Recent Conversions
-                </h3>
-                <div className="space-y-3 max-h-60 overflow-y-auto">
-                  <AnimatePresence>
-                    {conversionHistory.map((item, index) => (
-                      <motion.div
-                        key={item.timestamp}
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        exit={{ opacity: 0, x: 20 }}
-                        className="p-3 bg-slate-50 rounded-lg"
-                      >
-                        <div className="flex justify-between items-center text-sm">
-                          <span className="font-medium text-slate-700">{item.from}</span>
-                          <span className="text-slate-400 mx-2">→</span>
-                          <span className="font-semibold text-green-600">{item.result} {getUnitSymbol(toUnit)}</span>
-                        </div>
-                      </motion.div>
-                    ))}
-                  </AnimatePresence>
-                </div>
-              </motion.div>
-            )}
-
-            {/* Unit Info */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4 }}
-              className="bg-gradient-to-br from-blue-500 to-purple-600 rounded-3xl p-6 text-white"
-            >
-              <h3 className="text-lg font-bold mb-3 flex items-center gap-2">
-                <Ruler size={20} />
-                Unit Systems
-              </h3>
-              <div className="space-y-2 text-sm">
+          {/* Info Section */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+            className="bg-card rounded-xl sm:rounded-2xl border border-border p-4 sm:p-6 shadow-sm"
+          >
+            <h3 className="text-base sm:text-lg font-semibold text-foreground mb-3">Length Conversion</h3>
+            <div className="space-y-2 text-muted-foreground text-sm">
+              <p>
+                Convert between metric and imperial length units using standard conversion factors.
+              </p>
+              <div className="text-xs sm:text-sm space-y-1 pt-2">
                 <div className="flex justify-between">
-                  <span>Current:</span>
-                  <span className="font-semibold">
-                    {getUnitCategory(fromUnit) === 'metric' ? 'Metric' : 'Imperial'} →{' '}
-                    {getUnitCategory(toUnit) === 'metric' ? 'Metric' : 'Imperial'}
-                  </span>
+                  <span>1 m =</span>
+                  <span>3.28084 ft</span>
                 </div>
-                <div className="h-px bg-white/20 my-2"></div>
-                <div className="text-white/80">
-                  <div className="font-medium mb-1">💡 Tip:</div>
-                  <div className="text-xs">
-                    {getUnitCategory(fromUnit) !== getUnitCategory(toUnit) 
-                      ? 'Converting between measurement systems'
-                      : 'Converting within the same system'}
-                  </div>
+                <div className="flex justify-between">
+                  <span>1 ft =</span>
+                  <span>0.3048 m</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>1 km =</span>
+                  <span>0.621371 mi</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>1 in =</span>
+                  <span>2.54 cm</span>
                 </div>
               </div>
-            </motion.div>
-          </div>
+            </div>
+          </motion.div>
         </div>
       </div>
     </div>

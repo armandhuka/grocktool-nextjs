@@ -1,26 +1,15 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Copy, Trash2, Filter } from 'lucide-react';
+import { ArrowLeft, Copy, RotateCcw, Filter } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import Header from '../../components/Header';
-import Footer from '../../components/Footer';
-import { Button } from '../../components/ui/button';
-import { Textarea } from '../../components/ui/textarea';
+import Link from 'next/link';
 
 const RemoveDuplicates = () => {
   const router = useRouter();
   const [inputText, setInputText] = useState('');
   const [outputText, setOutputText] = useState('');
   const [caseSensitive, setCaseSensitive] = useState(false);
-
-  useEffect(() => {
-    document.title = 'Remove Duplicate Lines - GrockTool';
-    const metaDescription = document.querySelector('meta[name="description"]');
-    if (metaDescription) {
-      metaDescription.setAttribute('content', 'Remove duplicate lines from your text instantly. Keep only unique lines with our free online duplicate remover tool.');
-    }
-  }, []);
 
   const removeDuplicates = () => {
     if (!inputText.trim()) {
@@ -29,8 +18,8 @@ const RemoveDuplicates = () => {
     }
 
     const lines = inputText.split('\n');
-    const uniqueLines: string[] = []; // ✅ Added explicit type
-    const seen = new Set<string>(); // ✅ Added explicit type
+    const uniqueLines: string[] = [];
+    const seen = new Set<string>();
 
     lines.forEach(line => {
       const checkLine = caseSensitive ? line : line.toLowerCase();
@@ -57,115 +46,143 @@ const RemoveDuplicates = () => {
   };
 
   return (
-    <div className="min-h-screen bg-toolnest-bg font-inter">
-      <Header />
-
-      <section className="pt-32 pb-20 px-4">
-        <div className="toolnest-container">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="max-w-6xl mx-auto"
-          >
-            <button
-              onClick={() => router.push('/tool')}
-              className="inline-flex items-center gap-2 text-toolnest-text/70 hover:text-toolnest-text mb-8 transition-colors"
+    <div className="min-h-screen bg-background font-inter">
+      <div className="pt-20 pb-8 px-4 sm:pt-24 sm:pb-12 sm:px-6 lg:pt-28">
+        <div className="max-w-lg mx-auto lg:max-w-4xl">
+          {/* Header */}
+          <div className="mb-8 sm:mb-10">
+            <Link
+              href="/tool"
+              className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground mb-6 transition-colors group text-sm sm:text-base"
             >
-              <ArrowLeft size={20} />
+              <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
               Back to Tools
-            </button>
-
-            <div className="text-center mb-12">
-              <h1 className="text-4xl md:text-5xl font-bold text-toolnest-text mb-4">
+            </Link>
+            
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="text-center"
+            >
+              <h1 className="text-2xl sm:text-3xl font-bold text-foreground mb-3">
                 Remove Duplicate Lines
               </h1>
-              <p className="text-xl text-toolnest-text/80 max-w-2xl mx-auto">
-                Remove duplicate lines from your text and keep only unique entries
+              <p className="text-muted-foreground text-sm sm:text-base">
+                Remove duplicate lines and keep only unique entries
               </p>
+            </motion.div>
+          </div>
+
+          {/* Main Tool Card */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="bg-card rounded-xl sm:rounded-2xl border border-border p-4 sm:p-6 mb-6 shadow-sm"
+          >
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {/* Input Section */}
+              <div className="space-y-4">
+                <label className="block text-sm font-medium text-foreground">
+                  Input Text
+                </label>
+                <textarea
+                  value={inputText}
+                  onChange={(e) => setInputText(e.target.value)}
+                  placeholder="Enter your text with duplicate lines..."
+                  className="w-full min-h-[250px] p-4 bg-input border border-border rounded-lg sm:rounded-xl focus:outline-none focus:ring-1 sm:focus:ring-2 focus:ring-ring focus:ring-opacity-50 resize-none text-foreground placeholder-muted-foreground"
+                />
+              </div>
+
+              {/* Output Section */}
+              <div className="space-y-4">
+                <label className="block text-sm font-medium text-foreground">
+                  Unique Lines
+                </label>
+                <textarea
+                  value={outputText}
+                  readOnly
+                  placeholder="Unique lines will appear here..."
+                  className="w-full min-h-[250px] p-4 bg-muted border border-border rounded-lg sm:rounded-xl focus:outline-none resize-none text-foreground placeholder-muted-foreground"
+                />
+              </div>
             </div>
 
-            <div className="bg-white rounded-3xl shadow-lg p-8">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <div>
-                  <label className="block text-toolnest-text font-medium mb-4">
-                    Input Text:
-                  </label>
-                  <Textarea
-                    value={inputText}
-                    onChange={(e) => setInputText(e.target.value)}
-                    placeholder="Enter your text with duplicate lines..."
-                    className="min-h-[300px] resize-none"
-                  />
+            {/* Options */}
+            <div className="flex items-center gap-3 mt-6 pt-6 border-t border-border">
+              <label className="flex items-center gap-2 text-sm text-foreground">
+                <input
+                  type="checkbox"
+                  checked={caseSensitive}
+                  onChange={(e) => setCaseSensitive(e.target.checked)}
+                  className="w-4 h-4 text-accent bg-input border-border rounded focus:ring-accent focus:ring-2"
+                />
+                Case sensitive
+              </label>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="flex flex-col sm:flex-row gap-3 mt-6">
+              <button
+                onClick={removeDuplicates}
+                className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-accent text-accent-foreground rounded-lg sm:rounded-xl hover:bg-accent/80 transition-colors text-sm sm:text-base"
+              >
+                <Filter size={16} className="sm:w-4 sm:h-4" />
+                Remove Duplicates
+              </button>
+              <button
+                onClick={handleClear}
+                className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-secondary text-secondary-foreground rounded-lg sm:rounded-xl hover:bg-secondary/80 transition-colors text-sm sm:text-base"
+              >
+                <RotateCcw size={16} className="sm:w-4 sm:h-4" />
+                Clear All
+              </button>
+              <button
+                onClick={handleCopy}
+                disabled={!outputText}
+                className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-secondary text-secondary-foreground rounded-lg sm:rounded-xl hover:bg-secondary/80 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base"
+              >
+                <Copy size={16} className="sm:w-4 sm:h-4" />
+                Copy Result
+              </button>
+            </div>
+          </motion.div>
+
+          {/* Info Section */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="bg-card rounded-xl sm:rounded-2xl border border-border p-4 sm:p-6 shadow-sm"
+          >
+            <h3 className="text-base sm:text-lg font-semibold text-foreground mb-3">How to Use</h3>
+            <div className="space-y-2 text-muted-foreground text-sm">
+              <p>
+                Remove duplicate lines from your text while preserving the order of unique entries.
+              </p>
+              <div className="text-xs sm:text-sm space-y-1 pt-2">
+                <div className="flex items-center gap-2">
+                  <div className="w-1 h-1 bg-muted-foreground rounded-full"></div>
+                  <span>Paste your text with duplicate lines in the input area</span>
                 </div>
-
-                <div>
-                  <label className="block text-toolnest-text font-medium mb-4">
-                    Unique Lines:
-                  </label>
-                  <Textarea
-                    value={outputText}
-                    readOnly
-                    placeholder="Unique lines will appear here..."
-                    className="min-h-[300px] resize-none bg-gray-50"
-                  />
+                <div className="flex items-center gap-2">
+                  <div className="w-1 h-1 bg-muted-foreground rounded-full"></div>
+                  <span>Enable "Case sensitive" to treat different cases as unique</span>
                 </div>
-              </div>
-
-              <div className="flex flex-wrap items-center gap-4 mt-6">
-                <label className="flex items-center gap-2">
-                  <input
-                    type="checkbox"
-                    checked={caseSensitive}
-                    onChange={(e) => setCaseSensitive(e.target.checked)}
-                    className="rounded"
-                  />
-                  <span className="text-toolnest-text/70 text-sm">Case sensitive</span>
-                </label>
-              </div>
-
-              <div className="flex gap-3 mt-6">
-                <Button
-                  onClick={removeDuplicates}
-                  className="flex items-center gap-2"
-                >
-                  <Filter size={16} />
-                  Remove Duplicates
-                </Button>
-                <Button
-                  onClick={handleClear}
-                  variant="outline"
-                  className="flex items-center gap-2"
-                >
-                  <Trash2 size={16} />
-                  Clear
-                </Button>
-                <Button
-                  onClick={handleCopy}
-                  variant="outline"
-                  className="flex items-center gap-2"
-                  disabled={!outputText}
-                >
-                  <Copy size={16} />
-                  Copy Result
-                </Button>
-              </div>
-
-              <div className="mt-8 p-6 bg-toolnest-bg/20 rounded-2xl">
-                <h4 className="font-medium text-toolnest-text mb-2">How to use:</h4>
-                <ul className="text-toolnest-text/70 text-sm space-y-1">
-                  <li>• Paste your text with duplicate lines in the input area</li>
-                  <li>• Check "Case sensitive" if you want to treat "Hello" and "hello" as different</li>
-                  <li>• Click "Remove Duplicates" to process your text</li>
-                  <li>• Copy the result or use it as needed</li>
-                </ul>
+                <div className="flex items-center gap-2">
+                  <div className="w-1 h-1 bg-muted-foreground rounded-full"></div>
+                  <span>Click "Remove Duplicates" to process your text</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-1 h-1 bg-muted-foreground rounded-full"></div>
+                  <span>Copy the result or use it as needed</span>
+                </div>
               </div>
             </div>
           </motion.div>
         </div>
-      </section>
-
-      <Footer />
+      </div>
     </div>
   );
 };

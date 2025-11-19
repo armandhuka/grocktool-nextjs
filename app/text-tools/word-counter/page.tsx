@@ -3,9 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Copy, Trash2 } from 'lucide-react';
-import { Button } from '../../components/ui/button';
-import { Textarea } from '../../components/ui/textarea';
+import { ArrowLeft, Copy, RotateCcw } from 'lucide-react';
 
 export default function WordCounterPage() {
   const [text, setText] = useState('');
@@ -47,112 +45,136 @@ export default function WordCounterPage() {
   };
 
   return (
-    <div className="min-h-screen bg-toolnest-bg font-inter">
-      <section className="pt-32 pb-20 px-4">
-        <div className="toolnest-container">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="max-w-4xl mx-auto"
-          >
-            {/* Back Link */}
+    <div className="min-h-screen bg-background font-inter">
+      <div className="pt-20 pb-8 px-4 sm:pt-24 sm:pb-12 sm:px-6 lg:pt-28">
+        <div className="max-w-lg mx-auto lg:max-w-4xl">
+          {/* Header */}
+          <div className="mb-8 sm:mb-10">
             <Link
               href="/tool"
-              className="inline-flex items-center gap-2 text-toolnest-text/70 hover:text-toolnest-text mb-8 transition-colors"
+              className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground mb-6 transition-colors group text-sm sm:text-base"
             >
-              <ArrowLeft size={20} />
+              <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
               Back to Tools
             </Link>
-
-            {/* Header */}
-            <div className="text-center mb-12">
-              <h1 className="text-4xl md:text-5xl font-bold text-toolnest-text mb-4">
+            
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="text-center"
+            >
+              <h1 className="text-2xl sm:text-3xl font-bold text-foreground mb-3">
                 Word & Character Counter
               </h1>
-              <p className="text-xl text-toolnest-text/80 max-w-2xl mx-auto">
-                Count words, characters, sentences, and paragraphs in your text instantly
+              <p className="text-muted-foreground text-sm sm:text-base">
+                Count words, characters, sentences, and paragraphs instantly
               </p>
-            </div>
+            </motion.div>
+          </div>
 
-            {/* Tool Interface */}
-            <div className="bg-white rounded-3xl shadow-lg p-8">
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                {/* Input Section */}
-                <div className="lg:col-span-2">
-                  <label className="block text-toolnest-text font-medium mb-4">
-                    Enter your text:
-                  </label>
-                  <Textarea
-                    value={text}
-                    onChange={(e) => setText(e.target.value)}
-                    placeholder="Start typing or paste your text here..."
-                    className="min-h-[300px] resize-none text-base"
-                  />
-                  
-                  {/* Action Buttons */}
-                  <div className="flex gap-3 mt-4">
-                    <Button
-                      onClick={handleClear}
-                      variant="outline"
-                      className="flex items-center gap-2"
-                    >
-                      <Trash2 size={16} />
-                      Clear
-                    </Button>
-                    <Button
-                      onClick={handleCopy}
-                      variant="outline"
-                      className="flex items-center gap-2"
-                    >
-                      <Copy size={16} />
-                      Copy Stats
-                    </Button>
-                  </div>
-                </div>
-
-                {/* Stats Section */}
-                <div>
-                  <h3 className="text-toolnest-text font-medium mb-4">Statistics:</h3>
-                  <div className="space-y-4">
-                    <div className="bg-toolnest-bg/30 rounded-2xl p-4">
-                      <div className="text-2xl font-bold text-toolnest-text">{stats.characters}</div>
-                      <div className="text-sm text-toolnest-text/70">Characters</div>
-                    </div>
-                    <div className="bg-toolnest-bg/30 rounded-2xl p-4">
-                      <div className="text-2xl font-bold text-toolnest-text">{stats.charactersNoSpaces}</div>
-                      <div className="text-sm text-toolnest-text/70">Characters (no spaces)</div>
-                    </div>
-                    <div className="bg-toolnest-bg/30 rounded-2xl p-4">
-                      <div className="text-2xl font-bold text-toolnest-text">{stats.words}</div>
-                      <div className="text-sm text-toolnest-text/70">Words</div>
-                    </div>
-                    <div className="bg-toolnest-bg/30 rounded-2xl p-4">
-                      <div className="text-2xl font-bold text-toolnest-text">{stats.sentences}</div>
-                      <div className="text-sm text-toolnest-text/70">Sentences</div>
-                    </div>
-                    <div className="bg-toolnest-bg/30 rounded-2xl p-4">
-                      <div className="text-2xl font-bold text-toolnest-text">{stats.paragraphs}</div>
-                      <div className="text-sm text-toolnest-text/70">Paragraphs</div>
-                    </div>
-                  </div>
+          {/* Main Tool Card */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="bg-card rounded-xl sm:rounded-2xl border border-border p-4 sm:p-6 mb-6 shadow-sm"
+          >
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              {/* Text Input Section */}
+              <div className="lg:col-span-2 space-y-4">
+                <label className="block text-sm font-medium text-foreground">
+                  Enter your text:
+                </label>
+                <textarea
+                  value={text}
+                  onChange={(e) => setText(e.target.value)}
+                  placeholder="Start typing or paste your text here..."
+                  className="w-full min-h-[300px] p-4 bg-input border border-border rounded-lg sm:rounded-xl focus:outline-none focus:ring-1 sm:focus:ring-2 focus:ring-ring focus:ring-opacity-50 resize-none text-foreground placeholder-muted-foreground"
+                />
+                
+                {/* Action Buttons */}
+                <div className="flex gap-3">
+                  <button
+                    onClick={handleClear}
+                    className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-secondary text-secondary-foreground rounded-lg sm:rounded-xl hover:bg-secondary/80 transition-colors text-sm sm:text-base"
+                  >
+                    <RotateCcw size={16} className="sm:w-4 sm:h-4" />
+                    Clear All
+                  </button>
+                  <button
+                    onClick={handleCopy}
+                    className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-accent text-accent-foreground rounded-lg sm:rounded-xl hover:bg-accent/80 transition-colors text-sm sm:text-base"
+                  >
+                    <Copy size={16} className="sm:w-4 sm:h-4" />
+                    Copy Stats
+                  </button>
                 </div>
               </div>
 
-              {/* Instructions */}
-              <div className="mt-8 p-6 bg-toolnest-bg/20 rounded-2xl">
-                <h4 className="font-medium text-toolnest-text mb-2">How to use:</h4>
-                <ul className="text-toolnest-text/70 text-sm space-y-1">
-                  <li>• Type or paste your text in the input area</li>
-                  <li>• Statistics will update automatically as you type</li>
-                  <li>• Use "Clear" to reset the text and stats</li>
-                  <li>• Use "Copy Stats" to copy the statistics to clipboard</li>
-                </ul>
+              {/* Statistics Section */}
+              <div className="space-y-4">
+                <h3 className="text-sm font-medium text-foreground">Statistics</h3>
+                <div className="space-y-3">
+                  <div className="bg-secondary rounded-lg p-4">
+                    <div className="text-2xl font-bold text-foreground">{stats.characters}</div>
+                    <div className="text-xs text-muted-foreground">Characters</div>
+                  </div>
+                  <div className="bg-secondary rounded-lg p-4">
+                    <div className="text-2xl font-bold text-foreground">{stats.charactersNoSpaces}</div>
+                    <div className="text-xs text-muted-foreground">Characters (no spaces)</div>
+                  </div>
+                  <div className="bg-secondary rounded-lg p-4">
+                    <div className="text-2xl font-bold text-foreground">{stats.words}</div>
+                    <div className="text-xs text-muted-foreground">Words</div>
+                  </div>
+                  <div className="bg-secondary rounded-lg p-4">
+                    <div className="text-2xl font-bold text-foreground">{stats.sentences}</div>
+                    <div className="text-xs text-muted-foreground">Sentences</div>
+                  </div>
+                  <div className="bg-secondary rounded-lg p-4">
+                    <div className="text-2xl font-bold text-foreground">{stats.paragraphs}</div>
+                    <div className="text-xs text-muted-foreground">Paragraphs</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Quick Info */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="bg-card rounded-xl sm:rounded-2xl border border-border p-4 sm:p-6 shadow-sm"
+          >
+            <h3 className="text-base sm:text-lg font-semibold text-foreground mb-3">How to Use</h3>
+            <div className="space-y-2 text-muted-foreground text-sm">
+              <p>
+                This tool provides real-time text analysis with comprehensive statistics for your writing.
+              </p>
+              <div className="text-xs sm:text-sm space-y-1 pt-2">
+                <div className="flex items-center gap-2">
+                  <div className="w-1 h-1 bg-muted-foreground rounded-full"></div>
+                  <span>Type or paste your text in the input area</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-1 h-1 bg-muted-foreground rounded-full"></div>
+                  <span>Statistics update automatically as you type</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-1 h-1 bg-muted-foreground rounded-full"></div>
+                  <span>Use Clear All to reset the text and statistics</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-1 h-1 bg-muted-foreground rounded-full"></div>
+                  <span>Copy Stats to save your analysis results</span>
+                </div>
               </div>
             </div>
           </motion.div>
         </div>
-      </section>
+      </div>
     </div>
   );
 }

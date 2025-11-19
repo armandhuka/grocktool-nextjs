@@ -11,7 +11,7 @@ const ToolSuggestions = () => {
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, delay: 0.6 }}
       viewport={{ once: true }}
-      className="bg-gradient-to-br from-toolnest-text to-toolnest-text/90 rounded-2xl p-6 text-white"
+      className="rounded-2xl p-6 text-white"
     >
       <div className="flex items-center gap-3 mb-3">
         <div className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">

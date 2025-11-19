@@ -2,7 +2,6 @@ import type { Metadata } from 'next'
 import ContactHero from '../components/contact/ContactHero'
 import ContactForm from '../components/contact/ContactForm'
 import ContactInfo from '../components/contact/ContactInfo'
-import SocialLinks from '../components/contact/SocialLinks'
 import ToolSuggestions from '../components/contact/ToolSuggestions'
 
 export const metadata: Metadata = {
@@ -181,7 +180,6 @@ export default function ContactPage() {
               {/* Sidebar */}
               <div className="space-y-6 lg:space-y-8">
                 <ContactInfo />
-                <SocialLinks />
                 <ToolSuggestions />
               </div>
             </div>

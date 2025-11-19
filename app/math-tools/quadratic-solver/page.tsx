@@ -3,9 +3,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Calculator, RotateCcw, Copy, ArrowLeft } from 'lucide-react';
-import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/card';
-import { Input } from '../../components/ui/input';
-import { Button } from '../../components/ui/button';
 import Link from 'next/link';
 
 export default function QuadraticSolver() {
@@ -94,172 +91,306 @@ export default function QuadraticSolver() {
     setResult(null);
   };
 
-  const copyResult = () => {
+  const copyResult = async () => {
     if (result) {
       const text = `x₁ = ${result.roots.x1}, x₂ = ${result.roots.x2}`;
-      navigator.clipboard.writeText(text);
+      try {
+        await navigator.clipboard.writeText(text);
+      } catch (err) {
+        console.error('Failed to copy:', err);
+      }
     }
   };
 
   return (
-    <div className="min-h-screen bg-toolnest-bg">
-      <main className="pt-32 pb-16 px-4">
-        <div className="toolnest-container max-w-4xl mx-auto">
-          <div className="mb-6">
-            <Link 
+    <div className="min-h-screen bg-background font-inter">
+      <div className="pt-20 pb-8 px-4 sm:pt-24 sm:pb-12 sm:px-6 lg:pt-28">
+        <div className="max-w-lg mx-auto lg:max-w-2xl">
+          {/* Header */}
+          <div className="mb-8 sm:mb-10">
+            <Link
               href="/tool"
-              className="inline-flex items-center text-toolnest-text hover:text-toolnest-accent transition-colors"
+              className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground mb-6 transition-colors group text-sm sm:text-base"
             >
-              <ArrowLeft className="w-4 h-4 mr-2" />
+              <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
               Back to Tools
             </Link>
+            
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="text-center"
+            >
+              <h1 className="text-2xl sm:text-3xl font-bold text-foreground mb-3">
+                Quadratic Equation Solver
+              </h1>
+              <p className="text-muted-foreground text-sm sm:text-base">
+                Solve quadratic equations of the form ax² + bx + c = 0
+              </p>
+            </motion.div>
           </div>
-          
+
+          {/* Main Tool Card */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-12"
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="bg-card rounded-xl sm:rounded-2xl border border-border p-4 sm:p-6 mb-6 shadow-sm"
           >
-            <h1 className="text-4xl md:text-5xl font-bold text-toolnest-text mb-4">
-              Quadratic Equation Solver
-            </h1>
-            <p className="text-xl text-toolnest-text/80 max-w-2xl mx-auto">
-              Solve quadratic equations of the form ax² + bx + c = 0
-            </p>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
-            <Card className="bg-white shadow-lg">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-3">
-                  <Calculator className="w-6 h-6 text-toolnest-text" />
-                  Quadratic Equation Solver
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                <div className="text-center mb-4">
-                  <p className="text-lg text-toolnest-text">
-                    <span className="font-mono">ax² + bx + c = 0</span>
-                  </p>
+            <div className="space-y-6">
+              {/* Equation Display */}
+              <div className="text-center p-4 bg-muted rounded-lg">
+                <div className="text-lg font-mono text-foreground font-semibold">
+                  ax² + bx + c = 0
                 </div>
+                <div className="text-sm text-muted-foreground mt-1">
+                  Standard quadratic equation form
+                </div>
+              </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium text-toolnest-text mb-2">
-                      Coefficient a
+              {/* Input Fields */}
+              <div className="space-y-4">
+                <div className="flex items-center gap-2">
+                  <Calculator size={20} className="text-foreground" />
+                  <label className="block text-sm font-medium text-foreground">
+                    Enter Coefficients
+                  </label>
+                </div>
+                
+                <div className="grid grid-cols-1 gap-4">
+                  <div className="space-y-2">
+                    <label className="block text-sm font-medium text-foreground">
+                      Coefficient a (x² term)
                     </label>
-                    <Input
+                    <input
                       type="number"
                       value={a}
                       onChange={(e) => setA(e.target.value)}
                       placeholder="e.g., 1"
-                      className="text-lg text-center"
+                      className="w-full p-3 bg-input border border-border rounded-lg focus:outline-none focus:ring-1 focus:ring-ring text-foreground text-center text-lg"
                       step="any"
                     />
                   </div>
-                  <div>
-                    <label className="block text-sm font-medium text-toolnest-text mb-2">
-                      Coefficient b
+                  <div className="space-y-2">
+                    <label className="block text-sm font-medium text-foreground">
+                      Coefficient b (x term)
                     </label>
-                    <Input
+                    <input
                       type="number"
                       value={b}
                       onChange={(e) => setB(e.target.value)}
                       placeholder="e.g., -3"
-                      className="text-lg text-center"
+                      className="w-full p-3 bg-input border border-border rounded-lg focus:outline-none focus:ring-1 focus:ring-ring text-foreground text-center text-lg"
                       step="any"
                     />
                   </div>
-                  <div>
-                    <label className="block text-sm font-medium text-toolnest-text mb-2">
-                      Coefficient c
+                  <div className="space-y-2">
+                    <label className="block text-sm font-medium text-foreground">
+                      Coefficient c (constant)
                     </label>
-                    <Input
+                    <input
                       type="number"
                       value={c}
                       onChange={(e) => setC(e.target.value)}
                       placeholder="e.g., 2"
-                      className="text-lg text-center"
+                      className="w-full p-3 bg-input border border-border rounded-lg focus:outline-none focus:ring-1 focus:ring-ring text-foreground text-center text-lg"
                       step="any"
                     />
                   </div>
                 </div>
+              </div>
 
-                <div className="flex flex-wrap gap-3">
-                  <Button onClick={solveQuadratic} className="bg-toolnest-text hover:bg-toolnest-text/90">
-                    <Calculator className="w-4 h-4 mr-2" />
-                    Solve
-                  </Button>
-                  <Button onClick={reset} variant="outline">
-                    <RotateCcw className="w-4 h-4 mr-2" />
-                    Reset
-                  </Button>
-                  {result && (
-                    <Button onClick={copyResult} variant="outline">
-                      <Copy className="w-4 h-4 mr-2" />
-                      Copy Roots
-                    </Button>
-                  )}
+              {/* Action Buttons */}
+              <div className="flex flex-col sm:flex-row gap-3">
+                <button
+                  onClick={solveQuadratic}
+                  className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-accent text-accent-foreground rounded-lg sm:rounded-xl hover:bg-accent/80 transition-colors text-sm sm:text-base"
+                >
+                  <Calculator size={16} className="sm:w-4 sm:h-4" />
+                  Solve Equation
+                </button>
+                <button
+                  onClick={reset}
+                  className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-secondary text-secondary-foreground rounded-lg sm:rounded-xl hover:bg-secondary/80 transition-colors text-sm sm:text-base"
+                >
+                  <RotateCcw size={16} className="sm:w-4 sm:h-4" />
+                  Clear All
+                </button>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Results Card */}
+          {result && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="bg-card rounded-xl sm:rounded-2xl border border-border p-4 sm:p-6 mb-6 shadow-sm"
+            >
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-lg font-semibold text-foreground">Solution Results</h3>
+                <button
+                  onClick={copyResult}
+                  className="p-2 text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  <Copy size={16} className="sm:w-4 sm:h-4" />
+                </button>
+              </div>
+
+              <div className="space-y-6">
+                {/* Nature and Discriminant */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className={`p-4 rounded-lg border ${
+                    result.discriminant > 0 
+                      ? 'bg-green-500/10 border-green-500/20' 
+                      : result.discriminant === 0 
+                      ? 'bg-blue-500/10 border-blue-500/20'
+                      : 'bg-purple-500/10 border-purple-500/20'
+                  }`}>
+                    <div className="text-sm text-muted-foreground mb-1">Nature of Roots</div>
+                    <div className="font-semibold text-foreground">{result.nature}</div>
+                  </div>
+                  <div className="bg-secondary/20 p-4 rounded-lg border border-border">
+                    <div className="text-sm text-muted-foreground mb-1">Discriminant (Δ)</div>
+                    <div className="font-semibold text-foreground">{result.discriminant}</div>
+                  </div>
                 </div>
 
-                {result && (
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    className="space-y-4"
-                  >
-                    <div className="p-4 bg-toolnest-accent/20 rounded-lg border">
-                      <h3 className="text-lg font-semibold text-toolnest-text mb-2">Results:</h3>
-                      <div className="space-y-2">
-                        <p><strong>Nature:</strong> {result.nature}</p>
-                        <p><strong>Discriminant:</strong> {result.discriminant}</p>
-                        <p><strong>Root 1 (x₁):</strong> {result.roots.x1}</p>
-                        <p><strong>Root 2 (x₂):</strong> {result.roots.x2}</p>
-                      </div>
+                {/* Roots Display */}
+                <div className="space-y-4">
+                  <h4 className="text-sm font-medium text-foreground">Roots:</h4>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="bg-accent/10 p-4 rounded-lg border border-accent/20 text-center">
+                      <div className="text-sm text-muted-foreground mb-1">Root 1 (x₁)</div>
+                      <div className="text-lg font-bold text-foreground font-mono">{result.roots.x1}</div>
                     </div>
-
-                    <div className="p-4 bg-gray-50 rounded-lg border">
-                      <h3 className="text-lg font-semibold text-toolnest-text mb-2">Solution Steps:</h3>
-                      <div className="space-y-1">
-                        {result.steps.map((step, index) => (
-                          <p key={index} className="text-toolnest-text font-mono text-sm">
-                            {step}
-                          </p>
-                        ))}
-                      </div>
+                    <div className="bg-accent/10 p-4 rounded-lg border border-accent/20 text-center">
+                      <div className="text-sm text-muted-foreground mb-1">Root 2 (x₂)</div>
+                      <div className="text-lg font-bold text-foreground font-mono">{result.roots.x2}</div>
                     </div>
-                  </motion.div>
-                )}
-              </CardContent>
-            </Card>
-          </motion.div>
+                  </div>
+                </div>
 
+                {/* Steps Display */}
+                <div className="space-y-3">
+                  <h4 className="text-sm font-medium text-foreground">Solution Steps:</h4>
+                  <div className="bg-muted p-4 rounded-lg space-y-2">
+                    {result.steps.map((step, index) => (
+                      <div key={index} className="text-sm font-mono text-foreground">
+                        {step}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          )}
+
+          {/* Info Section */}
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="mt-8"
+            transition={{ duration: 0.5, delay: 0.3 }}
+            className="bg-card rounded-xl sm:rounded-2xl border border-border p-4 sm:p-6 shadow-sm"
           >
-            <Card className="bg-white shadow-lg">
-              <CardHeader>
-                <CardTitle>How This Tool Works</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-toolnest-text/80 leading-relaxed">
-                  This solver uses the quadratic formula to find roots: x = (-b ± √(b² - 4ac)) / 2a. 
-                  The discriminant (b² - 4ac) determines the nature of roots: positive gives two real roots, 
-                  zero gives one repeated root, and negative gives complex roots.
-                </p>
-              </CardContent>
-            </Card>
+            <h3 className="text-base sm:text-lg font-semibold text-foreground mb-3">How Quadratic Equations Work</h3>
+            <div className="space-y-2 text-muted-foreground text-sm">
+              <p>
+                Quadratic equations are second-degree polynomial equations that can be solved using 
+                the quadratic formula, which provides the roots based on the discriminant value.
+              </p>
+              <div className="text-xs sm:text-sm space-y-1 pt-2">
+                <div className="flex items-center gap-2">
+                  <div className="w-1 h-1 bg-muted-foreground rounded-full"></div>
+                  <span>Enter coefficients a, b, and c from your equation</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-1 h-1 bg-muted-foreground rounded-full"></div>
+                  <span>Click "Solve Equation" to calculate the roots</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-1 h-1 bg-muted-foreground rounded-full"></div>
+                  <span>View the nature of roots based on discriminant</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-1 h-1 bg-muted-foreground rounded-full"></div>
+                  <span>See step-by-step solution process</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-1 h-1 bg-muted-foreground rounded-full"></div>
+                  <span>Copy roots for use in other applications</span>
+                </div>
+              </div>
+              <div className="text-xs sm:text-sm space-y-2 pt-3">
+                <div className="font-medium text-foreground">Quadratic Formula:</div>
+                <div className="flex items-center gap-2">
+                  <div className="w-1 h-1 bg-accent rounded-full"></div>
+                  <span className="font-mono"><strong>x = [-b ± √(b² - 4ac)] / 2a</strong></span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-1 h-1 bg-accent rounded-full"></div>
+                  <span><strong>Discriminant (Δ) = b² - 4ac</strong></span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-1 h-1 bg-accent rounded-full"></div>
+                  <span>Determines the nature of the roots</span>
+                </div>
+              </div>
+              <div className="text-xs sm:text-sm space-y-2 pt-3">
+                <div className="font-medium text-foreground">Roots Classification:</div>
+                <div className="flex items-center gap-2">
+                  <div className="w-1 h-1 bg-green-500 rounded-full"></div>
+                  <span><strong>Δ &gt; 0:</strong> Two distinct real roots</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-1 h-1 bg-blue-500 rounded-full"></div>
+                  <span><strong>Δ = 0:</strong> One repeated real root</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-1 h-1 bg-purple-500 rounded-full"></div>
+                  <span><strong>Δ &lt; 0:</strong> Two complex conjugate roots</span>
+                </div>
+              </div>
+              <div className="text-xs sm:text-sm space-y-2 pt-3">
+                <div className="font-medium text-foreground">Common Examples:</div>
+                <div className="flex items-center gap-2">
+                  <div className="w-1 h-1 bg-green-500 rounded-full"></div>
+                  <span><strong>x² - 5x + 6 = 0:</strong> Roots at x=2, x=3 (Δ=1)</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-1 h-1 bg-blue-500 rounded-full"></div>
+                  <span><strong>x² - 4x + 4 = 0:</strong> Root at x=2 (Δ=0)</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-1 h-1 bg-purple-500 rounded-full"></div>
+                  <span><strong>x² + 2x + 5 = 0:</strong> Complex roots (Δ=-16)</span>
+                </div>
+              </div>
+              <div className="text-xs sm:text-sm space-y-2 pt-3">
+                <div className="font-medium text-foreground">Real-World Applications:</div>
+                <div className="flex items-center gap-2">
+                  <div className="w-1 h-1 bg-accent rounded-full"></div>
+                  <span><strong>Physics:</strong> Projectile motion and trajectories</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-1 h-1 bg-accent rounded-full"></div>
+                  <span><strong>Engineering:</strong> Structural analysis and optimization</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-1 h-1 bg-accent rounded-full"></div>
+                  <span><strong>Economics:</strong> Profit maximization and break-even analysis</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-1 h-1 bg-accent rounded-full"></div>
+                  <span><strong>Computer Graphics:</strong> Curve fitting and 3D modeling</span>
+                </div>
+              </div>
+            </div>
           </motion.div>
         </div>
-      </main>
+      </div>
     </div>
   );
 }

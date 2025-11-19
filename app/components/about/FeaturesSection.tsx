@@ -7,7 +7,7 @@ import FeatureCard from '../shared/FeatureCard';
 
 const FeaturesSection = () => {
   return (
-    <section className="py-16 px-6 bg-toolnest-bg">
+    <section className="py-16 px-6 bg-[hsl(var(--toolnest-bg))]">
       <div className="max-w-6xl mx-auto">
         <motion.div
           className="text-center mb-12"
@@ -16,10 +16,10 @@ const FeaturesSection = () => {
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-toolnest-text mb-4">
+          <h2 className="text-4xl md:text-5xl font-bold text-[hsl(var(--toolnest-text))] mb-4">
             Why Choose GrockTool?
           </h2>
-          <p className="text-toolnest-text/80 text-lg">
+          <p className="text-[hsl(var(--toolnest-text))/80] text-lg">
             Four key reasons that make us different
           </p>
         </motion.div>

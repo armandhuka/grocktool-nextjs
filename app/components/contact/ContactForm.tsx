@@ -100,7 +100,7 @@ const ContactForm = () => {
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
       viewport={{ once: true }}
-      className="bg-white rounded-2xl p-6 md:p-8 shadow-lg border border-gray-100"
+      className="rounded-2xl p-6 md:p-8 shadow-lg border"
     >
       {isSubmitted && (
         <SuccessMessage 
@@ -130,7 +130,6 @@ const ContactForm = () => {
               type="text"
               value={formData.name}
               onChange={handleInputChange}
-              className={`h-12 ${errors.name ? 'border-red-500 focus:border-red-500' : 'border-gray-200 focus:border-toolnest-text'}`}
               placeholder="Enter your full name"
               disabled={isLoading}
             />
@@ -147,7 +146,6 @@ const ContactForm = () => {
               type="email"
               value={formData.email}
               onChange={handleInputChange}
-              className={`h-12 ${errors.email ? 'border-red-500 focus:border-red-500' : 'border-gray-200 focus:border-toolnest-text'}`}
               placeholder="your.email@example.com"
               disabled={isLoading}
             />
@@ -165,8 +163,6 @@ const ContactForm = () => {
             type="text"
             value={formData.subject}
             onChange={handleInputChange}
-            className="h-12 border-gray-200 focus:border-toolnest-text"
-            placeholder="What's this about?"
             disabled={isLoading}
           />
         </div>
@@ -180,7 +176,6 @@ const ContactForm = () => {
             name="message"
             value={formData.message}
             onChange={handleInputChange}
-            className={`min-h-[140px] resize-none ${errors.message ? 'border-red-500 focus:border-red-500' : 'border-gray-200 focus:border-toolnest-text'}`}
             placeholder="Tell us more about your inquiry, suggestion, or question..."
             disabled={isLoading}
           />
@@ -190,7 +185,7 @@ const ContactForm = () => {
         <motion.div whileHover={{ scale: isLoading ? 1 : 1.02 }} whileTap={{ scale: isLoading ? 1 : 0.98 }}>
           <Button 
             type="submit" 
-            className="w-full h-12 bg-toolnest-text hover:bg-toolnest-text/90 text-white text-base font-semibold transition-all duration-200"
+            className="w-full h-12 border borde-[#d8a188] bg-[#262626] hover:bg-[#d8a188] text-white text-base font-semibold transition-all duration-200"
             disabled={isLoading}
           >
             {isLoading ? (

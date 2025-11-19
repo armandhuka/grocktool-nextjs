@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 
 const IntroductionSection = () => {
   return (
-    <section className="py-16 px-6 bg-toolnest-accent">
+    <section>
       <div className="max-w-4xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -14,8 +14,8 @@ const IntroductionSection = () => {
           viewport={{ once: true }}
           className="text-center"
         >
-          <div className="bg-white p-8 md:p-12 rounded-3xl shadow-lg">
-            <div className="space-y-6 text-lg text-toolnest-text/80 leading-relaxed">
+          <div className="bg-[hsl(var(--toolnest-bg))] p-8 md:p-12 rounded-3xl shadow-lg">
+            <div className="space-y-6 text-lg text-[hsl(var(--toolnest-text))/80] leading-relaxed">
               <p>
                 GrockTool is your go-to platform to access 150+ handy tools for daily development, 
                 productivity, calculations, and more — all in one place. From text manipulation 

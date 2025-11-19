@@ -20,17 +20,17 @@ const Footer = () => {
   ];
 
   const toolCategories = [
-    { name: "Text Tools", path: "/tools/text" },
-    { name: "Image Tools", path: "/tools/image" },
-    { name: "Developer Tools", path: "/tools/developer" },
-    { name: "Calculator Tools", path: "/tools/calculator" },
+    { name: "Text Tools", path: "/tool?category=Text%20Tools" },
+    { name: "Qr Code", path: "/tool?category=QR%20%26%20Barcode%20Tools" },
+    { name: "Number Tools", path: "/tool?category=Number%20Tools" },
+    { name: "Math Tools", path: "/tool?category=Math%20Tools" },
   ];
 
   const popularTools = [
     { name: "Length Converter", path: "/tools/length-converter" },
-    { name: "Color Picker", path: "/tools/color-picker" },
-    { name: "JSON Formatter", path: "/tools/json-formatter" },
-    { name: "PDF Converter", path: "/tools/pdf-converter" },
+    { name: "Qr Code ", path: "/QR-Barcode/qr-code-generator" },
+    { name: "BMI Calculator", path: "/health-tools/bmi-calculator" },
+    { name: "Word Counter", path: "/text-tools/word-counter" },
   ];
 
   const handleFeedbackSubmit = async (e: React.FormEvent) => {
@@ -70,7 +70,7 @@ const Footer = () => {
   };
 
   return (
-    <footer className="relative bg-gray-900 text-white border-t border-gray-700">
+    <footer className="relative text-white border-t border-gray-700">
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-[0.02]">
         <div className="absolute inset-0" style={{
@@ -95,7 +95,7 @@ const Footer = () => {
                   className="flex items-center gap-3"
                   whileHover={{ scale: 1.02 }}
                 >
-                  <div className="w-12 h-12 bg-gradient-to-br from-gray-800 to-gray-900 border border-gray-700 rounded-xl flex items-center justify-center shadow-lg">
+                  <div className="w-12 h-12 bg-gradient-to-br border border-gray-700 rounded-xl flex items-center justify-center shadow-lg">
                     <span className="text-white font-bold text-xl">G</span>
                   </div>
                   <div>
@@ -107,27 +107,6 @@ const Footer = () => {
                   Your ultimate platform for 150+ essential tools. Fast, free, and always accessible 
                   for developers, designers, and creators worldwide.
                 </p>
-              </div>
-
-              {/* Social Links */}
-              <div className="flex items-center space-x-3 pt-2">
-                {[
-                  { icon: Twitter, href: "#", label: "Twitter" },
-                  { icon: Linkedin, href: "#", label: "LinkedIn" },
-                  { icon: Github, href: "#", label: "GitHub" },
-                  { icon: MessageCircle, href: "#", label: "Chat" }
-                ].map((social, index) => (
-                  <motion.a
-                    key={index}
-                    href={social.href}
-                    className="text-gray-400 hover:text-white transition-all duration-300 p-2 rounded-lg bg-gray-800 hover:bg-gray-700 border border-gray-700 hover:border-gray-600"
-                    whileHover={{ scale: 1.1, y: -2 }}
-                    whileTap={{ scale: 0.95 }}
-                    aria-label={social.label}
-                  >
-                    <social.icon size={18} />
-                  </motion.a>
-                ))}
               </div>
             </motion.div>
 
@@ -215,7 +194,7 @@ const Footer = () => {
 
           {/* Feedback Section */}
           <motion.div 
-            className="border-t border-gray-800 pt-8 mb-8"
+            className="border-t  pt-8 mb-8"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
@@ -223,7 +202,7 @@ const Footer = () => {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
               <div className="space-y-4">
                 <div className="flex items-center gap-3">
-                  <div className="p-2 bg-gray-800 rounded-lg border border-gray-700">
+                  <div className="p-2  rounded-lg border border-gray-700">
                     <Mail size={18} className="text-gray-300" />
                   </div>
                   <div>
@@ -254,10 +233,10 @@ const Footer = () => {
                       initial={{ opacity: 0, scale: 0.9 }}
                       animate={{ opacity: 1, scale: 1 }}
                       exit={{ opacity: 0, scale: 0.9 }}
-                      className="bg-gray-800 border border-gray-700 rounded-xl p-6 text-center"
+                      className="bg-gray-800 border  rounded-xl p-6 text-center"
                     >
-                      <div className="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center mx-auto mb-3">
-                        <svg className="w-5 h-5 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <div className="w-10 h-10  rounded-full flex items-center justify-center mx-auto mb-3">
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                         </svg>
                       </div>
@@ -284,7 +263,7 @@ const Footer = () => {
                           placeholder="Your name"
                           value={name}
                           onChange={(e) => setName(e.target.value)}
-                          className="col-span-2 sm:col-span-1 px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 text-white placeholder-gray-500 focus:outline-none focus:border-gray-500 focus:ring-1 focus:ring-gray-500 transition-all duration-300 text-sm"
+                          className="col-span-2 sm:col-span-1 px-3 py-2 rounded-lg bg-[#262626]  border border-[#d8a188] text-white placeholder-gray-500 focus:outline-none focus:border-[#262626] focus:ring-1 focus:ring-gray-500 transition-all duration-300 text-sm"
                           required
                           disabled={isSubmitting}
                         />
@@ -294,7 +273,7 @@ const Footer = () => {
                           placeholder="Your email"
                           value={email}
                           onChange={(e) => setEmail(e.target.value)}
-                          className="col-span-2 sm:col-span-1 px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 text-white placeholder-gray-500 focus:outline-none focus:border-gray-500 focus:ring-1 focus:ring-gray-500 transition-all duration-300 text-sm"
+                          className="col-span-2 sm:col-span-1 px-3 py-2 rounded-lg bg-[#262626] border border-[#d8a188] text-white placeholder-gray-500 focus:outline-none focus:border-gray-500 focus:ring-1 focus:ring-gray-500 transition-all duration-300 text-sm"
                           required
                           disabled={isSubmitting}
                         />
@@ -305,14 +284,14 @@ const Footer = () => {
                         value={message}
                         onChange={(e) => setMessage(e.target.value)}
                         rows={3}
-                        className="w-full px-3 py-2 rounded-lg bg-gray-800 border border-gray-700 text-white placeholder-gray-500 focus:outline-none focus:border-gray-500 focus:ring-1 focus:ring-gray-500 transition-all duration-300 resize-none text-sm"
+                        className="w-full px-3 py-2 rounded-lg bg-[#262626] border border-[#d8a188] text-white placeholder-gray-500 focus:outline-none focus:border-gray-500 focus:ring-1 focus:ring-gray-500 transition-all duration-300 resize-none text-sm"
                         required
                         disabled={isSubmitting}
                       />
                       <motion.button
                         type="submit"
                         disabled={isSubmitting}
-                        className="w-full bg-gray-800 hover:bg-gray-700 border border-gray-700 hover:border-gray-600 text-white py-2 px-4 rounded-lg transition-all duration-300 flex items-center justify-center gap-2 font-medium text-sm disabled:opacity-50 disabled:cursor-not-allowed group"
+                        className="w-full bg-[#d8a188] hover:bg-gray-700 border border-gray-700 hover:border-gray-600 text-white py-2 px-4 rounded-lg transition-all duration-300 flex items-center justify-center gap-2 font-medium text-sm disabled:opacity-50 disabled:cursor-not-allowed group"
                         whileHover={{ scale: isSubmitting ? 1 : 1.02 }}
                         whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
                       >

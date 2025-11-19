@@ -20,10 +20,14 @@ const CTASection = () => {
             Want to explore all 150+ tools?
           </h2>
           <motion.button
-            className="bg-toolnest-text text-white px-10 py-4 rounded-full text-lg font-semibold transition-all duration-300 hover:scale-105 hover:shadow-xl"
+            onClick={navigateToTools}
+            className="px-10 py-4 rounded-full text-lg font-medium transition-all duration-300"
+            style={{
+              backgroundColor: `hsl(var(--toolnest-accent))`,
+              color: `hsl(var(--toolnest-bg))`
+            }}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            onClick={navigateToTools}
           >
             Explore All Tools
           </motion.button>

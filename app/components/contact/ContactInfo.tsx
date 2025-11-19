@@ -40,7 +40,7 @@ const ContactInfo = () => {
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, delay: 0.2 }}
       viewport={{ once: true }}
-      className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100"
+      className=" rounded-2xl p-6 shadow-lg "
     >
       <h3 className="text-xl font-bold text-toolnest-text mb-6">Contact Information</h3>
 
@@ -48,7 +48,7 @@ const ContactInfo = () => {
         {contactItems.map((item, index) => {
           const IconComponent = item.icon;
           return (
-            <div key={index} className="flex items-start space-x-3 p-3 rounded-lg hover:bg-gray-50 transition-colors">
+            <div key={index} className="flex items-start space-x-3 p-3 rounded-lg transition-colors">
               <div className="flex-shrink-0 w-10 h-10 bg-toolnest-text/10 rounded-lg flex items-center justify-center">
                 <IconComponent className="w-5 h-5 text-toolnest-text" />
               </div>

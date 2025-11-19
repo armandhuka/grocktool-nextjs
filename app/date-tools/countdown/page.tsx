@@ -4,10 +4,6 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Clock, Copy, RotateCcw, ArrowLeft, Play, Pause } from 'lucide-react';
 import Link from 'next/link';
-import Header from '../../components/Header';
-import { Button } from '../../components/ui/button';
-import { Input } from '../../components/ui/input';
-import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/card';
 
 export default function Countdown() {
   const [targetDate, setTargetDate] = useState('');
@@ -82,163 +78,248 @@ export default function Countdown() {
     setTimeLeft(null);
   };
 
-  const copyResult = () => {
+  const copyResult = async () => {
     if (timeLeft && eventName) {
       const text = `${eventName}: ${timeLeft.days} days, ${timeLeft.hours} hours, ${timeLeft.minutes} minutes, ${timeLeft.seconds} seconds remaining`;
-      navigator.clipboard.writeText(text);
+      try {
+        await navigator.clipboard.writeText(text);
+      } catch (err) {
+        console.error('Failed to copy:', err);
+      }
     }
   };
 
   return (
-    <div className="min-h-screen bg-toolnest-bg font-inter">
-      <Header />
-
-      <div className="pt-32 pb-20 px-4">
-        <div className="toolnest-container max-w-4xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            <div className="text-center mb-12">
-              <h1 className="text-4xl md:text-5xl font-bold text-toolnest-text mb-4">
+    <div className="min-h-screen bg-background font-inter">
+      <div className="pt-20 pb-8 px-4 sm:pt-24 sm:pb-12 sm:px-6 lg:pt-28">
+        <div className="max-w-lg mx-auto lg:max-w-2xl">
+          {/* Header */}
+          <div className="mb-8 sm:mb-10">
+            <Link
+              href="/tool"
+              className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground mb-6 transition-colors group text-sm sm:text-base"
+            >
+              <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
+              Back to Tools
+            </Link>
+            
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="text-center"
+            >
+              <h1 className="text-2xl sm:text-3xl font-bold text-foreground mb-3">
                 Countdown Timer
               </h1>
-              <p className="text-xl text-toolnest-text/80">
+              <p className="text-muted-foreground text-sm sm:text-base">
                 Create a countdown to any future date and event
               </p>
-            </div>
+            </motion.div>
+          </div>
 
-            <Card className="mb-8">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Clock className="w-5 h-5" />
-                  Set Countdown Details
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                <div>
-                  <label className="block text-sm font-medium text-toolnest-text mb-2">
+          {/* Main Tool Card */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="bg-card rounded-xl sm:rounded-2xl border border-border p-4 sm:p-6 mb-6 shadow-sm"
+          >
+            <div className="space-y-6">
+              {/* Event Name */}
+              <div className="space-y-4">
+                <div className="flex items-center gap-2">
+                  <Clock size={20} className="text-foreground" />
+                  <label className="block text-sm font-medium text-foreground">
+                    Set Countdown Details
+                  </label>
+                </div>
+                
+                <div className="space-y-2">
+                  <label className="block text-sm text-muted-foreground">
                     Event Name (Optional)
                   </label>
-                  <Input
+                  <input
                     type="text"
                     placeholder="New Year, Wedding, Birthday..."
                     value={eventName}
                     onChange={(e) => setEventName(e.target.value)}
-                    className="text-lg"
+                    className="w-full p-3 bg-input border border-border rounded-lg focus:outline-none focus:ring-1 focus:ring-ring text-foreground placeholder-muted-foreground"
                   />
                 </div>
+              </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium text-toolnest-text mb-2">
-                      Target Date
-                    </label>
-                    <Input
-                      type="date"
-                      value={targetDate}
-                      onChange={(e) => setTargetDate(e.target.value)}
-                      className="text-lg"
-                    />
+              {/* Date and Time Inputs */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <label className="block text-sm text-muted-foreground">
+                    Target Date
+                  </label>
+                  <input
+                    type="date"
+                    value={targetDate}
+                    onChange={(e) => setTargetDate(e.target.value)}
+                    className="w-full p-3 bg-input border border-border rounded-lg focus:outline-none focus:ring-1 focus:ring-ring text-foreground"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label className="block text-sm text-muted-foreground">
+                    Target Time
+                  </label>
+                  <input
+                    type="time"
+                    value={targetTime}
+                    onChange={(e) => setTargetTime(e.target.value)}
+                    className="w-full p-3 bg-input border border-border rounded-lg focus:outline-none focus:ring-1 focus:ring-ring text-foreground"
+                  />
+                </div>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex flex-col sm:flex-row gap-3">
+                {!isActive ? (
+                  <button
+                    onClick={startCountdown}
+                    disabled={!targetDate || !targetTime}
+                    className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-accent text-accent-foreground rounded-lg sm:rounded-xl hover:bg-accent/80 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base"
+                  >
+                    <Play size={16} className="sm:w-4 sm:h-4" />
+                    Start Countdown
+                  </button>
+                ) : (
+                  <button
+                    onClick={pauseCountdown}
+                    className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-secondary text-secondary-foreground rounded-lg sm:rounded-xl hover:bg-secondary/80 transition-colors text-sm sm:text-base"
+                  >
+                    <Pause size={16} className="sm:w-4 sm:h-4" />
+                    Pause Countdown
+                  </button>
+                )}
+                <button
+                  onClick={clearFields}
+                  className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-secondary text-secondary-foreground rounded-lg sm:rounded-xl hover:bg-secondary/80 transition-colors text-sm sm:text-base"
+                >
+                  <RotateCcw size={16} className="sm:w-4 sm:h-4" />
+                  Clear All
+                </button>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Countdown Display */}
+          {timeLeft && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="bg-card rounded-xl sm:rounded-2xl border border-border p-4 sm:p-6 mb-6 shadow-sm"
+            >
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-lg font-semibold text-foreground">
+                  {eventName || 'Countdown Timer'}
+                </h3>
+                <button
+                  onClick={copyResult}
+                  className="p-2 text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  <Copy size={16} className="sm:w-4 sm:h-4" />
+                </button>
+              </div>
+
+              {timeLeft.total > 0 ? (
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                  <div className="bg-accent/10 p-4 rounded-lg border border-accent/20 text-center">
+                    <div className="text-2xl font-bold text-foreground">{timeLeft.days}</div>
+                    <div className="text-xs text-muted-foreground mt-1">Days</div>
                   </div>
-                  <div>
-                    <label className="block text-sm font-medium text-toolnest-text mb-2">
-                      Target Time
-                    </label>
-                    <Input
-                      type="time"
-                      value={targetTime}
-                      onChange={(e) => setTargetTime(e.target.value)}
-                      className="text-lg"
-                    />
+                  <div className="bg-accent/10 p-4 rounded-lg border border-accent/20 text-center">
+                    <div className="text-2xl font-bold text-foreground">{timeLeft.hours}</div>
+                    <div className="text-xs text-muted-foreground mt-1">Hours</div>
+                  </div>
+                  <div className="bg-accent/10 p-4 rounded-lg border border-accent/20 text-center">
+                    <div className="text-2xl font-bold text-foreground">{timeLeft.minutes}</div>
+                    <div className="text-xs text-muted-foreground mt-1">Minutes</div>
+                  </div>
+                  <div className="bg-accent/10 p-4 rounded-lg border border-accent/20 text-center">
+                    <div className="text-2xl font-bold text-foreground">{timeLeft.seconds}</div>
+                    <div className="text-xs text-muted-foreground mt-1">Seconds</div>
                   </div>
                 </div>
-
-                <div className="flex gap-3">
-                  {!isActive ? (
-                    <Button onClick={startCountdown} className="flex-1">
-                      <Play className="w-4 h-4 mr-2" />
-                      Start Countdown
-                    </Button>
-                  ) : (
-                    <Button onClick={pauseCountdown} className="flex-1" variant="outline">
-                      <Pause className="w-4 h-4 mr-2" />
-                      Pause
-                    </Button>
-                  )}
-                  <Button onClick={clearFields} variant="outline">
-                    <RotateCcw className="w-4 h-4" />
-                  </Button>
+              ) : (
+                <div className="text-center py-6">
+                  <div className="text-3xl mb-3">🎉</div>
+                  <h3 className="text-xl font-bold text-foreground mb-2">
+                    Time's Up!
+                  </h3>
+                  <p className="text-muted-foreground text-sm">
+                    {eventName ? `${eventName} has arrived!` : 'The countdown has finished!'}
+                  </p>
                 </div>
-              </CardContent>
-            </Card>
+              )}
+            </motion.div>
+          )}
 
-            {timeLeft && (
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4 }}
-              >
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="flex items-center justify-between">
-                      {eventName || 'Countdown Timer'}
-                      <Button onClick={copyResult} variant="outline" size="sm">
-                        <Copy className="w-4 h-4" />
-                      </Button>
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    {timeLeft.total > 0 ? (
-                      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
-                        <div className="bg-toolnest-bg/50 p-6 rounded-lg">
-                          <div className="text-3xl font-bold text-toolnest-text">{timeLeft.days}</div>
-                          <div className="text-sm text-toolnest-text/70">Days</div>
-                        </div>
-                        <div className="bg-toolnest-bg/50 p-6 rounded-lg">
-                          <div className="text-3xl font-bold text-toolnest-text">{timeLeft.hours}</div>
-                          <div className="text-sm text-toolnest-text/70">Hours</div>
-                        </div>
-                        <div className="bg-toolnest-bg/50 p-6 rounded-lg">
-                          <div className="text-3xl font-bold text-toolnest-text">{timeLeft.minutes}</div>
-                          <div className="text-sm text-toolnest-text/70">Minutes</div>
-                        </div>
-                        <div className="bg-toolnest-bg/50 p-6 rounded-lg">
-                          <div className="text-3xl font-bold text-toolnest-text">{timeLeft.seconds}</div>
-                          <div className="text-sm text-toolnest-text/70">Seconds</div>
-                        </div>
-                      </div>
-                    ) : (
-                      <div className="text-center py-8">
-                        <h3 className="text-2xl font-bold text-toolnest-text mb-2">
-                          🎉 Time's Up!
-                        </h3>
-                        <p className="text-toolnest-text/70">
-                          {eventName ? `${eventName} has arrived!` : 'The countdown has finished!'}
-                        </p>
-                      </div>
-                    )}
-                  </CardContent>
-                </Card>
-              </motion.div>
-            )}
-
-            <Card className="mt-8">
-              <CardContent className="pt-6">
-                <h3 className="text-lg font-semibold mb-2">How this tool works</h3>
-                <p className="text-toolnest-text/70">
-                  Set a target date and time for any upcoming event. The countdown timer will show you exactly 
-                  how much time remains in days, hours, minutes, and seconds, updating in real-time.
-                </p>
-              </CardContent>
-            </Card>
-
-            <div className="text-center mt-8">
-              <Link href="/tools" className="inline-flex items-center gap-2 text-toolnest-text hover:text-toolnest-text/80 transition-colors">
-                <ArrowLeft className="w-4 h-4" />
-                Back to Tools
-              </Link>
+          {/* Info Section */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+            className="bg-card rounded-xl sm:rounded-2xl border border-border p-4 sm:p-6 shadow-sm"
+          >
+            <h3 className="text-base sm:text-lg font-semibold text-foreground mb-3">How to Use</h3>
+            <div className="space-y-2 text-muted-foreground text-sm">
+              <p>
+                Create real-time countdowns for any upcoming event with live updates every second.
+              </p>
+              <div className="text-xs sm:text-sm space-y-1 pt-2">
+                <div className="flex items-center gap-2">
+                  <div className="w-1 h-1 bg-muted-foreground rounded-full"></div>
+                  <span>Enter an event name to personalize your countdown (optional)</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-1 h-1 bg-muted-foreground rounded-full"></div>
+                  <span>Select the target date and time for your countdown</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-1 h-1 bg-muted-foreground rounded-full"></div>
+                  <span>Click "Start Countdown" to begin the real-time timer</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-1 h-1 bg-muted-foreground rounded-full"></div>
+                  <span>Use "Pause Countdown" to temporarily stop the timer</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-1 h-1 bg-muted-foreground rounded-full"></div>
+                  <span>Watch the countdown update every second</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-1 h-1 bg-muted-foreground rounded-full"></div>
+                  <span>Copy the current countdown status for sharing</span>
+                </div>
+              </div>
+              <div className="text-xs sm:text-sm space-y-2 pt-3">
+                <div className="font-medium text-foreground">Perfect For:</div>
+                <div className="flex items-center gap-2">
+                  <div className="w-1 h-1 bg-accent rounded-full"></div>
+                  <span>New Year's Eve celebrations</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-1 h-1 bg-accent rounded-full"></div>
+                  <span>Birthday and anniversary countdowns</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-1 h-1 bg-accent rounded-full"></div>
+                  <span>Project deadlines and launch dates</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-1 h-1 bg-accent rounded-full"></div>
+                  <span>Vacation and trip planning</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-1 h-1 bg-accent rounded-full"></div>
+                  <span>Event and meeting reminders</span>
+                </div>
+              </div>
             </div>
           </motion.div>
         </div>

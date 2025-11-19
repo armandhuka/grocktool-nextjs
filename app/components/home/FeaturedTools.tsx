@@ -1,95 +1,124 @@
 'use client';
 
-import React from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { toolsData } from '../../data/toolsData';
 import { useToolNavigation } from '../../hooks/useToolNavigation';
-import { getCategoryIcon, getCategoryColor } from '../../utils/categoryUtils';
-import { useScroll } from '../../hooks/useScroll';
+import { getCategoryIcon } from '../../utils/categoryUtils';
 
-const FeaturedTools = () => {
+export default function FeaturedTools() {
   const { handleToolClick } = useToolNavigation();
-  const { scrollContainer } = useScroll();
+  const containerRef = useRef(null);
+  const [activeIndex, setActiveIndex] = useState(0);
 
-  const featuredTools = toolsData
-    .filter(tool => tool.status === 'available')
+  const featured = toolsData
+    .filter(t => t.status === 'available')
     .slice(0, 8);
 
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+
+    const update = () => {
+      const cardWidth = 280 + 28;
+      setActiveIndex(Math.round(el.scrollLeft / cardWidth));
+    };
+
+    el.addEventListener('scroll', update);
+    return () => el.removeEventListener('scroll', update);
+  }, []);
+
+  const scrollToIndex = (i) => {
+    const el = containerRef.current;
+    if (!el) return;
+    const cardWidth = 280 + 28;
+    el.scrollTo({ left: i * cardWidth, behavior: 'smooth' });
+  };
+
   return (
-    <section className="py-20 px-6">
+    <section className="py-24 px-6">
       <div className="max-w-7xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
+
+        {/* Title */}
+        <motion.h2
+          initial={{ opacity: 0, y: 18 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.5 }}
           viewport={{ once: true }}
-          className="text-center mb-12"
+          className="text-4xl md:text-5xl font-semibold text-toolnest-text text-center mb-6"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-toolnest-text mb-4">
-            Featured Tools
-          </h2>
-          <p className="text-toolnest-text/80 text-lg">
-            Popular tools used by thousands of users
-          </p>
-        </motion.div>
+          Featured Tools
+        </motion.h2>
 
+        <p className="text-toolnest-text/65 text-center mb-16 text-lg">
+          Handpicked AI tools, selected for performance and reliability
+        </p>
+
+        {/* Fade gradients */}
         <div className="relative">
-          <button
-            onClick={() => scrollContainer('featured-tools-container', 'left')}
-            className="absolute left-0 top-1/2 transform -translate-y-1/2 z-10 bg-white shadow-lg rounded-full p-3 hover:bg-gray-50 transition-colors"
-          >
-            <ChevronLeft size={20} className="text-toolnest-text" />
-          </button>
-          <button
-            onClick={() => scrollContainer('featured-tools-container', 'right')}
-            className="absolute right-0 top-1/2 transform -translate-y-1/2 z-10 bg-white shadow-lg rounded-full p-3 hover:bg-gray-50 transition-colors"
-          >
-            <ChevronRight size={20} className="text-toolnest-text" />
-          </button>
+          <div className="pointer-events-none absolute left-0 top-0 h-full w-24 bg-gradient-to-r from-[#262626] to-transparent"></div>
+          <div className="pointer-events-none absolute right-0 top-0 h-full w-24 bg-gradient-to-l from-[#262626] to-transparent"></div>
 
+          {/* Scroll container */}
           <div
-            id="featured-tools-container"
-            className="flex gap-6 overflow-x-auto scrollbar-hide pb-4 px-12"
-            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+            ref={containerRef}
+            className="flex gap-7 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-8"
+            style={{ scrollBehavior: 'smooth' }}
           >
-            {featuredTools.map((tool, index) => (
+            {featured.map((tool, i) => (
               <motion.div
                 key={tool.id}
-                className="flex-shrink-0 w-80 bg-toolnest-accent p-6 rounded-2xl hover:bg-white transition-all duration-300 cursor-pointer hover:shadow-lg group"
-                initial={{ opacity: 0, x: 50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.45, delay: i * 0.08 }}
                 viewport={{ once: true }}
-                whileHover={{ y: -5 }}
+                whileHover={{ scale: 1.05  }}
                 onClick={() => handleToolClick(tool)}
+                className="snap-start mt-5 min-w-[280px] backdrop-blur-xl bg-[#ffffff0a] border border-[#ffffff20] rounded-2xl p-7 cursor-pointer 
+                transition-all shadow-[0_0_0_0_rgba(0,0,0,0)]
+                hover:shadow-[0_12px_30px_rgba(0,0,0,0.35)]
+                hover:border-[#B2C9AD60]"
               >
-                <div className="flex items-center mb-4">
-                  <div className={`w-12 h-12 rounded-2xl flex items-center justify-center text-2xl ${getCategoryColor(tool.category)} shadow-sm mr-4`}>
+                {/* Icon + Title */}
+                <div className="flex items-center mb-5">
+                  <div className="w-12 h-12 rounded-xl flex items-center justify-center bg-toolnest-accent text-[#262626] text-xl font-semibold shadow-sm">
                     {getCategoryIcon(tool.category)}
                   </div>
-                  <div className="flex-1">
-                    <h3 className="text-lg font-semibold text-toolnest-text mb-1">
-                      {tool.name}
-                    </h3>
-                    <span className={`px-3 py-1 rounded-full text-xs font-medium ${getCategoryColor(tool.category)}`}>
-                      {tool.category}
-                    </span>
-                  </div>
+                  <h3 className="text-toolnest-text text-xl font-medium ml-4">
+                    {tool.name}
+                  </h3>
                 </div>
-                <p className="text-toolnest-text/70 text-sm mb-4 line-clamp-2">
+
+                {/* Description */}
+                <p className="text-toolnest-text/70 text-sm mb-7 line-clamp-3">
                   {tool.description}
                 </p>
-                <button className="w-full bg-toolnest-text text-white py-2 px-4 rounded-xl font-medium group-hover:bg-toolnest-text/90 transition-colors">
+
+                {/* Button */}
+                <button className="w-full bg-toolnest-accent text-[#262626] font-medium py-2.5 rounded-xl transition-all hover:opacity-85">
                   Try Now
                 </button>
               </motion.div>
             ))}
           </div>
+
+          {/* Scroll Dots */}
+          <div className="flex justify-center mt-8 space-x-3">
+            {featured.map((_, i) => (
+              <div
+                key={i}
+                onClick={() => scrollToIndex(i)}
+                className={`w-3.5 h-3.5 rounded-full cursor-pointer transition-all ${
+                  i === activeIndex
+                    ? 'bg-toolnest-accent shadow-[0_0_8px_rgba(178,201,173,0.8)] scale-110'
+                    : 'bg-toolnest-text/30'
+                }`}
+              />
+            ))}
+          </div>
+
         </div>
       </div>
     </section>
   );
-};
-
-export default FeaturedTools;
+}

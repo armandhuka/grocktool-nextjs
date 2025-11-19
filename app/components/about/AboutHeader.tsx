@@ -27,7 +27,10 @@ const AboutHeader = () => {
   };
 
   return (
-    <section className="pt-32 pb-16 px-6 bg-toolnest-bg">
+    <section 
+      className="pt-32 pb-16 px-6"
+      style={{ backgroundColor: 'hsl(var(--toolnest-bg))' }}
+    >
       <div className="max-w-4xl mx-auto text-center">
         <motion.div
           variants={containerVariants}
@@ -35,15 +38,17 @@ const AboutHeader = () => {
           animate="visible"
         >
           <motion.h1 
-            className="text-5xl md:text-6xl font-bold text-toolnest-text mb-6"
+            className="text-5xl md:text-6xl font-bold mb-6"
             variants={itemVariants}
+            style={{ color: 'hsl(var(--toolnest-text))' }}
           >
             About GrockTool
           </motion.h1>
           
           <motion.p 
-            className="text-xl md:text-2xl text-toolnest-text/80 max-w-2xl mx-auto"
+            className="text-xl md:text-2xl max-w-2xl mx-auto"
             variants={itemVariants}
+            style={{ color: 'hsl(var(--toolnest-text))' }}
           >
             Your all-in-one smart tool directory.
           </motion.p>

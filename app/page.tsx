@@ -1,8 +1,9 @@
 import type { Metadata } from 'next'
 import HeroSection from './components/home/HeroSection'
 import FeaturedTools from './components/home/FeaturedTools'
-import CategoriesSection from './components/home/CategoriesSection'
-import UpcomingTools from './components/home/UpcomingTools'
+// import CategoriesSection from './components/home/CategoriesSection'
+// import UpcomingTools from './components/home/UpcomingTools'
+import CategoriesAndUpcoming from './components/home/CategoriesAndUpcoming'
 import TrustedSection from './components/home/TrustedSection'
 import HowItWorks from './components/home/HowItWorks'
 import NewsletterSection from './components/home/NewsletterSection'
@@ -156,8 +157,9 @@ export default function HomePage() {
         <EmailModal />
         <HeroSection />
         <FeaturedTools />
-        <CategoriesSection />
-        <UpcomingTools />
+        {/* <CategoriesSection /> */}
+        {/* <UpcomingTools /> */}
+        {/* <CategoriesAndUpcoming /> */}
         <TrustedSection />
         <HowItWorks />
         <NewsletterSection />

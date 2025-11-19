@@ -1,29 +1,16 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Copy, Trash2, Filter } from 'lucide-react';
-import { useRouter } from 'next/navigation';
-import Header from '../../components/Header';
-import Footer from '../../components/Footer';
-import { Button } from '../../components/ui/button';
-import { Textarea } from '../../components/ui/textarea';
+import { ArrowLeft, Copy, RotateCcw, Filter } from 'lucide-react';
+import Link from 'next/link';
 
 const RemoveSpecialChars = () => {
-  const router = useRouter();
   const [inputText, setInputText] = useState('');
   const [outputText, setOutputText] = useState('');
   const [keepSpaces, setKeepSpaces] = useState(true);
   const [keepNumbers, setKeepNumbers] = useState(true);
   const [keepNewlines, setKeepNewlines] = useState(true);
   const [customChars, setCustomChars] = useState('');
-
-  useEffect(() => {
-    document.title = 'Remove Special Characters - GrockTool';
-    const metaDescription = document.querySelector('meta[name="description"]');
-    if (metaDescription) {
-      metaDescription.setAttribute('content', 'Remove or filter special characters from text. Keep only letters, numbers, and spaces with customizable options.');
-    }
-  }, []);
 
   const removeSpecialChars = () => {
     if (!inputText) {
@@ -66,6 +53,7 @@ const RemoveSpecialChars = () => {
   const handleClear = () => {
     setInputText('');
     setOutputText('');
+    setCustomChars('');
   };
 
   const handleCopy = async () => {
@@ -97,166 +85,229 @@ const RemoveSpecialChars = () => {
   const preview = getPreview();
 
   return (
-    <div className="min-h-screen bg-toolnest-bg font-inter">
-      <Header />
-
-      <section className="pt-32 pb-20 px-4">
-        <div className="toolnest-container">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="max-w-6xl mx-auto"
-          >
-            <button
-              onClick={() => router.push('/tool')}
-              className="inline-flex items-center gap-2 text-toolnest-text/70 hover:text-toolnest-text mb-8 transition-colors"
+    <div className="min-h-screen bg-background font-inter">
+      <div className="pt-20 pb-8 px-4 sm:pt-24 sm:pb-12 sm:px-6 lg:pt-28">
+        <div className="max-w-lg mx-auto lg:max-w-4xl">
+          {/* Header */}
+          <div className="mb-8 sm:mb-10">
+            <Link
+              href="/tool"
+              className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground mb-6 transition-colors group text-sm sm:text-base"
             >
-              <ArrowLeft size={20} />
+              <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
               Back to Tools
-            </button>
-
-            <div className="text-center mb-12">
-              <h1 className="text-4xl md:text-5xl font-bold text-toolnest-text mb-4">
+            </Link>
+            
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="text-center"
+            >
+              <h1 className="text-2xl sm:text-3xl font-bold text-foreground mb-3">
                 Remove Special Characters
               </h1>
-              <p className="text-xl text-toolnest-text/80 max-w-2xl mx-auto">
+              <p className="text-muted-foreground text-sm sm:text-base">
                 Remove or filter special characters and keep only the content you need
               </p>
-            </div>
+            </motion.div>
+          </div>
 
-            <div className="bg-white rounded-3xl shadow-lg p-8">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <div>
-                  <label className="block text-toolnest-text font-medium mb-4">
-                    Input Text:
-                  </label>
-                  <Textarea
-                    value={inputText}
-                    onChange={(e) => setInputText(e.target.value)}
-                    placeholder="Enter text with special characters..."
-                    className="min-h-[300px] resize-none"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-toolnest-text font-medium mb-4">
-                    Cleaned Text:
-                  </label>
-                  <Textarea
-                    value={outputText}
-                    readOnly
-                    placeholder="Text without special characters will appear here..."
-                    className="min-h-[300px] resize-none bg-gray-50"
-                  />
-                </div>
+          {/* Main Tool Card */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="bg-card rounded-xl sm:rounded-2xl border border-border p-4 sm:p-6 mb-6 shadow-sm"
+          >
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {/* Input Section */}
+              <div className="space-y-4">
+                <label className="block text-sm font-medium text-foreground">
+                  Input Text
+                </label>
+                <textarea
+                  value={inputText}
+                  onChange={(e) => setInputText(e.target.value)}
+                  placeholder="Enter text with special characters..."
+                  className="w-full min-h-[250px] p-4 bg-input border border-border rounded-lg sm:rounded-xl focus:outline-none focus:ring-1 sm:focus:ring-2 focus:ring-ring focus:ring-opacity-50 resize-none text-foreground placeholder-muted-foreground"
+                />
               </div>
 
-              <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div>
-                  <h4 className="font-medium text-toolnest-text mb-4">Keep these characters:</h4>
+              {/* Output Section */}
+              <div className="space-y-4">
+                <label className="block text-sm font-medium text-foreground">
+                  Cleaned Text
+                </label>
+                <textarea
+                  value={outputText}
+                  readOnly
+                  placeholder="Text without special characters will appear here..."
+                  className="w-full min-h-[250px] p-4 bg-muted border border-border rounded-lg sm:rounded-xl focus:outline-none resize-none text-foreground placeholder-muted-foreground"
+                />
+              </div>
+            </div>
+
+            {/* Options Section */}
+            <div className="mt-6 pt-6 border-t border-border">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* Keep Options */}
+                <div className="space-y-4">
+                  <h4 className="text-sm font-medium text-foreground">Keep these characters</h4>
                   <div className="space-y-3">
-                    <label className="flex items-center gap-2">
+                    <label className="flex items-center gap-2 text-sm text-foreground">
                       <input
                         type="checkbox"
                         checked={keepSpaces}
                         onChange={(e) => setKeepSpaces(e.target.checked)}
-                        className="rounded"
+                        className="w-4 h-4 text-accent bg-input border-border rounded focus:ring-accent focus:ring-2"
                       />
-                      <span className="text-toolnest-text/70 text-sm">Spaces</span>
+                      Spaces
                     </label>
-                    <label className="flex items-center gap-2">
+                    <label className="flex items-center gap-2 text-sm text-foreground">
                       <input
                         type="checkbox"
                         checked={keepNumbers}
                         onChange={(e) => setKeepNumbers(e.target.checked)}
-                        className="rounded"
+                        className="w-4 h-4 text-accent bg-input border-border rounded focus:ring-accent focus:ring-2"
                       />
-                      <span className="text-toolnest-text/70 text-sm">Numbers (0-9)</span>
+                      Numbers (0-9)
                     </label>
-                    <label className="flex items-center gap-2">
+                    <label className="flex items-center gap-2 text-sm text-foreground">
                       <input
                         type="checkbox"
                         checked={keepNewlines}
                         onChange={(e) => setKeepNewlines(e.target.checked)}
-                        className="rounded"
+                        className="w-4 h-4 text-accent bg-input border-border rounded focus:ring-accent focus:ring-2"
                       />
-                      <span className="text-toolnest-text/70 text-sm">New lines</span>
+                      New lines
                     </label>
                   </div>
                 </div>
 
-                <div>
-                  <h4 className="font-medium text-toolnest-text mb-4">Custom characters to keep:</h4>
+                {/* Custom Characters */}
+                <div className="space-y-4">
+                  <h4 className="text-sm font-medium text-foreground">Custom characters to keep</h4>
                   <input
                     type="text"
                     value={customChars}
                     onChange={(e) => setCustomChars(e.target.value)}
                     placeholder="e.g., !@#$%"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-toolnest-text/20"
+                    className="w-full p-3 bg-input border border-border rounded-lg focus:outline-none focus:ring-1 focus:ring-ring text-foreground placeholder-muted-foreground"
                   />
-                  <p className="text-toolnest-text/50 text-xs mt-1">
+                  <p className="text-muted-foreground text-xs">
                     Enter specific characters you want to preserve
                   </p>
                 </div>
               </div>
+            </div>
 
-              {inputText && (
-                <div className="mt-6 p-4 bg-toolnest-bg/20 rounded-2xl">
-                  <h4 className="font-medium text-toolnest-text mb-2">Statistics:</h4>
-                  <div className="grid grid-cols-3 gap-4 text-center">
-                    <div>
-                      <div className="text-2xl font-bold text-toolnest-text">{preview.originalLength}</div>
-                      <div className="text-sm text-toolnest-text/70">Original chars</div>
-                    </div>
-                    <div>
-                      <div className="text-2xl font-bold text-toolnest-text">{preview.cleanedLength}</div>
-                      <div className="text-sm text-toolnest-text/70">Cleaned chars</div>
-                    </div>
-                    <div>
-                      <div className="text-2xl font-bold text-red-600">{preview.removedCount}</div>
-                      <div className="text-sm text-toolnest-text/70">Removed chars</div>
-                    </div>
+            {/* Statistics */}
+            {inputText && (
+              <div className="mt-6 p-4 bg-secondary rounded-lg">
+                <h4 className="text-sm font-medium text-foreground mb-3">Statistics</h4>
+                <div className="grid grid-cols-3 gap-4 text-center">
+                  <div>
+                    <div className="text-xl font-bold text-foreground">{preview.originalLength}</div>
+                    <div className="text-xs text-muted-foreground">Original chars</div>
+                  </div>
+                  <div>
+                    <div className="text-xl font-bold text-foreground">{preview.cleanedLength}</div>
+                    <div className="text-xs text-muted-foreground">Cleaned chars</div>
+                  </div>
+                  <div>
+                    <div className="text-xl font-bold text-red-500">{preview.removedCount}</div>
+                    <div className="text-xs text-muted-foreground">Removed chars</div>
                   </div>
                 </div>
-              )}
-
-              <div className="flex gap-3 mt-6">
-                <Button
-                  onClick={handleClear}
-                  variant="outline"
-                  className="flex items-center gap-2"
-                >
-                  <Trash2 size={16} />
-                  Clear
-                </Button>
-                <Button
-                  onClick={handleCopy}
-                  variant="outline"
-                  className="flex items-center gap-2"
-                  disabled={!outputText}
-                >
-                  <Copy size={16} />
-                  Copy Result
-                </Button>
               </div>
+            )}
 
-              <div className="mt-8 p-6 bg-toolnest-bg/20 rounded-2xl">
-                <h4 className="font-medium text-toolnest-text mb-2">How to use:</h4>
-                <ul className="text-toolnest-text/70 text-sm space-y-1">
-                  <li>• Paste your text containing special characters</li>
-                  <li>• Choose which types of characters to keep</li>
-                  <li>• Add specific characters to preserve in the custom field</li>
-                  <li>• The cleaned text updates automatically</li>
-                  <li>• Copy the result when you're satisfied</li>
-                </ul>
+            {/* Action Buttons */}
+            <div className="flex flex-col sm:flex-row gap-3 mt-6">
+              <button
+                onClick={handleClear}
+                className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-secondary text-secondary-foreground rounded-lg sm:rounded-xl hover:bg-secondary/80 transition-colors text-sm sm:text-base"
+              >
+                <RotateCcw size={16} className="sm:w-4 sm:h-4" />
+                Clear All
+              </button>
+              <button
+                onClick={handleCopy}
+                disabled={!outputText}
+                className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-secondary text-secondary-foreground rounded-lg sm:rounded-xl hover:bg-secondary/80 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base"
+              >
+                <Copy size={16} className="sm:w-4 sm:h-4" />
+                Copy Result
+              </button>
+            </div>
+          </motion.div>
+
+          {/* Info Section */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="bg-card rounded-xl sm:rounded-2xl border border-border p-4 sm:p-6 shadow-sm"
+          >
+            <h3 className="text-base sm:text-lg font-semibold text-foreground mb-3">How to Use</h3>
+            <div className="space-y-2 text-muted-foreground text-sm">
+              <p>
+                Clean your text by removing special characters while preserving the content you need.
+              </p>
+              <div className="text-xs sm:text-sm space-y-1 pt-2">
+                <div className="flex items-center gap-2">
+                  <div className="w-1 h-1 bg-muted-foreground rounded-full"></div>
+                  <span>Paste your text containing special characters in the input area</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-1 h-1 bg-muted-foreground rounded-full"></div>
+                  <span>Choose which types of characters to keep using the checkboxes</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-1 h-1 bg-muted-foreground rounded-full"></div>
+                  <span>Add specific characters to preserve in the custom field</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-1 h-1 bg-muted-foreground rounded-full"></div>
+                  <span>The cleaned text updates automatically as you type or change options</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-1 h-1 bg-muted-foreground rounded-full"></div>
+                  <span>Monitor the statistics to see how many characters were removed</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-1 h-1 bg-muted-foreground rounded-full"></div>
+                  <span>Copy the result when you're satisfied with the cleaning</span>
+                </div>
+              </div>
+              <div className="text-xs sm:text-sm space-y-2 pt-3">
+                <div className="font-medium text-foreground">Character Types:</div>
+                <div className="flex items-center gap-2">
+                  <div className="w-1 h-1 bg-accent rounded-full"></div>
+                  <span><strong>Letters:</strong> Always kept (a-z, A-Z)</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-1 h-1 bg-accent rounded-full"></div>
+                  <span><strong>Spaces:</strong> Optional - preserve or remove spaces</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-1 h-1 bg-accent rounded-full"></div>
+                  <span><strong>Numbers:</strong> Optional - preserve or remove digits (0-9)</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-1 h-1 bg-accent rounded-full"></div>
+                  <span><strong>New lines:</strong> Optional - preserve or remove line breaks</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-1 h-1 bg-accent rounded-full"></div>
+                  <span><strong>Custom:</strong> Add specific characters you want to keep</span>
+                </div>
               </div>
             </div>
           </motion.div>
         </div>
-      </section>
-
-      <Footer />
+      </div>
     </div>
   );
 };

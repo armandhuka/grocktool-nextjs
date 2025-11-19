@@ -26,7 +26,7 @@ export const getToolRoute = (toolName: string, category: string) => {
       'Age Calculator': '/date-tools/age-calculator',
       'Date Difference': '/date-tools/date-difference',
       'Countdown Timer': '/date-tools/countdown',
-      'Work Days Calculator': '/date-tools/workdays',
+      'Work Days Calculator': '/date-tools/WorkDays',
       'Next Birthday Countdown': '/date-tools/birthday-countdown',
       'Leap Year Checker': '/date-tools/leap-year',
       'Current Week Number Checker': '/date-tools/week-number'
