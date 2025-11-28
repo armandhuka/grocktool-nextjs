@@ -563,4 +563,65 @@ export const toolsData: Tool[] = [
     icon: "📊",
     status: "available"
   },
+  // pdf tool
+  {
+    id: 55,
+    name: "PDF Merge",
+    description: "Merge multiple PDF files into one",
+    category: "PDF Tools",
+    path: "/PDF-Tools/pdf-merge",
+    iconColor: "#EF4444",
+    icon: "📄",
+    status: "available"
+  },
+  {
+    id: 56,
+    name: "PDF Split",
+    description: "Split PDF into multiple files or extract pages",
+    category: "PDF Tools",
+    path: "/PDF-Tools/pdf-split",
+    iconColor: "#F59E0B",
+    icon: "✂️",
+    status: "available"
+  },
+  {
+    id: 57,
+    name: "PDF Compressor",
+    description: "Reduce PDF file size without losing quality",
+    category: "PDF Tools",
+    path: "/PDF-Tools/pdf-compressor",
+    iconColor: "#10B981",
+    icon: "🗜️",
+    status: "available"
+  },
+  {
+    id: 60,
+    name: "PDF Rotate",
+    description: "Rotate PDF pages to correct orientation",
+    category: "PDF Tools",
+    path: "/PDF-Tools/pdf-rotate",
+    iconColor: "#06B6D4",
+    icon: "🔄",
+    status: "available"
+  },
+  {
+    id: 61,
+    name: "PDF Watermark",
+    description: "Add text or image watermarks to PDF documents",
+    category: "PDF Tools",
+    path: "/PDF-Tools/pdf-watermark",
+    iconColor: "#EC4899",
+    icon: "💧",
+    status: "available"
+  },
+  {
+    id: 62,
+    name: "PDF Page Reorder",
+    description: "Rearrange PDF pages in desired order",
+    category: "PDF Tools",
+    path: "/PDF-Tools/pdf-reorder",
+    iconColor: "#84CC16",
+    icon: "📑",
+    status: "available"
+  }
 ];

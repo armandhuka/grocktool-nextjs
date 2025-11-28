@@ -5,5 +5,6 @@ export const categoriesData = [
   { name: 'Unit Converter Tools', icon: '📏', description: '12+ tools', color: 'bg-blue-100 text-blue-600' },
   { name: 'Math Tools', icon: '🧮', description: '18+ tools', color: 'bg-red-100 text-red-600' },
   { name: 'Health Tools', icon: '💪', description: '8+ tools', color: 'bg-cyan-100 text-cyan-600' },
-  { name: 'Qr code', icon: '⚡', description: 'Smart utilities', color: 'bg-indigo-100 text-indigo-600' }
+  { name: 'Qr code', icon: '⚡', description: 'Smart utilities', color: 'bg-indigo-100 text-indigo-600' },
+  { name: 'PDF Tools', icon: '📄', description: '9+ tools', color: 'bg-red-100 text-red-600' },
 ];

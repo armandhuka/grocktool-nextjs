@@ -7,6 +7,7 @@ export const getCategoryIcon = (category: string) => {
     'Math Tools': '🧮',
     'Health Tools': '💪',
     'QR & Barcode Tools': '📱',
+    'PDF Tools': '📄',
   };
   return icons[category] || '🔧';
 };

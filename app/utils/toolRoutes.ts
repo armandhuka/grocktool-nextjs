@@ -72,7 +72,16 @@ export const getToolRoute = (toolName: string, category: string) => {
       'vCard QR Generator': '/QR-Barcode/vcard-qr-generator',
       'WiFi QR Code Generator': '/QR-Barcode/wifi-qr-generator',
       'Event QR Generator': '/QR-Barcode/event-qr-generator',
-    }
+    },
+    'PDF Tools': {
+      'PDF Merge': '/PDF-Tools/pdf-merge',
+      'PDF Split': '/PDF-Tools/pdf-split',
+      'PDF Compressor': '/PDF-Tools/pdf-compressor',
+      'PDF Password': '/PDF-Tools/pdf-password',
+      'PDF Rotate': '/PDF-Tools/pdf-rotate',
+      'PDF Watermark': '/PDF-Tools/pdf-watermark',
+      'PDF Page Reorder': '/PDF-Tools/pdf-reorder',
+    },
   };
   return routes[category]?.[toolName] || null;
 };
