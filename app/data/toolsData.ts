@@ -287,46 +287,46 @@ export const toolsData: Tool[] = [
     icon: "💰",
     status: "available"
   },
-  // {
-  //   id: 28,
-  //   name: "EMI Calculator",
-  //   description: "Calculate loan EMI and payment schedules",
-  //   category: "Number Tools",
-  //   path: "/tools/emi-calculator",
-  //   iconColor: "#F59E0B",
-  //   icon: "🏦",
-  //   status: "available"
-  // },
-  // {
-  //   id: 29,
-  //   name: "Roman Number Converter",
-  //   description: "Convert between Arabic and Roman numerals",
-  //   category: "Number Tools",
-  //   path: "/tools/roman-number-converter",
-  //   iconColor: "#F59E0B",
-  //   icon: "🏛️",
-  //   status: "available"
-  // },
-  // {
-  //   id: 30,
-  //   name: "LCM/HCF Calculator",
-  //   description: "Find Least Common Multiple and Highest Common Factor",
-  //   category: "Number Tools",
-  //   path: "/tools/lcm-hcf-calculator",
-  //   iconColor: "#F59E0B",
-  //   icon: "🔢",
-  //   status: "available"
-  // },
-  // {
-  //   id: 31,
-  //   name: "Number to Words",
-  //   description: "Convert numbers to written words",
-  //   category: "Number Tools",
-  //   path: "/tools/number-to-words",
-  //   iconColor: "#F59E0B",
-  //   icon: "📖",
-  //   status: "available"
-  // },
+  {
+    id: 28,
+    name: "EMI Calculator",
+    description: "Calculate loan EMI and payment schedules",
+    category: "Number Tools",
+    path: "/tools/emi-calculator",
+    iconColor: "#F59E0B",
+    icon: "🏦",
+    status: "available"
+  },
+  {
+    id: 29,
+    name: "Roman Number Converter",
+    description: "Convert between Arabic and Roman numerals",
+    category: "Number Tools",
+    path: "/tools/roman-number-converter",
+    iconColor: "#F59E0B",
+    icon: "🏛️",
+    status: "available"
+  },
+  {
+    id: 30,
+    name: "LCM/HCF Calculator",
+    description: "Find Least Common Multiple and Highest Common Factor",
+    category: "Number Tools",
+    path: "/tools/lcm-hcf-calculator",
+    iconColor: "#F59E0B",
+    icon: "🔢",
+    status: "available"
+  },
+  {
+    id: 31,
+    name: "Number to Words",
+    description: "Convert numbers to written words",
+    category: "Number Tools",
+    path: "/tools/number-to-words",
+    iconColor: "#F59E0B",
+    icon: "📖",
+    status: "available"
+  },
   {
     id: 32,
     name: "Scientific Notation",
@@ -337,26 +337,26 @@ export const toolsData: Tool[] = [
     icon: "🔬",
     status: "available"
   },
-  // {
-  //   id: 33,
-  //   name: "Base Converter",
-  //   description: "Convert between binary, decimal, octal, and hexadecimal",
-  //   category: "Number Tools",
-  //   path: "/tools/base-converter",
-  //   iconColor: "#F59E0B",
-  //   icon: "💻",
-  //   status: "available"
-  // },
-  // {
-  //   id: 34,
-  //   name: "Number Rounding",
-  //   description: "Round numbers to specified decimal places",
-  //   category: "Number Tools",
-  //   path: "/tools/number-rounding",
-  //   iconColor: "#F59E0B",
-  //   icon: "🎯",
-  //   status: "available"
-  // },
+  {
+    id: 33,
+    name: "Base Converter",
+    description: "Convert between binary, decimal, octal, and hexadecimal",
+    category: "Number Tools",
+    path: "/tools/base-converter",
+    iconColor: "#F59E0B",
+    icon: "💻",
+    status: "available"
+  },
+  {
+    id: 34,
+    name: "Number Rounding",
+    description: "Round numbers to specified decimal places",
+    category: "Number Tools",
+    path: "/tools/number-rounding",
+    iconColor: "#F59E0B",
+    icon: "🎯",
+    status: "available"
+  },
   {
     id: 35,
     name: "Random Generator",

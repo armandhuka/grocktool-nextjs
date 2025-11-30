@@ -34,9 +34,9 @@ export const getToolRoute = (toolName: string, category: string) => {
     'Number Tools': {
       'Percentage Calculator': '/number-tools/percentage-calculator',
       'Interest Calculator': '/number-tools/simple-interest',
-      'EMI Calculator': '/number-tools/emi',
+      'EMI Calculator': '/number-tools/EMI-Calculator',
       'Roman Number Converter': '/number-tools/roman-converter',
-      'LCM/HCF Calculator': '/number-tools/lcm-hcf',
+      'LCM/HCF Calculator': '/number-tools/lcm-hcf-calculator',
       'Number to Words': '/number-tools/number-to-words',
       'Scientific Notation': '/number-tools/scientific-notation',
       'Base Converter': '/number-tools/number-base-converter',

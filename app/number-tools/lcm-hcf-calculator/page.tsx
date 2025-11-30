@@ -2,13 +2,10 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Calculator, RotateCcw, Copy } from 'lucide-react';
-import { useRouter } from 'next/navigation';
-import Header from '../../components/Header';
-import Footer from '../../components/Footer';
+import { Calculator, RotateCcw, Copy, ArrowLeft } from 'lucide-react';
+import Link from 'next/link';
 
 const LCMHCFCalculator = () => {
-  const router = useRouter();
   const [numbers, setNumbers] = useState('');
   const [result, setResult] = useState<{ lcm: number; hcf: number; factors: number[][] } | null>(null);
 
@@ -69,154 +66,206 @@ const LCMHCFCalculator = () => {
     setResult(null);
   };
 
-  const copyResult = () => {
+  const copyResult = async () => {
     if (result) {
       const text = `Numbers: ${numbers}\nLCM: ${result.lcm}\nHCF: ${result.hcf}`;
-      navigator.clipboard.writeText(text);
-      alert('Result copied to clipboard!');
+      try {
+        await navigator.clipboard.writeText(text);
+      } catch (err) {
+        console.error('Failed to copy:', err);
+      }
     }
   };
 
   return (
-    <div className="min-h-screen bg-toolnest-bg">
-      <Header />
+    <div className="min-h-screen bg-background font-inter">
+      <div className="pt-20 pb-8 px-4 sm:pt-24 sm:pb-12 sm:px-6 lg:pt-28">
+        <div className="max-w-lg mx-auto lg:max-w-2xl">
+          {/* Header */}
+          <div className="mb-8 sm:mb-10">
+            <Link
+              href="/tool"
+              className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground mb-6 transition-colors group text-sm sm:text-base"
+            >
+              <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
+              Back to Tools
+            </Link>
+            
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="text-center"
+            >
+              <h1 className="text-2xl sm:text-3xl font-bold text-foreground mb-3">
+                LCM & HCF Calculator
+              </h1>
+              <p className="text-muted-foreground text-sm sm:text-base">
+                Calculate Least Common Multiple and Highest Common Factor
+              </p>
+            </motion.div>
+          </div>
 
-      <main className="pt-32 pb-16 px-4">
-        <div className="toolnest-container max-w-4xl mx-auto">
+          {/* Input Card */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-12"
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="bg-card rounded-xl sm:rounded-2xl border border-border p-4 sm:p-6 mb-6 shadow-sm"
           >
-            <h1 className="text-4xl md:text-5xl font-bold text-toolnest-text mb-4">
-              LCM & HCF Calculator
-            </h1>
-            <p className="text-xl text-toolnest-text/80 max-w-2xl mx-auto">
-              Calculate Least Common Multiple and Highest Common Factor
-            </p>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
-            <div className="bg-white shadow-lg rounded-lg">
-              <div className="p-6 border-b">
-                <h2 className="text-xl font-semibold text-toolnest-text flex items-center gap-3">
-                  <Calculator className="w-6 h-6 text-toolnest-text" />
-                  LCM & HCF Calculator
-                </h2>
+            <div className="space-y-6">
+              <div className="flex items-center gap-2 mb-4">
+                <Calculator size={20} className="text-foreground" />
+                <label className="block text-sm font-medium text-foreground">
+                  Enter Numbers
+                </label>
               </div>
-              <div className="p-6 space-y-6">
-                <div>
-                  <label className="block text-sm font-medium text-toolnest-text mb-2">
-                    Enter Numbers (comma-separated)
-                  </label>
+
+              <div className="space-y-4">
+                <div className="space-y-2">
                   <input
                     type="text"
                     value={numbers}
                     onChange={(e) => setNumbers(e.target.value)}
                     placeholder="e.g., 12, 18, 24"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg text-lg text-center focus:outline-none focus:ring-2 focus:ring-toolnest-text focus:border-transparent"
+                    className="w-full p-3 bg-input border border-border rounded-lg focus:outline-none focus:ring-1 focus:ring-ring text-foreground placeholder:text-muted-foreground"
                   />
-                  <p className="text-sm text-toolnest-text/60 mt-1">Enter at least 2 positive numbers separated by commas</p>
+                  <p className="text-xs text-muted-foreground">
+                    Enter at least 2 positive numbers separated by commas
+                  </p>
                 </div>
 
-                <div className="flex flex-wrap gap-3">
-                  <button onClick={calculate} className="bg-toolnest-text hover:bg-toolnest-text/90 text-white px-6 py-3 rounded-lg font-medium flex items-center gap-2 transition-colors">
-                    <Calculator className="w-4 h-4" />
+                {/* Action Buttons */}
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <button
+                    onClick={calculate}
+                    disabled={!numbers}
+                    className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-accent text-accent-foreground rounded-lg sm:rounded-xl hover:bg-accent/80 transition-colors text-sm sm:text-base disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    <Calculator size={16} className="sm:w-4 sm:h-4" />
                     Calculate
                   </button>
-                  <button onClick={reset} className="border border-gray-300 hover:bg-gray-50 text-gray-700 px-6 py-3 rounded-lg font-medium flex items-center gap-2 transition-colors">
-                    <RotateCcw className="w-4 h-4" />
-                    Reset
+                  <button
+                    onClick={reset}
+                    className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-secondary text-secondary-foreground rounded-lg sm:rounded-xl hover:bg-secondary/80 transition-colors text-sm sm:text-base"
+                  >
+                    <RotateCcw size={16} className="sm:w-4 sm:h-4" />
+                    Clear All
                   </button>
-                  {result && (
-                    <button onClick={copyResult} className="border border-gray-300 hover:bg-gray-50 text-gray-700 px-6 py-3 rounded-lg font-medium flex items-center gap-2 transition-colors">
-                      <Copy className="w-4 h-4" />
-                      Copy Result
-                    </button>
-                  )}
+                </div>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Results Card */}
+          {result && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="bg-card rounded-xl sm:rounded-2xl border border-border p-4 sm:p-6 mb-6 shadow-sm"
+            >
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-lg font-semibold text-foreground">Calculation Results</h3>
+                <button
+                  onClick={copyResult}
+                  className="p-2 text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  <Copy size={16} className="sm:w-4 sm:h-4" />
+                </button>
+              </div>
+
+              <div className="space-y-4">
+                {/* LCM & HCF Results */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="bg-accent/10 p-4 rounded-lg border border-accent/20">
+                    <div className="text-sm font-medium text-foreground mb-2">LCM</div>
+                    <div className="text-2xl font-bold text-foreground">
+                      {result.lcm.toLocaleString()}
+                    </div>
+                    <div className="text-xs text-muted-foreground mt-1">Least Common Multiple</div>
+                  </div>
+                  <div className="bg-accent/10 p-4 rounded-lg border border-accent/20">
+                    <div className="text-sm font-medium text-foreground mb-2">HCF</div>
+                    <div className="text-2xl font-bold text-foreground">
+                      {result.hcf.toLocaleString()}
+                    </div>
+                    <div className="text-xs text-muted-foreground mt-1">Highest Common Factor</div>
+                  </div>
                 </div>
 
-                {result && (
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    className="mt-6"
-                  >
-                    <div className="p-6 bg-toolnest-accent/20 rounded-lg border">
-                      <h3 className="text-2xl font-bold text-toolnest-text mb-4">
-                        Calculation Results
-                      </h3>
-                      
-                      <div className="space-y-4 text-toolnest-text">
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                          <div className="p-4 bg-white rounded-lg border">
-                            <h4 className="font-semibold text-lg mb-2">LCM (Least Common Multiple)</h4>
-                            <p className="text-2xl font-bold text-toolnest-text">{result.lcm.toLocaleString()}</p>
-                          </div>
-                          <div className="p-4 bg-white rounded-lg border">
-                            <h4 className="font-semibold text-lg mb-2">HCF (Highest Common Factor)</h4>
-                            <p className="text-2xl font-bold text-toolnest-text">{result.hcf.toLocaleString()}</p>
-                          </div>
-                        </div>
-                        
-                        <div className="p-4 bg-white rounded-lg border">
-                          <h4 className="font-semibold text-lg mb-2">Prime Factorization</h4>
-                          <div className="space-y-2">
-                            {numbers.split(',').map((num, index) => (
-                              <div key={index} className="flex items-center gap-2">
-                                <span className="font-medium">{num.trim()}:</span>
-                                <span className="text-sm">
-                                  {result.factors[index].join(' × ')}
-                                </span>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
+                {/* Prime Factorization */}
+                <div className="space-y-3">
+                  <h4 className="text-sm font-medium text-foreground">Prime Factorization</h4>
+                  <div className="space-y-2">
+                    {numbers.split(',').map((num, index) => (
+                      <div key={index} className="flex items-center gap-2 text-sm">
+                        <span className="font-medium text-foreground">{num.trim()}:</span>
+                        <span className="text-muted-foreground">
+                          {result.factors[index].join(' × ')}
+                        </span>
                       </div>
-                    </div>
-                  </motion.div>
-                )}
+                    ))}
+                  </div>
+                </div>
               </div>
-            </div>
-          </motion.div>
+            </motion.div>
+          )}
 
+          {/* Info Section */}
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="mt-8"
+            transition={{ duration: 0.5, delay: 0.3 }}
+            className="bg-card rounded-xl sm:rounded-2xl border border-border p-4 sm:p-6 shadow-sm"
           >
-            <div className="bg-white shadow-lg rounded-lg">
-              <div className="p-6 border-b">
-                <h2 className="text-xl font-semibold text-toolnest-text">How This Tool Works</h2>
+            <h3 className="text-base sm:text-lg font-semibold text-foreground mb-3">How This Tool Works</h3>
+            <div className="space-y-2 text-muted-foreground text-sm">
+              <p>
+                Calculate LCM (Least Common Multiple) and HCF (Highest Common Factor) 
+                of multiple numbers using prime factorization and the Euclidean algorithm.
+              </p>
+              <div className="text-xs sm:text-sm space-y-1 pt-2">
+                <div className="flex items-center gap-2">
+                  <div className="w-1 h-1 bg-muted-foreground rounded-full"></div>
+                  <span>Enter at least 2 positive numbers separated by commas</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-1 h-1 bg-muted-foreground rounded-full"></div>
+                  <span>Click "Calculate" to compute LCM and HCF</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-1 h-1 bg-muted-foreground rounded-full"></div>
+                  <span>View detailed results including prime factorization</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-1 h-1 bg-muted-foreground rounded-full"></div>
+                  <span>Use "Clear All" to reset the calculator</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-1 h-1 bg-muted-foreground rounded-full"></div>
+                  <span>Copy your results for sharing or record keeping</span>
+                </div>
               </div>
-              <div className="p-6">
-                <p className="text-toolnest-text/80 leading-relaxed">
-                  LCM (Least Common Multiple) is the smallest number that is a multiple of all given numbers. 
-                  HCF (Highest Common Factor) is the largest number that divides all given numbers without remainder. 
-                  This tool calculates both using prime factorization and the Euclidean algorithm.
-                </p>
+              <div className="text-xs sm:text-sm space-y-2 pt-3">
+                <div className="font-medium text-foreground">Key Concepts:</div>
+                <div className="flex items-center gap-2">
+                  <div className="w-1 h-1 bg-accent rounded-full"></div>
+                  <span><strong>LCM:</strong> The smallest number that is a multiple of all given numbers</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-1 h-1 bg-accent rounded-full"></div>
+                  <span><strong>HCF:</strong> The largest number that divides all given numbers without remainder</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-1 h-1 bg-accent rounded-full"></div>
+                  <span><strong>Prime Factorization:</strong> Breaking down numbers into their prime factors</span>
+                </div>
               </div>
             </div>
           </motion.div>
-
-          <div className="mt-8 text-center">
-            <button 
-              onClick={() => router.push('/tool')}
-              className="bg-toolnest-text hover:bg-toolnest-text/90 text-white px-6 py-3 rounded-lg font-medium transition-colors"
-            >
-              Back to Tools
-            </button>
-          </div>
         </div>
-      </main>
-
-      <Footer />
+      </div>
     </div>
   );
 };
