@@ -1,4 +1,6 @@
 import { MetadataRoute } from 'next'
+import { toolsData } from '../app/data/toolsData'
+import { getToolRoute } from '../app/utils/toolRoutes'
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://www.grocktool.com'
@@ -32,160 +34,56 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ]
 
-  // Text Tools
-  const textTools = [
-    'text-case-converter',
-    'word-character-counter',
-    'remove-duplicate-lines',
-    'text-sorter',
-    'text-reverser',
-    'slug-generator',
-    'find-replace',
-    'palindrome-checker',
-    'remove-special-characters',
-    'text-length-limiter'
-  ].map(tool => ({
-    url: `${baseUrl}/tools/${tool}`,
-    lastModified: currentDate,
-    changeFrequency: 'weekly' as const,
-    priority: 0.8,
-  }))
+  const getToolPages = (categoryFilter?: string) => {
+    return toolsData
+      .filter(tool => tool.status === 'available' && 
+        (!categoryFilter || tool.category === categoryFilter))
+      .map(tool => {
+        const routePath = getToolRoute(tool.name, tool.category)
+        return {
+          url: `${baseUrl}${routePath}`,
+          lastModified: currentDate,
+          changeFrequency: 'weekly' as const,
+          priority: 0.8,
+        }
+      })
+      .filter(tool => tool.url !== `${baseUrl}null`) 
+  }
 
   // Unit Converter Tools
-  const converterTools = [
-    'length-converter',
-    'weight-converter',
-    'temperature-converter',
-    'time-converter',
-    'speed-converter',
-    'area-converter',
-    'volume-converter',
-    'data-size-converter',
-    'all-in-one-converter'
-  ].map(tool => ({
-    url: `${baseUrl}/tools/${tool}`,
-    lastModified: currentDate,
-    changeFrequency: 'weekly' as const,
-    priority: 0.8,
-  }))
+  const unitConverterTools = getToolPages('Unit Converter Tools')
+
+  // Text Tools
+  const textTools = getToolPages('Text Tools')
 
   // Date & Time Tools
-  const dateTimeTools = [
-    'age-calculator',
-    'date-difference-calculator',
-    'countdown-timer',
-    'work-days-calculator',
-    'birthday-countdown',
-    'leap-year-checker',
-    'week-number-checker'
-  ].map(tool => ({
-    url: `${baseUrl}/tools/${tool}`,
-    lastModified: currentDate,
-    changeFrequency: 'weekly' as const,
-    priority: 0.8,
-  }))
+  const dateTimeTools = getToolPages('Date & Time Tools')
 
   // Number Tools
-  const numberTools = [
-    'percentage-calculator',
-    'simple-interest',
-    'emi-calculator',
-    'roman-numeral-converter',
-    'lcm-hcf-calculator',
-    'number-to-words',
-    'scientific-notation',
-    'number-base-converter',
-    'rounding-tool',
-    'random-number-generator'
-  ].map(tool => ({
-    url: `${baseUrl}/tools/${tool}`,
-    lastModified: currentDate,
-    changeFrequency: 'weekly' as const,
-    priority: 0.8,
-  }))
+  const numberTools = getToolPages('Number Tools')
 
   // Math Tools
-  const mathTools = [
-    'basic-calculator',
-    'prime-checker',
-    'factorial-calculator',
-    'multiplication-table',
-    'quadratic-equation-solver',
-    'percentage-change',
-    'triangle-area',
-    'circle-calculator',
-    'exponent-log',
-    'average-median-mode'
-  ].map(tool => ({
-    url: `${baseUrl}/tools/${tool}`,
-    lastModified: currentDate,
-    changeFrequency: 'weekly' as const,
-    priority: 0.8,
-  }))
+  const mathTools = getToolPages('Math Tools')
 
   // Health Tools
-  const healthTools = [
-    'bmi-calculator',
-    'calorie-calculator',
-    'water-intake-calculator',
-    'body-fat-calculator',
-    'ideal-weight',
-    'bmr-calculator',
-    'macro-calculator'
-  ].map(tool => ({
-    url: `${baseUrl}/tools/${tool}`,
-    lastModified: currentDate,
-    changeFrequency: 'weekly' as const,
-    priority: 0.8,
-  }))
+  const healthTools = getToolPages('Health Tools')
 
-  // Developer Tools
-  const developerTools = [
-    'json-formatter',
-    'html-formatter',
-    'css-formatter',
-    'javascript-formatter',
-    'xml-formatter',
-    'sql-formatter',
-    'base64-encoder',
-    'base64-decoder',
-    'url-encoder',
-    'url-decoder',
-    'hash-generator',
-    'uuid-generator'
-  ].map(tool => ({
-    url: `${baseUrl}/tools/${tool}`,
-    lastModified: currentDate,
-    changeFrequency: 'weekly' as const,
-    priority: 0.8,
-  }))
+  // QR & Barcode Tools
+  const qrBarcodeTools = getToolPages('QR & Barcode Tools')
 
-  // Image Tools
-  const imageTools = [
-    'image-converter',
-    'image-compressor',
-    'image-resizer',
-    'color-picker',
-    'palette-generator',
-    'qr-code-generator',
-    'qr-code-reader'
-  ].map(tool => ({
-    url: `${baseUrl}/tools/${tool}`,
-    lastModified: currentDate,
-    changeFrequency: 'weekly' as const,
-    priority: 0.8,
-  }))
+  // PDF Tools
+  const pdfTools = getToolPages('PDF Tools')
 
   // Combine all URLs
   return [
     ...mainPages,
+    ...unitConverterTools,
     ...textTools,
-    ...converterTools,
     ...dateTimeTools,
     ...numberTools,
     ...mathTools,
     ...healthTools,
-    // ...developerTools,
-    // ...imageTools,
+    ...qrBarcodeTools,
+    ...pdfTools,
   ]
 }

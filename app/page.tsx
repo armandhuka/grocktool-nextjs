@@ -3,12 +3,12 @@ import HeroSection from './components/home/HeroSection'
 import FeaturedTools from './components/home/FeaturedTools'
 // import CategoriesSection from './components/home/CategoriesSection'
 // import UpcomingTools from './components/home/UpcomingTools'
-import CategoriesAndUpcoming from './components/home/CategoriesAndUpcoming'
+// import CategoriesAndUpcoming from './components/home/CategoriesAndUpcoming'
 import TrustedSection from './components/home/TrustedSection'
 import HowItWorks from './components/home/HowItWorks'
 import NewsletterSection from './components/home/NewsletterSection'
 import CTASection from './components/home/CTASection'
-import EmailModal from './components/shared/EmailModal'
+// import EmailModal from './components/shared/EmailModal'
 
 export const metadata: Metadata = {
   title: 'GrockTool - 150+ Free Online Tools for Developers & Creators',
@@ -154,7 +154,7 @@ export default function HomePage() {
 
       {/* Main Visible Content */}
       <div className="min-h-screen bg-toolnest-bg font-inter">
-        <EmailModal />
+        {/* <EmailModal /> */}
         <HeroSection />
         <FeaturedTools />
         {/* <CategoriesSection /> */}
