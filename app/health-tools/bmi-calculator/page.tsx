@@ -148,7 +148,7 @@ export default function BMICalculator() {
             {/* Header */}
             <div className="mb-8 sm:mb-10">
               <Link
-                href="/tools"
+                href="/tool"
                 className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground mb-6 transition-colors group text-sm sm:text-base"
               >
                 <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
