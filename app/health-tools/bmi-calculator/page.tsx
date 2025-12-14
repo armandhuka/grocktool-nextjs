@@ -124,7 +124,7 @@ export default function BMICalculator() {
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Free BMI Calculator - Calculate Your Body Mass Index" />
         <meta name="twitter:description" content="Instant BMI calculation with all measurement units. Get accurate health assessment." />
-        <link rel="canonical" href="https://yoursite.com/tools/bmi-calculator" />
+        <link rel="canonical" href="https://www.grocktool.com/health-tools/bmi-calculator" />
         <script type="application/ld+json">
           {JSON.stringify({
             "@context": "https://schema.org",
@@ -133,10 +133,10 @@ export default function BMICalculator() {
             "applicationCategory": "HealthApplication",
             "operatingSystem": "Any",
             "description": "Free online BMI calculator to calculate Body Mass Index using various measurement units",
-            "url": "https://yoursite.com/tools/bmi-calculator",
+            "url": "https://www.grocktool.com/health-tools/bmi-calculator",
             "author": {
               "@type": "Organization",
-              "name": "Your Site Name"
+              "name": "GrockTool"
             }
           })}
         </script>
