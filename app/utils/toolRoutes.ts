@@ -77,7 +77,6 @@ export const getToolRoute = (toolName: string, category: string) => {
       'PDF Merge': '/PDF-Tools/pdf-merge',
       'PDF Split': '/PDF-Tools/pdf-split',
       'PDF Compressor': '/PDF-Tools/pdf-compressor',
-      'PDF Password': '/PDF-Tools/pdf-password',
       'PDF Rotate': '/PDF-Tools/pdf-rotate',
       'PDF Watermark': '/PDF-Tools/pdf-watermark',
       'PDF Page Reorder': '/PDF-Tools/pdf-reorder',
