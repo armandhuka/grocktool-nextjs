@@ -831,7 +831,7 @@ const ScientificNotation = () => {
                           <div className="bg-accent/20 p-1 rounded mt-0.5">
                             <Copy size={12} className="text-accent" />
                           </div>
-                          <span>Copy results directly into LaTeX documents: $C \times 10^{n}$ format</span>
+                          <span>Copy results directly into LaTeX documents: $C \times 10^{"{n}"}$ format</span>
                         </li>
                         <li className="flex items-start gap-2">
                           <div className="bg-accent/20 p-1 rounded mt-0.5">
