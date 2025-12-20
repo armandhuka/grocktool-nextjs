@@ -9,15 +9,15 @@ const ContactInfo = () => {
     {
       icon: Mail,
       title: 'Email',
-      content: 'support@grocktool.com',
-      href: 'mailto:support@grocktool.com',
+      content: 'grocktool@gmail.com',
+      href: 'mailto:grocktool@gmail.com',
       description: 'We reply within 24 hours'
     },
     {
       icon: Phone,
       title: 'Phone',
-      content: '+91-XXXXXXXXXX',
-      href: 'tel:+91XXXXXXXXXX',
+      content: '+91-9265350594',
+      href: 'tel:+919265350594',
       description: 'Mon-Fri from 9am to 6pm'
     },
     {

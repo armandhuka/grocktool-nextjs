@@ -24,7 +24,7 @@ const HeroSection = () => {
   return (
     <section className="min-h-screen flex items-center justify-center relative overflow-hidden pt-20">
       {/* Background Icons */}
-      <div className="absolute inset-0 opacity-5">
+      <div className="absolute inset-0 opacity-5 pointer-events-none">
         <div className="animate-float absolute top-20 left-10">
           <Search size={40} className="text-toolnest-text" />
         </div>
