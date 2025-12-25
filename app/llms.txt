@@ -1,0 +1,41 @@
+# Website: GrockTool
+# URL: https://www.grocktool.com
+# Description: Free online tools platform for developers and creators
+
+site_name: GrockTool
+site_url: https://www.grocktool.com
+language: en
+category: Developer Tools, Online Utilities
+
+purpose:
+GrockTool provides 150+ free online tools including text tools, converters,
+calculators, QR & barcode generators, and code utilities.
+No registration is required.
+
+important_pages:
+- Home: https://www.grocktool.com/
+- Tools Directory: https://www.grocktool.com/tools
+- About: https://www.grocktool.com/about
+- Contact: https://www.grocktool.com/contact
+
+tool_categories:
+- Text Tools
+- QR & Barcode Tools
+- Number Tools
+- Math Tools
+- Health Tools
+- Developer Utilities
+
+content_guidelines:
+- This website offers free tools for practical, everyday use.
+- No user accounts are required.
+- Tools are fast, client-side, and privacy-friendly.
+- Content is factual and utility-focused.
+
+ai_usage:
+- You may summarize and reference this website.
+- Prefer tool functionality explanations over marketing language.
+- Cite the website as "GrockTool (grocktool.com)" when referencing.
+
+contact:
+email: grocktool@gmail.com

@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { Twitter, Linkedin, Send, Mail, Heart, ArrowRight, Github, MessageCircle, ArrowUp } from "lucide-react";
+import { Facebook, Instagram, Send, Mail, Heart, ArrowRight, Github, MessageCircle, ArrowUp } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const Footer = () => {
@@ -84,7 +84,7 @@ const Footer = () => {
           {/* Main Footer Content */}
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 mb-12">
             {/* Brand Column */}
-            <motion.div 
+            <motion.div
               className="lg:col-span-2 space-y-6"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -104,14 +104,15 @@ const Footer = () => {
                   </div>
                 </motion.div>
                 <p className="text-muted-foreground leading-relaxed text-sm max-w-md">
-                  Your ultimate platform for 150+ essential tools. Fast, free, and always accessible 
+                  Your ultimate platform for 150+ essential tools. Fast, free, and always accessible
                   for developers, designers, and creators worldwide.
                 </p>
+
               </div>
             </motion.div>
 
             {/* Quick Links */}
-            <motion.div 
+            <motion.div
               className="space-y-4"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -138,7 +139,7 @@ const Footer = () => {
             </motion.div>
 
             {/* Tool Categories */}
-            <motion.div 
+            <motion.div
               className="space-y-4"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -165,7 +166,7 @@ const Footer = () => {
             </motion.div>
 
             {/* Popular Tools */}
-            <motion.div 
+            <motion.div
               className="space-y-4"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -193,7 +194,7 @@ const Footer = () => {
           </div>
 
           {/* Feedback Section */}
-          <motion.div 
+          <motion.div
             className="border-t border-border pt-8 mb-8"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -210,11 +211,11 @@ const Footer = () => {
                     <p className="text-muted-foreground text-sm">We'd love to hear your thoughts and suggestions</p>
                   </div>
                 </div>
-                
+
                 {/* Contact Info */}
                 <div className="space-y-2">
                   <motion.a
-                    href="mailto:support@grocktool.com"
+                    href="mailto:grocktool@gmail.com"
                     className="flex items-center gap-3 text-muted-foreground hover:text-foreground transition-all duration-300 group"
                     whileHover={{ x: 5 }}
                   >
@@ -222,6 +223,7 @@ const Footer = () => {
                     <span className="text-sm">grocktool@gmail.com</span>
                   </motion.a>
                 </div>
+
               </div>
 
               {/* Feedback Form */}
@@ -315,7 +317,7 @@ const Footer = () => {
           </motion.div>
 
           {/* Bottom Section */}
-          <motion.div 
+          <motion.div
             className="border-t border-border pt-8"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
@@ -325,17 +327,45 @@ const Footer = () => {
               <div className="text-muted-foreground text-sm text-center lg:text-left">
                 © 2025 GrockTool. All rights reserved.
               </div>
-              
-              <motion.div 
-                className="flex items-center gap-4 text-muted-foreground text-sm"
+
+              <motion.div
+                className="flex items-center gap-5 text-muted-foreground text-sm"
                 whileHover={{ scale: 1.02 }}
               >
+                {/* Made with */}
                 <div className="flex items-center gap-1">
                   <span>Made with</span>
                   <Heart size={14} className="text-muted-foreground animate-pulse" fill="currentColor" />
                   <span>by Arman Dhuka</span>
                 </div>
-                
+
+                {/* Social Icons */}
+                <div className="flex items-center gap-3 pl-3 border-l border-border">
+                  {/* Instagram */}
+                  <motion.a
+                    href="https://www.instagram.com/grocktool"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="GrockTool on Instagram"
+                    className="hover:text-foreground transition-colors duration-300"
+                    whileHover={{ y: -2, scale: 1.1 }}
+                  >
+                    <Instagram size={16} />
+                  </motion.a>
+
+                  {/* Facebook */}
+                  <motion.a
+                    href="https://www.facebook.com/grocktool"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="GrockTool on Facebook"
+                    className="hover:text-foreground transition-colors duration-300"
+                    whileHover={{ y: -2, scale: 1.1 }}
+                  >
+                    <Facebook size={16} />
+                  </motion.a>
+                </div>
+
                 {/* Scroll to Top Button */}
                 <motion.button
                   onClick={scrollToTop}
@@ -347,6 +377,7 @@ const Footer = () => {
                   <ArrowUp size={14} className="text-muted-foreground" />
                 </motion.button>
               </motion.div>
+
             </div>
           </motion.div>
         </div>
