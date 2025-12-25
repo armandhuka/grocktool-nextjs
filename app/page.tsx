@@ -7,12 +7,12 @@ import NewsletterSection from './components/home/NewsletterSection'
 import CTASection from './components/home/CTASection'
 
 export const metadata: Metadata = {
-  title: '150+ Free Online Tools for Developers | GrockTool',
-  description: 'GrockTool offers 150+ free online tools for developers & creators. Text utilities, image editors, code formatters, calculators & converters. No registration required.',
-  keywords: 'free online tools, developer tools, text tools, image converter, code formatter, PDF tools, web utilities, calculator tools, GrockTool',
+  title: '150+ Free Online Tools for Developers & Creators | GrockTool',
+  description: 'GrockTool provides 150+ free online tools for developers and creators, including text, math,number, calculators, and pdf tool. No signup required.',
+  keywords: 'free online developer tools, text tools online, Maths tools,number tools, code formatter online, PDF tools free, web utilities, calculator tools online, developer utilities, free coding tools, GrockTool',
   authors: [{ name: 'GrockTool' }],
-  creator: 'GrockTool',
-  publisher: 'GrockTool',
+  creator: 'Arman Dhuka',
+  publisher: 'Arman Dhuka',
   formatDetection: {
     email: false,
     address: false,

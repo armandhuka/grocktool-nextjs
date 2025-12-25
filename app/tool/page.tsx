@@ -41,8 +41,8 @@ export async function generateMetadata(
     description: toolData.description,
     keywords: toolData.keywords.join(', '),
     authors: [{ name: 'GrockTool' }],
-    creator: 'GrockTool',
-    publisher: 'GrockTool',
+    creator: 'Arman Dhuka',
+    publisher: 'Arman Dhuka',
     metadataBase: new URL('https://www.grocktool.com'),
     alternates: { canonical: `/tool?toolId=${toolId}` },
     openGraph: {
