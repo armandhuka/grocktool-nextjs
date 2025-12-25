@@ -219,7 +219,7 @@ const Footer = () => {
                     whileHover={{ x: 5 }}
                   >
                     <Mail size={16} />
-                    <span className="text-sm">support@grocktool.com</span>
+                    <span className="text-sm">grocktool@gmail.com</span>
                   </motion.a>
                 </div>
               </div>

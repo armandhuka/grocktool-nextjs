@@ -71,10 +71,9 @@ const ContactForm = () => {
 
     setIsLoading(true);
 
-    // Simulate API call
     try {
+      // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1000));
-      console.log('Form submitted:', formData);
       
       setIsSubmitted(true);
       setFormData({
@@ -95,12 +94,13 @@ const ContactForm = () => {
   };
 
   return (
-    <motion.div
+    <motion.article
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
       viewport={{ once: true }}
-      className="rounded-2xl p-6 md:p-8 shadow-lg border"
+      className="rounded-2xl p-6 md:p-8 shadow-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800"
+      aria-labelledby="form-heading"
     >
       {isSubmitted && (
         <SuccessMessage 
@@ -110,15 +110,24 @@ const ContactForm = () => {
       )}
 
       <div className="mb-6">
-        <h2 className="text-2xl md:text-3xl font-bold text-toolnest-text mb-2">
-          Send us a Message
+        <h2 
+          id="form-heading"
+          className="text-2xl md:text-3xl font-bold text-toolnest-text mb-2"
+        >
+          Send Your Message or Feedback
         </h2>
         <p className="text-toolnest-text/60">
-          Fill out the form below and we'll get back to you as soon as possible.
+          Fill out the form below for support, bug reports, or tool suggestions. 
+          We read every message and respond within 24 hours.
         </p>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-6">
+      <form 
+        onSubmit={handleSubmit} 
+        className="space-y-6"
+        aria-label="Contact form"
+        noValidate
+      >
         <div className="grid md:grid-cols-2 gap-4 md:gap-6">
           <div className="space-y-2">
             <Label htmlFor="name" className="text-toolnest-text font-medium text-sm">
@@ -132,8 +141,15 @@ const ContactForm = () => {
               onChange={handleInputChange}
               placeholder="Enter your full name"
               disabled={isLoading}
+              aria-required="true"
+              aria-invalid={!!errors.name}
+              aria-describedby={errors.name ? "name-error" : undefined}
             />
-            {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
+            {errors.name && (
+              <p id="name-error" className="text-red-500 text-xs mt-1" role="alert">
+                {errors.name}
+              </p>
+            )}
           </div>
 
           <div className="space-y-2">
@@ -148,8 +164,15 @@ const ContactForm = () => {
               onChange={handleInputChange}
               placeholder="your.email@example.com"
               disabled={isLoading}
+              aria-required="true"
+              aria-invalid={!!errors.email}
+              aria-describedby={errors.email ? "email-error" : undefined}
             />
-            {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
+            {errors.email && (
+              <p id="email-error" className="text-red-500 text-xs mt-1" role="alert">
+                {errors.email}
+              </p>
+            )}
           </div>
         </div>
 
@@ -163,6 +186,7 @@ const ContactForm = () => {
             type="text"
             value={formData.subject}
             onChange={handleInputChange}
+            placeholder="Brief description of your inquiry"
             disabled={isLoading}
           />
         </div>
@@ -176,21 +200,30 @@ const ContactForm = () => {
             name="message"
             value={formData.message}
             onChange={handleInputChange}
-            placeholder="Tell us more about your inquiry, suggestion, or question..."
+            placeholder="Describe your issue, suggestion, or question in detail..."
             disabled={isLoading}
+            rows={5}
+            aria-required="true"
+            aria-invalid={!!errors.message}
+            aria-describedby={errors.message ? "message-error" : undefined}
           />
-          {errors.message && <p className="text-red-500 text-xs mt-1">{errors.message}</p>}
+          {errors.message && (
+            <p id="message-error" className="text-red-500 text-xs mt-1" role="alert">
+              {errors.message}
+            </p>
+          )}
         </div>
 
         <motion.div whileHover={{ scale: isLoading ? 1 : 1.02 }} whileTap={{ scale: isLoading ? 1 : 0.98 }}>
           <Button 
             type="submit" 
-            className="w-full h-12 border borde-[#d8a188] bg-[#262626] hover:bg-[#d8a188] text-white text-base font-semibold transition-all duration-200"
+            className="w-full h-12 bg-toolnest-accent hover:bg-toolnest-accent/90 text-white text-base font-semibold transition-all duration-200"
             disabled={isLoading}
+            aria-label={isLoading ? "Sending your message" : "Submit contact form"}
           >
             {isLoading ? (
               <div className="flex items-center gap-2">
-                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" aria-hidden="true" />
                 Sending...
               </div>
             ) : (
@@ -198,8 +231,16 @@ const ContactForm = () => {
             )}
           </Button>
         </motion.div>
+        
+        <p className="text-xs text-toolnest-text/50 text-center">
+          By submitting this form, you agree to our{' '}
+          <a href="/privacy" className="text-toolnest-accent hover:underline">
+            Privacy Policy
+          </a>
+          . We never share your personal information.
+        </p>
       </form>
-    </motion.div>
+    </motion.article>
   );
 };
 

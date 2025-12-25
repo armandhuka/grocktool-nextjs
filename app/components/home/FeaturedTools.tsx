@@ -38,11 +38,12 @@ export default function FeaturedTools() {
   };
 
   return (
-    <section className="py-24 px-6 bg-background">
+    <section className="py-24 px-6 bg-background" aria-labelledby="featured-tools-heading">
       <div className="max-w-7xl mx-auto">
 
         {/* Title */}
         <motion.h2
+          id="featured-tools-heading"
           initial={{ opacity: 0, y: 18 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
@@ -53,22 +54,24 @@ export default function FeaturedTools() {
         </motion.h2>
 
         <p className="text-muted-foreground text-center mb-16 text-lg">
-          Handpicked AI tools, selected for performance and reliability
+          Handpicked tools selected for performance and reliability
         </p>
 
         {/* Fade gradients */}
         <div className="relative">
-          <div className="pointer-events-none absolute left-0 top-0 h-full w-24 bg-gradient-to-r from-background to-transparent z-10"></div>
-          <div className="pointer-events-none absolute right-0 top-0 h-full w-24 bg-gradient-to-l from-background to-transparent z-10"></div>
+          <div className="pointer-events-none absolute left-0 top-0 h-full w-24 bg-gradient-to-r from-background to-transparent z-10" aria-hidden="true"></div>
+          <div className="pointer-events-none absolute right-0 top-0 h-full w-24 bg-gradient-to-l from-background to-transparent z-10" aria-hidden="true"></div>
 
           {/* Scroll container */}
           <div
             ref={containerRef}
             className="flex gap-7 overflow-x-auto snap-x snap-mandatory custom-scrollbar pb-8"
             style={{ scrollBehavior: 'smooth' }}
+            role="list"
+            aria-label="Featured tools carousel"
           >
             {featured.map((tool, i) => (
-              <motion.div
+              <motion.article
                 key={tool.id}
                 initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -79,7 +82,15 @@ export default function FeaturedTools() {
                 className="snap-start mt-5 min-w-[280px] glass rounded-2xl p-7 cursor-pointer 
                 transition-all shadow-sm
                 hover:shadow-lg hover:shadow-[hsl(var(--accent))]/10
-                hover:border-accent/40 hover:scale-[1.02]"
+                hover:border-accent/40 hover:scale-[1.02]
+                focus-within:ring-2 focus-within:ring-accent focus-within:ring-offset-2"
+                role="listitem"
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    handleToolClick(tool);
+                  }
+                }}
               >
                 {/* Icon + Title */}
                 <div className="flex items-center mb-5">
@@ -97,16 +108,20 @@ export default function FeaturedTools() {
                 </p>
 
                 {/* Button */}
-                <button className="w-full bg-accent text-accent-foreground font-medium py-2.5 rounded-xl transition-all 
-                  hover:opacity-90 hover:shadow-md hover:shadow-accent/20">
+                <button 
+                  className="w-full bg-accent text-accent-foreground font-medium py-2.5 rounded-xl transition-all 
+                  hover:opacity-90 hover:shadow-md hover:shadow-accent/20
+                  focus:outline-none focus:ring-2 focus:ring-accent-foreground focus:ring-offset-2"
+                  aria-label={`Try ${tool.name} tool`}
+                >
                   Try Now
                 </button>
-              </motion.div>
+              </motion.article>
             ))}
           </div>
 
           {/* Scroll Dots */}
-          <div className="flex justify-center mt-8 space-x-3">
+          <div className="flex justify-center mt-8 space-x-3" role="tablist" aria-label="Tool carousel navigation">
             {featured.map((_, i) => (
               <button
                 key={i}
@@ -116,7 +131,9 @@ export default function FeaturedTools() {
                     ? 'bg-accent scale-110 shadow-[0_0_8px_hsl(var(--accent)/0.8)]'
                     : 'bg-muted hover:bg-muted-foreground/50'
                 }`}
-                aria-label={`Go to slide ${i + 1}`}
+                aria-label={`Go to tool ${i + 1}`}
+                aria-selected={i === activeIndex}
+                role="tab"
               />
             ))}
           </div>
@@ -124,5 +141,6 @@ export default function FeaturedTools() {
         </div>
       </div>
     </section>
+    
   );
 }
