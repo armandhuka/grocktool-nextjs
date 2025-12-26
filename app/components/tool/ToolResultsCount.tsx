@@ -1,10 +1,11 @@
 'use client';
 
 import React from 'react';
+import type { Tool } from '../../data/toolsData';
 
 interface ToolResultsCountProps {
-  filteredTools: any[];
-  toolsData: any[];
+  filteredTools: Tool[];
+  toolsData: Tool[];
   selectedCategory: string;
 }
 

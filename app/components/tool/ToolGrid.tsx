@@ -4,13 +4,12 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import ToolCard from './ToolCard';
 import { getCategoryIcon, getCategoryColor } from '../../utils/categoryUtils';
+import type { Tool } from '../../data/toolsData';
 
 interface ToolGridProps {
-  filteredTools: any[];
+  filteredTools: Tool[];
   viewMode: 'grid' | 'list';
   favorites: string[];
-  
-  // FIXED: string id instead of number
   handleFavorite: (toolId: string) => void;
 }
 
@@ -21,15 +20,15 @@ const ToolGrid: React.FC<ToolGridProps> = ({
   handleFavorite
 }) => {
 
-  const gridClasses = viewMode === 'grid' 
-    ? 'grid grid-cols-1 xs:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6'
-    : 'flex flex-col gap-4';
+  const gridClasses =
+    viewMode === 'grid'
+      ? 'grid grid-cols-1 xs:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6'
+      : 'flex flex-col gap-4';
 
   return (
     <section className="px-4 md:px-6 pb-20">
       <div className="max-w-7xl mx-auto">
         <div className={gridClasses}>
-          
           {filteredTools.map((tool, index) => (
             <motion.div
               key={tool.id}
@@ -38,21 +37,20 @@ const ToolGrid: React.FC<ToolGridProps> = ({
               transition={{
                 duration: 0.4,
                 delay: Math.min(index * 0.05, 0.5),
-                ease: "easeOut"
+                ease: 'easeOut'
               }}
               className={viewMode === 'list' ? 'w-full' : ''}
             >
               <ToolCard
                 tool={tool}
                 onFavorite={handleFavorite}
-                isFavorite={favorites.includes(tool.id)}
+                isFavorite={favorites.includes(tool.id.toString())}
                 viewMode={viewMode}
                 categoryIcon={getCategoryIcon(tool.category)}
                 categoryColor={getCategoryColor(tool.category)}
               />
             </motion.div>
           ))}
-
         </div>
       </div>
     </section>
