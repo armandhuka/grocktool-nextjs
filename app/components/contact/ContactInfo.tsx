@@ -9,26 +9,10 @@ const ContactInfo = () => {
     {
       icon: Mail,
       title: 'Support Email',
-      content: 'support@grocktool.com',
-      href: 'mailto:support@grocktool.com',
+      content: 'grocktool@gmail.com',
+      href: 'mailto:grocktool@gmail.com',
       description: 'General inquiries & support',
       badge: '24h response'
-    },
-    {
-      icon: Bug,
-      title: 'Bug Reports',
-      content: 'bugs@grocktool.com',
-      href: 'mailto:bugs@grocktool.com',
-      description: 'Report tool issues & errors',
-      badge: 'Priority'
-    },
-    {
-      icon: Lightbulb,
-      title: 'Tool Suggestions',
-      content: 'ideas@grocktool.com',
-      href: 'mailto:ideas@grocktool.com',
-      description: 'Suggest new tools or features',
-      badge: 'Welcome'
     },
     {
       icon: Phone,

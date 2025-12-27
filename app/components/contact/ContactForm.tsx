@@ -22,22 +22,23 @@ const ContactForm = () => {
     subject: '',
     message: '',
   });
+
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
+
     setFormData((prev) => ({
       ...prev,
       [name]: value,
     }));
 
     if (errors[name]) {
-      setErrors((prev) => ({
-        ...prev,
-        [name]: '',
-      }));
+      setErrors((prev) => ({ ...prev, [name]: '' }));
     }
   };
 
@@ -64,17 +65,40 @@ const ContactForm = () => {
     return Object.keys(newErrors).length === 0;
   };
 
+  // ✅ REAL FORM SUBMISSION (EMAIL SEND)
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!validateForm()) return;
 
     setIsLoading(true);
 
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
+      const response = await fetch(
+        'https://formsubmit.co/ajax/grocktool@gmail.com',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+          },
+          body: JSON.stringify({
+            name: formData.name,
+            email: formData.email,
+            subject: formData.subject || 'New Contact Message',
+            message: formData.message,
+
+            _template: 'table',
+            _captcha: 'false',
+            _replyto: formData.email,
+          }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error('Form submission failed');
+      }
+
       setIsSubmitted(true);
       setFormData({
         name: '',
@@ -83,9 +107,7 @@ const ContactForm = () => {
         message: '',
       });
 
-      setTimeout(() => {
-        setIsSubmitted(false);
-      }, 5000);
+      setTimeout(() => setIsSubmitted(false), 5000);
     } catch (error) {
       console.error('Error submitting form:', error);
     } finally {
@@ -103,142 +125,94 @@ const ContactForm = () => {
       aria-labelledby="form-heading"
     >
       {isSubmitted && (
-        <SuccessMessage 
-          title="Message sent successfully!" 
-          message="Thank you for reaching out. We'll get back to you within 24 hours." 
+        <SuccessMessage
+          title="Message sent successfully!"
+          message="Thank you for reaching out. We'll get back to you within 24 hours."
         />
       )}
 
       <div className="mb-6">
-        <h2 
+        <h2
           id="form-heading"
           className="text-2xl md:text-3xl font-bold text-toolnest-text mb-2"
         >
           Send Your Message or Feedback
         </h2>
         <p className="text-toolnest-text/60">
-          Fill out the form below for support, bug reports, or tool suggestions. 
-          We read every message and respond within 24 hours.
+          Fill out the form below for support, bug reports, or tool suggestions. We read every message and respond within 24 hours.
         </p>
       </div>
 
-      <form 
-        onSubmit={handleSubmit} 
-        className="space-y-6"
-        aria-label="Contact form"
-        noValidate
-      >
+      <form onSubmit={handleSubmit} className="space-y-6" noValidate>
         <div className="grid md:grid-cols-2 gap-4 md:gap-6">
           <div className="space-y-2">
-            <Label htmlFor="name" className="text-toolnest-text font-medium text-sm">
-              Full Name *
-            </Label>
+            <Label htmlFor="name">Full Name *</Label>
             <Input
               id="name"
               name="name"
-              type="text"
+              placeholder='Enter your full name'
               value={formData.name}
               onChange={handleInputChange}
-              placeholder="Enter your full name"
               disabled={isLoading}
-              aria-required="true"
-              aria-invalid={!!errors.name}
-              aria-describedby={errors.name ? "name-error" : undefined}
             />
             {errors.name && (
-              <p id="name-error" className="text-red-500 text-xs mt-1" role="alert">
-                {errors.name}
-              </p>
+              <p className="text-red-500 text-xs">{errors.name}</p>
             )}
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="email" className="text-toolnest-text font-medium text-sm">
-              Email Address *
-            </Label>
+            <Label htmlFor="email">Email *</Label>
             <Input
               id="email"
               name="email"
               type="email"
+              placeholder='your.email@example.com'
               value={formData.email}
               onChange={handleInputChange}
-              placeholder="your.email@example.com"
               disabled={isLoading}
-              aria-required="true"
-              aria-invalid={!!errors.email}
-              aria-describedby={errors.email ? "email-error" : undefined}
             />
             {errors.email && (
-              <p id="email-error" className="text-red-500 text-xs mt-1" role="alert">
-                {errors.email}
-              </p>
+              <p className="text-red-500 text-xs">{errors.email}</p>
             )}
           </div>
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="subject" className="text-toolnest-text font-medium text-sm">
-            Subject
-          </Label>
+          <Label htmlFor="subject">Subject</Label>
           <Input
             id="subject"
             name="subject"
-            type="text"
+            placeholder='Brief description of your inquiry'
             value={formData.subject}
             onChange={handleInputChange}
-            placeholder="Brief description of your inquiry"
             disabled={isLoading}
           />
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="message" className="text-toolnest-text font-medium text-sm">
-            Message *
-          </Label>
+          <Label htmlFor="message">Message *</Label>
           <Textarea
             id="message"
             name="message"
+            placeholder='Describe your issue, suggestion, or question in detail...'
+            rows={5}
             value={formData.message}
             onChange={handleInputChange}
-            placeholder="Describe your issue, suggestion, or question in detail..."
             disabled={isLoading}
-            rows={5}
-            aria-required="true"
-            aria-invalid={!!errors.message}
-            aria-describedby={errors.message ? "message-error" : undefined}
           />
           {errors.message && (
-            <p id="message-error" className="text-red-500 text-xs mt-1" role="alert">
-              {errors.message}
-            </p>
+            <p className="text-red-500 text-xs">{errors.message}</p>
           )}
         </div>
 
-        <motion.div whileHover={{ scale: isLoading ? 1 : 1.02 }} whileTap={{ scale: isLoading ? 1 : 0.98 }}>
-          <Button 
-            type="submit" 
-            className="w-full h-12 bg-toolnest-accent hover:bg-toolnest-accent/90 text-white text-base font-semibold transition-all duration-200"
-            disabled={isLoading}
-            aria-label={isLoading ? "Sending your message" : "Submit contact form"}
-          >
-            {isLoading ? (
-              <div className="flex items-center gap-2">
-                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" aria-hidden="true" />
-                Sending...
-              </div>
-            ) : (
-              'Send Message'
-            )}
-          </Button>
-        </motion.div>
-        
-        <p className="text-xs text-toolnest-text/50 text-center">
-          By submitting this form, you agree to our{' '}
-          <a href="/privacy" className="text-toolnest-accent hover:underline">
-            Privacy Policy
-          </a>
-          . We never share your personal information.
-        </p>
+        <Button
+          type="submit"
+          disabled={isLoading}
+          className="w-full h-12"
+        >
+          {isLoading ? 'Sending...' : 'Send Message'}
+        </Button>
+        <p className="text-xs text-toolnest-text/50 text-center"> By submitting this form, you agree to our{' '} <a href="/privacy" className="text-toolnest-accent hover:underline"> Privacy Policy </a> . We never share your personal information. </p>
       </form>
     </motion.article>
   );
