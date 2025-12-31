@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { Facebook, Instagram, Send, Mail, Heart, ArrowRight, Github, MessageCircle, ArrowUp } from "lucide-react";
+import { Facebook, Instagram,Twitter,Youtube,Linkedin, Send, Mail, Heart, ArrowRight, Github, MessageCircle, ArrowUp } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const Footer = () => {
@@ -364,7 +364,44 @@ const Footer = () => {
                   >
                     <Facebook size={16} />
                   </motion.a>
+                  {/* Twitter / X */}
+                  <motion.a
+                    href="https://twitter.com/grocktool"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="GrockTool on Twitter"
+                    className="hover:text-foreground transition-colors duration-300"
+                    whileHover={{ y: -2, scale: 1.1 }}
+                  >
+                    <Twitter size={16} />
+                  </motion.a>
+
+                  {/* YouTube */}
+                  <motion.a
+                    href="https://www.youtube.com/@grocktool"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="GrockTool on YouTube"
+                    className="hover:text-foreground transition-colors duration-300"
+                    whileHover={{ y: -2, scale: 1.1 }}
+                  >
+                    <Youtube size={16} />
+                  </motion.a>
+
+                  {/* LinkedIn */}
+                  <motion.a
+                    href="https://www.linkedin.com/in/grocktool"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="GrockTool on LinkedIn"
+                    className="hover:text-foreground transition-colors duration-300"
+                    whileHover={{ y: -2, scale: 1.1 }}
+                  >
+                    <Linkedin size={16} />
+                  </motion.a>
+
                 </div>
+
 
                 {/* Scroll to Top Button */}
                 <motion.button
