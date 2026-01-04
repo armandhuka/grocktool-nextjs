@@ -19,9 +19,9 @@ const CategoriesSection = () => {
           viewport={{ once: true, amount: 0.3 }}
           className="text-center mb-16"
         >
-          <h1 className="text-4xl md:text-5xl font-semibold text-toolnest-text mb-6">
+          <h2 className="text-4xl md:text-5xl font-semibold text-toolnest-text mb-6">
             Explore Our Tools by Category
-          </h1>
+          </h2>
           <p className="text-toolnest-text/65 text-lg mb-8 max-w-3xl mx-auto">
             Discover specialized tools organized into comprehensive categories for efficient workflow management and productivity enhancement
           </p>

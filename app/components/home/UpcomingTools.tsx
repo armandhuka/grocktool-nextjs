@@ -29,13 +29,13 @@ const UpcomingTools = () => {
             <span className="w-2 h-2 bg-accent-foreground rounded-full animate-pulse"></span>
           </div>
 
-          <h1 className="text-5xl md:text-6xl font-bold mb-6">
+          <h2 className="text-5xl md:text-6xl font-bold mb-6">
             <span className="gradient-text bg-gradient-to-r from-primary via-accent to-primary bg-[length:200%_auto] animate-gradient">
               Premium Tools
             </span>
             <br />
             <span className="text-foreground">Coming Soon</span>
-          </h1>
+          </h2>
 
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
             Be the first to experience our next-generation tools. These premium utilities are

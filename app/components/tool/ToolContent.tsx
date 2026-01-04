@@ -10,8 +10,8 @@ import ToolGrid from './ToolGrid';
 import NoToolsFound from './NoToolsFound';
 
 interface ToolContentProps {
-  toolId?: string;     // single tool page
-  category?: string;   // category page
+  toolId?: string; 
+  category?: string; 
 }
 
 const ToolContent: React.FC<ToolContentProps> = ({ toolId, category }) => {
