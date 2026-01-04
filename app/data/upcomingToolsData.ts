@@ -1,8 +1,38 @@
 export const upcomingToolsData = [
-  { name: 'QR Code Generator', description: 'Generate custom QR codes instantly.', category: 'Developer Tool', color: 'bg-indigo-100 text-indigo-600' },
-  { name: 'Resume Builder', description: 'Create professional resumes in minutes.', category: 'Resume Tool', color: 'bg-orange-100 text-orange-600' },
-  { name: 'CSS Box Shadow Generator', description: 'Design shadows visually.', category: 'Developer Tool', color: 'bg-indigo-100 text-indigo-600' },
-  { name: 'Username Generator', description: 'Smart and catchy usernames.', category: 'Text Tool', color: 'bg-green-100 text-green-600' },
-  { name: 'Invoice Maker', description: 'Create quick downloadable invoices.', category: 'Business Tool', color: 'bg-pink-100 text-pink-600' },
-  { name: 'JSON Formatter', description: 'Prettify and validate JSON code.', category: 'Developer Tool', color: 'bg-indigo-100 text-indigo-600' }
+  {
+    name: 'JSON to CSV Converter',
+    description: 'Convert JSON data into CSV format instantly in your browser.',
+    category: 'Developer Tool',
+    color: 'bg-indigo-100 text-indigo-600'
+  },
+  {
+    name: 'Base64 Encoder / Decoder',
+    description: 'Encode or decode Base64 strings instantly without any server.',
+    category: 'Developer Tool',
+    color: 'bg-indigo-100 text-indigo-600'
+  },
+  {
+    name: 'JWT Decoder',
+    description: 'Decode JWT tokens and view payload securely in your browser.',
+    category: 'Developer Tool',
+    color: 'bg-indigo-100 text-indigo-600'
+  },
+  {
+    name: 'Regex Tester',
+    description: 'Test and debug regular expressions in real time.',
+    category: 'Developer Tool',
+    color: 'bg-indigo-100 text-indigo-600'
+  },
+  {
+    name: 'UUID Generator',
+    description: 'Generate secure UUIDs instantly using browser-based logic.',
+    category: 'Developer Tool',
+    color: 'bg-indigo-100 text-indigo-600'
+  },
+  {
+    name: 'Unix Timestamp Converter',
+    description: 'Convert Unix timestamps to human-readable dates and back.',
+    category: 'Developer Tool',
+    color: 'bg-indigo-100 text-indigo-600'
+  }
 ];

@@ -26,7 +26,7 @@ const TrustedSection = () => {
             </div>
             <div className="text-center">
               <div className="text-3xl font-bold text-toolnest-text">150+</div>
-              <div className="text-toolnest-text/70">Tools Available</div>
+              <div className="text-toolnest-text/70">Tools Available in Features</div>
             </div>
             <div className="text-center">
               <div className="text-3xl font-bold text-toolnest-text">99.9%</div>

@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 import HeroSection from './components/home/HeroSection'
+import CategoriesSection from './components/home/CategoriesSection'
 import FeaturedTools from './components/home/FeaturedTools'
+import UpcomingTools from './components/home/UpcomingTools'
 import TrustedSection from './components/home/TrustedSection'
 import HowItWorks from './components/home/HowItWorks'
 import NewsletterSection from './components/home/NewsletterSection'
@@ -64,7 +66,9 @@ export default function HomePage() {
       {/* Main Visible Content */}
       <main className="min-h-screen bg-toolnest-bg font-inter">
         <HeroSection />
+        <CategoriesSection/>
         <FeaturedTools />
+        <UpcomingTools/>
         <TrustedSection />
         <HowItWorks />
         <NewsletterSection />

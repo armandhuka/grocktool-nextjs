@@ -21,7 +21,7 @@ export default function FeaturedTools() {
     if (!el) return;
 
     const update = () => {
-      const cardWidth = 280 + 28;
+      const cardWidth = 320 + 32; // Updated width
       setActiveIndex(Math.round(el.scrollLeft / cardWidth));
     };
 
@@ -33,7 +33,7 @@ export default function FeaturedTools() {
     const el = containerRef.current as HTMLDivElement | null;
     if (!el) return;
 
-    const cardWidth = 280 + 28;
+    const cardWidth = 320 + 32; // Updated width
     el.scrollTo({ left: i * cardWidth, behavior: 'smooth' });
   };
 
@@ -41,21 +41,25 @@ export default function FeaturedTools() {
     <section className="py-24 px-6 bg-background" aria-labelledby="featured-tools-heading">
       <div className="max-w-7xl mx-auto">
 
-        {/* Title */}
-        <motion.h2
-          id="featured-tools-heading"
+        {/* Title - Categories section ke similar */}
+        <motion.div
           initial={{ opacity: 0, y: 18 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          viewport={{ once: true }}
-          className="text-4xl md:text-5xl font-semibold text-foreground text-center mb-6"
+          viewport={{ once: true, amount: 0.3 }}
+          className="text-center mb-16"
         >
-          Featured Tools
-        </motion.h2>
-
-        <p className="text-muted-foreground text-center mb-16 text-lg">
-          Handpicked tools selected for performance and reliability
-        </p>
+          <h2 
+            id="featured-tools-heading"
+            className="text-4xl md:text-5xl font-semibold text-foreground mb-6"
+          >
+            Featured Tools
+          </h2>
+          <p className="text-muted-foreground text-lg mb-8 max-w-3xl mx-auto">
+            Handpicked tools selected for performance and reliability
+          </p>
+          <div className="w-24 h-1 bg-accent rounded-full mx-auto"></div>
+        </motion.div>
 
         {/* Fade gradients */}
         <div className="relative">
@@ -65,7 +69,7 @@ export default function FeaturedTools() {
           {/* Scroll container */}
           <div
             ref={containerRef}
-            className="flex gap-7 overflow-x-auto snap-x snap-mandatory custom-scrollbar pb-8"
+            className="flex gap-8 overflow-x-auto snap-x snap-mandatory custom-scrollbar pb-8"
             style={{ scrollBehavior: 'smooth' }}
             role="list"
             aria-label="Featured tools carousel"
@@ -73,17 +77,13 @@ export default function FeaturedTools() {
             {featured.map((tool, i) => (
               <motion.article
                 key={tool.id}
-                initial={{ opacity: 0, y: 16 }}
+                initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.45, delay: i * 0.08 }}
-                viewport={{ once: true }}
-                whileHover={{ scale: 1.05 }}
+                transition={{ duration: 0.5, delay: i * 0.08 }}
+                viewport={{ once: true, amount: 0.3 }}
+                whileHover={{ y: -8, transition: { duration: 0.2 } }}
                 onClick={() => handleToolClick(tool)}
-                className="snap-start mt-5 min-w-[280px] glass rounded-2xl p-7 cursor-pointer 
-                transition-all shadow-sm
-                hover:shadow-lg hover:shadow-[hsl(var(--accent))]/10
-                hover:border-accent/40 hover:scale-[1.02]
-                focus-within:ring-2 focus-within:ring-accent focus-within:ring-offset-2"
+                className="group relative overflow-hidden snap-start mt-5 min-w-[320px] cursor-pointer"
                 role="listitem"
                 tabIndex={0}
                 onKeyDown={(e) => {
@@ -92,30 +92,89 @@ export default function FeaturedTools() {
                   }
                 }}
               >
-                {/* Icon + Title */}
-                <div className="flex items-center mb-5">
-                  <div className="w-12 h-12 rounded-xl flex items-center justify-center bg-accent text-accent-foreground text-xl font-semibold shadow-sm">
-                    {getCategoryIcon(tool.category)}
+                {/* Background Glow Effect */}
+                <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+
+                {/* Main Card - Categories section ke similar design */}
+                <div className="relative backdrop-blur-xl bg-card border border-border rounded-2xl p-8 h-full
+                              group-hover:border-accent/50 group-hover:shadow-2xl 
+                              group-hover:shadow-accent/20 transition-all duration-300">
+                  
+                  {/* Icon + Title - Categories section ke similar */}
+                  <div className="flex items-start mb-6">
+                    <div className="w-16 h-16 rounded-xl flex items-center justify-center text-2xl bg-accent text-accent-foreground shadow-sm transition-all group-hover:scale-110">
+                      {getCategoryIcon(tool.category)}
+                    </div>
+                    <div className="ml-5">
+                      <h3 className="text-xl font-semibold text-foreground mb-2">
+                        {tool.name}
+                      </h3>
+                      <div className="flex items-center">
+                        <span className="text-sm font-medium text-accent bg-accent/10 px-3 py-1 rounded-full">
+                          {tool.category}
+                        </span>
+                      </div>
+                    </div>
                   </div>
-                  <h3 className="text-foreground text-xl font-medium ml-4">
-                    {tool.name}
-                  </h3>
+
+                  {/* Description */}
+                  <div className="mb-8">
+                    <p className="text-muted-foreground text-sm mb-4 line-clamp-3">
+                      {tool.description}
+                    </p>
+                    
+                    {/* Features Info with Animation */}
+                    <div className="flex items-center justify-between bg-secondary/30 rounded-lg p-3">
+                      <span className="text-sm font-medium text-foreground">
+                        Status
+                      </span>
+                      <div className="flex items-center">
+                        <span className="text-sm font-semibold text-accent mr-2">
+                          Available
+                        </span>
+                        <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Features List - Categories section ke similar */}
+                  <ul className="space-y-2 mb-8">
+                    <li className="flex items-center text-sm text-muted-foreground">
+                      <div className="w-1.5 h-1.5 bg-accent rounded-full mr-3"></div>
+                      Real-time processing
+                    </li>
+                    <li className="flex items-center text-sm text-muted-foreground">
+                      <div className="w-1.5 h-1.5 bg-accent rounded-full mr-3"></div>
+                      No installation needed
+                    </li>
+                    <li className="flex items-center text-sm text-muted-foreground">
+                      <div className="w-1.5 h-1.5 bg-accent rounded-full mr-3"></div>
+                      Secure data handling
+                    </li>
+                  </ul>
+
+                  {/* CTA Button - Categories section ke similar */}
+                  <button 
+                    className="w-full bg-accent text-accent-foreground font-semibold py-3.5 rounded-xl 
+                              hover:opacity-90 active:scale-[0.98] transition-all duration-200
+                              flex items-center justify-center group/btn"
+                    aria-label={`Try ${tool.name} tool`}
+                  >
+                    <span className="mr-2">Try Now</span>
+                    <svg 
+                      className="w-4 h-4 transform group-hover/btn:translate-x-1 transition-transform" 
+                      fill="none" 
+                      stroke="currentColor" 
+                      viewBox="0 0 24 24"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                    </svg>
+                  </button>
+
+                  {/* Hover Effect Line - Categories section ke similar */}
+                  <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-accent to-transparent 
+                                transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
                 </div>
-
-                {/* Description */}
-                <p className="text-muted-foreground text-sm mb-7 line-clamp-3">
-                  {tool.description}
-                </p>
-
-                {/* Button */}
-                <button 
-                  className="w-full bg-accent text-accent-foreground font-medium py-2.5 rounded-xl transition-all 
-                  hover:opacity-90 hover:shadow-md hover:shadow-accent/20
-                  focus:outline-none focus:ring-2 focus:ring-accent-foreground focus:ring-offset-2"
-                  aria-label={`Try ${tool.name} tool`}
-                >
-                  Try Now
-                </button>
               </motion.article>
             ))}
           </div>
@@ -141,6 +200,5 @@ export default function FeaturedTools() {
         </div>
       </div>
     </section>
-    
   );
 }
