@@ -133,7 +133,7 @@ const ToolCard: React.FC<ToolCardProps> = ({
 
       <button
         onClick={tryNow}
-        className="w-full bg-[#d8a188] text-white py-2.5 rounded-lg text-sm"
+        className="w-full bg-[hsl(var(--accent))] text-white py-2.5 rounded-lg text-sm"
       >
         Try Now
       </button>

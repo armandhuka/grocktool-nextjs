@@ -267,12 +267,12 @@ const WeightConverter = () => {
                           value={inputValue}
                           onChange={(e) => setInputValue(e.target.value)}
                           placeholder="Enter weight value"
-                          className="flex-1 p-3 sm:p-4 text-base bg-input border border-border rounded-lg sm:rounded-xl focus:outline-none focus:ring-1 sm:focus:ring-2 focus:ring-ring focus:ring-opacity-50"
+                          className="flex-1 p-3 sm:p-4 text-base bg-muted border border-border rounded-lg sm:rounded-xl focus:outline-none focus:ring-1 sm:focus:ring-2 focus:ring-ring focus:ring-opacity-50"
                         />
                         <select
                           value={fromUnit}
                           onChange={(e) => setFromUnit(e.target.value)}
-                          className="w-24 sm:w-28 p-3 sm:p-4 bg-input border border-border rounded-lg sm:rounded-xl focus:outline-none focus:ring-1 sm:focus:ring-2 focus:ring-ring focus:ring-opacity-50 text-sm sm:text-base"
+                          className="w-24 sm:w-28 p-3 sm:p-4 bg-muted border border-border rounded-lg sm:rounded-xl focus:outline-none focus:ring-1 sm:focus:ring-2 focus:ring-ring focus:ring-opacity-50 text-sm sm:text-base"
                         >
                           {Object.entries(weightUnits).map(([key, unit]) => (
                             <option key={key} value={key}>{unit.name} ({unit.abbreviation})</option>
@@ -317,7 +317,7 @@ const WeightConverter = () => {
                         <select
                           value={toUnit}
                           onChange={(e) => setToUnit(e.target.value)}
-                          className="w-24 sm:w-28 p-3 sm:p-4 bg-input border border-border rounded-lg sm:rounded-xl focus:outline-none focus:ring-1 sm:focus:ring-2 focus:ring-ring focus:ring-opacity-50 text-sm sm:text-base"
+                          className="w-24 sm:w-28 p-3 sm:p-4 bg-muted border border-border rounded-lg sm:rounded-xl focus:outline-none focus:ring-1 sm:focus:ring-2 focus:ring-ring focus:ring-opacity-50 text-sm sm:text-base"
                         >
                           {Object.entries(weightUnits).map(([key, unit]) => (
                             <option key={key} value={key}>{unit.name} ({unit.abbreviation})</option>
