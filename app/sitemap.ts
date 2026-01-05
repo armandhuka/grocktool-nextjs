@@ -74,6 +74,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // PDF Tools
   const pdfTools = getToolPages('PDF Tools')
 
+    // PDF Tools
+  const developerTools = getToolPages('Developer Tools')
+
   // Combine all URLs
   return [
     ...mainPages,
@@ -85,5 +88,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...healthTools,
     ...qrBarcodeTools,
     ...pdfTools,
+    ...developerTools
   ]
 }
