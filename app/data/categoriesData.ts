@@ -7,4 +7,11 @@ export const categoriesData = [
   { name: 'Health Tools', icon: '💪', description: '8+ tools', color: 'bg-cyan-100 text-cyan-600' },
   { name: 'Qr code', icon: '⚡', description: 'Smart utilities', color: 'bg-indigo-100 text-indigo-600' },
   { name: 'PDF Tools', icon: '📄', description: '9+ tools', color: 'bg-red-100 text-red-600' },
+  {
+    name: 'Developer Tools',
+    icon: '👨‍💻',
+    description: '6+ tools',
+    color: 'bg-slate-100 text-slate-700'
+  },
+
 ];

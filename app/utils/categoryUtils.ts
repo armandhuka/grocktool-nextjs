@@ -8,6 +8,7 @@ export const getCategoryIcon = (category: string) => {
     'Health Tools': '💪',
     'QR & Barcode Tools': '📱',
     'PDF Tools': '📄',
+    'Developer Tools': '👨‍💻',
   };
   return icons[category] || '🔧';
 };
@@ -21,6 +22,7 @@ export const getCategoryColor = (category: string) => {
     'Math Tools': 'bg-red-100 text-red-600',
     'Health Tools': 'bg-cyan-100 text-cyan-600',
     'QR & Barcode Tools': 'bg-teal-100 text-teal-800',
+    'Developer Tools': 'bg-slate-100 text-slate-700',
   };
   return colors[category] || 'bg-gray-100 text-gray-600';
 };

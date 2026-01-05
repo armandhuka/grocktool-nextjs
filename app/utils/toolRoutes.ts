@@ -81,6 +81,14 @@ export const getToolRoute = (toolName: string, category: string) => {
       'PDF Watermark': '/PDF-Tools/pdf-watermark',
       'PDF Page Reorder': '/PDF-Tools/pdf-reorder',
     },
+    'Developer Tools': {
+      'JSON to CSV Converter': '/developer-tools/json-to-csv',
+      'Base64 Encoder / Decoder': '/developer-tools/base64-encoder-decoder',
+      'JWT Decoder': '/developer-tools/jwt-decoder',
+      'Regex Tester': '/developer-tools/regex-tester',
+      'UUID Generator': '/developer-tools/uuid-generator',
+      'Unix Timestamp Converter': '/developer-tools/unix-timestamp'
+    },
   };
   return routes[category]?.[toolName] || null;
 };

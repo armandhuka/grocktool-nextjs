@@ -623,5 +623,65 @@ export const toolsData: Tool[] = [
     iconColor: "#84CC16",
     icon: "📑",
     status: "available"
+  },
+  {
+    id: 63,
+    name: "JSON to CSV Converter",
+    description: "Convert JSON data into CSV format instantly",
+    category: "Developer Tools",
+    path: "/developer-tools/json-to-csv",
+    iconColor: "#0EA5E9",
+    icon: "🔁",
+    status: "available"
+  },
+  {
+    id: 64,
+    name: "Base64 Encoder / Decoder",
+    description: "Encode or decode Base64 strings easily",
+    category: "Developer Tools",
+    path: "/developer-tools/base64-encoder-decoder",
+    iconColor: "#6366F1",
+    icon: "🔐",
+    status: "available"
+  },
+  {
+    id: 65,
+    name: "JWT Decoder",
+    description: "Decode and inspect JSON Web Tokens",
+    category: "Developer Tools",
+    path: "/developer-tools/jwt-decoder",
+    iconColor: "#F59E0B",
+    icon: "🪪",
+    status: "available"
+  },
+  {
+    id: 66,
+    name: "Regex Tester",
+    description: "Test and validate regular expressions",
+    category: "Developer Tools",
+    path: "/developer-tools/regex-tester",
+    iconColor: "#EC4899",
+    icon: "🧪",
+    status: "available"
+  },
+  {
+    id: 67,
+    name: "UUID Generator",
+    description: "Generate unique UUIDs instantly",
+    category: "Developer Tools",
+    path: "/developer-tools/uuid-generator",
+    iconColor: "#22C55E",
+    icon: "🆔",
+    status: "available"
+  },
+  {
+    id: 68,
+    name: "Unix Timestamp Converter",
+    description: "Convert Unix timestamps to readable dates",
+    category: "Developer Tools",
+    path: "/developer-tools/unix-timestamp",
+    iconColor: "#64748B",
+    icon: "⏱️",
+    status: "available"
   }
 ];
