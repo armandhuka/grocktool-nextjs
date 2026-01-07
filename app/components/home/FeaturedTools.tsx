@@ -63,8 +63,8 @@ export default function FeaturedTools() {
 
         {/* Fade gradients */}
         <div className="relative">
-          <div className="pointer-events-none absolute left-0 top-0 h-full w-24 bg-gradient-to-r from-background to-transparent z-10" aria-hidden="true"></div>
-          <div className="pointer-events-none absolute right-0 top-0 h-full w-24 bg-gradient-to-l from-background to-transparent z-10" aria-hidden="true"></div>
+          <div className="pointer-events-none absolute left-0 top-0 h-full w-3 bg-gradient-to-r from-background to-transparent z-10" aria-hidden="true"></div>
+          <div className="pointer-events-none absolute right-0 top-0 h-full w-3 bg-gradient-to-l from-background to-transparent z-10" aria-hidden="true"></div>
 
           {/* Scroll container */}
           <div

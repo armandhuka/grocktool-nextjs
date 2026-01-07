@@ -1,56 +1,38 @@
 export const upcomingToolsData = [
   {
-    name: 'JSON Formatter & Validator',
-    description: 'Format, beautify, and validate JSON data with real-time error detection.',
-    category: 'Developer Tool',
-    color: 'bg-indigo-100 text-indigo-600'
+    name: 'Stock Profit & Loss Calculator',
+    description: 'Calculate profit or loss from stock trades based on buy price, sell price, and quantity.',
+    category: 'Share Market Tool',
+    color: 'bg-emerald-100 text-emerald-600'
   },
   {
-    name: 'JSON to XML Converter',
-    description: 'Convert JSON data to XML format quickly and accurately in your browser.',
-    category: 'Developer Tool',
-    color: 'bg-indigo-100 text-indigo-600'
+    name: 'Risk Reward Ratio Calculator',
+    description: 'Evaluate trade risk and reward using entry price, stop loss, and target.',
+    category: 'Share Market Tool',
+    color: 'bg-emerald-100 text-emerald-600'
   },
   {
-    name: 'HTML Minifier',
-    description: 'Minify HTML code to reduce file size and improve load performance.',
-    category: 'Developer Tool',
-    color: 'bg-indigo-100 text-indigo-600'
+    name: 'Position Size Calculator',
+    description: 'Determine ideal trade quantity based on capital, risk percentage, and stop loss.',
+    category: 'Share Market Tool',
+    color: 'bg-emerald-100 text-emerald-600'
   },
   {
-    name: 'CSS Minifier',
-    description: 'Compress CSS files instantly for faster website performance.',
-    category: 'Developer Tool',
-    color: 'bg-indigo-100 text-indigo-600'
+    name: 'SIP Return Calculator',
+    description: 'Estimate long-term returns on monthly SIP investments with expected growth rate.',
+    category: 'Share Market Tool',
+    color: 'bg-emerald-100 text-emerald-600'
   },
   {
-    name: 'JavaScript Minifier',
-    description: 'Minify JavaScript code safely to optimize speed and reduce payload size.',
-    category: 'Developer Tool',
-    color: 'bg-indigo-100 text-indigo-600'
+    name: 'Brokerage & Charges Calculator',
+    description: 'Calculate brokerage, taxes, and net profit for equity trades.',
+    category: 'Share Market Tool',
+    color: 'bg-emerald-100 text-emerald-600'
   },
   {
-    name: 'URL Encoder / Decoder',
-    description: 'Encode or decode URLs to ensure safe data transmission.',
-    category: 'Developer Tool',
-    color: 'bg-indigo-100 text-indigo-600'
-  },
-  {
-    name: 'HTML Escape / Unescape',
-    description: 'Escape or unescape HTML entities to prevent rendering issues.',
-    category: 'Developer Tool',
-    color: 'bg-indigo-100 text-indigo-600'
-  },
-  {
-    name: 'Lorem Ipsum Generator',
-    description: 'Generate placeholder Lorem Ipsum text for design and layout testing.',
-    category: 'Developer Tool',
-    color: 'bg-indigo-100 text-indigo-600'
-  },
-  {
-    name: 'Color Code Converter (HEX ↔ RGB ↔ HSL)',
-    description: 'Convert color codes between HEX, RGB, and HSL formats instantly.',
-    category: 'Developer Tool',
-    color: 'bg-indigo-100 text-indigo-600'
+    name: 'Pivot Point Calculator',
+    description: 'Generate pivot points and support-resistance levels for intraday trading.',
+    category: 'Share Market Tool',
+    color: 'bg-emerald-100 text-emerald-600'
   }
 ];

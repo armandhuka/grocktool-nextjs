@@ -1,6 +1,12 @@
 import { Check, Zap, BookOpen, Search } from 'lucide-react';
 
-export const featuresData = [
+export interface Feature {
+  icon: any; // Lucide icon component
+  title: string;
+  description: string;
+}
+
+export const featuresData: Feature[] = [
   {
     icon: Check,
     title: 'All Free, No Sign-up',

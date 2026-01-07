@@ -626,6 +626,16 @@ export const toolsData: Tool[] = [
   },
   {
     id: 63,
+    name: "JSON Formatter & Validator",
+    description: "Format, prettify, and validate JSON data",
+    category: "Developer Tools",
+    path: "/developer-tools/json-formatter",
+    iconColor: "#3B82F6",
+    icon: "🧾",
+    status: "available"
+  },
+  {
+    id: 64,
     name: "JSON to CSV Converter",
     description: "Convert JSON data into CSV format instantly",
     category: "Developer Tools",
@@ -635,7 +645,18 @@ export const toolsData: Tool[] = [
     status: "available"
   },
   {
-    id: 64,
+    id: 65,
+    name: "JSON to XML Converter",
+    description: "Convert JSON data into XML format",
+    category: "Developer Tools",
+    path: "/developer-tools/json-to-xml",
+    iconColor: "#0EA5E9",
+    icon: "🔁",
+    status: "available"
+  },
+
+  {
+    id: 66,
     name: "Base64 Encoder / Decoder",
     description: "Encode or decode Base64 strings easily",
     category: "Developer Tools",
@@ -645,7 +666,27 @@ export const toolsData: Tool[] = [
     status: "available"
   },
   {
-    id: 65,
+    id: 67,
+    name: "URL Encoder / Decoder",
+    description: "Encode or decode URLs safely",
+    category: "Developer Tools",
+    path: "/developer-tools/url-encoder-decoder",
+    iconColor: "#10B981",
+    icon: "🔗",
+    status: "available"
+  },
+  {
+    id: 68,
+    name: "HTML Escape / Unescape",
+    description: "Escape or unescape HTML entities",
+    category: "Developer Tools",
+    path: "/developer-tools/html-escape-unescape",
+    iconColor: "#8B5CF6",
+    icon: "🔐",
+    status: "available"
+  },
+  {
+    id: 69,
     name: "JWT Decoder",
     description: "Decode and inspect JSON Web Tokens",
     category: "Developer Tools",
@@ -654,8 +695,40 @@ export const toolsData: Tool[] = [
     icon: "🪪",
     status: "available"
   },
+
   {
-    id: 66,
+    id: 70,
+    name: "HTML Minifier",
+    description: "Minify HTML by removing whitespace and comments",
+    category: "Developer Tools",
+    path: "/developer-tools/html-minifier",
+    iconColor: "#F97316",
+    icon: "📄",
+    status: "available"
+  },
+  {
+    id: 71,
+    name: "CSS Minifier",
+    description: "Minify CSS files for faster load times",
+    category: "Developer Tools",
+    path: "/developer-tools/css-minifier",
+    iconColor: "#2563EB",
+    icon: "🎨",
+    status: "available"
+  },
+  {
+    id: 72,
+    name: "JavaScript Minifier",
+    description: "Compress JavaScript code for production use",
+    category: "Developer Tools",
+    path: "/developer-tools/javascript-minifier",
+    iconColor: "#FACC15",
+    icon: "⚡",
+    status: "available"
+  },
+
+  {
+    id: 73,
     name: "Regex Tester",
     description: "Test and validate regular expressions",
     category: "Developer Tools",
@@ -665,7 +738,7 @@ export const toolsData: Tool[] = [
     status: "available"
   },
   {
-    id: 67,
+    id: 74,
     name: "UUID Generator",
     description: "Generate unique UUIDs instantly",
     category: "Developer Tools",
@@ -675,13 +748,34 @@ export const toolsData: Tool[] = [
     status: "available"
   },
   {
-    id: 68,
+    id: 75,
     name: "Unix Timestamp Converter",
     description: "Convert Unix timestamps to readable dates",
     category: "Developer Tools",
     path: "/developer-tools/unix-timestamp",
     iconColor: "#64748B",
     icon: "⏱️",
+    status: "available"
+  },
+
+  {
+    id: 76,
+    name: "Lorem Ipsum Generator",
+    description: "Generate placeholder Lorem Ipsum text",
+    category: "Developer Tools",
+    path: "/developer-tools/lorem-ipsum-generator",
+    iconColor: "#64748B",
+    icon: "✍️",
+    status: "available"
+  },
+  {
+    id: 77,
+    name: "Color Code Converter",
+    description: "Convert colors between HEX, RGB, and HSL",
+    category: "Developer Tools",
+    path: "/developer-tools/color-code-converter",
+    iconColor: "#EC4899",
+    icon: "🎯",
     status: "available"
   }
 ];

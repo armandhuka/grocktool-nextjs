@@ -87,7 +87,16 @@ export const getToolRoute = (toolName: string, category: string) => {
       'JWT Decoder': '/developer-tools/jwt-decoder',
       'Regex Tester': '/developer-tools/regex-tester',
       'UUID Generator': '/developer-tools/uuid-generator',
-      'Unix Timestamp Converter': '/developer-tools/unix-timestamp'
+      'Unix Timestamp Converter': '/developer-tools/unix-timestamp',
+      'JSON Formatter & Validator': '/developer-tools/json-formatter',
+      'JSON to XML Converter': '/developer-tools/json-to-xml',
+      'HTML Minifier': '/developer-tools/html-minifier',
+      'CSS Minifier': '/developer-tools/css-minifier',
+      'JavaScript Minifier': '/developer-tools/javascript-minifier',
+      'URL Encoder / Decoder': '/developer-tools/url-encoder-decoder',
+      'HTML Escape / Unescape': '/developer-tools/html-escape-unescape',
+      'Lorem Ipsum Generator': '/developer-tools/lorem-ipsum-generator',
+      'Color Code Converter': '/developer-tools/color-code-converter'
     },
   };
   return routes[category]?.[toolName] || null;
