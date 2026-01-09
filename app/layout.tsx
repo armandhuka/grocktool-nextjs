@@ -8,7 +8,7 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import { ThemeProvider } from "./components/ThemeProvider";
 
-const inter = Inter({ 
+const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
 });
@@ -68,6 +68,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             ],
           })}
         </Script>
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5228247979418936"
+          crossOrigin="anonymous"></script>
       </head>
 
       <body className={`${inter.variable} font-sans antialiased`}>

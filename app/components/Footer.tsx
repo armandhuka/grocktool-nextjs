@@ -11,7 +11,7 @@ const Footer = () => {
   const [message, setMessage] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-
+  
   const navItems = [
     { name: "Home", path: "/" },
     { name: "About", path: "/about" },
