@@ -17,6 +17,8 @@ const Footer = () => {
     { name: "About", path: "/about" },
     { name: "Tools", path: "/tools" },
     { name: "Contact", path: "/contact" },
+    { name: "privacy-policy", path: "/privacy-policy" },
+    { name: "terms&conditions", path: "/terms-and-conditions" },
   ];
 
   const toolCategories = [
