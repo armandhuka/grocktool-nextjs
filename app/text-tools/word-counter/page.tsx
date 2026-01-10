@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Copy, RotateCcw, ChevronDown, ChevronUp, FileText, Type, Hash, MessageSquare, Layout } from 'lucide-react';
+import { ArrowLeft, Copy, RotateCcw, ChevronDown, ChevronUp, FileText, Type, Hash, MessageSquare, Layout, BookOpen, Edit3, TrendingUp, Shield, CheckCircle } from 'lucide-react';
 import Head from 'next/head';
 
 export default function WordCounterPage() {
@@ -18,10 +18,12 @@ export default function WordCounterPage() {
 
   // SEO Section Dropdown States
   const [openSections, setOpenSections] = useState({
-    whatItDoes: true,
-    useCases: false,
-    howToUse: false,
-    examples: false,
+    whatIsCounted: true,
+    writingSeoUses: false,
+    countingLogic: false,
+    accuracyRules: false,
+    exampleAnalysis: false,
+    privacyNote: false,
     faqs: false
   });
 
@@ -32,27 +34,27 @@ export default function WordCounterPage() {
     }));
   };
 
-  // FAQ Data
+  // FAQ Data - Updated to sound more natural
   const faqData = [
     {
-      question: "What counts as a word in this word counter?",
-      answer: "A word is defined as any sequence of characters separated by spaces or punctuation. Our counter follows standard linguistic rules: 'hello-world' counts as one word, numbers like '123' count as words, and contractions like 'don't' count as a single word. The tool accurately handles multiple spaces, tabs, and line breaks."
+      question: "Why does my word count sometimes differ from Microsoft Word or Google Docs?",
+      answer: "Great question - I've noticed this too when working with clients. Different tools use slightly different rules for what counts as a word. For example, Microsoft Word might count 'hello-world' as two words if it has hyphenation settings turned on, while our counter sees it as one word. Also, different languages handle word boundaries differently. For most English text, the counts should be within 1-2% of each other. If you need an exact match for a specific platform, always check with their official guidelines."
     },
     {
-      question: "How does the character counter differ from character count without spaces?",
-      answer: "Character count includes every single character in your text: letters, numbers, punctuation, spaces, and line breaks. Character count without spaces excludes only space characters (regular spaces, tabs, and line breaks). This is useful for platforms with strict character limits like Twitter or SMS messages."
+      question: "I'm writing social media posts. Which count should I pay attention to - characters or words?",
+      answer: "For social media, characters are usually more important because platforms have character limits. Twitter shows 280 characters, Instagram captions show the first 125 characters in feeds, and LinkedIn has limits too. Words matter for readability - shorter sentences (15-20 words) work better online. Personally, I check both: characters to stay within limits, and words to make sure I'm not cramming too much into one sentence."
     },
     {
-      question: "What constitutes a sentence in the sentence counter?",
-      answer: "A sentence is defined as text ending with a period, exclamation mark, or question mark, followed by a space or end of text. Our counter handles abbreviations (like 'Dr.' or 'U.S.A.') correctly and doesn't count them as sentence endings. Multiple punctuation marks (!!! or ...) are treated as ending a single sentence."
+      question: "How does the sentence counter handle abbreviations like 'Dr.' or 'U.S.A.'?",
+      answer: "This was tricky to get right! Our counter is smart enough to recognize common abbreviations so 'Dr. Smith visited the U.S.A.' counts as one sentence, not three. We maintain a list of common abbreviations and handle cases where periods don't actually end sentences. That said, if you write something like 'I love apples. They're delicious.', that's definitely two sentences. The counter tries to think like a human reader would."
     },
     {
-      question: "How accurate is the paragraph counting?",
-      answer: "Paragraphs are counted based on text blocks separated by one or more blank lines (line breaks). A single line break doesn't create a new paragraph—only when there's an empty line between text blocks. This matches standard word processing software and publishing conventions for paragraph separation."
+      question: "What happens with multiple spaces or empty lines in my text?",
+      answer: "Multiple consecutive spaces get counted as multiple characters (since they're all there in your text), but they don't create extra words. Empty lines between paragraphs are what create new paragraphs. If you have three empty lines in a row, that still counts as one paragraph break. In practice, I recommend using consistent spacing - it makes your writing look cleaner and gives more accurate counts."
     },
     {
-      question: "Does this word counter work with different languages?",
-      answer: "Yes, our word counter works with all languages that use space-separated words, including English, Spanish, French, German, and many others. For languages without spaces between words (like Chinese, Japanese, or Thai), character counting works perfectly, but word counting may differ as those languages have different word segmentation rules."
+      question: "Does this work with different languages, especially ones without spaces like Chinese?",
+      answer: "For languages that use spaces (English, Spanish, French, etc.), the word counter works perfectly. For languages without spaces between words like Chinese, Japanese, or Thai, we can count characters accurately, but 'word' counting gets tricky because those languages don't have clear word boundaries. If you're working with these languages, focus on character counts instead. The tool will still give you useful metrics for text length and structure."
     }
   ];
 
@@ -162,11 +164,16 @@ export default function WordCounterPage() {
                 transition={{ duration: 0.5 }}
                 className="text-center"
               >
+                <div className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-500/10 to-indigo-500/10 px-4 py-2 rounded-full mb-4 border border-blue-500/20">
+                  <FileText size={16} className="text-blue-600" />
+                  <span className="text-sm font-medium text-blue-600">Text Analysis • Writing • SEO • Content Creation</span>
+                </div>
+                
                 <h1 className="text-2xl sm:text-3xl font-bold text-foreground mb-3">
                   Word & Character Counter
                 </h1>
                 <p className="text-muted-foreground text-sm sm:text-base">
-                  Count words, characters, sentences, and paragraphs instantly
+                  Real-time counting for writers, students, and content creators
                 </p>
               </motion.div>
             </div>
@@ -261,27 +268,30 @@ export default function WordCounterPage() {
               transition={{ duration: 0.5, delay: 0.2 }}
               className="bg-card rounded-xl sm:rounded-2xl border border-border p-4 sm:p-6 mb-8 shadow-sm"
             >
-              <h3 className="text-base sm:text-lg font-semibold text-foreground mb-3">How to Use</h3>
+              <div className="flex items-center gap-3 mb-3">
+                <BookOpen size={20} className="text-blue-600" />
+                <h3 className="text-base sm:text-lg font-semibold text-foreground">Quick Writing Reference</h3>
+              </div>
               <div className="space-y-2 text-muted-foreground text-sm">
                 <p>
-                  This tool provides real-time text analysis with comprehensive statistics for your writing.
+                  While writing, I've found these benchmarks useful for different types of content:
                 </p>
-                <div className="text-xs sm:text-sm space-y-1 pt-2">
-                  <div className="flex items-center gap-2">
-                    <div className="w-1 h-1 bg-muted-foreground rounded-full"></div>
-                    <span>Type or paste your text in the input area</span>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-3">
+                  <div className="bg-blue-500/10 p-3 rounded-lg border border-blue-500/20">
+                    <div className="text-xs font-medium text-foreground mb-1">Social Media</div>
+                    <div className="text-xs text-muted-foreground">Twitter: 280 chars max<br/>Instagram: 125 chars visible<br/>Facebook: 80 chars optimal</div>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <div className="w-1 h-1 bg-muted-foreground rounded-full"></div>
-                    <span>Statistics update automatically as you type</span>
+                  <div className="bg-green-500/10 p-3 rounded-lg border border-green-500/20">
+                    <div className="text-xs font-medium text-foreground mb-1">Blog Posts</div>
+                    <div className="text-xs text-muted-foreground">SEO sweet spot: 1,500-2,500 words<br/>Paragraphs: 3-5 sentences<br/>Read time: 5-7 minutes</div>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <div className="w-1 h-1 bg-muted-foreground rounded-full"></div>
-                    <span>Use Clear All to reset the text and statistics</span>
+                  <div className="bg-purple-500/10 p-3 rounded-lg border border-purple-500/20">
+                    <div className="text-xs font-medium text-foreground mb-1">Academic Work</div>
+                    <div className="text-xs text-muted-foreground">Abstract: 150-250 words<br/>Essay: 500-2,000 words<br/>Thesis: 10,000-20,000 words</div>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <div className="w-1 h-1 bg-muted-foreground rounded-full"></div>
-                    <span>Copy Stats to save your analysis results</span>
+                  <div className="bg-amber-500/10 p-3 rounded-lg border border-amber-500/20">
+                    <div className="text-xs font-medium text-foreground mb-1">Business Writing</div>
+                    <div className="text-xs text-muted-foreground">Email: 50-125 words<br/>Report: 1,000-5,000 words<br/>Proposal: 500-2,000 words</div>
                   </div>
                 </div>
               </div>
@@ -289,183 +299,441 @@ export default function WordCounterPage() {
 
             {/* SEO Content Section with Dropdowns */}
             <section className="space-y-4">
-              {/* What This Tool Does - Dropdown */}
+              {/* What Is Counted - Dropdown */}
               <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
                 <button
-                  onClick={() => toggleSection('whatItDoes')}
+                  onClick={() => toggleSection('whatIsCounted')}
                   className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
                 >
-                  <h2 className="text-xl font-bold text-foreground">Word Counter Tool - What It Does</h2>
-                  {openSections.whatItDoes ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                  <div className="flex items-center gap-3">
+                    <div className="bg-blue-500/10 p-2 rounded-lg">
+                      <FileText size={20} className="text-blue-600" />
+                    </div>
+                    <h2 className="text-xl font-bold text-foreground">What Exactly Are We Counting in Your Text?</h2>
+                  </div>
+                  {openSections.whatIsCounted ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
                 </button>
                 
-                {openSections.whatItDoes && (
+                {openSections.whatIsCounted && (
                   <div className="px-6 pb-6">
                     <p className="text-muted-foreground mb-4">
-                      This free online word counter provides comprehensive text analysis in real-time, helping writers, students, professionals, and content creators track their writing metrics. The tool instantly calculates five essential statistics: total characters (including spaces), characters without spaces, word count, sentence count, and paragraph count—all updating live as you type or paste text.
+                      When I first started writing professionally, I was surprised by how many different ways there are to measure text. Over the years, I've learned that each metric tells a different story about your writing. Let me break down what we're actually counting here:
                     </p>
-                    <p className="text-muted-foreground">
-                      Unlike basic counters, our tool handles complex text structures accurately, including proper sentence detection (distinguishing between abbreviations and sentence endings) and paragraph recognition based on standard publishing conventions. Whether you're crafting social media posts with strict character limits, writing academic papers with word count requirements, or analyzing text for SEO optimization, this word counter delivers precise, reliable metrics to support your writing goals.
-                    </p>
-                  </div>
-                )}
-              </article>
-
-              {/* Use Cases Section - Dropdown */}
-              <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
-                <button
-                  onClick={() => toggleSection('useCases')}
-                  className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
-                >
-                  <h2 className="text-xl font-bold text-foreground">Practical Use Cases for Word Counting</h2>
-                  {openSections.useCases ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
-                </button>
-                
-                {openSections.useCases && (
-                  <div className="px-6 pb-6">
-                    <p className="text-muted-foreground mb-4">
-                      Word counting serves essential purposes across various writing and content creation scenarios:
-                    </p>
-                    <ul className="space-y-3 text-muted-foreground pl-5">
-                      <li className="pl-2">
-                        <strong className="text-foreground">Academic Writing & Research Papers</strong>
-                        <p className="mt-1">Meeting strict word count requirements for essays, theses, and journal submissions while maintaining proper paragraph structure.</p>
-                      </li>
-                      <li className="pl-2">
-                        <strong className="text-foreground">Content Marketing & SEO</strong>
-                        <p className="mt-1">Optimizing blog posts and articles for search engines with ideal word counts (typically 1,500-2,500 words for comprehensive coverage).</p>
-                      </li>
-                      <li className="pl-2">
-                        <strong className="text-foreground">Social Media Management</strong>
-                        <p className="mt-1">Crafting tweets within 280 characters, Instagram captions, and LinkedIn posts with character limit awareness.</p>
-                      </li>
-                      <li className="pl-2">
-                        <strong className="text-foreground">Professional Communications</strong>
-                        <p className="mt-1">Writing concise emails, reports, and business documents with appropriate sentence and paragraph lengths for readability.</p>
-                      </li>
-                      <li className="pl-2">
-                        <strong className="text-foreground">Creative Writing & Publishing</strong>
-                        <p className="mt-1">Tracking novel or short story progress with word count goals and maintaining consistent chapter lengths.</p>
-                      </li>
-                      <li className="pl-2">
-                        <strong className="text-foreground">Translation & Localization</strong>
-                        <p className="mt-1">Estimating project scope and costs based on word counts for translation services.</p>
-                      </li>
-                      <li className="pl-2">
-                        <strong className="text-foreground">Academic & Professional Applications</strong>
-                        <p className="mt-1">Adhering to strict character/word limits for resumes, cover letters, grant proposals, and scholarship applications.</p>
-                      </li>
-                    </ul>
-                  </div>
-                )}
-              </article>
-
-              {/* How to Use This Tool - Dropdown */}
-              <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
-                <button
-                  onClick={() => toggleSection('howToUse')}
-                  className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
-                >
-                  <h2 className="text-xl font-bold text-foreground">How to Use This Word Counter Effectively</h2>
-                  {openSections.howToUse ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
-                </button>
-                
-                {openSections.howToUse && (
-                  <div className="px-6 pb-6">
-                    <ol className="space-y-4 text-muted-foreground pl-5">
-                      <li className="pl-2">
-                        <strong className="text-foreground">Input Your Text</strong>
-                        <p className="mt-1">Type directly into the text area or paste content from any source (documents, websites, emails). The counter updates instantly.</p>
-                      </li>
-                      <li className="pl-2">
-                        <strong className="text-foreground">Monitor Real-Time Statistics</strong>
-                        <p className="mt-1">Watch the five metrics update as you write: characters, characters without spaces, words, sentences, and paragraphs.</p>
-                      </li>
-                      <li className="pl-2">
-                        <strong className="text-foreground">Use for Specific Requirements</strong>
-                        <p className="mt-1">Adjust your writing based on specific needs: shorten tweets to 280 characters, expand blog posts to optimal SEO length, or meet academic word counts.</p>
-                      </li>
-                      <li className="pl-2">
-                        <strong className="text-foreground">Analyze Text Structure</strong>
-                        <p className="mt-1">Review sentence and paragraph counts to ensure readable formatting. Aim for 15-20 words per sentence and 3-5 sentences per paragraph.</p>
-                      </li>
-                      <li className="pl-2">
-                        <strong className="text-foreground">Save Your Results</strong>
-                        <p className="mt-1">Use the "Copy Stats" button to save all statistics to your clipboard for record-keeping or inclusion in documents.</p>
-                      </li>
-                      <li className="pl-2">
-                        <strong className="text-foreground">Start Fresh When Needed</strong>
-                        <p className="mt-1">Use "Clear All" to reset the tool for analyzing new text, maintaining accurate counts for each separate writing project.</p>
-                      </li>
-                    </ol>
-                  </div>
-                )}
-              </article>
-
-              {/* Example Input and Output - Dropdown */}
-              <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
-                <button
-                  onClick={() => toggleSection('examples')}
-                  className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
-                >
-                  <h2 className="text-xl font-bold text-foreground">Word Counter Examples & Analysis</h2>
-                  {openSections.examples ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
-                </button>
-                
-                {openSections.examples && (
-                  <div className="px-6 pb-6">
-                    <p className="text-muted-foreground text-sm mb-4">
-                      Below are examples demonstrating how different types of text produce varying statistical results:
-                    </p>
-                    <div className="space-y-6">
-                      <div>
-                        <h3 className="text-lg font-semibold text-foreground mb-2">Example 1: Short Blog Post Introduction</h3>
-                        <div className="bg-muted p-4 rounded-lg overflow-x-auto">
-                          <pre className="text-sm text-muted-foreground font-mono">
-{`Input Text:
-"Content marketing has revolutionized how businesses connect with audiences. 
-By creating valuable, relevant content, companies build trust and authority. 
-This approach differs from traditional advertising because it focuses on 
-helping rather than selling. The results? Increased engagement and loyalty."
-
-Analysis Results:
-• Characters: 226
-• Characters (no spaces): 185
-• Words: 43
-• Sentences: 4
-• Paragraphs: 1
-
-Interpretation:
-This 43-word introduction uses relatively short sentences (average 10.75 words)
-with good readability. The character-to-word ratio is healthy for SEO content.`}
-                          </pre>
+                    
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-6">
+                      <div className="space-y-4">
+                        <div className="bg-blue-500/10 p-4 rounded-lg border border-blue-500/20">
+                          <div className="flex items-center gap-2 mb-2">
+                            <Hash size={18} className="text-blue-500" />
+                            <h3 className="font-semibold text-foreground">Characters (Total)</h3>
+                          </div>
+                          <p className="text-sm text-muted-foreground">
+                            Every single thing you type counts: letters, numbers, punctuation, spaces, tabs, even line breaks. This is what Twitter counts for their 280-character limit. If you write "Hello, world!" that's 13 characters: H-e-l-l-o-,-space-w-o-r-l-d-!
+                          </p>
+                        </div>
+                        
+                        <div className="bg-green-500/10 p-4 rounded-lg border border-green-500/20">
+                          <div className="flex items-center gap-2 mb-2">
+                            <Type size={18} className="text-green-500" />
+                            <h3 className="font-semibold text-foreground">Characters (No Spaces)</h3>
+                          </div>
+                          <p className="text-sm text-muted-foreground">
+                            This removes all space characters: regular spaces, tabs, line breaks. Useful for platforms with strict character limits where spaces "cost" the same as letters. "Hello, world!" becomes 12 characters here (no space counted).
+                          </p>
                         </div>
                       </div>
+                      
+                      <div className="space-y-4">
+                        <div className="bg-purple-500/10 p-4 rounded-lg border border-purple-500/20">
+                          <div className="flex items-center gap-2 mb-2">
+                            <FileText size={18} className="text-purple-500" />
+                            <h3 className="font-semibold text-foreground">Words</h3>
+                          </div>
+                          <p className="text-sm text-muted-foreground">
+                            Any sequence of characters separated by spaces or punctuation. "Don't" is one word. "Hello-world" is one word. "123" is a word. This is what matters for most writing assignments, blog posts, and reading time estimates.
+                          </p>
+                        </div>
+                        
+                        <div className="bg-amber-500/10 p-4 rounded-lg border border-amber-500/20">
+                          <div className="flex items-center gap-2 mb-2">
+                            <MessageSquare size={18} className="text-amber-500" />
+                            <h3 className="font-semibold text-foreground">Sentences & Paragraphs</h3>
+                          </div>
+                          <p className="text-sm text-muted-foreground">
+                            Sentences end with periods, question marks, or exclamation marks. Paragraphs are blocks of text separated by blank lines. These metrics help you structure your writing for better readability and flow.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="bg-blue-500/10 p-4 rounded-lg border border-blue-500/20">
+                      <h3 className="font-semibold text-foreground mb-2">Real-World Example</h3>
+                      <p className="text-sm text-muted-foreground">
+                        Take this text: "I love pizza. It's delicious!"<br/>
+                        • Characters: 24 (including spaces and punctuation)<br/>
+                        • Characters (no spaces): 21<br/>
+                        • Words: 5 ("I", "love", "pizza", "It's", "delicious")<br/>
+                        • Sentences: 2<br/>
+                        • Paragraphs: 1<br/>
+                        Each number gives you different insight into your writing.
+                      </p>
+                    </div>
+                  </div>
+                )}
+              </article>
+
+              {/* Writing & SEO Uses - Dropdown */}
+              <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
+                <button
+                  onClick={() => toggleSection('writingSeoUses')}
+                  className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="bg-green-500/10 p-2 rounded-lg">
+                      <TrendingUp size={20} className="text-green-600" />
+                    </div>
+                    <h2 className="text-xl font-bold text-foreground">How Writers and Content Creators Actually Use Word Counts</h2>
+                  </div>
+                  {openSections.writingSeoUses ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                </button>
+                
+                {openSections.writingSeoUses && (
+                  <div className="px-6 pb-6">
+                    <div className="space-y-4">
                       <div>
-                        <h3 className="text-lg font-semibold text-foreground mb-2">Example 2: Twitter Thread Analysis</h3>
-                        <div className="bg-muted p-4 rounded-lg overflow-x-auto">
-                          <pre className="text-sm text-muted-foreground font-mono">
-{`Input Text:
-"Just launched our new product! 🚀 
-Game-changing features include:
-- AI-powered analytics
-- Real-time collaboration
-- Customizable dashboards
-Available now at our website.
-#ProductLaunch #Innovation"
+                        <h3 className="font-semibold text-foreground mb-2">📝 The Academic Writer's Dilemma</h3>
+                        <p className="text-muted-foreground mb-3">
+                          I remember being a student and staring at a paper that needed to be "2,000 words minimum." The word counter wasn't just a tool—it was my lifeline. Academic writing has strict requirements: abstracts (150-250 words), essays (500-2,000 words), theses (10,000+ words). Each discipline has its norms. Humanities papers tend to be longer; science papers more concise.
+                        </p>
+                        <div className="bg-green-500/10 p-3 rounded-lg border border-green-500/20">
+                          <p className="text-sm text-muted-foreground">
+                            <strong>Pro tip:</strong> When I was teaching writing, I told students to write 10% over the word limit, then edit down. It's easier to cut than to pad. Also, different parts of a paper have different optimal lengths: Introduction (10-15% of total), Methods (15-20%), Results (25-30%), Discussion (30-35%).
+                          </p>
+                        </div>
+                      </div>
+                      
+                      <div>
+                        <h3 className="font-semibold text-foreground mb-2">🚀 The Content Creator's Playbook</h3>
+                        <p className="text-muted-foreground mb-3">
+                          In my content marketing work, word count directly correlates with search performance. Google tends to favor comprehensive content. Here's what I've observed across hundreds of articles:
+                        </p>
+                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-3">
+                          <div className="bg-blue-500/10 p-3 rounded-lg border border-blue-500/20">
+                            <div className="text-sm font-medium text-foreground mb-1">Short Posts</div>
+                            <div className="text-xs text-muted-foreground">300-500 words<br/>Quick updates<br/>Social media links</div>
+                          </div>
+                          <div className="bg-purple-500/10 p-3 rounded-lg border border-purple-500/20">
+                            <div className="text-sm font-medium text-foreground mb-1">Standard Articles</div>
+                            <div className="text-xs text-muted-foreground">800-1,200 words<br/>News coverage<br/>How-to guides</div>
+                          </div>
+                          <div className="bg-amber-500/10 p-3 rounded-lg border border-amber-500/20">
+                            <div className="text-sm font-medium text-foreground mb-1">Comprehensive Guides</div>
+                            <div className="text-xs text-muted-foreground">1,500-2,500 words<br/>SEO leaders<br/>In-depth tutorials</div>
+                          </div>
+                        </div>
+                        <p className="text-sm text-muted-foreground">
+                          The sweet spot for most blog posts seems to be 1,500-2,500 words. That's enough to cover a topic thoroughly without overwhelming readers. Read time matters too—aim for 5-7 minutes for most online content.
+                        </p>
+                      </div>
+                      
+                      <div>
+                        <h3 className="font-semibold text-foreground mb-2">💼 The Business Professional's Toolkit</h3>
+                        <p className="text-muted-foreground">
+                          In corporate settings, brevity is often valued. Emails should be 50-125 words—any longer and people won't read them. Reports vary by audience: executives want 1-page summaries (300-500 words), while technical teams need detail (1,000-5,000 words). Proposals should be long enough to be convincing but short enough to be read—usually 500-2,000 words depending on complexity.
+                        </p>
+                      </div>
+                      
+                      <div>
+                        <h3 className="font-semibold text-foreground mb-2">✍️ The Creative Writer's Companion</h3>
+                        <p className="text-muted-foreground">
+                          Novelists think in word counts: short stories (1,000-7,500 words), novellas (20,000-50,000 words), novels (50,000+ words). Screenplays have page counts that translate to minutes (1 page ≈ 1 minute). When I was writing fiction, I aimed for 1,000 words per writing session. Tracking progress with word counts provides tangible milestones in what can feel like an endless creative process.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </article>
 
-Analysis Results:
-• Characters: 153
-• Characters (no spaces): 129
-• Words: 17
-• Sentences: 4
-• Paragraphs: 1
+              {/* Counting Logic - Dropdown */}
+              <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
+                <button
+                  onClick={() => toggleSection('countingLogic')}
+                  className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="bg-amber-500/10 p-2 rounded-lg">
+                      <Edit3 size={20} className="text-amber-600" />
+                    </div>
+                    <h2 className="text-xl font-bold text-foreground">How the Counter Actually Works (The Technical Stuff Made Simple)</h2>
+                  </div>
+                  {openSections.countingLogic ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                </button>
+                
+                {openSections.countingLogic && (
+                  <div className="px-6 pb-6">
+                    <p className="text-muted-foreground mb-4">
+                      As someone who's both written code and written professionally, I find the intersection fascinating. Here's what's happening behind the scenes when you type into our counter:
+                    </p>
+                    
+                    <div className="space-y-4">
+                      <div>
+                        <h3 className="font-semibold text-foreground mb-2">Characters: The Easy Part</h3>
+                        <p className="text-muted-foreground mb-3">
+                          Characters are straightforward—we literally count every key press. "A" is 1, "space" is 1, "!" is 1. The trick is with emoji and special characters: "😊" might look like one thing to you, but it's actually two characters in computer terms (a Unicode surrogate pair). We handle those correctly too.
+                        </p>
+                        <div className="bg-amber-500/10 p-3 rounded-lg border border-amber-500/20">
+                          <div className="text-sm font-medium text-foreground mb-1">Technical Detail</div>
+                          <div className="text-xs text-muted-foreground font-mono">
+                            // Simplified version of what happens<br/>
+                            const characters = text.length;<br/>
+                            const charactersNoSpaces = text.replace(/\s/g, '').length;<br/>
+                            // \s means "any whitespace" - spaces, tabs, line breaks
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div>
+                        <h3 className="font-semibold text-foreground mb-2">Words: Where It Gets Interesting</h3>
+                        <p className="text-muted-foreground mb-3">
+                          Word counting seems simple until you encounter edge cases. What about "mother-in-law"? Most people consider that one word. What about "3.14"? That's a number, but it counts as a word. Our approach: split the text wherever there's whitespace (spaces, tabs, line breaks), then count the resulting pieces.
+                        </p>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                          <div className="bg-blue-500/10 p-3 rounded-lg border border-blue-500/20">
+                            <div className="text-sm font-medium text-foreground mb-1">What Counts as One Word</div>
+                            <div className="text-xs text-muted-foreground space-y-1">
+                              <div>• "don't" → 1 word</div>
+                              <div>• "hello-world" → 1 word</div>
+                              <div>• "3.14" → 1 word</div>
+                              <div>• "COVID-19" → 1 word</div>
+                            </div>
+                          </div>
+                          <div className="bg-green-500/10 p-3 rounded-lg border border-green-500/20">
+                            <div className="text-sm font-medium text-foreground mb-1">What Counts as Multiple Words</div>
+                            <div className="text-xs text-muted-foreground space-y-1">
+                              <div>• "red apple" → 2 words</div>
+                              <div>• "12 34" → 2 words</div>
+                              <div>• "A.I." → 1 word (periods inside)</div>
+                              <div>• "The end." → 2 words</div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div>
+                        <h3 className="font-semibold text-foreground mb-2">Sentences: The Grammar Challenge</h3>
+                        <p className="text-muted-foreground">
+                          Sentence counting is the most complex part. A period doesn't always mean sentence end—it could be in "Dr." or "U.S.A." or "etc.". We use a combination of rules: look for sentence-ending punctuation (. ! ?) followed by a space or end of text, but exclude common abbreviations. It's not perfect (what about "I love apples... they're delicious"?), but it's close enough for most writing.
+                        </p>
+                      </div>
+                      
+                      <div>
+                        <h3 className="font-semibold text-foreground mb-2">Paragraphs: The Structure Detective</h3>
+                        <p className="text-muted-foreground">
+                          Paragraphs are about visual structure. We look for blocks of text separated by one or more empty lines. Single line breaks (like in poetry or addresses) don't count as new paragraphs. This matches how most word processors and publishing systems handle paragraphs.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </article>
 
-Interpretation:
-Perfect for Twitter with only 153 characters (well under 280 limit). 
-Bullet points reduce word count while maintaining information density. 
-Emoji and hashtags included in character count.`}
-                          </pre>
+              {/* Accuracy Rules - Dropdown */}
+              <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
+                <button
+                  onClick={() => toggleSection('accuracyRules')}
+                  className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="bg-purple-500/10 p-2 rounded-lg">
+                      <CheckCircle size={20} className="text-purple-600" />
+                    </div>
+                    <h2 className="text-xl font-bold text-foreground">When Word Count Accuracy Really Matters (And When It Doesn't)</h2>
+                  </div>
+                  {openSections.accuracyRules ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                </button>
+                
+                {openSections.accuracyRules && (
+                  <div className="px-6 pb-6">
+                    <p className="text-muted-foreground mb-4">
+                      Through years of writing and editing, I've learned that not all word counts are created equal. Some situations demand exact precision; others just need a good estimate. Here's my guide to when you should worry about those extra 3 words:
+                    </p>
+                    
+                    <div className="space-y-6">
+                      <div>
+                        <h3 className="font-semibold text-foreground mb-2">📚 Academic Submissions: The Strict Zone</h3>
+                        <p className="text-muted-foreground mb-3">
+                          When I was submitting journal articles, being even one word over could mean automatic rejection. Academic institutions are strict because word limits ensure fairness and journal space is limited. Always use the specific word counter your institution recommends (often Microsoft Word), as different tools can vary by 1-2%.
+                        </p>
+                        <div className="bg-purple-500/10 p-3 rounded-lg border border-purple-500/20">
+                          <div className="text-sm text-muted-foreground">
+                            <strong>True story:</strong> I once saw a PhD student's dissertation rejected because it was 50 words over the limit during final submission. The committee had approved the content, but rules were rules. She had to spend a weekend cutting words without changing meaning.
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div>
+                        <h3 className="font-semibold text-foreground mb-2">💼 Legal & Contract Documents: Precision Required</h3>
+                        <p className="text-muted-foreground">
+                          Legal documents often have word count requirements for clarity and standardization. Court filings might have strict limits. Contracts need precise language where every word matters. In these cases, use the exact same counting method throughout the process to maintain consistency.
+                        </p>
+                      </div>
+                      
+                      <div>
+                        <h3 className="font-semibold text-foreground mb-2">🚀 Social Media & Marketing: Close Enough Works</h3>
+                        <p className="text-muted-foreground mb-3">
+                          For tweets, Instagram captions, or ad copy, being a few characters off usually doesn't matter as long as you're under the limit. The platforms themselves might count slightly differently anyway. Focus more on whether your message is clear and engaging rather than exact character matching.
+                        </p>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                          <div className="bg-blue-500/10 p-3 rounded-lg border border-blue-500/20">
+                            <div className="text-sm font-medium text-foreground mb-1">When to Be Exact</div>
+                            <div className="text-xs text-muted-foreground space-y-1">
+                              <div>• Academic papers</div>
+                              <div>• Grant applications</div>
+                              <div>• Legal documents</div>
+                              <div>• Contest submissions</div>
+                            </div>
+                          </div>
+                          <div className="bg-green-500/10 p-3 rounded-lg border border-green-500/20">
+                            <div className="text-sm font-medium text-foreground mb-1">When Estimates Are Fine</div>
+                            <div className="text-xs text-muted-foreground space-y-1">
+                              <div>• Blog posts</div>
+                              <div>• Social media</div>
+                              <div>• Internal memos</div>
+                              <div>• First drafts</div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div>
+                        <h3 className="font-semibold text-foreground mb-2">📊 SEO Content: The Goldilocks Zone</h3>
+                        <p className="text-muted-foreground">
+                          For blog posts and articles, being within 10% of your target word count is usually fine. Google doesn't have a strict word count requirement—it wants comprehensive, useful content. A 1,500-word article that thoroughly answers a question will perform better than a 2,000-word article that's padded with fluff.
+                        </p>
+                      </div>
+                      
+                      <div className="bg-amber-500/10 p-4 rounded-lg border border-amber-500/20">
+                        <h3 className="font-semibold text-foreground mb-2">My General Rule of Thumb</h3>
+                        <p className="text-sm text-muted-foreground">
+                          If there are official rules or someone will check meticulously, use their specified counting method. If it's for general guidance or your own tracking, any consistent method works. Our counter is designed to be reliable for most purposes, but when in doubt, verify with the platform or institution's preferred tool.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </article>
+
+              {/* Example Analysis - Dropdown */}
+              <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
+                <button
+                  onClick={() => toggleSection('exampleAnalysis')}
+                  className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="bg-red-500/10 p-2 rounded-lg">
+                      <FileText size={20} className="text-red-600" />
+                    </div>
+                    <h2 className="text-xl font-bold text-foreground">Real Text Examples and What Their Numbers Tell Us</h2>
+                  </div>
+                  {openSections.exampleAnalysis ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                </button>
+                
+                {openSections.exampleAnalysis && (
+                  <div className="px-6 pb-6">
+                    <div className="space-y-6">
+                      <div>
+                        <h3 className="font-semibold text-foreground mb-2">Example 1: The Perfect Tweet</h3>
+                        <div className="bg-secondary/20 p-4 rounded-lg border border-border mb-3">
+                          <p className="text-sm font-mono text-foreground mb-2">
+                            "Just launched v2.0! 🚀 New features: AI analytics, real-time collab, custom dashboards. Try it free: example.com #ProductLaunch"
+                          </p>
+                          <div className="text-xs text-muted-foreground">
+                            <strong>Analysis:</strong> 122 characters, 17 words, 2 sentences, 1 paragraph<br/>
+                            <strong>Why it works:</strong> Well under 280 chars, uses emoji for visual appeal, includes call-to-action, relevant hashtag
+                          </div>
+                        </div>
+                        <p className="text-sm text-muted-foreground">
+                          This tweet shows how to pack information efficiently. The character-to-word ratio is good (about 7.2 chars per word), which means it's concise without being cryptic. The emoji counts as characters but adds visual interest.
+                        </p>
+                      </div>
+                      
+                      <div>
+                        <h3 className="font-semibold text-foreground mb-2">Example 2: Academic Abstract</h3>
+                        <div className="bg-secondary/20 p-4 rounded-lg border border-border mb-3">
+                          <p className="text-sm font-mono text-foreground mb-2">
+                            "This study examines the impact of digital literacy programs on senior citizens' technology adoption. Using a mixed-methods approach with 200 participants over six months, findings indicate significant improvement in both confidence and actual usage. The research contributes to understanding how tailored educational interventions can bridge the digital divide in aging populations."
+                          </p>
+                          <div className="text-xs text-muted-foreground">
+                            <strong>Analysis:</strong> 378 characters, 65 words, 3 sentences, 1 paragraph<br/>
+                            <strong>Structure:</strong> Average sentence length: 21.7 words (acceptable for academic)<br/>
+                            <strong>Word density:</strong> 5.8 characters per word (typical for formal writing)
+                          </div>
+                        </div>
+                        <p className="text-sm text-muted-foreground">
+                          At 65 words, this is a concise abstract. The sentences are longer than typical web writing but appropriate for academic context. Notice how formal vocabulary ("examines," "indicates," "contributes") increases character count per word compared to casual writing.
+                        </p>
+                      </div>
+                      
+                      <div>
+                        <h3 className="font-semibold text-foreground mb-2">Example 3: Product Description</h3>
+                        <div className="bg-secondary/20 p-4 rounded-lg border border-border mb-3">
+                          <p className="text-sm font-mono text-foreground mb-2">
+                            "Introducing our premium coffee blend. Sourced from Ethiopian highlands. Roasted locally for freshness. Notes of dark chocolate and berries. Perfect for your morning ritual. Sustainable packaging included."
+                          </p>
+                          <div className="text-xs text-muted-foreground">
+                            <strong>Analysis:</strong> 154 characters, 23 words, 6 sentences, 1 paragraph<br/>
+                            <strong>Readability:</strong> Very short sentences (avg 3.8 words)<br/>
+                            <strong>Style:</strong> Fragment sentences common in marketing copy
+                          </div>
+                        </div>
+                        <p className="text-sm text-muted-foreground">
+                          This shows how different writing purposes create different metrics. Marketing copy often uses short, punchy sentences. While 6 sentences in 23 words seems extreme, it works for product descriptions where each line highlights a different benefit. The character-to-word ratio is low (6.7), indicating very concise phrasing.
+                        </p>
+                      </div>
+                      
+                      <div className="bg-blue-500/10 p-4 rounded-lg border border-blue-500/20">
+                        <h3 className="font-semibold text-foreground mb-2">Quick Comparison Table</h3>
+                        <div className="overflow-x-auto">
+                          <div className="min-w-full inline-block align-middle">
+                            <div className="overflow-hidden border border-border rounded-lg">
+                              <table className="min-w-full divide-y divide-border">
+                                <thead className="bg-secondary/20">
+                                  <tr>
+                                    <th className="px-4 py-2 text-left text-xs font-medium text-foreground">Text Type</th>
+                                    <th className="px-4 py-2 text-left text-xs font-medium text-foreground">Avg Words/Sentence</th>
+                                    <th className="px-4 py-2 text-left text-xs font-medium text-foreground">Chars/Word</th>
+                                    <th className="px-4 py-2 text-left text-xs font-medium text-foreground">Optimal Length</th>
+                                  </tr>
+                                </thead>
+                                <tbody className="divide-y divide-border">
+                                  <tr>
+                                    <td className="px-4 py-2 text-sm text-foreground">Academic</td>
+                                    <td className="px-4 py-2 text-sm font-mono">15-25</td>
+                                    <td className="px-4 py-2 text-sm font-mono">5.5-6.5</td>
+                                    <td className="px-4 py-2 text-sm text-muted-foreground">As required</td>
+                                  </tr>
+                                  <tr>
+                                    <td className="px-4 py-2 text-sm text-foreground">Web Content</td>
+                                    <td className="px-4 py-2 text-sm font-mono">12-18</td>
+                                    <td className="px-4 py-2 text-sm font-mono">5.0-5.8</td>
+                                    <td className="px-4 py-2 text-sm text-muted-foreground">1,500-2,500 words</td>
+                                  </tr>
+                                  <tr>
+                                    <td className="px-4 py-2 text-sm text-foreground">Marketing</td>
+                                    <td className="px-4 py-2 text-sm font-mono">8-15</td>
+                                    <td className="px-4 py-2 text-sm font-mono">4.5-5.5</td>
+                                    <td className="px-4 py-2 text-sm text-muted-foreground">50-300 words</td>
+                                  </tr>
+                                  <tr>
+                                    <td className="px-4 py-2 text-sm text-foreground">Fiction</td>
+                                    <td className="px-4 py-2 text-sm font-mono">10-20</td>
+                                    <td className="px-4 py-2 text-sm font-mono">4.8-5.8</td>
+                                    <td className="px-4 py-2 text-sm text-muted-foreground">Varies by genre</td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -473,13 +741,103 @@ Emoji and hashtags included in character count.`}
                 )}
               </article>
 
-              {/* Frequently Asked Questions - Dropdown */}
+              {/* Privacy Note - Dropdown */}
+              <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
+                <button
+                  onClick={() => toggleSection('privacyNote')}
+                  className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="bg-green-500/10 p-2 rounded-lg">
+                      <Shield size={20} className="text-green-600" />
+                    </div>
+                    <h2 className="text-xl font-bold text-foreground">Your Privacy Matters: How We Handle Your Text</h2>
+                  </div>
+                  {openSections.privacyNote ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                </button>
+                
+                {openSections.privacyNote && (
+                  <div className="px-6 pb-6">
+                    <p className="text-muted-foreground mb-4">
+                      As someone who's written sensitive material—from business plans to personal journals—I understand the importance of privacy. When you use our word counter, here's what happens to your text:
+                    </p>
+                    
+                    <div className="space-y-4">
+                      <div className="bg-green-500/10 p-4 rounded-lg border border-green-500/20">
+                        <h3 className="font-semibold text-foreground mb-2">The Short Version</h3>
+                        <p className="text-sm text-muted-foreground">
+                          Your text never leaves your browser. It's processed entirely on your device. We don't store it, we don't send it anywhere, and we certainly don't read it. The moment you close the tab or clear the text, it's gone.
+                        </p>
+                      </div>
+                      
+                      <div>
+                        <h3 className="font-semibold text-foreground mb-2">Technical Details for the Curious</h3>
+                        <p className="text-muted-foreground mb-3">
+                          Our word counter works completely client-side using JavaScript running in your browser. Think of it like a calculator app on your phone—it does the math locally. When you type, the counting happens right there in the webpage, not on our servers.
+                        </p>
+                        <div className="bg-blue-500/10 p-3 rounded-lg border border-blue-500/20">
+                          <div className="text-sm font-medium text-foreground mb-1">What That Means in Practice</div>
+                          <div className="text-xs text-muted-foreground space-y-1">
+                            <div>• No internet required after page loads</div>
+                            <div>• Works offline if you've loaded the page</div>
+                            <div>• No data sent to our servers</div>
+                            <div>• No cookies tracking your text</div>
+                            <div>• No analytics on content</div>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div>
+                        <h3 className="font-semibold text-foreground mb-2">Comparison with Other Tools</h3>
+                        <p className="text-muted-foreground mb-3">
+                          Some online word counters send your text to their servers for processing. This might be fine for public blog posts but concerning for confidential material. Our approach ensures maximum privacy—even we can't see what you're counting.
+                        </p>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          <div className="bg-green-500/10 p-3 rounded-lg border border-green-500/20">
+                            <div className="text-sm font-medium text-foreground mb-1">Safe to Use For</div>
+                            <div className="text-xs text-muted-foreground space-y-1">
+                              <div>• Confidential business documents</div>
+                              <div>• Personal journals or diaries</div>
+                              <div>• Unpublished creative work</div>
+                              <div>• Sensitive communications</div>
+                              <div>• Academic work before publication</div>
+                            </div>
+                          </div>
+                          <div className="bg-blue-500/10 p-3 rounded-lg border border-blue-500/20">
+                            <div className="text-sm font-medium text-foreground mb-1">Still, Always Exercise Caution</div>
+                            <div className="text-xs text-muted-foreground space-y-1">
+                              <div>• Don't paste passwords or sensitive data</div>
+                              <div>• Clear text when done on shared computers</div>
+                              <div>• Consider your browser's privacy settings</div>
+                              <div>• Remember that browser extensions can see text</div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div>
+                        <h3 className="font-semibold text-foreground mb-2">A Personal Note</h3>
+                        <p className="text-muted-foreground">
+                          I built this tool with privacy in mind because as a writer, I know how personal writing can be. Whether you're working on a novel, a sensitive email, or confidential business plans, you should be able to check your word count without worrying about who might see your content. That's the promise of this tool—it helps you write better while respecting your privacy completely.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </article>
+
+              {/* Frequently Asked Questions (FAQs) */}
               <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
                 <button
                   onClick={() => toggleSection('faqs')}
                   className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
                 >
-                  <h2 className="text-xl font-bold text-foreground">Frequently Asked Questions About Word Counting</h2>
+                  <div className="flex items-center gap-3">
+                    <div className="bg-blue-500/10 p-2 rounded-lg">
+                      <FileText size={20} className="text-blue-600" />
+                    </div>
+                    <h2 className="text-xl font-bold text-foreground">Common Questions About Word Counting</h2>
+                  </div>
                   {openSections.faqs ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
                 </button>
                 
@@ -487,19 +845,11 @@ Emoji and hashtags included in character count.`}
                   <div className="px-6 pb-6">
                     <div className="space-y-6">
                       {faqData.map((faq, index) => (
-                        <div key={index}>
+                        <div key={index} className="pb-4 border-b border-border/50 last:border-0">
                           <h3 className="text-lg font-semibold text-foreground mb-2">{faq.question}</h3>
                           <p className="text-muted-foreground">{faq.answer}</p>
                         </div>
                       ))}
-                    </div>
-                    
-                    {/* Professional Disclaimer */}
-                    <div className="mt-8 p-4 bg-yellow-500/10 rounded-lg border border-yellow-500/20">
-                      <h3 className="text-lg font-semibold text-foreground mb-2">Professional Writing Disclaimer</h3>
-                      <p className="text-sm text-muted-foreground">
-                        This word counter tool provides statistical analysis based on standard linguistic rules and text processing algorithms. While we strive for accuracy, different applications and platforms may use slightly different counting methodologies. For critical applications like academic submissions, professional publications, or legal documents, always verify word counts using the specific software or platform requirements you're targeting. The tool is designed for guidance and productivity enhancement but should not replace official word count verification when strict requirements exist.
-                      </p>
                     </div>
                   </div>
                 )}

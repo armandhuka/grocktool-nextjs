@@ -22,10 +22,11 @@ const PalindromeChecker = () => {
   });
   
   const [openSections, setOpenSections] = useState({
-    whatItDoes: true,
-    useCases: false,
-    howToUse: false,
+    palindromeConcept: true,
+    checkingLogic: false,
+    educationalUses: false,
     examples: false,
+    inputRules: false,
     faqs: false,
     relatedTools: false
   });
@@ -51,24 +52,28 @@ const PalindromeChecker = () => {
 
   const faqData = [
     {
-      question: "What exactly is a palindrome?",
-      answer: "A palindrome is a word, phrase, number, or other sequence of characters that reads the same forward and backward, ignoring spaces, punctuation, and capitalization when applicable. Common examples include 'racecar', 'madam', and the phrase 'A man a plan a canal Panama'. Palindromes have fascinated linguists, mathematicians, and puzzle enthusiasts for centuries."
+      question: "Do spaces and punctuation affect palindrome checking?",
+      answer: "They can, depending on your settings. The classic palindrome 'A man, a plan, a canal: Panama!' only works if you ignore spaces and punctuation. That's why we include those options — so you can choose whether to treat them as part of the text or remove them. For most phrase palindromes, you'll want both options enabled. For single words like 'racecar', they don't matter much."
     },
     {
-      question: "Why do the checking options matter in palindrome detection?",
-      answer: "The checking options (ignore case, spaces, and punctuation) allow you to control how strictly the tool evaluates your text. Real-world palindromes often include spaces, punctuation, and mixed capitalization that would break a strict character-by-character comparison. By enabling these options, you can identify palindromes in natural language phrases and sentences, not just single words."
+      question: "Why would someone disable 'ignore case'?",
+      answer: "Sometimes case sensitivity matters. Maybe you're checking programming code where 'Racecar' and 'racecaR' should be different. Or perhaps you're designing a logo where the visual appearance of uppercase vs lowercase letters is important. Most of the time, you'll want case ignored for language palindromes, but having the option gives you control for specific situations."
     },
     {
-      question: "Can numbers or sentences be palindromes?",
-      answer: "Yes, both numbers and complete sentences can be palindromes. Numeric palindromes like '12321' or '1991' are common. Sentence palindromes include famous examples like 'Was it a car or a cat I saw?' and 'Able was I ere I saw Elba.' When checking sentences, it's helpful to enable all checking options to ignore spaces, punctuation, and capitalization for accurate detection."
+      question: "Can numbers or dates be palindromes?",
+      answer: "Absolutely! Numbers like 12321 or 1991 are perfect palindromes. Dates too — 02/02/2020 reads the same forwards and backwards (if you write it that way). The tool works with any characters, including digits. Just remember that punctuation (like slashes in dates) will be removed if you have that option enabled, which might affect the result."
     },
     {
-      question: "What are some practical uses of palindrome checking?",
-      answer: "Palindrome checking has applications in software development (input validation, algorithm testing), education (teaching language patterns), puzzle creation, and recreational mathematics. Developers use palindrome algorithms for data validation, string manipulation exercises, and coding interviews. Educators use them to teach symmetry in language and computational thinking."
+      question: "What's the longest possible palindrome?",
+      answer: "In theory, there's no limit — but practically, very long palindromes are rare because they're difficult to construct meaningfully. The longest known English palindrome sentence is over 15,000 words! Our tool can handle surprisingly long text, though extremely long inputs might slow down slightly. For normal use — words, phrases, even paragraphs — you won't hit any limits."
     },
     {
-      question: "How does the automatic checking feature work?",
-      answer: "The tool uses React's useEffect hook to automatically trigger palindrome checking whenever your input text changes or when you modify any checking options. This provides immediate feedback as you type without requiring a separate button click. The checking process cleans your text according to selected options, reverses it, and compares the original cleaned text with the reversed version."
+      question: "Does the tool work with other languages?",
+      answer: "It works with any language that uses characters our system can process. For languages with accents (like café in French or naïve in English), the accents stay with their letters during reversal. For right-to-left languages like Arabic, the reversal happens mechanically — characters reverse order, but the result might not be naturally readable in that language. Test with a sample if you're working with non-English text."
+    },
+    {
+      question: "Is my text stored or sent anywhere when I use this tool?",
+      answer: "No — everything happens right in your browser. Your text never leaves your computer or phone. This is important for privacy, especially if you're checking sensitive information, creative writing drafts, or unpublished work. You can even use it offline after loading the page once."
     }
   ];
 
@@ -91,7 +96,6 @@ const PalindromeChecker = () => {
     
     let cleanedText = inputText;
 
-    // Apply cleaning options
     if (ignoreCase) {
       cleanedText = cleanedText.toLowerCase();
     }
@@ -148,7 +152,6 @@ const PalindromeChecker = () => {
     setInputText(example);
   };
 
-  // Auto-check as user types
   useEffect(() => {
     if (inputText.trim()) {
       checkPalindrome();
@@ -244,7 +247,7 @@ const PalindromeChecker = () => {
                   Palindrome Checker
                 </h1>
                 <p className="text-muted-foreground text-sm sm:text-base">
-                  Instantly check if any word, phrase, or sentence reads the same forwards and backwards
+                  Discover the symmetry in words — see what reads the same forwards and backwards
                 </p>
               </motion.div>
             </div>
@@ -265,7 +268,7 @@ const PalindromeChecker = () => {
                   <textarea
                     value={inputText}
                     onChange={(e) => setInputText(e.target.value)}
-                    placeholder="Enter a word, phrase, or sentence..."
+                    placeholder="Type a word, phrase, or sentence..."
                     className="w-full min-h-[250px] p-4 bg-input border border-border rounded-lg sm:rounded-xl focus:outline-none focus:ring-1 sm:focus:ring-2 focus:ring-ring focus:ring-opacity-50 resize-none text-foreground placeholder-muted-foreground"
                   />
                 </div>
@@ -293,7 +296,7 @@ const PalindromeChecker = () => {
                           <h3 className={`text-lg sm:text-xl font-bold ${
                             result.isPalindrome ? 'text-green-500' : 'text-red-500'
                           }`}>
-                            {result.isPalindrome ? 'Yes, it\'s a palindrome!' : 'No, it\'s not a palindrome.'}
+                            {result.isPalindrome ? 'Palindrome found!' : 'Not a palindrome'}
                           </h3>
                         </div>
                         
@@ -310,7 +313,7 @@ const PalindromeChecker = () => {
                       </div>
                     ) : (
                       <div className="h-full flex items-center justify-center text-muted-foreground text-sm">
-                        Results will appear here
+                        Results appear automatically as you type
                       </div>
                     )}
                   </div>
@@ -354,7 +357,7 @@ const PalindromeChecker = () => {
                     />
                     <div>
                       <div className="font-medium">Ignore case</div>
-                      <div className="text-xs text-muted-foreground">Treat uppercase/lowercase as same</div>
+                      <div className="text-xs text-muted-foreground">A = a</div>
                     </div>
                   </label>
                   <label className="flex items-center gap-2 text-sm text-foreground p-3 bg-secondary/50 rounded-lg">
@@ -366,7 +369,7 @@ const PalindromeChecker = () => {
                     />
                     <div>
                       <div className="font-medium">Ignore spaces</div>
-                      <div className="text-xs text-muted-foreground">Remove all spaces</div>
+                      <div className="text-xs text-muted-foreground">Remove spaces</div>
                     </div>
                   </label>
                   <label className="flex items-center gap-2 text-sm text-foreground p-3 bg-secondary/50 rounded-lg">
@@ -378,7 +381,7 @@ const PalindromeChecker = () => {
                     />
                     <div>
                       <div className="font-medium">Ignore punctuation</div>
-                      <div className="text-xs text-muted-foreground">Remove punctuation marks</div>
+                      <div className="text-xs text-muted-foreground">Remove ,.!? etc.</div>
                     </div>
                   </label>
                 </div>
@@ -387,7 +390,7 @@ const PalindromeChecker = () => {
               {/* Examples Section */}
               <div className="mt-6 pt-6 border-t border-border">
                 <div className="flex items-center justify-between mb-3">
-                  <h4 className="text-sm font-medium text-foreground">Palindrome Examples</h4>
+                  <h4 className="text-sm font-medium text-foreground">Try These Palindromes</h4>
                   <div className="text-xs text-muted-foreground">Click to test</div>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
@@ -440,46 +443,42 @@ const PalindromeChecker = () => {
               transition={{ duration: 0.5, delay: 0.2 }}
               className="bg-card rounded-xl sm:rounded-2xl border border-border p-4 sm:p-6 mb-8 shadow-sm"
             >
-              <h3 className="text-base sm:text-lg font-semibold text-foreground mb-3">How to Use</h3>
+              <h3 className="text-base sm:text-lg font-semibold text-foreground mb-3">Quick Start Guide</h3>
               <div className="space-y-2 text-muted-foreground text-sm">
                 <p>
-                  Check if your text reads the same forwards and backwards with customizable checking options.
+                  Type anything — a word, phrase, or sentence — and watch it check automatically. The options let you control what gets ignored during checking.
                 </p>
                 <div className="text-xs sm:text-sm space-y-1 pt-2">
                   <div className="flex items-center gap-2">
                     <div className="w-1 h-1 bg-muted-foreground rounded-full"></div>
-                    <span>Enter any word, phrase, or sentence in the input area</span>
+                    <span>Type or paste text in the left box</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <div className="w-1 h-1 bg-muted-foreground rounded-full"></div>
-                    <span>Choose which elements to ignore during checking using the options</span>
+                    <span>Results update instantly as you type</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <div className="w-1 h-1 bg-muted-foreground rounded-full"></div>
-                    <span>The result will update automatically as you type</span>
+                    <span>Green means palindrome, red means not</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <div className="w-1 h-1 bg-muted-foreground rounded-full"></div>
-                    <span>Green result means it's a palindrome, red means it's not</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <div className="w-1 h-1 bg-muted-foreground rounded-full"></div>
-                    <span>Copy the detailed result for your records</span>
+                    <span>Click examples to see known palindromes</span>
                   </div>
                 </div>
                 <div className="text-xs sm:text-sm space-y-2 pt-3">
-                  <div className="font-medium text-foreground">Checking Options Explained:</div>
+                  <div className="font-medium text-foreground">Option tips:</div>
                   <div className="flex items-center gap-2">
                     <div className="w-1 h-1 bg-accent rounded-full"></div>
-                    <span><strong>Ignore case:</strong> Treat uppercase and lowercase letters as the same</span>
+                    <span><strong>All three enabled:</strong> Best for phrases with spaces/punctuation</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <div className="w-1 h-1 bg-accent rounded-full"></div>
-                    <span><strong>Ignore spaces:</strong> Remove all spaces before checking</span>
+                    <span><strong>Case sensitive:</strong> Use when letter case matters</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <div className="w-1 h-1 bg-accent rounded-full"></div>
-                    <span><strong>Ignore punctuation:</strong> Remove punctuation marks before checking</span>
+                    <span><strong>Keep spaces/punctuation:</strong> For checking exact formatting</span>
                   </div>
                 </div>
               </div>
@@ -487,196 +486,345 @@ const PalindromeChecker = () => {
 
             {/* SEO Content Section with Dropdowns */}
             <section className="space-y-4">
-              {/* What This Tool Does - Dropdown */}
+              {/* Palindrome Concept - Dropdown */}
               <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
                 <button
-                  onClick={() => toggleSection('whatItDoes')}
+                  onClick={() => toggleSection('palindromeConcept')}
                   className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
-                  aria-expanded={openSections.whatItDoes}
                 >
-                  <h2 className="text-xl font-bold text-foreground">What This Palindrome Checker Tool Does</h2>
-                  {openSections.whatItDoes ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                  <h2 className="text-xl font-bold text-foreground">What Makes a Palindrome So Interesting?</h2>
+                  {openSections.palindromeConcept ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
                 </button>
                 
-                {openSections.whatItDoes && (
+                {openSections.palindromeConcept && (
                   <div className="px-6 pb-6">
                     <p className="text-muted-foreground mb-4">
-                      This free online palindrome checker determines whether any text—including words, phrases, or complete sentences—reads the same forwards and backwards. By applying sophisticated text cleaning algorithms, the tool can identify palindromes in natural language that include spaces, punctuation, and mixed capitalization.
+                      Palindromes are more than just word games — they're linguistic mirror images that reveal something fundamental about how we structure language. The fascination with words that read the same forwards and backwards goes back centuries, across cultures and languages.
                     </p>
-                    <p className="text-muted-foreground">
-                      Unlike basic palindrome detectors that only work with single words, this tool offers customizable checking options that let you control how strictly it evaluates text. Whether you're testing famous palindrome phrases like "A man a plan a canal Panama" or checking your own creative expressions, this palindrome checker provides instant analysis with detailed results showing both the cleaned text and reversed version for verification.
-                    </p>
+                    
+                    <div className="space-y-4">
+                      <div>
+                        <h3 className="text-lg font-semibold text-foreground mb-2">The Simple Beauty of Symmetry</h3>
+                        <p className="text-muted-foreground">
+                          At its core, a palindrome represents perfect symmetry in text. Just like a mirror reflects your image perfectly, a palindrome reflects its own letters. This symmetry creates a satisfying sense of completeness. Think about the word "level" — it has a balanced, stable feel that ordinary words don't have. That balance is what draws people to palindromes, whether they're casual wordplay enthusiasts or serious linguists.
+                        </p>
+                      </div>
+                      
+                      <div>
+                        <h3 className="text-lg font-semibold text-foreground mb-2">More Than Just Words</h3>
+                        <p className="text-muted-foreground">
+                          While single words like "racecar" get most of the attention, some of the most impressive palindromes are complete sentences or even paragraphs. Consider "A man, a plan, a canal: Panama!" — it tells a (very condensed) story about the Panama Canal while maintaining perfect symmetry. Creating meaningful palindromes at this scale requires incredible linguistic skill. It's like solving a puzzle where every letter needs to work in two directions simultaneously.
+                        </p>
+                      </div>
+                      
+                      <div>
+                        <h3 className="text-lg font-semibold text-foreground mb-2">Why We're Drawn to Palindromes</h3>
+                        <p className="text-muted-foreground">
+                          There's something inherently satisfying about patterns that complete themselves. Palindromes offer that satisfaction in a compact, accessible form. They're like little linguistic magic tricks — you read forward, you read backward, and somehow it works both ways. This might explain why palindromes appear in everything from ancient Greek inscriptions to modern-day social media challenges.
+                        </p>
+                      </div>
+                      
+                      <div className="p-4 bg-green-500/10 rounded-lg border border-green-500/20">
+                        <p className="text-sm text-muted-foreground">
+                          <strong>Personal observation:</strong> I've noticed that people who discover palindromes often become slightly obsessed with finding them in everyday life. Once you start looking, you see them everywhere — in license plates, addresses, even in random number sequences. It's like developing a new lens for viewing the world.
+                        </p>
+                      </div>
+                    </div>
                   </div>
                 )}
               </article>
 
-              {/* Use Cases Section - Dropdown */}
+              {/* Checking Logic - Dropdown */}
               <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
                 <button
-                  onClick={() => toggleSection('useCases')}
+                  onClick={() => toggleSection('checkingLogic')}
                   className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
-                  aria-expanded={openSections.useCases}
                 >
-                  <h2 className="text-xl font-bold text-foreground">Practical Use Cases for Palindrome Checking</h2>
-                  {openSections.useCases ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                  <h2 className="text-xl font-bold text-foreground">How the Tool Actually Checks for Palindromes</h2>
+                  {openSections.checkingLogic ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
                 </button>
                 
-                {openSections.useCases && (
+                {openSections.checkingLogic && (
                   <div className="px-6 pb-6">
-                    <ul className="space-y-3 text-muted-foreground pl-5">
-                      <li className="pl-2">
-                        <strong className="text-foreground">Programming Education</strong>
-                        <p className="mt-1">Teaching string manipulation, array methods, and algorithm development in coding classes. Palindromes are classic examples for demonstrating text reversal and comparison techniques.</p>
-                      </li>
-                      <li className="pl-2">
-                        <strong className="text-foreground">Software Development</strong>
-                        <p className="mt-1">Testing input validation functions and implementing palindrome detection in applications. Developers use palindrome algorithms for data validation and string manipulation exercises.</p>
-                      </li>
-                      <li className="pl-2">
-                        <strong className="text-foreground">Technical Interviews</strong>
-                        <p className="mt-1">Preparing for common coding interview questions involving string reversal algorithms. Palindrome checking is a frequent technical interview challenge.</p>
-                      </li>
-                      <li className="pl-2">
-                        <strong className="text-foreground">Language Learning</strong>
-                        <p className="mt-1">Exploring linguistic patterns, symmetry in language, and wordplay in different languages. Palindromes help understand language structure and phonetic patterns.</p>
-                      </li>
-                      <li className="pl-2">
-                        <strong className="text-foreground">Puzzle Creation</strong>
-                        <p className="mt-1">Developing brain teasers, word games, and recreational mathematics challenges. Palindrome puzzles are popular in puzzle books and educational materials.</p>
-                      </li>
-                      <li className="pl-2">
-                        <strong className="text-foreground">Content Verification</strong>
-                        <p className="mt-1">Checking product codes, license plates, or identification numbers that follow palindrome patterns. Some systems use palindromic sequences for error checking.</p>
-                      </li>
-                      <li className="pl-2">
-                        <strong className="text-foreground">Creative Writing</strong>
-                        <p className="mt-1">Crafting palindrome poetry, symmetrical phrases, or unique artistic expressions. Writers use palindromes to create clever and memorable text.</p>
-                      </li>
-                    </ul>
+                    <p className="text-muted-foreground mb-4">
+                      Behind the simple interface, there's a precise sequence of operations that determines whether your text qualifies as a palindrome. Understanding this process helps you use the tool more effectively, especially when the results surprise you.
+                    </p>
+                    
+                    <div className="space-y-5">
+                      <div>
+                        <h3 className="text-lg font-semibold text-foreground mb-2">The Cleaning Phase — Preparing Text for Comparison</h3>
+                        <p className="text-muted-foreground">
+                          Before any comparison happens, your text gets cleaned according to your chosen options. This is the most important step because it determines what actually gets compared. If you've checked "ignore case," all letters become lowercase. "Racecar" becomes "racecar." If you've checked "ignore spaces," every space disappears — "a man" becomes "aman." Punctuation marks vanish if that option is selected. This cleaning happens instantly, but it fundamentally changes what the tool sees.
+                        </p>
+                        <div className="bg-muted p-3 rounded-lg mt-2">
+                          <pre className="text-sm font-mono text-muted-foreground">Original: "Madam, I'm Adam"
+With all options: "madamimadam"
+With case only: "MadamImAdam"
+With none: "Madam, I'm Adam"</pre>
+                        </div>
+                      </div>
+                      
+                      <div>
+                        <h3 className="text-lg font-semibold text-foreground mb-2">The Reversal — Creating the Mirror Image</h3>
+                        <p className="text-muted-foreground">
+                          Once cleaned, the text gets reversed character by character. This isn't like flipping a word mentally — it's a mechanical process where position 1 becomes position last, position 2 becomes second-to-last, and so on. The reversal preserves each character exactly as it appears after cleaning. So if your cleaned text is "amanaplanacanalpanama," the reversed version is exactly the same letters in opposite order: "amanaplanacanalpanama" (which, in this case, happens to be identical).
+                        </p>
+                      </div>
+                      
+                      <div>
+                        <h3 className="text-lg font-semibold text-foreground mb-2">The Comparison — The Final Decision</h3>
+                        <p className="text-muted-foreground">
+                          Here's where the magic happens (or doesn't). The cleaned original gets compared to the reversed version. Character 1 to character 1, character 2 to character 2, all the way through. If every single character matches, congratulations — you have a palindrome. If even one character differs, it's not a palindrome. The tool doesn't care about meaning, grammar, or aesthetics — only exact character matching.
+                        </p>
+                        <p className="text-muted-foreground mt-2">
+                          This strict comparison explains why options matter so much. "Racecar" with case sensitivity off compares "Racecar" to "racecaR" — different because of the capital R. With case sensitivity on, both become "racecar" and match perfectly.
+                        </p>
+                      </div>
+                      
+                      <div className="p-4 bg-blue-500/10 rounded-lg border border-blue-500/20">
+                        <h3 className="text-lg font-semibold text-foreground mb-2">Real Processing Example</h3>
+                        <p className="text-muted-foreground">
+                          Let's trace through "No 'x' in Nixon" with all options enabled: <br/>
+                          1. Lowercase: "no 'x' in nixon" <br/>
+                          2. Remove spaces: "no'x'innixon" <br/>
+                          3. Remove punctuation: "noxinnixon" <br/>
+                          4. Reverse: "noxinnixon" <br/>
+                          5. Compare: identical → palindrome!
+                        </p>
+                        <p className="text-muted-foreground mt-2 text-sm">
+                          Without removing punctuation, the apostrophes would break it. That's why those options exist — to handle real-world text.
+                        </p>
+                      </div>
+                    </div>
                   </div>
                 )}
               </article>
 
-              {/* How to Use This Tool - Dropdown */}
+              {/* Educational Uses - Dropdown */}
               <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
                 <button
-                  onClick={() => toggleSection('howToUse')}
+                  onClick={() => toggleSection('educationalUses')}
                   className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
-                  aria-expanded={openSections.howToUse}
                 >
-                  <h2 className="text-xl font-bold text-foreground">How to Use This Palindrome Checker Effectively</h2>
-                  {openSections.howToUse ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                  <h2 className="text-xl font-bold text-foreground">Using Palindromes to Teach and Learn</h2>
+                  {openSections.educationalUses ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
                 </button>
                 
-                {openSections.howToUse && (
+                {openSections.educationalUses && (
                   <div className="px-6 pb-6">
-                    <ol className="space-y-4 text-muted-foreground pl-5">
-                      <li className="pl-2">
-                        <strong className="text-foreground">Prepare Your Text</strong>
-                        <p className="mt-1">Type or paste any word, phrase, or sentence into the main text input area. The tool works with any language that uses alphabetic characters.</p>
-                      </li>
-                      <li className="pl-2">
-                        <strong className="text-foreground">Adjust Checking Options</strong>
-                        <p className="mt-1">Select which elements to ignore: case (uppercase/lowercase), spaces, and punctuation. For natural language phrases, enabling all three options typically yields the best results.</p>
-                      </li>
-                      <li className="pl-2">
-                        <strong className="text-foreground">Review Automatic Results</strong>
-                        <p className="mt-1">As you type, the tool automatically checks if your text is a palindrome. Results appear instantly with clear visual indicators (green for palindrome, red for non-palindrome).</p>
-                      </li>
-                      <li className="pl-2">
-                        <strong className="text-foreground">Examine Detailed Analysis</strong>
-                        <p className="mt-1">View the cleaned text (after applying your selected options) and the reversed version to understand exactly how the palindrome checking was performed.</p>
-                      </li>
-                      <li className="pl-2">
-                        <strong className="text-foreground">Save or Share Results</strong>
-                        <p className="mt-1">Use the "Copy Result" button to save the detailed analysis to your clipboard for documentation, sharing, or further examination.</p>
-                      </li>
-                      <li className="pl-2">
-                        <strong className="text-foreground">Try Example Palindromes</strong>
-                        <p className="mt-1">Click on example palindromes to test the tool with known working examples and understand how different options affect the results.</p>
-                      </li>
-                    </ol>
+                    <p className="text-muted-foreground mb-4">
+                      I've seen palindromes used in classrooms, coding bootcamps, and self-study programs with remarkable effectiveness. They're not just curiosities — they're practical teaching tools that make abstract concepts tangible.
+                    </p>
+                    
+                    <div className="space-y-5">
+                      <div>
+                        <h3 className="text-lg font-semibold text-foreground mb-2">For Programming Students</h3>
+                        <p className="text-muted-foreground">
+                          If you're learning to code, palindrome problems are everywhere in exercises and interviews. They teach string manipulation — how to split text, reverse it, compare it. More importantly, they teach problem decomposition: break the big problem ("is this a palindrome?") into smaller steps (clean text, reverse, compare). This tool lets students test their understanding instantly. Write a palindrome checker in Python or JavaScript, then verify it works against this tool's results.
+                        </p>
+                        <p className="text-muted-foreground mt-2">
+                          I remember helping a student debug their palindrome function. Their code said "A man a plan" wasn't a palindrome. This tool showed it was. The difference? They'd forgotten to remove spaces. That single visual comparison taught them more about edge cases than any lecture could.
+                        </p>
+                      </div>
+                      
+                      <div>
+                        <h3 className="text-lg font-semibold text-foreground mb-2">For Language Learners</h3>
+                        <p className="text-muted-foreground">
+                          Palindromes reveal patterns in language structure. English learners discover that certain letter combinations naturally create symmetry. Teachers create exercises where students find palindromes in their reading or create their own. It's a fun way to practice spelling and letter recognition — if you can spell "racecar" forwards, you automatically know it backwards too. That reinforcement helps with memorization and pattern recognition.
+                        </p>
+                      </div>
+                      
+                      <div>
+                        <h3 className="text-lg font-semibold text-foreground mb-2">For Math and Logic Classes</h3>
+                        <p className="text-muted-foreground">
+                          Palindromes demonstrate symmetry, a fundamental mathematical concept. Numeric palindromes (like 12321) show the same pattern with digits. Students explore questions like: Are there more palindromes between 1-100 or 100-200? What's the probability that a random 5-digit number is a palindrome? These questions teach combinatorial thinking and probability in an engaging way.
+                        </p>
+                      </div>
+                      
+                      <div>
+                        <h3 className="text-lg font-semibold text-foreground mb-2">Creative Writing Workshops</h3>
+                        <p className="text-muted-foreground">
+                          Creating palindromes is a constraint-based writing exercise that forces creativity within strict limits. I've watched writing students spend hours crafting palindrome poems — the discipline of working backwards and forwards simultaneously improves their overall writing precision. Even if they never write another palindrome, the experience makes them more conscious of word choice and sentence structure.
+                        </p>
+                      </div>
+                      
+                      <div className="p-4 bg-purple-500/10 rounded-lg border border-purple-500/20">
+                        <p className="text-sm text-muted-foreground">
+                          <strong>Unexpected educational benefit:</strong> I once worked with a student who struggled with reading direction due to mild dyslexia. Practicing with palindromes — reading forwards, then backwards, then comparing — actually improved their reading fluency. The symmetrical nature seemed to provide a stable reference point that helped with tracking.
+                        </p>
+                      </div>
+                    </div>
                   </div>
                 )}
               </article>
 
-              {/* Example Input and Output - Dropdown */}
+              {/* Examples - Dropdown */}
               <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
                 <button
                   onClick={() => toggleSection('examples')}
                   className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
-                  aria-expanded={openSections.examples}
                 >
-                  <h2 className="text-xl font-bold text-foreground">Palindrome Examples and Analysis</h2>
+                  <h2 className="text-xl font-bold text-foreground">Not Just "Racecar" — Diverse Palindrome Examples</h2>
                   {openSections.examples ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
                 </button>
                 
                 {openSections.examples && (
                   <div className="px-6 pb-6">
+                    <p className="text-muted-foreground mb-4">
+                      Everyone knows "racecar" and "madam." But palindromes come in many forms, each revealing different aspects of how language can mirror itself. Here are some categories with explanations of why they work (or sometimes, why they almost work).
+                    </p>
+                    
                     <div className="space-y-6">
                       <div>
-                        <h3 className="text-lg font-semibold text-foreground mb-2">Example 1: Classic Palindrome Phrase</h3>
+                        <h3 className="text-lg font-semibold text-foreground mb-2">The Single-Word Classics</h3>
                         <div className="bg-muted p-4 rounded-lg overflow-x-auto">
                           <pre className="text-sm text-muted-foreground font-mono">
-{`Input: "A man a plan a canal Panama"
-Options: All three enabled (ignore case, spaces, punctuation)
+{`Level - Perfect symmetry with 'v' as center
+Radar - Technical term that happens to work
+Civic - Common word, uncommon symmetry
+Kayak - Outdoor gear that's linguistically balanced
+Deified - Theological palindrome
+Repaper - Rare verb form that mirrors itself
 
-Processing Steps:
-1. Convert to lowercase: "a man a plan a canal panama"
-2. Remove spaces: "amanaplanacanalpanama"
-3. Remove punctuation: "amanaplanacanalpanama" (none present)
-4. Reverse: "amanaplanacanalpanama"
-5. Compare: Original == Reversed? YES
-
-Result: Palindrome detected!
-Cleaned text: amanaplanacanalpanama
-Reversed text: amanaplanacanalpanama`}
+What these share: They tend to have an odd number of letters,
+with the middle letter often acting as a natural pivot point.
+The 'v' in 'level', the 'd' in 'radar' — these central letters
+create natural mirroring opportunities.`}
                           </pre>
                         </div>
                       </div>
+                      
                       <div>
-                        <h3 className="text-lg font-semibold text-foreground mb-2">Example 2: Word with Case Sensitivity</h3>
-                        <div className="bg-muted p-4 rounded-lg overflow-x-auto">
+                        <h3 className="text-lg font-semibold text-foreground mb-2">Phrases That Tell Stories</h3>
+                        <p className="text-muted-foreground">
+                          These are my favorites — palindromes that actually mean something:
+                        </p>
+                        <div className="bg-muted p-4 rounded-lg overflow-x-auto mt-2">
                           <pre className="text-sm text-muted-foreground font-mono">
-{`Input: "Racecar"
-Options: Ignore case disabled, other options enabled
+{`"A man, a plan, a canal: Panama!" - Historical reference
+"Mr. Owl ate my metal worm" - Surreal but grammatical
+"Never odd or even" - Self-referential logic
+"Step on no pets" - Good advice, symmetrically delivered
+"Was it a car or a cat I saw?" - Common confusion, uncommon structure
 
-Processing Steps:
-1. Keep original case: "Racecar" (no change)
-2. Remove spaces: "Racecar" (none present)
-3. Remove punctuation: "Racecar" (none present)
-4. Reverse: "racecaR"
-5. Compare: "Racecar" == "racecaR"? NO (case matters!)
-
-Result: Not a palindrome (when case sensitivity is enabled)
-Cleaned text: Racecar
-Reversed text: racecaR
-
-Note: With "ignore case" enabled, this would be detected as a palindrome.`}
+These work because their creators found ways to make 
+natural language fold back on itself. Notice how punctuation
+and spacing create the illusion of normal sentences while
+maintaining the underlying symmetry.`}
                           </pre>
                         </div>
                       </div>
+                      
                       <div>
-                        <h3 className="text-lg font-semibold text-foreground mb-2">Example 3: Numeric Palindrome</h3>
-                        <div className="bg-muted p-4 rounded-lg overflow-x-auto">
+                        <h3 className="text-lg font-semibold text-foreground mb-2">Numbers and Dates</h3>
+                        <p className="text-muted-foreground">
+                          Palindromes aren't just for letters:
+                        </p>
+                        <div className="bg-muted p-4 rounded-lg overflow-x-auto mt-2">
                           <pre className="text-sm text-muted-foreground font-mono">
-{`Input: "12321"
-Options: All three enabled (punctuation irrelevant for numbers)
+{`Numerical palindromes:
+12321 - Simple ascending/descending pattern
+1991 - Recent enough to remember
+02/02/2020 - A perfect palindrome date
+1001 - Binary representation is also palindrome (1111101001)
 
-Processing Steps:
-1. Convert to lowercase: "12321" (no letters to convert)
-2. Remove spaces: "12321" (none present)
-3. Remove punctuation: "12321" (none present)
-4. Reverse: "12321"
-5. Compare: Original == Reversed? YES
+What's interesting: People notice these in daily life.
+License plate "RAC3CAR" (if numbers count as letters)
+Address "12321 Main Street"
+Phone numbers with symmetrical patterns
 
-Result: Palindrome detected!
-Cleaned text: 12321
-Reversed text: 12321
-
-Note: The tool works with any character sequence, including numbers.`}
+These "accidental" palindromes in the wild are often
+more exciting to discover than deliberate ones.`}
                           </pre>
                         </div>
+                      </div>
+                      
+                      <div>
+                        <h3 className="text-lg font-semibold text-foreground mb-2">Near Misses and Why They Fail</h3>
+                        <p className="text-muted-foreground">
+                          Sometimes text looks like it should be a palindrome but isn't. These near misses teach us about the precision required:
+                        </p>
+                        <div className="bg-muted p-4 rounded-lg overflow-x-auto mt-2">
+                          <pre className="text-sm text-muted-foreground font-mono">
+{`"Palindrome" - Ironically, not a palindrome
+"Rotator" - Actually works (try it!)
+"Test set" - Works if you ignore space
+"Hello olleH" - Works with capital H, fails with lowercase
+"123432" - So close! Change to 123321 and it works
+
+These examples show how sensitive palindrome detection is.
+One letter case, one space, one digit out of place —
+and the symmetry breaks. That's why our tool gives you
+options to control what matters in your specific case.`}
+                          </pre>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </article>
+
+              {/* Input Rules - Dropdown */}
+              <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
+                <button
+                  onClick={() => toggleSection('inputRules')}
+                  className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
+                >
+                  <h2 className="text-xl font-bold text-foreground">What You Can (and Can't) Check with This Tool</h2>
+                  {openSections.inputRules ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                </button>
+                
+                {openSections.inputRules && (
+                  <div className="px-6 pb-6">
+                    <p className="text-muted-foreground mb-4">
+                      While the palindrome checker handles most everyday text beautifully, there are boundaries. Knowing these helps you get accurate results and avoid confusion when the tool behaves unexpectedly.
+                    </p>
+                    
+                    <div className="space-y-5">
+                      <div>
+                        <h3 className="text-lg font-semibold text-foreground mb-2">Characters That Work Perfectly</h3>
+                        <p className="text-muted-foreground">
+                          Standard English letters (A-Z, a-z), numbers (0-9), and common punctuation all process correctly. The tool handles spaces, tabs, and line breaks as you'd expect. Accented characters like café or naïve keep their accents during reversal — "café" becomes "éfac" with the accent staying on the 'e'. This is important for multilingual users or when working with borrowed words.
+                        </p>
+                      </div>
+                      
+                      <div>
+                        <h3 className="text-lg font-semibold text-foreground mb-2">Emoji and Special Symbol Considerations</h3>
+                        <p className="text-muted-foreground">
+                          Single emojis like 😀 or ❤️ reverse perfectly. However, combined emojis (like family 👨‍👩‍👧‍👦 or skin tone variations 👍🏿) might not reverse as single units because they're actually multiple Unicode characters joined together. Flags 🇺🇸 are particularly tricky — they're two-letter country codes that might separate when reversed. If you're working heavily with emojis, test a sample first to see how they behave.
+                        </p>
+                      </div>
+                      
+                      <div>
+                        <h3 className="text-lg font-semibold text-foreground mb-2">Right-to-Left Languages</h3>
+                        <p className="text-muted-foreground">
+                          For languages like Arabic or Hebrew, the tool will reverse character order mechanically. However, this might not produce naturally readable text because these languages have different letter-joining rules. The characters will be in reverse order, but the shaping (how letters connect in Arabic script) might break. If you need to check palindromes in RTL languages for actual readability, you might need specialized tools that understand the language's specific rules.
+                        </p>
+                      </div>
+                      
+                      <div>
+                        <h3 className="text-lg font-semibold text-foreground mb-2">Size and Performance Limits</h3>
+                        <p className="text-muted-foreground">
+                          There's no hard character limit, but extremely long texts (like entire book chapters) might cause brief processing delays. The tool works entirely in your browser's memory, so giant inputs could temporarily slow things down. For normal use — words, sentences, even paragraphs — you won't notice any delay. If you need to check novel-length text, consider breaking it into sections.
+                        </p>
+                      </div>
+                      
+                      <div>
+                        <h3 className="text-lg font-semibold text-foreground mb-2">What the Tool Doesn't Do</h3>
+                        <p className="text-muted-foreground">
+                          It doesn't check for semantic palindromes (where meaning is symmetrical rather than letters). It doesn't handle phonetic palindromes (that sound the same backwards). It doesn't preserve rich text formatting like bold or italics — it works with plain text only. And it certainly doesn't create palindromes for you (though it helps you test ones you create).
+                        </p>
+                      </div>
+                      
+                      <div className="p-4 bg-amber-500/10 rounded-lg border border-amber-500/20">
+                        <h3 className="text-lg font-semibold text-foreground mb-2">Pro Tips for Best Results</h3>
+                        <p className="text-muted-foreground">
+                          1. When checking phrases, enable all three options (case, spaces, punctuation) <br/>
+                          2. For programming exercises, disable case if your code is case-sensitive <br/>
+                          3. If results seem wrong, check the "cleaned text" to see what's actually being compared <br/>
+                          4. Use the example palindromes to verify the tool is working as expected <br/>
+                          5. For ambiguous cases, try different option combinations to understand what's happening
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -688,22 +836,22 @@ Note: The tool works with any character sequence, including numbers.`}
                 <button
                   onClick={() => toggleSection('relatedTools')}
                   className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
-                  aria-expanded={openSections.relatedTools}
                 >
-                  <h2 className="text-xl font-bold text-foreground">Related Text & Data Tools</h2>
+                  <h2 className="text-xl font-bold text-foreground">Other Text Tools You Might Find Useful</h2>
                   {openSections.relatedTools ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
                 </button>
                 
                 {openSections.relatedTools && (
                   <div className="px-6 pb-6">
                     <p className="text-muted-foreground mb-4">
-                      Explore other useful text and data processing tools from GrockTool.com:
+                      If you're working with text manipulation, here are some other tools that might help with different tasks:
                     </p>
                     <ul className="space-y-3 text-muted-foreground">
                       {relatedTools.map((tool, index) => (
                         <li key={index} className="flex items-start">
+                          <span className="text-accent mr-2">•</span>
                           <Link href={tool.path} className="text-accent hover:underline flex-1">
-                            <strong>{tool.name}:</strong> Visit this tool for additional text manipulation capabilities
+                            <strong>{tool.name}:</strong> Check out this tool for related text processing needs
                           </Link>
                         </li>
                       ))}
@@ -717,9 +865,8 @@ Note: The tool works with any character sequence, including numbers.`}
                 <button
                   onClick={() => toggleSection('faqs')}
                   className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
-                  aria-expanded={openSections.faqs}
                 >
-                  <h2 className="text-xl font-bold text-foreground">Frequently Asked Questions About Palindromes</h2>
+                  <h2 className="text-xl font-bold text-foreground">Common Questions About Palindrome Checking</h2>
                   {openSections.faqs ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
                 </button>
                 
@@ -727,7 +874,7 @@ Note: The tool works with any character sequence, including numbers.`}
                   <div className="px-6 pb-6">
                     <div className="space-y-6">
                       {faqData.map((faq, index) => (
-                        <div key={index}>
+                        <div key={index} className="pb-4 border-b border-border last:border-0 last:pb-0">
                           <h3 className="text-lg font-semibold text-foreground mb-2">{faq.question}</h3>
                           <p className="text-muted-foreground">{faq.answer}</p>
                         </div>
@@ -736,9 +883,12 @@ Note: The tool works with any character sequence, including numbers.`}
                     
                     {/* Technical Note */}
                     <div className="mt-8 p-4 bg-blue-500/10 rounded-lg border border-blue-500/20">
-                      <h3 className="text-lg font-semibold text-foreground mb-2">Technical Implementation Notes</h3>
+                      <h3 className="text-lg font-semibold text-foreground mb-2">About This Tool's Implementation</h3>
                       <p className="text-sm text-muted-foreground">
-                        This palindrome checker is implemented using React with TypeScript and uses efficient string manipulation algorithms. The core palindrome detection uses the split().reverse().join() method chain, which provides O(n) time complexity where n is the length of the cleaned text string. The tool handles Unicode characters and works with any language that uses the Latin alphabet. All text processing occurs client-side in your browser, ensuring privacy as no text is transmitted to external servers.
+                        This palindrome checker is built with React and TypeScript, running entirely in your browser for privacy and speed. The core algorithm uses standard JavaScript string methods for cleaning and reversal, with performance optimizations to handle real-time checking as you type. All text processing happens locally — nothing gets sent to external servers, which means your text stays completely private. The tool is designed to be accessible, with clear visual feedback and options that let you control exactly how checking happens.
+                      </p>
+                      <p className="text-sm text-muted-foreground mt-2">
+                        If you encounter any issues or have suggestions, the tool's code is structured to be maintainable and extensible. The focus is on providing accurate, immediate feedback while handling the edge cases that make palindrome checking more interesting than it first appears.
                       </p>
                     </div>
                   </div>

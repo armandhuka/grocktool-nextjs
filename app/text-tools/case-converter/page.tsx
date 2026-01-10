@@ -12,10 +12,11 @@ export default function CaseConverterPage() {
 
   // SEO Section Dropdown States
   const [openSections, setOpenSections] = useState({
-    whatItDoes: true,
-    useCases: false,
-    howToUse: false,
+    supportedCaseTypes: true,
+    writingCodingUses: false,
+    conversionRules: false,
     examples: false,
+    characterHandling: false,
     faqs: false,
     relatedTools: false
   });
@@ -30,24 +31,24 @@ export default function CaseConverterPage() {
   // FAQ Data
   const faqData = [
     {
-      question: "What's the difference between Title Case and Sentence Case?",
-      answer: "Title Case capitalizes the first letter of every major word (nouns, pronouns, verbs, adjectives, adverbs), typically used for titles and headings. Sentence Case capitalizes only the first word of each sentence, like normal writing. Example: Title Case: 'The Quick Brown Fox Jumps Over The Lazy Dog'; Sentence Case: 'The quick brown fox jumps over the lazy dog.' Title Case is for headlines, Sentence Case is for paragraphs."
+      question: "Why does my Title Case conversion look wrong for small words?",
+      answer: "That's actually correct behavior for proper Title Case. Words like 'a', 'an', 'the', 'and', 'but', 'or', etc. are usually lowercase unless they're the first or last word. Different style guides have different rules - AP Style capitalizes words with 4+ letters, Chicago Style is more complex. Our converter follows standard title case rules. If you need different rules, you might need manual adjustment after conversion."
     },
     {
-      question: "When should I use camelCase vs snake_case vs kebab-case?",
-      answer: "camelCase (exampleVariableName) is standard in JavaScript and Java for variable/function names. snake_case (example_variable_name) is common in Python, Ruby, and databases. kebab-case (example-variable-name) is used in URLs, CSS classes, and file names. Use camelCase for programming, snake_case for databases/configs, kebab-case for web addresses and file naming. Each has specific conventions in different tech stacks."
+      question: "Can I convert code from camelCase to snake_case without breaking it?",
+      answer: "For simple variable names, yes. But be careful with code - our converter just changes text, it doesn't understand programming syntax. So 'userName' becomes 'user_name' fine, but 'getUserName()' becomes 'get_user_name()' which adds parentheses that might not belong. For code conversion, it's best for simple identifiers, not complex expressions. Always review the output before using in production code."
     },
     {
-      question: "Does the case converter handle special characters and numbers?",
-      answer: "Yes, our case converter properly handles all characters including numbers, symbols, and Unicode. Numbers remain unchanged in all cases. Special characters are preserved but may affect word boundaries in conversions. For example: 'hello-world' converts to 'Hello-World' in Title Case. Unicode characters (accented letters, emojis) are also supported. The tool maintains character integrity while applying case transformations."
+      question: "What happens to numbers and symbols during conversion?",
+      answer: "Numbers stay exactly as they are - 'iPhone12' becomes 'IPHONE12' in uppercase, 'iphone12' in lowercase. Symbols like @, #, $, %, &, * are preserved but treated as word separators in some cases. So 'hello-world' becomes 'Hello-World' in Title Case. Underscores and hyphens are preserved in most conversions. The converter tries to be smart about word boundaries without mangling your text."
     },
     {
-      question: "What is alternating case and when is it useful?",
-      answer: "Alternating case (aLtErNaTiNg CaSe) converts text to alternating uppercase and lowercase letters, often starting with lowercase. This format is primarily used for stylistic purposes in social media, branding, or creative writing to create visual interest. It's not used in formal writing or programming. Example: 'alternating case' becomes 'aLtErNaTiNg CaSe'. The tool preserves word boundaries while alternating letters."
+      question: "Is there a keyboard shortcut to convert text quickly?",
+      answer: "Not directly in the web tool, but you can use Ctrl+A (Cmd+A on Mac) to select all input text, then click your conversion button. For power users who convert text often, consider browser extensions or text editor macros. Many code editors have built-in case conversion - VS Code has 'Transform to Uppercase' etc. right in the command palette. Our web tool is great for one-off conversions or when you're not in your usual editing environment."
     },
     {
-      question: "Can I convert multiple lines or paragraphs at once?",
-      answer: "Yes, the case converter handles multi-line text and paragraphs seamlessly. Each line is processed independently, maintaining line breaks. For Title Case and Sentence Case, each line or sentence is treated separately. This is useful for converting lists, addresses, or structured data. The tool preserves the original formatting while applying the selected case transformation across all content."
+      question: "How do I handle names with apostrophes or special characters?",
+      answer: "The converter preserves apostrophes and most special characters. 'O'Connor' becomes 'O'CONNOR' in uppercase, 'o'connor' in lowercase. For names with non-English characters like 'José' or 'Björn', the conversion works normally - 'JOSÉ', 'björn'. Emojis and other Unicode symbols are left untouched. If you're working with international text, the converter handles it gracefully."
     }
   ];
 
@@ -349,178 +350,690 @@ try converting this text to various case formats.`;
 
             {/* SEO Content Section with Dropdowns */}
             <section className="space-y-4">
-              {/* What This Tool Does - Dropdown */}
+              {/* Supported Case Types */}
               <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
                 <button
-                  onClick={() => toggleSection('whatItDoes')}
+                  onClick={() => toggleSection('supportedCaseTypes')}
                   className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
                 >
-                  <h2 className="text-xl font-bold text-foreground">Case Converter Tool - What It Does</h2>
-                  {openSections.whatItDoes ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                  <h2 className="text-xl font-bold text-foreground">Eight Case Types Explained</h2>
+                  {openSections.supportedCaseTypes ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
                 </button>
                 
-                {openSections.whatItDoes && (
+                {openSections.supportedCaseTypes && (
                   <div className="px-6 pb-6">
-                    <p className="text-muted-foreground mb-4">
-                      This free online case converter transforms text between eight different case formats with precision and speed. The tool handles everything from basic uppercase/lowercase conversions to specialized programming formats like camelCase, snake_case, and kebab-case. Each conversion uses sophisticated algorithms that preserve text integrity while applying the appropriate case transformation rules.
-                    </p>
-                    <p className="text-muted-foreground">
-                      Beyond simple case changes, the converter intelligently handles word boundaries, punctuation, and special characters. It supports Title Case with proper capitalization rules, Sentence Case for natural writing, and even stylistic formats like alternating case. Whether you're formatting programming code, preparing content for publication, or standardizing data across systems, this tool provides the exact case transformation you need with a single click.
-                    </p>
+                    <div className="space-y-4">
+                      <p className="text-muted-foreground">
+                        Text case isn't just about capitalization - it's about communication style, technical requirements, and even personality. Each of these eight case types serves different purposes in writing, coding, and design.
+                      </p>
+                      
+                      <div className="space-y-4">
+                        <div className="bg-blue-500/5 p-4 rounded-lg">
+                          <h3 className="font-semibold text-foreground mb-2">UPPERCASE & lowercase - The Basics</h3>
+                          <p className="text-sm text-muted-foreground mb-2">
+                            <strong>UPPERCASE</strong> (all caps) isn't just shouting - it's used for acronyms (NASA), legal documents (TERMS AND CONDITIONS), and emphasizing headings. In design, uppercase text can feel more formal or authoritative. But use it sparingly in paragraphs - it's harder to read in bulk because we recognize word shapes, not just individual letters.
+                          </p>
+                          <p className="text-sm text-muted-foreground">
+                            <strong>lowercase</strong> feels informal and modern. Email addresses and URLs are lowercase by necessity. In contemporary branding, lowercase logos (like tumblr or audible) feel approachable. Most body text uses lowercase with sentence case - we're just showing the pure form here.
+                          </p>
+                        </div>
+                        
+                        <div className="bg-green-500/5 p-4 rounded-lg">
+                          <h3 className="font-semibold text-foreground mb-2">Title Case & Sentence Case - For Readers</h3>
+                          <p className="text-sm text-muted-foreground mb-2">
+                            <strong>Title Case</strong> follows specific rules that vary by style guide. Generally: capitalize nouns, pronouns, verbs, adjectives, adverbs, and subordinate conjunctions (like "because"). Don't capitalize articles (a, an, the), coordinating conjunctions (and, but, or), or prepositions (in, on, at) unless they're the first or last word. Our converter follows standard rules, but different publications have their own variations.
+                          </p>
+                          <p className="text-sm text-muted-foreground">
+                            <strong>Sentence case</strong> is what you're reading right now - first word capitalized, rest lowercase (except proper nouns). It's the most readable for paragraphs. News articles, blog posts, and most web content use sentence case. It feels natural because it matches how we speak.
+                          </p>
+                        </div>
+                        
+                        <div className="bg-purple-500/5 p-4 rounded-lg">
+                          <h3 className="font-semibold text-foreground mb-2">camelCase, snake_case, kebab-case - For Machines</h3>
+                          <p className="text-sm text-muted-foreground mb-2">
+                            <strong>camelCase</strong> (or "lower camelCase") starts with lowercase, then capitalizes each subsequent word. Used in JavaScript, Java, and Swift for variables and functions. "Upper CamelCase" or "PascalCase" capitalizes every word - used for class names in many languages.
+                          </p>
+                          <p className="text-sm text-muted-foreground mb-2">
+                            <strong>snake_case</strong> uses underscores between words, all lowercase. Common in Python, Ruby, and databases. It's readable and doesn't require holding Shift. Some use SCREAMING_SNAKE_CASE for constants.
+                          </p>
+                          <p className="text-sm text-muted-foreground">
+                            <strong>kebab-case</strong> (or "dash-case") uses hyphens. Perfect for URLs, CSS classes, and file names because they're URL-safe and don't have the underscore's hidden-underline problem in early web browsers.
+                          </p>
+                        </div>
+                        
+                        <div className="bg-amber-500/5 p-4 rounded-lg">
+                          <h3 className="font-semibold text-foreground mb-2">Alternating Case - For Personality</h3>
+                          <p className="text-sm text-muted-foreground">
+                            <strong>aLtErNaTiNg cAsE</strong> (or "spongebob case" after the mocking meme) has no technical purpose - it's purely stylistic. Used in social media for playful emphasis, or in design for visual texture. It's hard to read in long passages but can grab attention in short bursts. Some use it ironically online. The converter alternates letter by letter, not word by word, which gives that distinctive up-down rhythm.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 )}
               </article>
 
-              {/* Use Cases Section - Dropdown */}
+              {/* Writing & Coding Uses */}
               <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
                 <button
-                  onClick={() => toggleSection('useCases')}
+                  onClick={() => toggleSection('writingCodingUses')}
                   className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
                 >
-                  <h2 className="text-xl font-bold text-foreground">Practical Use Cases for Case Conversion</h2>
-                  {openSections.useCases ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                  <h2 className="text-xl font-bold text-foreground">When to Use Each Case Type</h2>
+                  {openSections.writingCodingUses ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
                 </button>
                 
-                {openSections.useCases && (
+                {openSections.writingCodingUses && (
                   <div className="px-6 pb-6">
-                    <ul className="space-y-3 text-muted-foreground pl-5">
-                      <li className="pl-2">
-                        <strong className="text-foreground">Programming & Development</strong>
-                        <p className="mt-1">Convert variable names between camelCase, snake_case, and other naming conventions when switching between programming languages or following style guides.</p>
-                      </li>
-                      <li className="pl-2">
-                        <strong className="text-foreground">Content Creation & Publishing</strong>
-                        <p className="mt-1">Format headlines with Title Case, body text with Sentence Case, or prepare text for different publication platforms with specific case requirements.</p>
-                      </li>
-                      <li className="pl-2">
-                        <strong className="text-foreground">Database & Data Management</strong>
-                        <p className="mt-1">Standardize data entries by converting names, addresses, or product information to consistent case formats for database consistency and search optimization.</p>
-                      </li>
-                      <li className="pl-2">
-                        <strong className="text-foreground">Web Development & SEO</strong>
-                        <p className="mt-1">Create kebab-case URLs from page titles, format CSS class names, and prepare meta tags with proper case formatting for better search engine performance.</p>
-                      </li>
-                      <li className="pl-2">
-                        <strong className="text-foreground">Academic & Professional Writing</strong>
-                        <p className="mt-1">Format paper titles, headings, and citations according to specific style guides (APA, MLA, Chicago) with appropriate case rules for academic publications.</p>
-                      </li>
-                      <li className="pl-2">
-                        <strong className="text-foreground">Social Media & Marketing</strong>
-                        <p className="mt-1">Create attention-grabbing text with alternating case for social media posts, or standardize brand mentions and hashtags across different platforms.</p>
-                      </li>
-                      <li className="pl-2">
-                        <strong className="text-foreground">Internationalization & Localization</strong>
-                        <p className="mt-1">Adapt text case for different languages with specific capitalization rules, especially for languages with different character sets or case conventions.</p>
-                      </li>
-                    </ul>
+                    <div className="space-y-4">
+                      <p className="text-muted-foreground">
+                        Choosing the right case isn't arbitrary - different contexts demand different formats. Here's when to reach for each type in your writing and coding work.
+                      </p>
+                      
+                      <div className="space-y-4">
+                        <div className="bg-blue-500/5 p-4 rounded-lg">
+                          <h3 className="font-semibold text-foreground mb-2">Writing & Publishing Contexts</h3>
+                          <div className="space-y-3 text-sm">
+                            <div className="flex items-start gap-2">
+                              <div className="w-4 h-4 bg-blue-500/20 rounded flex items-center justify-center flex-shrink-0 mt-0.5">
+                                <FileText size={12} className="text-blue-500" />
+                              </div>
+                              <span><strong>Blog posts & articles:</strong> Title Case for headlines, Sentence case for body text. Subheadings can go either way depending on publication style.</span>
+                            </div>
+                            <div className="flex items-start gap-2">
+                              <div className="w-4 h-4 bg-green-500/20 rounded flex items-center justify-center flex-shrink-0 mt-0.5">
+                                <FileText size={12} className="text-green-500" />
+                              </div>
+                              <span><strong>Academic papers:</strong> Title Case for paper titles, Sentence case for section headings (varies by style guide). Check APA, MLA, or Chicago requirements.</span>
+                            </div>
+                            <div className="flex items-start gap-2">
+                              <div className="w-4 h-4 bg-purple-500/20 rounded flex items-center justify-center flex-shrink-0 mt-0.5">
+                                <FileText size={12} className="text-purple-500" />
+                              </div>
+                              <span><strong>Business documents:</strong> Often use Title Case for all headings. Legal documents might use UPPERCASE for emphasis of key terms.</span>
+                            </div>
+                            <div className="flex items-start gap-2">
+                              <div className="w-4 h-4 bg-amber-500/20 rounded flex items-center justify-center flex-shrink-0 mt-0.5">
+                                <FileText size={12} className="text-amber-500" />
+                              </div>
+                              <span><strong>Social media:</strong> Sentence case feels natural. Some brands use Title Case for posts. Alternating case for playful content. NEVER USE ALL CAPS UNLESS YOU'RE YELLING.</span>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <div className="bg-green-500/5 p-4 rounded-lg">
+                          <h3 className="font-semibold text-foreground mb-2">Programming & Development</h3>
+                          <div className="space-y-3 text-sm">
+                            <div className="flex items-start gap-2">
+                              <div className="w-4 h-4 bg-blue-500/20 rounded flex items-center justify-center flex-shrink-0 mt-0.5">
+                                <Code size={12} className="text-blue-500" />
+                              </div>
+                              <span><strong>JavaScript/TypeScript:</strong> camelCase for variables/functions, PascalCase for classes/components, UPPERCASE for constants. 'calculateTotalPrice', 'UserProfile', 'MAX_RETRIES'</span>
+                            </div>
+                            <div className="flex items-start gap-2">
+                              <div className="w-4 h-4 bg-green-500/20 rounded flex items-center justify-center flex-shrink-0 mt-0.5">
+                                <Code size={12} className="text-green-500" />
+                              </div>
+                              <span><strong>Python:</strong> snake_case for everything (functions, variables). PascalCase for classes. SCREAMING_SNAKE for constants. 'calculate_total', 'UserClass', 'DEFAULT_TIMEOUT'</span>
+                            </div>
+                            <div className="flex items-start gap-2">
+                              <div className="w-4 h-4 bg-purple-500/20 rounded flex items-center justify-center flex-shrink-0 mt-0.5">
+                                <Code size={12} className="text-purple-500" />
+                              </div>
+                              <span><strong>Database/SQL:</strong> snake_case common for table/column names. Some use camelCase. Consistency within a project matters most. 'user_accounts', 'createdAt'</span>
+                            </div>
+                            <div className="flex items-start gap-2">
+                              <div className="w-4 h-4 bg-amber-500/20 rounded flex items-center justify-center flex-shrink-0 mt-0.5">
+                                <Code size={12} className="text-amber-500" />
+                              </div>
+                              <span><strong>HTML/CSS:</strong> kebab-case for classes/IDs, lowercase for tags/attributes. 'main-navigation', 'user-profile-card'. Some frameworks use BEM: 'block__element--modifier'</span>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <div className="bg-purple-500/5 p-4 rounded-lg">
+                          <h3 className="font-semibold text-foreground mb-2">File Management & URLs</h3>
+                          <div className="space-y-3 text-sm">
+                            <div className="border-l-4 border-blue-500 pl-3 py-1">
+                              <div className="font-medium text-foreground">File naming</div>
+                              <div className="text-muted-foreground">Use kebab-case or snake_case. Avoid spaces (breaks in terminals). 'quarterly-report-2024.pdf' or 'quarterly_report_2024.pdf'. Lowercase preferred for cross-platform compatibility.</div>
+                            </div>
+                            <div className="border-l-4 border-green-500 pl-3 py-1">
+                              <div className="font-medium text-foreground">URL slugs</div>
+                              <div className="text-muted-foreground">kebab-case, all lowercase. SEO-friendly and readable. 'how-to-learn-python-quickly' converts well from 'How to Learn Python Quickly'.</div>
+                            </div>
+                            <div className="border-l-4 border-purple-500 pl-3 py-1">
+                              <div className="font-medium text-foreground">Git commits/branches</div>
+                              <div className="text-muted-foreground">kebab-case for branch names: 'feature/add-user-authentication'. Sentence case for commit messages: 'Add user authentication feature'.</div>
+                            </div>
+                            <div className="border-l-4 border-amber-500 pl-3 py-1">
+                              <div className="font-medium text-foreground">API endpoints</div>
+                              <div className="text-muted-foreground">kebab-case or snake_case. '/api/user-profiles' or '/api/user_profiles'. Consistency with your framework's conventions.</div>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <div className="bg-amber-500/5 p-4 rounded-lg">
+                          <h3 className="font-semibold text-foreground mb-2">Common Mistakes to Avoid</h3>
+                          <div className="space-y-2 text-sm">
+                            <div className="flex items-start gap-2">
+                              <div className="w-1.5 h-1.5 bg-red-500 rounded-full mt-1 flex-shrink-0"></div>
+                              <span>Using Title Case for hashtags (#ThisLooksWeird vs #thislooksnormal)</span>
+                            </div>
+                            <div className="flex items-start gap-2">
+                              <div className="w-1.5 h-1.5 bg-red-500 rounded-full mt-1 flex-shrink-0"></div>
+                              <span>Mixing cases in code (calculate_total and calculateTotal in same project)</span>
+                            </div>
+                            <div className="flex items-start gap-2">
+                              <div className="w-1.5 h-1.5 bg-red-500 rounded-full mt-1 flex-shrink-0"></div>
+                              <span>Using spaces in file names that will be used on command line</span>
+                            </div>
+                            <div className="flex items-start gap-2">
+                              <div className="w-1.5 h-1.5 bg-red-500 rounded-full mt-1 flex-shrink-0"></div>
+                              <span>Overusing UPPERCASE in emails or messages (comes across as angry)</span>
+                            </div>
+                            <div className="flex items-start gap-2">
+                              <div className="w-1.5 h-1.5 bg-red-500 rounded-full mt-1 flex-shrink-0"></div>
+                              <span>Inconsistent case in database columns (userName vs user_name in same table)</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 )}
               </article>
 
-              {/* How to Use This Tool - Dropdown */}
+              {/* Conversion Rules */}
               <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
                 <button
-                  onClick={() => toggleSection('howToUse')}
+                  onClick={() => toggleSection('conversionRules')}
                   className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
                 >
-                  <h2 className="text-xl font-bold text-foreground">How to Convert Text Between Different Cases</h2>
-                  {openSections.howToUse ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                  <h2 className="text-xl font-bold text-foreground">How Case Conversion Actually Works</h2>
+                  {openSections.conversionRules ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
                 </button>
                 
-                {openSections.howToUse && (
+                {openSections.conversionRules && (
                   <div className="px-6 pb-6">
-                    <ol className="space-y-4 text-muted-foreground pl-5">
-                      <li className="pl-2">
-                        <strong className="text-foreground">Input Your Text</strong>
-                        <p className="mt-1">Paste or type the text you want to convert in the input field. The tool handles single lines, paragraphs, and multi-line content with equal efficiency.</p>
-                      </li>
-                      <li className="pl-2">
-                        <strong className="text-foreground">Choose Conversion Type</strong>
-                        <p className="mt-1">Select from eight case formats: UPPERCASE, lowercase, Title Case, Sentence case, camelCase, snake_case, kebab-case, or alternating case based on your specific needs.</p>
-                      </li>
-                      <li className="pl-2">
-                        <strong className="text-foreground">Apply Conversion</strong>
-                        <p className="mt-1">Click your chosen case button to instantly transform the text. The tool processes the conversion in real-time, maintaining all characters and formatting.</p>
-                      </li>
-                      <li className="pl-2">
-                        <strong className="text-foreground">Review Results</strong>
-                        <p className="mt-1">Check the output for accuracy. For programming conversions, verify that variable names or identifiers follow the intended language conventions.</p>
-                      </li>
-                      <li className="pl-2">
-                        <strong className="text-foreground">Iterate if Needed</strong>
-                        <p className="mt-1">Use the "Use as Input" button to take the converted text and apply additional transformations, or try different case formats to compare results.</p>
-                      </li>
-                      <li className="pl-2">
-                        <strong className="text-foreground">Export Your Text</strong>
-                        <p className="mt-1">Copy the converted text to your clipboard with one click, or manually select the output for use in your target application or document.</p>
-                      </li>
-                    </ol>
+                    <div className="space-y-4">
+                      <p className="text-muted-foreground">
+                        Converting text between cases seems simple, but there are nuanced rules that affect the results. Understanding these helps you get predictable outcomes and troubleshoot when conversions don't look right.
+                      </p>
+                      
+                      <div className="space-y-4">
+                        <div className="bg-blue-500/5 p-4 rounded-lg">
+                          <h3 className="font-semibold text-foreground mb-2">Word Boundary Detection</h3>
+                          <p className="text-sm text-muted-foreground mb-3">
+                            The converter needs to know where words start and end. It uses spaces, punctuation, and symbols as boundaries. But different cases treat boundaries differently:
+                          </p>
+                          <div className="space-y-2 text-sm mb-3">
+                            <div className="flex items-center justify-between">
+                              <div>"hello-world"</div>
+                              <div className="font-mono text-xs bg-blue-500/10 px-2 py-1 rounded">Title Case: "Hello-World"</div>
+                            </div>
+                            <div className="flex items-center justify-between">
+                              <div>"hello_world"</div>
+                              <div className="font-mono text-xs bg-green-500/10 px-2 py-1 rounded">Title Case: "Hello_World"</div>
+                            </div>
+                            <div className="flex items-center justify-between">
+                              <div>"helloWorld"</div>
+                              <div className="font-mono text-xs bg-purple-500/10 px-2 py-1 rounded">Title Case: "Helloworld" (no boundary detected)</div>
+                            </div>
+                          </div>
+                          <p className="text-sm text-muted-foreground">
+                            The hyphen and underscore are treated as word separators, so each side gets capitalized. But camelCase text without spaces or punctuation gets treated as one word. This is why 'iPhone' becomes 'IPHONE' in uppercase, not 'IPHONE' with weird capitalization.
+                          </p>
+                        </div>
+                        
+                        <div className="bg-green-500/5 p-4 rounded-lg">
+                          <h3 className="font-semibold text-foreground mb-2">Title Case Complexity</h3>
+                          <p className="text-sm text-muted-foreground mb-3">
+                            Title Case has the most rules. Our converter follows these general principles:
+                          </p>
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-3">
+                            <div className="p-3 bg-blue-500/10 rounded">
+                              <div className="font-medium text-sm mb-1">Always capitalize</div>
+                              <div className="text-xs space-y-1">
+                                <div>• First and last words</div>
+                                <div>• Nouns (book, computer)</div>
+                                <div>• Pronouns (he, they, it)</div>
+                                <div>• Verbs (run, think, is)</div>
+                                <div>• Adjectives (big, beautiful)</div>
+                                <div>• Adverbs (quickly, very)</div>
+                              </div>
+                            </div>
+                            <div className="p-3 bg-green-500/10 rounded">
+                              <div className="font-medium text-sm mb-1">Usually lowercase</div>
+                              <div className="text-xs space-y-1">
+                                <div>• Articles (a, an, the)</div>
+                                <div>• Coordinating conjunctions (and, but, or)</div>
+                                <div>• Short prepositions (in, on, at, by)</div>
+                                <div>• "To" in infinitives (to run)</div>
+                                <div>• Parts of phrasal verbs (look up to)</div>
+                              </div>
+                            </div>
+                          </div>
+                          <p className="text-sm text-muted-foreground">
+                            But here's where it gets tricky: "because" is a subordinating conjunction, so it gets capitalized. "Than" and "as" are usually lowercase. Prepositions over 4 letters (like "between", "through") often get capitalized. Different style guides (AP, Chicago, MLA) have different lists. Our converter uses a standard approach that works for most cases.
+                          </p>
+                        </div>
+                        
+                        <div className="bg-purple-500/5 p-4 rounded-lg">
+                          <h3 className="font-semibold text-foreground mb-2">Programming Case Algorithms</h3>
+                          <div className="space-y-3 text-sm">
+                            <div className="border-l-4 border-blue-500 pl-3 py-1">
+                              <div className="font-medium text-foreground">camelCase conversion</div>
+                              <div className="text-muted-foreground">Lowercase everything first, then find word boundaries (spaces, underscores, hyphens), capitalize next letter, remove separators. 'user profile' → 'userprofile' → 'userProfile'. Works for simple cases but can't handle 'XMLHttpRequest' correctly.</div>
+                            </div>
+                            <div className="border-l-4 border-green-500 pl-3 py-1">
+                              <div className="font-medium text-foreground">snake_case conversion</div>
+                              <div className="text-muted-foreground">Lowercase everything, replace spaces with underscores. Simple but effective. For camelCase input, we'd need to detect capital letters as word breaks, which our converter doesn't do automatically. You'd need to add spaces first.</div>
+                            </div>
+                            <div className="border-l-4 border-purple-500 pl-3 py-1">
+                              <div className="font-medium text-foreground">kebab-case conversion</div>
+                              <div className="text-muted-foreground">Similar to snake_case but with hyphens. Important for URLs because spaces become %20, plus signs have meaning, underscores can disappear under links. Hyphens are the safe choice for web addresses.</div>
+                            </div>
+                          </div>
+                          <p className="text-sm text-muted-foreground mt-3">
+                            For programming conversions, the tool works best when you start with spaced text. If you have 'userProfile' and want 'user_profile', convert to Title Case first ('User Profile'), then to lowercase ('user profile'), then to snake_case ('user_profile'). Two-step process but gets you there.
+                          </p>
+                        </div>
+                        
+                        <div className="bg-amber-500/5 p-4 rounded-lg">
+                          <h3 className="font-semibold text-foreground mb-2">Edge Cases and Limitations</h3>
+                          <div className="space-y-2 text-sm">
+                            <div className="flex items-start gap-2">
+                              <div className="w-4 h-4 bg-red-500/20 rounded flex items-center justify-center flex-shrink-0 mt-0.5">
+                                <div className="w-1.5 h-1.5 bg-red-500 rounded-full"></div>
+                              </div>
+                              <span><strong>Acronyms in Title Case:</strong> 'NASA official' becomes 'Nasa Official' (lowercases the acronym). You'd want 'NASA Official'. Our converter doesn't know what's an acronym.</span>
+                            </div>
+                            <div className="flex items-start gap-2">
+                              <div className="w-4 h-4 bg-yellow-500/20 rounded flex items-center justify-center flex-shrink-0 mt-0.5">
+                                <div className="w-1.5 h-1.5 bg-yellow-500 rounded-full"></div>
+                              </div>
+                              <span><strong>Proper nouns:</strong> 'mcdonald' becomes 'Mcdonald' not 'McDonald'. The converter doesn't have a dictionary of proper names.</span>
+                            </div>
+                            <div className="flex items-start gap-2">
+                              <div className="w-4 h-4 bg-green-500/20 rounded flex items-center justify-center flex-shrink-0 mt-0.5">
+                                <div className="w-1.5 h-1.5 bg-green-500 rounded-full"></div>
+                              </div>
+                              <span><strong>Mixed case input:</strong> 'iPhone' to uppercase becomes 'IPHONE' correctly. But 'iPHONE' (weird casing) also becomes 'IPHONE'. Uppercase/lowercase conversions are straightforward.</span>
+                            </div>
+                            <div className="flex items-start gap-2">
+                              <div className="w-4 h-4 bg-blue-500/20 rounded flex items-center justify-center flex-shrink-0 mt-0.5">
+                                <div className="w-1.5 h-1.5 bg-blue-500 rounded-full"></div>
+                              </div>
+                              <span><strong>Non-English text:</strong> Works fine with accented characters: 'café' → 'CAFÉ' → 'café'. But language-specific rules (German nouns always capitalized) aren't applied.</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 )}
               </article>
 
-              {/* Example Input and Output - Dropdown */}
+              {/* Examples */}
               <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
                 <button
                   onClick={() => toggleSection('examples')}
                   className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
                 >
-                  <h2 className="text-xl font-bold text-foreground">Case Conversion Examples & Applications</h2>
+                  <h2 className="text-xl font-bold text-foreground">Real-World Case Conversion Examples</h2>
                   {openSections.examples ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
                 </button>
                 
                 {openSections.examples && (
                   <div className="px-6 pb-6">
+                    <div className="space-y-4">
+                      <p className="text-muted-foreground mb-4">
+                        Seeing case conversion in action helps understand when and how to use each type. Here are practical examples from different fields.
+                      </p>
+                      
+                      <div className="space-y-4">
+                        <div className="bg-blue-500/5 p-4 rounded-lg">
+                          <h3 className="font-semibold text-foreground mb-2">Example 1: Blog Post Workflow</h3>
+                          <div className="space-y-3 text-sm">
+                            <p><strong>Starting with a working title:</strong> "10 tips for better python code"</p>
+                            
+                            <div className="pl-4 border-l-2 border-blue-500">
+                              <div className="font-medium text-foreground">Conversions needed:</div>
+                              <div className="mt-1 text-muted-foreground space-y-1">
+                                <div>• <strong>Title Case for headline:</strong> "10 Tips for Better Python Code"</div>
+                                <div>• <strong>Sentence case for intro:</strong> "Here are 10 tips for better Python code."</div>
+                                <div>• <strong>kebab-case for URL:</strong> "10-tips-for-better-python-code"</div>
+                                <div>• <strong>camelCase for JavaScript variable:</strong> "tipsForBetterPythonCode" (if tracking in analytics)</div>
+                              </div>
+                            </div>
+                            
+                            <div className="bg-secondary/30 p-3 rounded">
+                              <div className="font-medium text-foreground">Why this matters:</div>
+                              <div className="text-xs mt-1 text-muted-foreground">The URL slug affects SEO and sharing. The headline needs proper title case for professionalism. The JavaScript variable needs to follow coding conventions if you're adding interactive elements to the post.</div>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <div className="bg-green-500/5 p-4 rounded-lg">
+                          <h3 className="font-semibold text-foreground mb-2">Example 2: Database Migration Project</h3>
+                          <div className="space-y-3 text-sm">
+                            <p><strong>Old database uses inconsistent naming:</strong> Some tables use spaces, some use underscores, some are camelCase.</p>
+                            
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                              <div>
+                                <div className="font-medium text-foreground mb-1">Original column names:</div>
+                                <ul className="space-y-1 text-muted-foreground text-xs">
+                                  <li>• "First Name" (with space)</li>
+                                  <li>• "last_name" (snake_case)</li>
+                                  <li>• "EmailAddress" (camelCase)</li>
+                                  <li>• "date-of-birth" (kebab-case)</li>
+                                </ul>
+                              </div>
+                              <div>
+                                <div className="font-medium text-foreground mb-1">Standardized to snake_case:</div>
+                                <ul className="space-y-1 text-muted-foreground text-xs">
+                                  <li>• "first_name"</li>
+                                  <li>• "last_name" (unchanged)</li>
+                                  <li>• "email_address"</li>
+                                  <li>• "date_of_birth"</li>
+                                </ul>
+                              </div>
+                            </div>
+                            
+                            <div className="pl-4 border-l-2 border-green-500">
+                              <div className="font-medium text-foreground">Conversion process:</div>
+                              <div className="mt-1 text-muted-foreground text-xs">
+                                For "EmailAddress": Convert to lowercase → "emailaddress". Not right. Better: Convert to Title Case with spaces → "Email Address". Then lowercase → "email address". Then snake_case → "email_address". Three steps but gets correct word boundaries.
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <div className="bg-purple-500/5 p-4 rounded-lg">
+                          <h3 className="font-semibold text-foreground mb-2">Example 3: Multi-Language Web Application</h3>
+                          <div className="space-y-3 text-sm">
+                            <p><strong>Building a user profile feature:</strong> Need consistent naming across frontend, backend, and database.</p>
+                            
+                            <div className="overflow-x-auto">
+                              <div className="min-w-full inline-block align-middle">
+                                <div className="overflow-hidden border border-border rounded-lg">
+                                  <table className="min-w-full divide-y divide-border">
+                                    <thead className="bg-secondary/20">
+                                      <tr>
+                                        <th className="px-4 py-2 text-left text-xs font-medium text-foreground">Context</th>
+                                        <th className="px-4 py-2 text-left text-xs font-medium text-foreground">Case Format</th>
+                                        <th className="px-4 py-2 text-left text-xs font-medium text-foreground">Example</th>
+                                        <th className="px-4 py-2 text-left text-xs font-medium text-foreground">Notes</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody className="divide-y divide-border">
+                                      <tr>
+                                        <td className="px-4 py-2 text-xs">React component</td>
+                                        <td className="px-4 py-2 text-xs font-mono">PascalCase</td>
+                                        <td className="px-4 py-2 text-xs font-mono">UserProfileCard</td>
+                                        <td className="px-4 py-2 text-xs">React convention</td>
+                                      </tr>
+                                      <tr>
+                                        <td className="px-4 py-2 text-xs">CSS class</td>
+                                        <td className="px-4 py-2 text-xs font-mono">kebab-case</td>
+                                        <td className="px-4 py-2 text-xs font-mono">user-profile-card</td>
+                                        <td className="px-4 py-2 text-xs">HTML/CSS standard</td>
+                                      </tr>
+                                      <tr>
+                                        <td className="px-4 py-2 text-xs">JavaScript variable</td>
+                                        <td className="px-4 py-2 text-xs font-mono">camelCase</td>
+                                        <td className="px-4 py-2 text-xs font-mono">userProfileData</td>
+                                        <td className="px-4 py-2 text-xs">JS/TS convention</td>
+                                      </tr>
+                                      <tr>
+                                        <td className="px-4 py-2 text-xs">API endpoint</td>
+                                        <td className="px-4 py-2 text-xs font-mono">kebab-case</td>
+                                        <td className="px-4 py-2 text-xs font-mono">/api/user-profile</td>
+                                        <td className="px-4 py-2 text-xs">REST API best practice</td>
+                                      </tr>
+                                      <tr>
+                                        <td className="px-4 py-2 text-xs">Database table</td>
+                                        <td className="px-4 py-2 text-xs font-mono">snake_case</td>
+                                        <td className="px-4 py-2 text-xs font-mono">user_profiles</td>
+                                        <td className="px-4 py-2 text-xs">SQL/common practice</td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </div>
+                              </div>
+                            </div>
+                            
+                            <p className="text-sm text-muted-foreground">
+                              <strong>The workflow:</strong> Start with a plain language description: "user profile". Use our converter to quickly generate each format as needed. Store these conversions in a project glossary so everyone uses the same names.
+                            </p>
+                          </div>
+                        </div>
+                        
+                        <div className="bg-amber-500/5 p-4 rounded-lg">
+                          <h3 className="font-semibold text-foreground mb-2">Example 4: Social Media Campaign</h3>
+                          <div className="space-y-3 text-sm">
+                            <p><strong>Launching a product called "QuickCalc":</strong> Need consistent branding across platforms.</p>
+                            
+                            <div className="space-y-2">
+                              <div className="flex items-center justify-between">
+                                <div>Twitter handle</div>
+                                <div className="font-mono text-xs bg-blue-500/10 px-2 py-1 rounded">@QuickCalcApp</div>
+                              </div>
+                              <div className="flex items-center justify-between">
+                                <div>Hashtag</div>
+                                <div className="font-mono text-xs bg-green-500/10 px-2 py-1 rounded">#QuickCalc</div>
+                              </div>
+                              <div className="flex items-center justify-between">
+                                <div>Website URL</div>
+                                <div className="font-mono text-xs bg-purple-500/10 px-2 py-1 rounded">quickcalc-app.com</div>
+                              </div>
+                              <div className="flex items-center justify-between">
+                                <div>App Store name</div>
+                                <div className="font-mono text-xs bg-amber-500/10 px-2 py-1 rounded">QuickCalc: Calculator App</div>
+                              </div>
+                              <div className="flex items-center justify-between">
+                                <div>Playful social post</div>
+                                <div className="font-mono text-xs bg-red-500/10 px-2 py-1 rounded">qUiCkCaLc iS hErE! 🎉</div>
+                              </div>
+                            </div>
+                            
+                            <div className="bg-secondary/30 p-3 rounded">
+                              <div className="font-medium text-foreground">Key insight:</div>
+                              <div className="text-xs mt-1 text-muted-foreground">Each platform has its own conventions. Twitter handles often use camelCase or PascalCase. URLs use kebab-case or lowercase. Hashtags usually PascalCase for readability (#QuickCalc not #quickcalc). The alternating case post grabs attention but should be used sparingly.</div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div className="mt-6 p-4 bg-secondary/20 rounded-lg">
+                        <h4 className="font-medium text-foreground mb-2">Pro Tips from These Examples</h4>
+                        <ul className="space-y-2 text-sm text-muted-foreground">
+                          <li className="flex items-start gap-2">
+                            <div className="w-1 h-1 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
+                            <span><strong>Plan your case strategy early:</strong> Decide on conventions before coding/writing to avoid costly renames later.</span>
+                          </li>
+                          <li className="flex items-start gap-2">
+                            <div className="w-1 h-1 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
+                            <span><strong>Use multi-step conversions:</strong> Sometimes you need to convert through an intermediate format to get proper word boundaries.</span>
+                          </li>
+                          <li className="flex items-start gap-2">
+                            <div className="w-1 h-1 bg-purple-500 rounded-full mt-2 flex-shrink-0"></div>
+                            <span><strong>Platforms have conventions:</strong> What works for code might not work for URLs or social media. Adapt to each context.</span>
+                          </li>
+                          <li className="flex items-start gap-2">
+                            <div className="w-1 h-1 bg-amber-500 rounded-full mt-2 flex-shrink-0"></div>
+                            <span><strong>Create a project glossary:</strong> Document your case decisions so team members stay consistent.</span>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </article>
+
+              {/* Character Handling */}
+              <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
+                <button
+                  onClick={() => toggleSection('characterHandling')}
+                  className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
+                >
+                  <h2 className="text-xl font-bold text-foreground">How Special Characters Are Handled</h2>
+                  {openSections.characterHandling ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                </button>
+                
+                {openSections.characterHandling && (
+                  <div className="px-6 pb-6">
+                    <div className="space-y-4">
+                      <p className="text-muted-foreground">
+                        Real text isn't just letters - it has numbers, symbols, emojis, and special characters. The converter handles these intelligently, but there are some things you should know.
+                      </p>
+                      
+                      <div className="space-y-4">
+                        <div className="bg-blue-500/5 p-4 rounded-lg">
+                          <h3 className="font-semibold text-foreground mb-2">Numbers Stay Put</h3>
+                          <p className="text-sm text-muted-foreground mb-3">
+                            Numbers remain unchanged in all conversions. This is important for product names, version numbers, and technical identifiers:
+                          </p>
+                          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 mb-3">
+                            <div className="text-center p-2 bg-blue-500/10 rounded text-xs">
+                              <div>iPhone12</div>
+                              <div className="font-mono">→ IPHONE12</div>
+                            </div>
+                            <div className="text-center p-2 bg-green-500/10 rounded text-xs">
+                              <div>Windows 11</div>
+                              <div className="font-mono">→ windows 11</div>
+                            </div>
+                            <div className="text-center p-2 bg-purple-500/10 rounded text-xs">
+                              <div>Python3.9</div>
+                              <div className="font-mono">→ python3_9</div>
+                            </div>
+                          </div>
+                          <p className="text-sm text-muted-foreground">
+                            Notice in the last example: the period becomes an underscore in snake_case because periods aren't allowed in identifiers. The converter treats periods as word separators in some cases.
+                          </p>
+                        </div>
+                        
+                        <div className="bg-green-500/5 p-4 rounded-lg">
+                          <h3 className="font-semibold text-foreground mb-2">Symbols as Word Breaks</h3>
+                          <div className="space-y-3 text-sm">
+                            <div className="border-l-4 border-blue-500 pl-3 py-1">
+                              <div className="font-medium text-foreground">Hyphens and underscores</div>
+                              <div className="text-muted-foreground">Treated as word separators. "front-end" → "Front-End" in Title Case, "front_end" in snake_case, "frontEnd" in camelCase. They're preserved in most conversions.</div>
+                            </div>
+                            <div className="border-l-4 border-green-500 pl-3 py-1">
+                              <div className="font-medium text-foreground">Periods and commas</div>
+                              <div className="text-muted-foreground">Sentence breaks for Sentence Case. "hello.world" → "Hello.world". In snake_case, periods often become underscores because they're not valid in identifiers.</div>
+                            </div>
+                            <div className="border-l-4 border-purple-500 pl-3 py-1">
+                              <div className="font-medium text-foreground">Apostrophes and quotes</div>
+                              <div className="text-muted-foreground">Preserved but not treated as word breaks. "don't" → "DON'T". "O'Connor" → "O'CONNOR". The apostrophe stays put through conversions.</div>
+                            </div>
+                            <div className="border-l-4 border-amber-500 pl-3 py-1">
+                              <div className="font-medium text-foreground">Special symbols (@, #, $, etc.)</div>
+                              <div className="text-muted-foreground">Preserved but may affect word detection. "user@example.com" → "USER@EXAMPLE.COM". Hashtags: "#helloWorld" → "#helloworld" in lowercase.</div>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <div className="bg-purple-500/5 p-4 rounded-lg">
+                          <h3 className="font-semibold text-foreground mb-2">Unicode and International Text</h3>
+                          <p className="text-sm text-muted-foreground mb-3">
+                            The converter handles Unicode characters correctly, which means it works with most languages:
+                          </p>
+                          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 mb-3">
+                            <div className="text-center p-2 bg-blue-500/10 rounded text-xs">
+                              <div>café</div>
+                              <div className="font-mono">→ CAFÉ</div>
+                            </div>
+                            <div className="text-center p-2 bg-green-500/10 rounded text-xs">
+                              <div>naïve</div>
+                              <div className="font-mono">→ NAÏVE</div>
+                            </div>
+                            <div className="text-center p-2 bg-purple-500/10 rounded text-xs">
+                              <div>Björn</div>
+                              <div className="font-mono">→ BJÖRN</div>
+                            </div>
+                          </div>
+                          <p className="text-sm text-muted-foreground">
+                            Accented characters maintain their accents through conversions. Greek, Cyrillic, Arabic, Chinese, Japanese - all handled. Emojis are also preserved: "Hello 👋" → "HELLO 👋". The converter doesn't try to "capitalize" non-Latin scripts that don't have case concepts.
+                          </p>
+                        </div>
+                        
+                        <div className="bg-amber-500/5 p-4 rounded-lg">
+                          <h3 className="font-semibold text-foreground mb-2">Common Problem Cases</h3>
+                          <div className="space-y-2 text-sm">
+                            <div className="flex items-start gap-2">
+                              <div className="w-4 h-4 bg-red-500/20 rounded flex items-center justify-center flex-shrink-0 mt-0.5">
+                                <div className="w-1.5 h-1.5 bg-red-500 rounded-full"></div>
+                              </div>
+                              <span><strong>Email addresses:</strong> "user@example.com" becomes "USER@EXAMPLE.COM" in uppercase. Valid but looks odd. Usually you'd want to preserve the original casing for emails.</span>
+                            </div>
+                            <div className="flex items-start gap-2">
+                              <div className="w-4 h-4 bg-yellow-500/20 rounded flex items-center justify-center flex-shrink-0 mt-0.5">
+                                <div className="w-1.5 h-1.5 bg-yellow-500 rounded-full"></div>
+                              </div>
+                              <span><strong>URLs:</strong> Converting "https://example.com/page" to uppercase gives "HTTPS://EXAMPLE.COM/PAGE". Technically URLs are case-insensitive for domain, case-sensitive for path. Usually leave URLs as-is.</span>
+                            </div>
+                            <div className="flex items-start gap-2">
+                              <div className="w-4 h-4 bg-green-500/20 rounded flex items-center justify-center flex-shrink-0 mt-0.5">
+                                <div className="w-1.5 h-1.5 bg-green-500 rounded-full"></div>
+                              </div>
+                              <span><strong>Code snippets:</strong> Converting to uppercase breaks the code. Don't use case conversion on actual code unless you're just transforming identifiers.</span>
+                            </div>
+                            <div className="flex items-start gap-2">
+                              <div className="w-4 h-4 bg-blue-500/20 rounded flex items-center justify-center flex-shrink-0 mt-0.5">
+                                <div className="w-1.5 h-1.5 bg-blue-500 rounded-full"></div>
+                              </div>
+                              <span><strong>Password-like text:</strong> "P@ssw0rd!" becomes "p@ssw0rd!" in lowercase. The symbols and numbers stay. But obviously don't put real passwords into web tools.</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </article>
+
+              {/* Frequently Asked Questions - Dropdown */}
+              <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
+                <button
+                  onClick={() => toggleSection('faqs')}
+                  className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
+                >
+                  <h2 className="text-xl font-bold text-foreground">Frequently Asked Questions About Case Conversion</h2>
+                  {openSections.faqs ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                </button>
+                
+                {openSections.faqs && (
+                  <div className="px-6 pb-6">
                     <div className="space-y-6">
-                      <div>
-                        <h3 className="text-lg font-semibold text-foreground mb-2">Example 1: Programming Variable Conversion</h3>
-                        <div className="bg-muted p-4 rounded-lg overflow-x-auto">
-                          <pre className="text-sm text-muted-foreground font-mono">
-{`Original Text:
-user profile information
-
-Conversions:
-• UPPERCASE: USER PROFILE INFORMATION
-• lowercase: user profile information
-• Title Case: User Profile Information
-• Sentence case: User profile information
-• camelCase: userProfileInformation
-• snake_case: user_profile_information
-• kebab-case: user-profile-information
-• Alternating: uSeR pRoFiLe iNfOrMaTiOn
-
-Application:
-Moving from Python (snake_case) to JavaScript (camelCase):
-user_profile_info → userProfileInfo
-Database column to programming variable conversion.`}
-                          </pre>
+                      {faqData.map((faq, index) => (
+                        <div key={index}>
+                          <h3 className="text-lg font-semibold text-foreground mb-2">{faq.question}</h3>
+                          <p className="text-muted-foreground">{faq.answer}</p>
                         </div>
+                      ))}
+                      
+                      <div className="pt-4">
+                        <h3 className="text-lg font-semibold text-foreground mb-2">How do I convert between camelCase and snake_case properly?</h3>
+                        <p className="text-muted-foreground mb-3">
+                          For camelCase to snake_case: First, add spaces before capital letters (using regex or manually): 'userName' → 'user Name'. Then convert to lowercase: 'user name'. Then to snake_case: 'user_name'. For snake_case to camelCase: Convert spaces to camelCase directly works if you replace underscores with spaces first: 'user_name' → 'user name' → 'userName'. Our tool can do this with the "Use as Input" button for multi-step conversions.
+                        </p>
+                        
+                        <h3 className="text-lg font-semibold text-foreground mb-2">What's the fastest way to convert a lot of text?</h3>
+                        <p className="text-muted-foreground">
+                          Paste all your text at once - the converter handles multi-line input. If you have a list of items (like column names), paste them one per line. Each line converts independently. For programming files with many variables, consider using your IDE's built-in refactoring tools which understand code structure better than a general text converter.
+                        </p>
                       </div>
-                      <div>
-                        <h3 className="text-lg font-semibold text-foreground mb-2">Example 2: Content Formatting for Publication</h3>
-                        <div className="bg-muted p-4 rounded-lg overflow-x-auto">
-                          <pre className="text-sm text-muted-foreground font-mono">
-{`Original Text:
-the future of artificial intelligence in healthcare
-
-Conversions:
-• UPPERCASE: THE FUTURE OF ARTIFICIAL INTELLIGENCE IN HEALTHCARE
-• lowercase: the future of artificial intelligence in healthcare
-• Title Case: The Future of Artificial Intelligence in Healthcare
-• Sentence case: The future of artificial intelligence in healthcare
-• camelCase: theFutureOfArtificialIntelligenceInHealthcare
-• snake_case: the_future_of_artificial_intelligence_in_healthcare
-• kebab-case: the-future-of-artificial-intelligence-in-healthcare
-• Alternating: tHe fUtUrE oF aRtIfIcIaL iNtElLiGeNcE iN hEaLtHcArE
-
-Application:
-• Title Case: Article headline
-• Sentence case: Article introduction
-• kebab-case: URL slug: the-future-of-artificial-intelligence-in-healthcare
-• UPPERCASE: Section heading in document`}
-                          </pre>
-                        </div>
-                      </div>
+                    </div>
+                    
+                    {/* Professional Disclaimer */}
+                    <div className="mt-8 p-4 bg-yellow-500/10 rounded-lg border border-yellow-500/20">
+                      <h3 className="text-lg font-semibold text-foreground mb-2">Text Formatting Disclaimer</h3>
+                      <p className="text-sm text-muted-foreground">
+                        This case converter uses standard text transformation algorithms for case conversion. Different programming languages and style guides may have specific variations or exceptions to standard case conventions. For critical applications, especially in programming or formal publications, always verify that converted text meets the specific requirements of your target language, framework, or style guide. The tool is designed for productivity and convenience but should be used as part of a comprehensive text validation process.
+                      </p>
                     </div>
                   </div>
                 )}
@@ -579,38 +1092,6 @@ Application:
                         </Link>
                       </li>
                     </ul>
-                  </div>
-                )}
-              </article>
-
-              {/* Frequently Asked Questions - Dropdown */}
-              <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
-                <button
-                  onClick={() => toggleSection('faqs')}
-                  className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
-                >
-                  <h2 className="text-xl font-bold text-foreground">Frequently Asked Questions About Case Conversion</h2>
-                  {openSections.faqs ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
-                </button>
-                
-                {openSections.faqs && (
-                  <div className="px-6 pb-6">
-                    <div className="space-y-6">
-                      {faqData.map((faq, index) => (
-                        <div key={index}>
-                          <h3 className="text-lg font-semibold text-foreground mb-2">{faq.question}</h3>
-                          <p className="text-muted-foreground">{faq.answer}</p>
-                        </div>
-                      ))}
-                    </div>
-                    
-                    {/* Professional Disclaimer */}
-                    <div className="mt-8 p-4 bg-yellow-500/10 rounded-lg border border-yellow-500/20">
-                      <h3 className="text-lg font-semibold text-foreground mb-2">Text Formatting Disclaimer</h3>
-                      <p className="text-sm text-muted-foreground">
-                        This case converter uses standard text transformation algorithms for case conversion. Different programming languages and style guides may have specific variations or exceptions to standard case conventions. For critical applications, especially in programming or formal publications, always verify that converted text meets the specific requirements of your target language, framework, or style guide. The tool is designed for productivity and convenience but should be used as part of a comprehensive text validation process.
-                      </p>
-                    </div>
                   </div>
                 )}
               </article>
