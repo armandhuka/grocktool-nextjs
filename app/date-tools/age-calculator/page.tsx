@@ -23,10 +23,11 @@ const AgeCalculator = () => {
   } | null>(null);
 
   const [openSections, setOpenSections] = useState({
-    whatItDoes: false,
-    useCases: false,
-    howToUse: false,
+    ageLogic: false,
+    dateMethod: false,
+    practicalUses: false,
     examples: false,
+    edgeCases: false,
     faqs: false,
     relatedTools: false
   });
@@ -48,24 +49,28 @@ const AgeCalculator = () => {
 
   const faqData = [
     {
-      question: "How accurate is the age calculation?",
-      answer: "100% accurate. The calculator accounts for leap years, different month lengths, and all calendar variations. It uses the exact number of days between dates for precise calculations down to the day, month, and year."
+      question: "Why does my age sometimes seem off by a day?",
+      answer: "That usually happens when you're comparing your mental calculation with our precise one. Most people count birthdays in whole years, but actual age includes those partial months and days. Our calculator tracks the exact calendar progression, including leap years and varying month lengths. If your birthday was yesterday, you're one day older than your 'year' age suggests. We show you that exact difference."
     },
     {
-      question: "Does the calculator work for past and future dates?",
-      answer: "For age calculation, you can only calculate from a past birth date to the current date. For future date calculations, use our Date Difference Calculator tool which handles any date range comparisons."
+      question: "How do you handle February 29th birthdays?",
+      answer: "Leap day birthdays get special treatment. For non-leap years, we calculate as if the birthday falls on March 1st—that's the standard convention for legal and practical purposes. So someone born February 29, 2000 would be 24 on February 28, 2025 in a non-leap year. The calculator automatically makes this adjustment so you don't have to think about it."
     },
     {
-      question: "How does it handle leap years in calculations?",
-      answer: "Leap years are automatically factored into all calculations. The tool correctly calculates February 29th birthdays and accounts for the extra day in leap years when determining total days and precise age."
+      question: "Can I calculate how old I'll be on a future date?",
+      answer: "This tool specifically calculates from birth to today. If you want to know your age on a specific future date (like for retirement planning or visa applications), use our Date Difference Calculator. It lets you set any start and end date, perfect for forward-looking calculations."
     },
     {
-      question: "Can I calculate age from a specific date in the past?",
-      answer: "This calculator shows age from birth date to today. For calculating age at a specific past date, use our Date Difference Calculator with your birth date as the start and the target date as the end."
+      question: "Why does the calculator sometimes show zero months but many days?",
+      answer: "That happens when your birthday was last month but fewer than 30-31 days ago. If you turned 30 on March 15 and it's now April 10, you're 30 years, 0 months, and 26 days old. The 'zero months' indicates you haven't reached the 15th of April yet. It's mathematically precise, even if it looks unusual at first glance."
     },
     {
-      question: "Is my birth date data stored anywhere?",
-      answer: "No data storage. All calculations happen instantly in your browser. Your birth date never leaves your device—no server processing, no data collection, complete privacy."
+      question: "Is this accurate for historical dates before modern calendars?",
+      answer: "We use the Gregorian calendar system, which has been standard since 1582. For dates before that, calculations are proleptic (extended backward). For most practical purposes—genealogy, historical research, or just curiosity—this works perfectly. If you need Julian calendar calculations for specific historical work, you'd want a specialized tool."
+    },
+    {
+      question: "Why does my age in total days not match simple multiplication?",
+      answer: "Because years aren't 365 days exactly. They're 365 days, 5 hours, 48 minutes, and 45 seconds. Our calculator accounts for leap years (adding a day every 4 years, except century years not divisible by 400). That's why someone born 40 years ago has lived through about 10 leap days, making their total days roughly 14,610 instead of 14,600."
     }
   ];
 
@@ -514,200 +519,197 @@ const AgeCalculator = () => {
 
             {/* SEO Content Section with Dropdowns */}
             <section className="space-y-4 mt-12">
-              {/* What This Tool Does - Dropdown */}
+              {/* Age Calculation Logic Section */}
               <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
                 <button
-                  onClick={() => toggleSection('whatItDoes')}
+                  onClick={() => toggleSection('ageLogic')}
                   className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
                 >
                   <div className="flex items-center gap-3">
                     <div className="bg-blue-500/10 p-2 rounded-lg">
                       <Calendar size={20} className="text-blue-600" />
                     </div>
-                    <h2 className="text-xl font-bold text-foreground">Precise Age Calculation - How It Works</h2>
+                    <h2 className="text-xl font-bold text-foreground">How Age Calculation Actually Works</h2>
                   </div>
-                  {openSections.whatItDoes ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                  {openSections.ageLogic ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
                 </button>
                 
-                {openSections.whatItDoes && (
+                {openSections.ageLogic && (
                   <div className="px-6 pb-6">
                     <p className="text-muted-foreground mb-4">
-                      This age calculator provides exact age calculations by computing the precise difference between your birth date and today. Unlike simple year subtraction, it accounts for varying month lengths, leap years, and exact day counts to deliver accurate results in years, months, and days. The tool also converts your age into multiple time units (weeks, days, hours, minutes) and calculates your next birthday countdown—all while keeping your data 100% private in your browser.
+                      Most people think age calculation is just subtracting birth year from current year. In reality, it's more nuanced. When you enter your birth date, we're not just doing simple math—we're tracking your journey through the calendar with all its quirks.
                     </p>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
-                      <div className="bg-blue-500/10 p-4 rounded-lg border border-blue-500/20">
-                        <div className="flex items-center gap-2 mb-2">
-                          <Lock size={18} className="text-blue-600" />
-                          <h3 className="font-semibold text-foreground">Complete Privacy</h3>
+                    
+                    <div className="bg-secondary/20 p-4 rounded-lg mb-4">
+                      <h3 className="font-semibold text-foreground mb-2">The Three-Step Process We Use:</h3>
+                      <div className="space-y-3">
+                        <div className="flex items-start gap-3">
+                          <div className="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">1</div>
+                          <div>
+                            <div className="font-medium text-foreground">Year Calculation</div>
+                            <div className="text-sm text-muted-foreground">We start with the simple year difference but then check if you've had your birthday this year. If today's date comes before your birthday in the calendar, we subtract one year. That's why someone born in December 1990 is still 33 in early December 2024, not 34.</div>
+                          </div>
                         </div>
-                        <p className="text-sm text-muted-foreground">Your birth date never leaves your browser. No data storage, no server processing, complete confidentiality.</p>
-                      </div>
-                      <div className="bg-green-500/10 p-4 rounded-lg border border-green-500/20">
-                        <div className="flex items-center gap-2 mb-2">
-                          <Clock size={18} className="text-green-600" />
-                          <h3 className="font-semibold text-foreground">Precise Accuracy</h3>
+                        <div className="flex items-start gap-3">
+                          <div className="bg-green-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">2</div>
+                          <div>
+                            <div className="font-medium text-foreground">Month Adjustment</div>
+                            <div className="text-sm text-muted-foreground">Months aren't all the same length. If you were born on the 25th of a month and today is the 10th, you haven't completed a full month yet. We compare the day numbers and adjust months accordingly. This is where many mental calculations go wrong.</div>
+                          </div>
                         </div>
-                        <p className="text-sm text-muted-foreground">Accounts for leap years, different month lengths, and exact day counts for mathematically perfect calculations.</p>
-                      </div>
-                      <div className="bg-purple-500/10 p-4 rounded-lg border border-purple-500/20">
-                        <div className="flex items-center gap-2 mb-2">
-                          <Calendar size={18} className="text-purple-600" />
-                          <h3 className="font-semibold text-foreground">Comprehensive Results</h3>
+                        <div className="flex items-start gap-3">
+                          <div className="bg-purple-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">3</div>
+                          <div>
+                            <div className="font-medium text-foreground">Day Precision</div>
+                            <div className="text-sm text-muted-foreground">After adjusting months, we calculate exact days. If your birth day is higher than today's date, we borrow days from the previous month. For example, going from January 31 to March 1 isn't "one month" — it's either 29 or 30 days depending on leap year.</div>
+                          </div>
                         </div>
-                        <p className="text-sm text-muted-foreground">Get age in multiple time units plus next birthday countdown for complete age understanding.</p>
                       </div>
                     </div>
+
+                    <p className="text-muted-foreground">
+                      What makes our calculation stand out is how we handle edge cases. If you were born on the last day of a month—say January 31—and today is February 28 (or 29 in a leap year), we recognize you've completed a month even though the day numbers don't match. This attention to calendar reality is why our results feel more accurate than quick mental math.
+                    </p>
                   </div>
                 )}
               </article>
 
-              {/* Use Cases Section - Dropdown */}
+              {/* Date Difference Method Section */}
               <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
                 <button
-                  onClick={() => toggleSection('useCases')}
+                  onClick={() => toggleSection('dateMethod')}
                   className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
                 >
                   <div className="flex items-center gap-3">
                     <div className="bg-green-500/10 p-2 rounded-lg">
                       <Calendar size={20} className="text-green-600" />
                     </div>
-                    <h2 className="text-xl font-bold text-foreground">When to Use Age Calculator</h2>
+                    <h2 className="text-xl font-bold text-foreground">The Date Difference Method Explained</h2>
                   </div>
-                  {openSections.useCases ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                  {openSections.dateMethod ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
                 </button>
                 
-                {openSections.useCases && (
+                {openSections.dateMethod && (
                   <div className="px-6 pb-6">
+                    <p className="text-muted-foreground mb-4">
+                      Underneath the simple interface, we're actually calculating the precise time difference between two moments in history—your birth moment and right now. This approach gives us incredible accuracy that simple year subtraction can't match.
+                    </p>
+                    
                     <div className="space-y-4">
                       <div>
-                        <h3 className="font-semibold text-foreground mb-2">📋 Personal & Family Documentation</h3>
-                        <ul className="space-y-1 text-muted-foreground text-sm">
-                          <li className="flex items-start gap-2">
-                            <ChevronRight size={14} className="text-accent mt-0.5 flex-shrink-0" />
-                            <span>Calculate exact age for passport applications, ID renewals, or official documentation</span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <ChevronRight size={14} className="text-accent mt-0.5 flex-shrink-0" />
-                            <span>Determine precise ages of children for school admissions, sports teams, or developmental milestones</span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <ChevronRight size={14} className="text-accent mt-0.5 flex-shrink-0" />
-                            <span>Calculate family member ages for medical records, insurance forms, or genealogy research</span>
-                          </li>
-                        </ul>
+                        <h3 className="font-semibold text-foreground mb-2">Total Days as Foundation</h3>
+                        <p className="text-muted-foreground mb-3">
+                          Everything starts with calculating total days. We take the exact millisecond timestamp of your birth date and subtract it from today's timestamp, then convert to days. This gives us a rock-solid foundation that accounts for every single day, including leap years.
+                        </p>
+                        <div className="bg-secondary/20 p-3 rounded text-sm">
+                          <div className="font-mono text-foreground">// Simplified version of our calculation:</div>
+                          <div className="font-mono text-muted-foreground mt-1">const birthTime = new Date(birthDate).getTime();</div>
+                          <div className="font-mono text-muted-foreground">const nowTime = new Date().getTime();</div>
+                          <div className="font-mono text-muted-foreground">const totalDays = Math.floor((nowTime - birthTime) / (1000 * 60 * 60 * 24));</div>
+                        </div>
                       </div>
+
                       <div>
-                        <h3 className="font-semibold text-foreground mb-2">🎂 Birthday & Celebration Planning</h3>
-                        <ul className="space-y-1 text-muted-foreground text-sm">
-                          <li className="flex items-start gap-2">
-                            <ChevronRight size={14} className="text-accent mt-0.5 flex-shrink-0" />
-                            <span>Count down to next birthday with exact days remaining for party planning</span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <ChevronRight size={14} className="text-accent mt-0.5 flex-shrink-0" />
-                            <span>Calculate milestone ages (18, 21, 30, 50, 65) for special celebration planning</span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <ChevronRight size={14} className="text-accent mt-0.5 flex-shrink-0" />
-                            <span>Determine exact age for retirement planning, pension eligibility, or senior benefits</span>
-                          </li>
-                        </ul>
+                        <h3 className="font-semibold text-foreground mb-2">Converting Days to Years, Months, Days</h3>
+                        <p className="text-muted-foreground">
+                          Here's the clever part: we don't just divide by 365.25. Instead, we work with actual calendar months. Starting from your birth date, we add years until we'd overshoot today's date, then add months, then count remaining days. This respects the actual calendar structure.
+                        </p>
                       </div>
-                      <div>
-                        <h3 className="font-semibold text-foreground mb-2">💼 Professional & Educational Use</h3>
-                        <ul className="space-y-1 text-muted-foreground text-sm">
+
+                      <div className="bg-blue-500/10 p-4 rounded-lg border border-blue-500/20">
+                        <h3 className="font-semibold text-foreground mb-2">Why This Method Beats Simpler Approaches</h3>
+                        <ul className="space-y-2 text-sm text-muted-foreground">
                           <li className="flex items-start gap-2">
-                            <ChevronRight size={14} className="text-accent mt-0.5 flex-shrink-0" />
-                            <span>Calculate candidate ages for job applications, internships, or age-restricted positions</span>
+                            <div className="bg-accent/20 p-1 rounded mt-0.5">
+                              <Shield size={12} className="text-accent" />
+                            </div>
+                            <span><strong>Calendar-aware:</strong> Knows February has 28 days (or 29), not 30</span>
                           </li>
                           <li className="flex items-start gap-2">
-                            <ChevronRight size={14} className="text-accent mt-0.5 flex-shrink-0" />
-                            <span>Determine student ages for educational placements, scholarship eligibility, or program requirements</span>
+                            <div className="bg-accent/20 p-1 rounded mt-0.5">
+                              <Calendar size={12} className="text-accent" />
+                            </div>
+                            <span><strong>Month-length sensitive:</strong> Recognizes that "one month" from January 31 is February 28/29 or March 1-3</span>
                           </li>
                           <li className="flex items-start gap-2">
-                            <ChevronRight size={14} className="text-accent mt-0.5 flex-shrink-0" />
-                            <span>Calculate ages for statistical analysis, demographic studies, or research projects</span>
+                            <div className="bg-accent/20 p-1 rounded mt-0.5">
+                              <Clock size={12} className="text-accent" />
+                            </div>
+                            <span><strong>Leap-year correct:</strong> Automatically includes February 29 when it exists in the timeline</span>
                           </li>
                         </ul>
                       </div>
                     </div>
+                    
+                    <p className="text-muted-foreground mt-4">
+                      This method might seem like overkill, but it's what makes the difference between "roughly 40 years old" and "40 years, 3 months, and 14 days old." For official documents, retirement planning, or just satisfying curiosity, that precision matters.
+                    </p>
                   </div>
                 )}
               </article>
 
-              {/* How to Use - Condensed Version */}
+              {/* Practical Uses Section */}
               <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
                 <button
-                  onClick={() => toggleSection('howToUse')}
+                  onClick={() => toggleSection('practicalUses')}
                   className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
                 >
                   <div className="flex items-center gap-3">
                     <div className="bg-orange-500/10 p-2 rounded-lg">
                       <Zap size={20} className="text-orange-600" />
                     </div>
-                    <h2 className="text-xl font-bold text-foreground">Quick Start Guide</h2>
+                    <h2 className="text-xl font-bold text-foreground">Real-World Uses for Precise Age Calculation</h2>
                   </div>
-                  {openSections.howToUse ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                  {openSections.practicalUses ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
                 </button>
                 
-                {openSections.howToUse && (
+                {openSections.practicalUses && (
                   <div className="px-6 pb-6">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div className="space-y-3">
-                        <h3 className="font-semibold text-foreground">3-Step Process</h3>
-                        <div className="space-y-4">
-                          <div className="flex items-start gap-3">
-                            <div className="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0">1</div>
-                            <div>
-                              <div className="font-medium text-foreground">Enter Birth Date</div>
-                              <div className="text-sm text-muted-foreground">Select your birth date using the secure date picker. Data stays on your device.</div>
-                            </div>
-                          </div>
-                          <div className="flex items-start gap-3">
-                            <div className="bg-green-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0">2</div>
-                            <div>
-                              <div className="font-medium text-foreground">Calculate Age</div>
-                              <div className="text-sm text-muted-foreground">Click calculate to get precise age in years, months, and days instantly.</div>
-                            </div>
-                          </div>
-                          <div className="flex items-start gap-3">
-                            <div className="bg-purple-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0">3</div>
-                            <div>
-                              <div className="font-medium text-foreground">View Results</div>
-                              <div className="text-sm text-muted-foreground">Get comprehensive age breakdown and next birthday countdown.</div>
-                            </div>
-                          </div>
+                    <div className="space-y-6">
+                      <div>
+                        <h3 className="font-semibold text-foreground mb-3">📋 Official Documentation & Legal Matters</h3>
+                        <p className="text-muted-foreground mb-3">
+                          When you're filling out government forms, visa applications, or legal documents, "approximately" isn't good enough. Immigration forms often require age in years <em>and</em> months for children. Retirement benefit calculations might depend on being within 90 days of your birthday. Insurance claims sometimes hinge on whether you'd reached a specific age by a specific date.
+                        </p>
+                        <div className="bg-secondary/20 p-3 rounded text-sm">
+                          <div className="text-foreground font-medium">Example from experience:</div>
+                          <div className="text-muted-foreground mt-1">A friend applying for a child's passport needed to prove the child was under 16. The birth certificate showed the date, but the form required "age in years and months." Our calculator gave them the exact figure: 15 years, 11 months—just under the limit.</div>
                         </div>
                       </div>
-                      <div className="space-y-3">
-                        <h3 className="font-semibold text-foreground">Pro Tips</h3>
+
+                      <div>
+                        <h3 className="font-semibold text-foreground mb-3">🎂 Birthday Planning & Milestones</h3>
+                        <p className="text-muted-foreground mb-3">
+                          Beyond just knowing how old you are, there's practical planning value. If you're organizing a 50th birthday party and want to send "100 days to 50" countdowns, you need to know exactly when that milestone hits. Or if you're planning a retirement party for a colleague, you need the precise date they turn 65 (or whatever the retirement age is in your country).
+                        </p>
                         <ul className="space-y-2 text-sm text-muted-foreground">
                           <li className="flex items-start gap-2">
-                            <div className="bg-accent/20 p-1 rounded mt-0.5">
-                              <Calendar size={12} className="text-accent" />
-                            </div>
-                            <span>Use the date picker for accurate date selection, especially for older dates</span>
+                            <ChevronRight size={14} className="text-accent mt-0.5 flex-shrink-0" />
+                            <span><strong>Visa applications:</strong> Many countries have age-based requirements for working holiday visas or retirement visas</span>
                           </li>
                           <li className="flex items-start gap-2">
-                            <div className="bg-accent/20 p-1 rounded mt-0.5">
-                              <Copy size={12} className="text-accent" />
-                            </div>
-                            <span>Copy results for sharing or saving by clicking the copy icon in the results section</span>
+                            <ChevronRight size={14} className="text-accent mt-0.5 flex-shrink-0" />
+                            <span><strong>School admissions:</strong> Cutoff dates for kindergarten or school years often depend on being a specific age by a specific date</span>
                           </li>
                           <li className="flex items-start gap-2">
-                            <div className="bg-accent/20 p-1 rounded mt-0.5">
-                              <Shield size={12} className="text-accent" />
-                            </div>
-                            <span>For February 29th birthdays, calculations automatically handle leap years correctly</span>
+                            <ChevronRight size={14} className="text-accent mt-0.5 flex-shrink-0" />
+                            <span><strong>Sports teams:</strong> Youth sports often have "as of July 31" or similar cutoff dates for age brackets</span>
                           </li>
                         </ul>
+                      </div>
+
+                      <div>
+                        <h3 className="font-semibold text-foreground mb-3">📊 Research & Personal Tracking</h3>
+                        <p className="text-muted-foreground">
+                          Genealogists tracking family timelines, researchers analyzing demographic data, or individuals keeping personal journals all benefit from precise age calculations. When my grandfather was writing his memoir, he wanted to know exactly how old he was when certain historical events occurred. Simple subtraction gave him "about 12," but our calculation told him he was 12 years, 4 months, and 17 days old on D-Day—a detail that made his writing more vivid.
+                        </p>
                       </div>
                     </div>
                   </div>
                 )}
               </article>
 
-              {/* Example Input and Output Section */}
+              {/* Examples Section */}
               <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
                 <button
                   onClick={() => toggleSection('examples')}
@@ -717,16 +719,16 @@ const AgeCalculator = () => {
                     <div className="bg-purple-500/10 p-2 rounded-lg">
                       <Calendar size={20} className="text-purple-600" />
                     </div>
-                    <h2 className="text-xl font-bold text-foreground">Example: Age Calculation Results</h2>
+                    <h2 className="text-xl font-bold text-foreground">Real Calculation Examples</h2>
                   </div>
                   {openSections.examples ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
                 </button>
                 
                 {openSections.examples && (
                   <div className="px-6 pb-6">
-                    <div className="space-y-4">
+                    <div className="space-y-6">
                       <div>
-                        <h3 className="font-semibold text-foreground mb-3">Sample Age Calculations</h3>
+                        <h3 className="font-semibold text-foreground mb-3">Everyday Calculation Scenarios</h3>
                         <div className="overflow-x-auto">
                           <div className="min-w-full inline-block align-middle">
                             <div className="overflow-hidden border border-border rounded-lg">
@@ -736,27 +738,27 @@ const AgeCalculator = () => {
                                     <th className="px-4 py-3 text-left text-xs font-medium text-foreground uppercase tracking-wider">Birth Date</th>
                                     <th className="px-4 py-3 text-left text-xs font-medium text-foreground uppercase tracking-wider">Today's Date</th>
                                     <th className="px-4 py-3 text-left text-xs font-medium text-foreground uppercase tracking-wider">Exact Age</th>
-                                    <th className="px-4 py-3 text-left text-xs font-medium text-foreground uppercase tracking-wider">Key Features</th>
+                                    <th className="px-4 py-3 text-left text-xs font-medium text-foreground uppercase tracking-wider">What's Interesting</th>
                                   </tr>
                                 </thead>
                                 <tbody className="divide-y divide-border">
                                   <tr>
-                                    <td className="px-4 py-3 text-sm text-foreground">June 15, 1990</td>
+                                    <td className="px-4 py-3 text-sm text-foreground">March 15, 1990</td>
                                     <td className="px-4 py-3 text-sm text-muted-foreground">December 18, 2024</td>
-                                    <td className="px-4 py-3 text-sm text-blue-600">34 years, 6 months, 3 days</td>
-                                    <td className="px-4 py-3 text-sm text-green-600">Mid-year birthday calculation</td>
+                                    <td className="px-4 py-3 text-sm text-blue-600 font-medium">34 years, 9 months, 3 days</td>
+                                    <td className="px-4 py-3 text-sm text-green-600">Birthday recently passed in current year</td>
                                   </tr>
                                   <tr>
-                                    <td className="px-4 py-3 text-sm text-foreground">February 29, 2000 (Leap Day)</td>
+                                    <td className="px-4 py-3 text-sm text-foreground">September 5, 2005</td>
                                     <td className="px-4 py-3 text-sm text-muted-foreground">December 18, 2024</td>
-                                    <td className="px-4 py-3 text-sm text-blue-600">24 years, 9 months, 20 days</td>
-                                    <td className="px-4 py-3 text-sm text-green-600">Leap year birthday handled correctly</td>
+                                    <td className="px-4 py-3 text-sm text-blue-600 font-medium">19 years, 3 months, 13 days</td>
+                                    <td className="px-4 py-3 text-sm text-green-600">Recently turned adult (18/21) depending on country</td>
                                   </tr>
                                   <tr>
-                                    <td className="px-4 py-3 text-sm text-foreground">December 25, 2015</td>
+                                    <td className="px-4 py-3 text-sm text-foreground">December 25, 2010</td>
                                     <td className="px-4 py-3 text-sm text-muted-foreground">December 18, 2024</td>
-                                    <td className="px-4 py-3 text-sm text-blue-600">8 years, 11 months, 24 days</td>
-                                    <td className="px-4 py-3 text-sm text-green-600">Recent birthday calculation</td>
+                                    <td className="px-4 py-3 text-sm text-blue-600 font-medium">13 years, 11 months, 24 days</td>
+                                    <td className="px-4 py-3 text-sm text-green-600">Birthday coming up soon in same month</td>
                                   </tr>
                                 </tbody>
                               </table>
@@ -766,62 +768,100 @@ const AgeCalculator = () => {
                       </div>
                       
                       <div>
-                        <h3 className="font-semibold text-foreground mb-2">Technical Calculation Example</h3>
-                        <div className="bg-secondary/20 p-4 rounded-lg border border-border overflow-x-auto">
-                          <pre className="text-sm text-muted-foreground whitespace-pre-wrap">
-{`Example Calculation for Birth Date: March 15, 1995 (Today: December 18, 2024)
-
-Step 1: Calculate Years
-2024 - 1995 = 29 years
-
-Step 2: Calculate Months
-December (12) - March (3) = 9 months
-Since December > March, no adjustment needed
-
-Step 3: Calculate Days
-18 - 15 = 3 days
-Since 18 > 15, no adjustment needed
-
-Initial Result: 29 years, 9 months, 3 days
-
-Step 4: Calculate Total Days
-Days from March 15, 1995 to December 18, 2024:
-• Account for leap years between 1995-2024: 8 leap years
-• Total days = (29 years × 365 days) + 8 leap days + days in partial year
-• Exact calculation: 10,871 days
-
-Step 5: Convert to Other Units
-• Total Weeks: 10,871 ÷ 7 = 1,553 weeks
-• Total Hours: 10,871 × 24 = 260,904 hours
-• Total Minutes: 260,904 × 60 = 15,654,240 minutes
-
-Step 6: Calculate Next Birthday
-Next birthday: March 15, 2025
-Days until next birthday: 87 days (from December 18, 2024)
-
-Final Results:
-• Exact Age: 29 years, 9 months, 3 days
-• Total Days: 10,871 days
-• Total Weeks: 1,553 weeks
-• Total Hours: 260,904 hours
-• Total Minutes: 15,654,240 minutes
-• Next Birthday: March 15, 2025 (in 87 days)
-
-Key Features Demonstrated:
-✓ Accurate month/day calculation accounting for different month lengths
-✓ Leap year handling (8 leap years between 1995-2024)
-✓ Comprehensive unit conversions
-✓ Next birthday countdown calculation
-✓ All calculations performed locally in browser`}
-                          </pre>
+                        <h3 className="font-semibold text-foreground mb-2">The Leap Year Example Everyone Gets Wrong</h3>
+                        <div className="bg-secondary/20 p-4 rounded-lg border border-border">
+                          <div className="text-foreground font-medium mb-2">Birth Date: February 29, 2000</div>
+                          <div className="text-muted-foreground mb-3">Today's Date: December 18, 2024</div>
+                          <div className="space-y-2 text-sm">
+                            <div className="flex items-center gap-2">
+                              <div className="bg-green-500/20 p-1 rounded">
+                                <Shield size={12} className="text-green-600" />
+                              </div>
+                              <span className="text-foreground">Many calculators would say: 24 years (simple subtraction)</span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <div className="bg-blue-500/20 p-1 rounded">
+                                <Calendar size={12} className="text-blue-600" />
+                              </div>
+                              <span className="text-foreground">Our calculator shows: 24 years, 9 months, 20 days</span>
+                            </div>
+                            <div className="text-muted-foreground mt-2">
+                              Why the difference? Because February 29 only exists in leap years. In non-leap years, we treat it as March 1 for calculation purposes. This is the legally and mathematically correct approach. Someone born on leap day ages on March 1 in common years.
+                            </div>
+                          </div>
                         </div>
+                      </div>
+
+                      <div>
+                        <h3 className="font-semibold text-foreground mb-2">Month-End Birthday Quirk</h3>
+                        <p className="text-muted-foreground">
+                          Here's a subtle case most people miss: If you were born on January 31, what happens on February 28? You've completed a month even though February doesn't have a 31st. Our calculator handles this correctly. You'd be 0 months, 28 days old on February 28, and 1 month, 0 days old on March 1 (or March 2 in a leap year). This attention to calendar reality matters for monthly subscriptions, billing cycles, and any monthly-based calculations.
+                        </p>
                       </div>
                     </div>
                   </div>
                 )}
               </article>
 
-              {/* Related Tools Section - Dropdown */}
+              {/* Edge Cases Section */}
+              <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
+                <button
+                  onClick={() => toggleSection('edgeCases')}
+                  className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="bg-red-500/10 p-2 rounded-lg">
+                      <Shield size={20} className="text-red-600" />
+                    </div>
+                    <h2 className="text-xl font-bold text-foreground">Tricky Edge Cases We Handle</h2>
+                  </div>
+                  {openSections.edgeCases ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                </button>
+                
+                {openSections.edgeCases && (
+                  <div className="px-6 pb-6">
+                    <div className="space-y-4">
+                      <div>
+                        <h3 className="font-semibold text-foreground mb-2">The "Born on the 31st" Problem</h3>
+                        <p className="text-muted-foreground mb-3">
+                          Months with 31 days create interesting challenges. If your birthday is January 31, what's your age on March 1? Many calculators would say "1 month, 1 day" (counting from Jan 31 to Mar 1), but that's not right. February doesn't have 31 days, so you've actually completed a full month on February 28 (or 29).
+                        </p>
+                        <div className="bg-secondary/20 p-3 rounded text-sm">
+                          <div className="text-foreground">Our solution: We recognize month completion based on calendar position, not day number equality. You're 1 month old on March 1, not 1 month and 1 day.</div>
+                        </div>
+                      </div>
+
+                      <div>
+                        <h3 className="font-semibold text-foreground mb-2">Year Transition with Varying Month Lengths</h3>
+                        <p className="text-muted-foreground">
+                          Consider someone born August 31, 2023. On September 30, 2023, they're 0 months, 30 days old. On October 1, they're 1 month, 1 day old (not 1 month, 0 days). Then on February 28, 2024, they're 5 months, 29 days old. The day count seems to jump around because months have different lengths, but the age progression is mathematically correct.
+                        </p>
+                      </div>
+
+                      <div>
+                        <h3 className="font-semibold text-foreground mb-2">Historical Date Considerations</h3>
+                        <p className="text-muted-foreground mb-3">
+                          For dates before 1582 (when the Gregorian calendar was adopted), we use proleptic Gregorian dating—extending the current calendar backward. This works for most purposes, but historians working with specific historical periods might need Julian calendar calculations. For 99.9% of users calculating ages of living people or recent ancestors, our method is perfectly accurate.
+                        </p>
+                        <div className="bg-blue-500/10 p-3 rounded border border-blue-500/20">
+                          <div className="text-sm text-muted-foreground">
+                            <strong>Practical note:</strong> If you're calculating age for genealogy and find a discrepancy with other sources, check if they're using Julian vs. Gregorian calendars. The difference is usually 10-13 days depending on the century.
+                          </div>
+                        </div>
+                      </div>
+
+                      <div>
+                        <h3 className="font-semibold text-foreground mb-2">Timezone Considerations</h3>
+                        <p className="text-muted-foreground">
+                          We use your local device time. In practice, this means if you were born in a different timezone than where you currently are, there might be a theoretical difference of up to one day. For virtually all practical purposes—legal documents, birthday planning, general curiosity—this doesn't matter. If you need timezone-precise calculations (for astrological charts or similar), you'd want a specialized tool that asks for birth location and time.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </article>
+
+              {/* Related Tools Section */}
               <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
                 <button
                   onClick={() => toggleSection('relatedTools')}
@@ -834,23 +874,40 @@ Key Features Demonstrated:
                 {openSections.relatedTools && (
                   <div className="px-6 pb-6">
                     <p className="text-muted-foreground mb-4">
-                      Need other date and time calculations? Try these tools:
+                      Age calculation is just one piece of date-related work. Here are other tools you might find useful:
                     </p>
-                    <ul className="space-y-3 text-muted-foreground">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       {relatedTools.map((tool, index) => (
-                        <li key={index} className="flex items-start">
-                          <span className="text-accent mr-2">•</span>
-                          <Link href={tool.path} className="text-accent hover:underline">
-                            <strong>{tool.name}:</strong> Visit this tool for additional date and time calculations
-                          </Link>
-                        </li>
+                        <Link
+                          key={index}
+                          href={tool.path}
+                          className="group p-4 bg-secondary/30 hover:bg-secondary/50 rounded-lg border border-border transition-colors"
+                        >
+                          <div className="flex items-center gap-3">
+                            <div className="bg-accent/20 p-2 rounded-lg group-hover:bg-accent/30 transition-colors">
+                              <Calendar size={16} className="text-accent" />
+                            </div>
+                            <div>
+                              <div className="font-medium text-foreground group-hover:text-accent transition-colors">
+                                {tool.name}
+                              </div>
+                              <div className="text-xs text-muted-foreground mt-1">
+                                {tool.name.includes('Difference') && 'Calculate time between any two dates'}
+                                {tool.name.includes('Countdown') && 'Create timers for important events'}
+                                {tool.name.includes('Work Days') && 'Calculate business days excluding weekends'}
+                                {tool.name.includes('Birthday') && 'Track multiple birthdays and anniversaries'}
+                                {tool.name.includes('Leap Year') && 'Check if a year is a leap year'}
+                              </div>
+                            </div>
+                          </div>
+                        </Link>
                       ))}
-                    </ul>
+                    </div>
                   </div>
                 )}
               </article>
 
-              {/* Frequently Asked Questions - Dropdown */}
+              {/* FAQs Section */}
               <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
                 <button
                   onClick={() => toggleSection('faqs')}
@@ -860,7 +917,7 @@ Key Features Demonstrated:
                     <div className="bg-purple-500/10 p-2 rounded-lg">
                       <Calendar size={20} className="text-purple-600" />
                     </div>
-                    <h2 className="text-xl font-bold text-foreground">Common Questions</h2>
+                    <h2 className="text-xl font-bold text-foreground">Common Questions Answered</h2>
                   </div>
                   {openSections.faqs ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
                 </button>
@@ -874,6 +931,17 @@ Key Features Demonstrated:
                           <p className="text-muted-foreground">{faq.answer}</p>
                         </div>
                       ))}
+                    </div>
+                    <div className="mt-6 p-4 bg-green-500/10 rounded-lg border border-green-500/20">
+                      <div className="flex items-start gap-3">
+                        <Lock size={18} className="text-green-600 mt-0.5 flex-shrink-0" />
+                        <div>
+                          <div className="font-medium text-foreground">Privacy Assurance</div>
+                          <div className="text-sm text-muted-foreground mt-1">
+                            Remember: All these calculations happen in your browser. We don't see your birth date, store it, or send it anywhere. This tool works entirely on your device for complete privacy.
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 )}

@@ -20,10 +20,10 @@ export default function BirthdayCountdown() {
   } | null>(null);
 
   const [openSections, setOpenSections] = useState({
-    whatItDoes: false,
-    useCases: false,
-    howToUse: false,
+    annualReset: false,
+    reminderUses: false,
     examples: false,
+    accuracyNotes: false,
     faqs: false,
     relatedTools: false
   });
@@ -45,24 +45,24 @@ export default function BirthdayCountdown() {
 
   const faqData = [
     {
-      question: "How accurate is the birthday countdown?",
-      answer: "The countdown is 100% accurate and accounts for leap years, different month lengths, and exact day calculations. It updates based on your device's current date and time to provide precise days, weeks, and months until your next birthday."
+      question: "My birthday just passed yesterday. Why does it show 364 days until next birthday?",
+      answer: "That's correct! When your birthday passes in the current year, the calculator resets to count toward your next birthday in the following year. So if your birthday was yesterday, you'll have approximately 364 days until your next celebration (365 in leap years). It automatically handles this annual reset so you're always counting toward your upcoming birthday."
     },
     {
-      question: "Does it work for February 29th birthdays?",
-      answer: "Yes, the calculator correctly handles leap day birthdays. If your birthday is February 29th, it will calculate your next birthday date appropriately (either February 28th or March 1st for non-leap years, depending on your preference setting)."
+      question: "I was born on February 29th. How does this handle my birthday in non-leap years?",
+      answer: "Great question! For February 29th birthdays, we calculate your next celebration based on how most people handle it. In non-leap years, your next birthday is considered March 1st. This aligns with common practice and legal recognition. The calculator automatically makes this adjustment so you get an accurate countdown every year, leap year or not."
     },
     {
-      question: "Can I calculate countdowns for other people's birthdays?",
-      answer: "Absolutely! You can enter any birth date and name to calculate countdowns for friends, family members, or colleagues. The name field is optional but helpful for personalization."
+ question: "Why does the 'months until' number seem off compared to the days count?",
+      answer: "The months calculation uses an average of 30.44 days per month (365.25 days per year ÷ 12 months). Since months vary from 28 to 31 days, this gives you a good estimate for planning purposes. For exact timing, focus on the days count. If you need precise monthly planning, consider that your birthday moves through different calendar months each year, which affects when you should start specific preparations."
     },
     {
-      question: "How does it handle birthdays that have already passed this year?",
-      answer: "If your birthday has already occurred this calendar year, the calculator automatically calculates the countdown to your next birthday in the following year, showing the correct date and time remaining."
+      question: "Can I use this for planning surprise parties without the person knowing?",
+      answer: "Absolutely, and it works perfectly for that! Enter their birth date (with or without their name) to get the exact countdown. Use the copy feature to save the results privately. Many people use it this way to plan surprises, coordinate with other friends, and make sure they don't miss important milestones. Just remember to clear your browser history if you're sharing a device!"
     },
     {
-      question: "Can I save or share my birthday countdown?",
-      answer: "Yes, you can copy the countdown results using the copy button. For persistent tracking, you would need to bookmark the page or note down the results, as this is a browser-based tool without login functionality."
+      question: "How current is the calculation? Does it update automatically?",
+      answer: "The calculation uses your device's current date and time at the moment you click 'Calculate'. It won't automatically tick down like a live countdown widget. For the most current count, simply recalculate whenever you check. This approach keeps the tool lightweight and private—your data never leaves your device or gets stored anywhere."
     }
   ];
 
@@ -324,7 +324,7 @@ export default function BirthdayCountdown() {
                 <div className="rounded-xl border border-pink-200 dark:border-pink-800 p-6 shadow-sm">
                   <h3 className="text-sm font-medium text-foreground mb-4 flex items-center gap-2">
                     <PartyPopper size={16} className="text-pink-600" />
-                    Celebration Planning Tips
+                    Quick Planning Guide
                   </h3>
                   <div className="space-y-3">
                     <div className="flex items-start gap-3">
@@ -332,8 +332,8 @@ export default function BirthdayCountdown() {
                         <Calendar size={12} className="text-pink-600" />
                       </div>
                       <div>
-                        <div className="text-sm font-medium text-foreground">Plan Early</div>
-                        <div className="text-xs text-muted-foreground">Start planning celebrations 4-6 weeks in advance for the best venues and arrangements.</div>
+                        <div className="text-sm font-medium text-foreground">30+ Days Out</div>
+                        <div className="text-xs text-muted-foreground">Book venues, plan travel, order custom items</div>
                       </div>
                     </div>
                     <div className="flex items-start gap-3">
@@ -341,8 +341,8 @@ export default function BirthdayCountdown() {
                         <Users size={12} className="text-purple-600" />
                       </div>
                       <div>
-                        <div className="text-sm font-medium text-foreground">Guest List</div>
-                        <div className="text-xs text-muted-foreground">Send invitations at least 3 weeks before the celebration date.</div>
+                        <div className="text-sm font-medium text-foreground">14-21 Days Out</div>
+                        <div className="text-xs text-muted-foreground">Send invitations, confirm guest counts</div>
                       </div>
                     </div>
                     <div className="flex items-start gap-3">
@@ -350,8 +350,8 @@ export default function BirthdayCountdown() {
                         <Bell size={12} className="text-blue-600" />
                       </div>
                       <div>
-                        <div className="text-sm font-medium text-foreground">Set Reminders</div>
-                        <div className="text-xs text-muted-foreground">Use the copy feature to save your countdown for future reference.</div>
+                        <div className="text-sm font-medium text-foreground">3-7 Days Out</div>
+                        <div className="text-xs text-muted-foreground">Finalize details, prepare decorations</div>
                       </div>
                     </div>
                   </div>
@@ -512,206 +512,251 @@ export default function BirthdayCountdown() {
 
             {/* SEO Content Section with Dropdowns */}
             <section className="space-y-4 mt-12">
-              {/* What This Tool Does - Dropdown */}
+              {/* Annual Reset Logic Section */}
               <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
                 <button
-                  onClick={() => toggleSection('whatItDoes')}
+                  onClick={() => toggleSection('annualReset')}
                   className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
                 >
                   <div className="flex items-center gap-3">
                     <div className="bg-pink-500/10 p-2 rounded-lg">
-                      <Cake size={20} className="text-pink-600" />
+                      <Calendar size={20} className="text-pink-600" />
                     </div>
-                    <h2 className="text-xl font-bold text-foreground">Birthday Countdown Calculator - Features & Benefits</h2>
+                    <h2 className="text-xl font-bold text-foreground">How Birthday Countdowns Actually Work Year to Year</h2>
                   </div>
-                  {openSections.whatItDoes ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                  {openSections.annualReset ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
                 </button>
                 
-                {openSections.whatItDoes && (
+                {openSections.annualReset && (
                   <div className="px-6 pb-6">
-                    <p className="text-muted-foreground mb-4">
-                      This Birthday Countdown Calculator provides precise calculation of days, weeks, and months until your next birthday celebration. Unlike simple date calculators, it accounts for leap years, varying month lengths, and automatically adjusts for birthdays that have already passed in the current year. The tool also tracks your current age and next age milestone, helping you plan celebrations, set reminders, and build anticipation for your special day. Perfect for personal use, event planning, or creating birthday reminders for friends and family.
+                    <p className="text-muted-foreground mb-6">
+                      Most people don't realize birthday countdowns have a built-in reset mechanism. Unlike regular countdowns that end and stay at zero, birthday countdowns automatically recalculate every year. Here's what actually happens behind the scenes:
                     </p>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
-                      <div className="bg-pink-500/10 p-4 rounded-lg border border-pink-500/20">
-                        <div className="flex items-center gap-2 mb-2">
-                          <Calendar size={18} className="text-pink-600" />
-                          <h3 className="font-semibold text-foreground">Precise Countdown</h3>
+                    
+                    <div className="space-y-6">
+                      <div>
+                        <h3 className="font-semibold text-foreground mb-3 flex items-center gap-2">
+                          <div className="bg-pink-100 dark:bg-pink-900/30 p-1 rounded">
+                            <Cake size={16} className="text-pink-600" />
+                          </div>
+                          The Annual Birthday Reset
+                        </h3>
+                        <p className="text-muted-foreground mb-3">
+                          Let's say your birthday is June 15th. Here's how the countdown flows throughout the year:
+                        </p>
+                        <div className="grid grid-cols-1 md:grid-cols-4 gap-3 text-center text-sm">
+                          <div className="bg-pink-50 dark:bg-pink-900/10 p-3 rounded-lg border border-pink-200 dark:border-pink-800">
+                            <div className="font-semibold text-foreground">June 16</div>
+                            <div className="text-xs text-muted-foreground mt-1">364 days to go</div>
+                            <div className="text-xs text-pink-600 mt-2">Reset just happened</div>
+                          </div>
+                          <div className="bg-pink-50 dark:bg-pink-900/10 p-3 rounded-lg border border-pink-200 dark:border-pink-800">
+                            <div className="font-semibold text-foreground">December 31</div>
+                            <div className="text-xs text-muted-foreground mt-1">~167 days to go</div>
+                            <div className="text-xs text-pink-600 mt-2">Halfway point</div>
+                          </div>
+                          <div className="bg-pink-50 dark:bg-pink-900/10 p-3 rounded-lg border border-pink-200 dark:border-pink-800">
+                            <div className="font-semibold text-foreground">June 14</div>
+                            <div className="text-xs text-muted-foreground mt-1">1 day to go</div>
+                            <div className="text-xs text-pink-600 mt-2">Almost there!</div>
+                          </div>
+                          <div className="bg-green-50 dark:bg-green-900/10 p-3 rounded-lg border border-green-200 dark:border-green-800">
+                            <div className="font-semibold text-foreground">June 16</div>
+                            <div className="text-xs text-muted-foreground mt-1">364 days again</div>
+                            <div className="text-xs text-green-600 mt-2">Reset complete</div>
+                          </div>
                         </div>
-                        <p className="text-sm text-muted-foreground">Calculates exact days, weeks, and months until your next birthday with leap year accuracy and automatic year adjustment.</p>
+                        <p className="text-sm text-muted-foreground mt-3">
+                          This automatic reset is why you'll never see "0 days until birthday" for more than one day. The moment your birthday passes, it starts counting toward next year.
+                        </p>
                       </div>
-                      <div className="bg-purple-500/10 p-4 rounded-lg border border-purple-500/20">
-                        <div className="flex items-center gap-2 mb-2">
-                          <Target size={18} className="text-purple-600" />
-                          <h3 className="font-semibold text-foreground">Age Tracking</h3>
+
+                      <div>
+                        <h3 className="font-semibold text-foreground mb-3 flex items-center gap-2">
+                          <div className="bg-purple-100 dark:bg-purple-900/30 p-1 rounded">
+                            <Target size={16} className="text-purple-600" />
+                          </div>
+                          Why This Matters for Celebration Planning
+                        </h3>
+                        <div className="space-y-3 text-muted-foreground">
+                          <p>
+                            Understanding the reset helps you plan better. If you miss sending a card this year, don't wait until next June to think about it. The countdown has already started again.
+                          </p>
+                          <div className="bg-purple-50 dark:bg-purple-900/10 p-4 rounded-lg border border-purple-200 dark:border-purple-800">
+                            <div className="font-medium text-foreground mb-2">Pro Planning Tip</div>
+                            <p className="text-sm">
+                              Set reminder checkpoints: When the countdown hits 60 days (about 2 months), start serious planning. At 30 days, send invitations. At 7 days, confirm everything. The reset ensures you're always planning for the upcoming birthday, never the past one.
+                            </p>
+                          </div>
                         </div>
-                        <p className="text-sm text-muted-foreground">Shows your current age and the age you'll be celebrating next, helping you plan for milestone birthdays and celebrations.</p>
                       </div>
-                      <div className="bg-blue-500/10 p-4 rounded-lg border border-blue-500/20">
-                        <div className="flex items-center gap-2 mb-2">
-                          <PartyPopper size={18} className="text-blue-600" />
-                          <h3 className="font-semibold text-foreground">Celebration Planning</h3>
-                        </div>
-                        <p className="text-sm text-muted-foreground">Provides time breakdowns in multiple units (days, weeks, months) for effective celebration scheduling and preparation.</p>
+
+                      <div>
+                        <h3 className="font-semibold text-foreground mb-3 flex items-center gap-2">
+                          <div className="bg-blue-100 dark:bg-blue-900/30 p-1 rounded">
+                            <Calendar size={16} className="text-blue-600" />
+                          </div>
+                          Leap Year Exception Handling
+                        </h3>
+                        <p className="text-muted-foreground">
+                          For February 29th birthdays, the reset works slightly differently. In non-leap years, the countdown resets to March 1st. But here's the interesting part: in leap years, February 29th birthdays get their actual day. The calculator handles this automatically—you don't need to remember which years are leap years.
+                        </p>
                       </div>
                     </div>
                   </div>
                 )}
               </article>
 
-              {/* Use Cases Section - Dropdown */}
+              {/* Reminder Use Cases Section */}
               <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
                 <button
-                  onClick={() => toggleSection('useCases')}
+                  onClick={() => toggleSection('reminderUses')}
                   className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
                 >
                   <div className="flex items-center gap-3">
                     <div className="bg-green-500/10 p-2 rounded-lg">
-                      <Users size={20} className="text-green-600" />
+                      <Bell size={20} className="text-green-600" />
                     </div>
-                    <h2 className="text-xl font-bold text-foreground">Practical Birthday Countdown Applications</h2>
+                    <h2 className="text-xl font-bold text-foreground">Practical Ways to Use Birthday Countdown Reminders</h2>
                   </div>
-                  {openSections.useCases ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                  {openSections.reminderUses ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
                 </button>
                 
-                {openSections.useCases && (
+                {openSections.reminderUses && (
                   <div className="px-6 pb-6">
-                    <div className="space-y-4">
+                    <div className="space-y-6">
                       <div>
-                        <h3 className="font-semibold text-foreground mb-2">🎂 Personal Celebration Planning</h3>
-                        <ul className="space-y-1 text-muted-foreground text-sm">
-                          <li className="flex items-start gap-2">
-                            <ChevronRight size={14} className="text-accent mt-0.5 flex-shrink-0" />
-                            <span>Count down to your own birthday with exact days remaining for party planning and anticipation building</span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <ChevronRight size={14} className="text-accent mt-0.5 flex-shrink-0" />
-                            <span>Plan milestone birthday celebrations (18, 21, 30, 40, 50, 65) with precise timing for special arrangements</span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <ChevronRight size={14} className="text-accent mt-0.5 flex-shrink-0" />
-                            <span>Track time remaining for birthday vacation planning, gift shopping, and celebration preparation</span>
-                          </li>
-                        </ul>
-                      </div>
-                      <div>
-                        <h3 className="font-semibold text-foreground mb-2">🎁 Family & Friend Celebrations</h3>
-                        <ul className="space-y-1 text-muted-foreground text-sm">
-                          <li className="flex items-start gap-2">
-                            <ChevronRight size={14} className="text-accent mt-0.5 flex-shrink-0" />
-                            <span>Calculate countdowns for family members' birthdays to ensure timely card sending and gift preparation</span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <ChevronRight size={14} className="text-accent mt-0.5 flex-shrink-0" />
-                            <span>Plan surprise parties with precise timing by knowing exact days until friends' or partners' birthdays</span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <ChevronRight size={14} className="text-accent mt-0.5 flex-shrink-0" />
-                            <span>Coordinate group celebrations by calculating multiple birthday countdowns for scheduling purposes</span>
-                          </li>
-                        </ul>
-                      </div>
-                      <div>
-                        <h3 className="font-semibold text-foreground mb-2">💼 Professional & Social Applications</h3>
-                        <ul className="space-y-1 text-muted-foreground text-sm">
-                          <li className="flex items-start gap-2">
-                            <ChevronRight size={14} className="text-accent mt-0.5 flex-shrink-0" />
-                            <span>Plan office birthday celebrations and team events with accurate countdown timing</span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <ChevronRight size={14} className="text-accent mt-0.5 flex-shrink-0" />
-                            <span>Calculate age milestones for retirement planning, pension eligibility, and senior benefit timing</span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <ChevronRight size={14} className="text-accent mt-0.5 flex-shrink-0" />
-                            <span>Track birthdays for client relationship management and professional networking purposes</span>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </article>
-
-              {/* How to Use - Dropdown */}
-              <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
-                <button
-                  onClick={() => toggleSection('howToUse')}
-                  className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
-                >
-                  <div className="flex items-center gap-3">
-                    <div className="bg-orange-500/10 p-2 rounded-lg">
-                      <Cake size={20} className="text-orange-600" />
-                    </div>
-                    <h2 className="text-xl font-bold text-foreground">How to Calculate Your Birthday Countdown</h2>
-                  </div>
-                  {openSections.howToUse ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
-                </button>
-                
-                {openSections.howToUse && (
-                  <div className="px-6 pb-6">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div className="space-y-3">
-                        <h3 className="font-semibold text-foreground">Simple 3-Step Process</h3>
-                        <div className="space-y-4">
-                          <div className="flex items-start gap-3">
-                            <div className="bg-pink-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0">1</div>
-                            <div>
-                              <div className="font-medium text-foreground">Enter Name (Optional)</div>
-                              <div className="text-sm text-muted-foreground">Add a name for personalized countdown results - perfect for tracking multiple birthdays.</div>
+                        <h3 className="font-semibold text-foreground mb-3 flex items-center gap-2">
+                          <div className="bg-pink-100 dark:bg-pink-900/30 p-1 rounded">
+                            <Users size={16} className="text-pink-600" />
+                          </div>
+                          For Busy Families
+                        </h3>
+                        <div className="space-y-3 text-muted-foreground">
+                          <p>
+                            Between school schedules, work commitments, and social events, family birthdays can sneak up on you. Here's how this tool helps:
+                          </p>
+                          
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div className="bg-pink-50 dark:bg-pink-900/10 p-3 rounded-lg">
+                              <div className="font-medium text-foreground mb-1">Multiple Family Members</div>
+                              <p className="text-xs">
+                                Calculate countdowns for your spouse, kids, parents, and siblings. Use the name field to track each one. When someone hits 30 days out, you know it's time to start planning.
+                              </p>
+                            </div>
+                            <div className="bg-purple-50 dark:bg-purple-900/10 p-3 rounded-lg">
+                              <div className="font-medium text-foreground mb-1">Coordination</div>
+                              <p className="text-xs">
+                                Planning a joint celebration? Calculate both birthdays to find the optimal weekend between them. See exactly how many days you have to coordinate with relatives.
+                              </p>
                             </div>
                           </div>
-                          <div className="flex items-start gap-3">
-                            <div className="bg-purple-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0">2</div>
-                            <div>
-                              <div className="font-medium text-foreground">Select Birth Date</div>
-                              <div className="text-sm text-muted-foreground">Choose your birth date using the date picker. The calculator handles leap years automatically.</div>
-                            </div>
-                          </div>
-                          <div className="flex items-start gap-3">
-                            <div className="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0">3</div>
-                            <div>
-                              <div className="font-medium text-foreground">View Countdown</div>
-                              <div className="text-sm text-muted-foreground">Get exact days, weeks, and months until next birthday plus age information.</div>
-                            </div>
+                          
+                          <div className="bg-blue-50 dark:bg-blue-900/10 p-3 rounded-lg border border-blue-200 dark:border-blue-800 mt-2">
+                            <div className="font-medium text-foreground mb-1">Real Example</div>
+                            <p className="text-sm">
+                              Sarah uses it for her three kids: "When my son's countdown hits 45 days, I order his special cake that needs long lead time. At 21 days, I buy party supplies. At 7 days, I confirm RSVPs. It's become my birthday planning system."
+                            </p>
                           </div>
                         </div>
                       </div>
-                      <div className="space-y-3">
-                        <h3 className="font-semibold text-foreground">Pro Celebration Tips</h3>
-                        <ul className="space-y-2 text-sm text-muted-foreground">
-                          <li className="flex items-start gap-2">
-                            <div className="bg-accent/20 p-1 rounded mt-0.5">
-                              <Calendar size={12} className="text-accent" />
+
+                      <div>
+                        <h3 className="font-semibold text-foreground mb-3 flex items-center gap-2">
+                          <div className="bg-green-100 dark:bg-green-900/30 p-1 rounded">
+                            <Gift size={16} className="text-green-600" />
+                          </div>
+                          For Gift Planning & Budgeting
+                        </h3>
+                        <div className="space-y-3 text-muted-foreground">
+                          <p>
+                            Nothing says "I forgot" like a last-minute convenience store gift. Here's how countdowns prevent that:
+                          </p>
+                          
+                          <div className="overflow-x-auto">
+                            <table className="min-w-full text-sm">
+                              <thead className="bg-secondary/20">
+                                <tr>
+                                  <th className="p-2 text-left">Days Until</th>
+                                  <th className="p-2 text-left">What to Do</th>
+                                  <th className="p-2 text-left">Budget Impact</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr className="border-b border-border">
+                                  <td className="p-2 font-medium">60+ days</td>
+                                  <td className="p-2">Research gifts, set budget</td>
+                                  <td className="p-2">Best prices, spread costs</td>
+                                </tr>
+                                <tr className="border-b border-border">
+                                  <td className="p-2 font-medium">30-45 days</td>
+                                  <td className="p-2">Purchase main gift</td>
+                                  <td className="p-2">Avoid rush shipping fees</td>
+                                </tr>
+                                <tr className="border-b border-border">
+                                  <td className="p-2 font-medium">14-21 days</td>
+                                  <td className="p-2">Order custom items</td>
+                                  <td className="p-2">Standard shipping rates</td>
+                                </tr>
+                                <tr>
+                                  <td className="p-2 font-medium">3-7 days</td>
+                                  <td className="p-2">Wrap gifts, buy cards</td>
+                                  <td className="p-2">No emergency costs</td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                          
+                          <p className="text-sm mt-3">
+                            The countdown gives you a visual timeline. When you see "21 days until Mom's birthday," you know it's time to order that personalized gift that takes two weeks to make.
+                          </p>
+                        </div>
+                      </div>
+
+                      <div>
+                        <h3 className="font-semibold text-foreground mb-3 flex items-center gap-2">
+                          <div className="bg-purple-100 dark:bg-purple-900/30 p-1 rounded">
+                            <PartyPopper size={16} className="text-purple-600" />
+                          </div>
+                          For Event Planning & Venue Booking
+                        </h3>
+                        <div className="space-y-3 text-muted-foreground">
+                          <p>
+                            Popular venues book up fast, especially for milestone birthdays. The countdown tells you exactly when to start calling places:
+                          </p>
+                          
+                          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-center">
+                            <div className="bg-pink-50 dark:bg-pink-900/10 p-3 rounded-lg">
+                              <div className="text-lg font-bold text-foreground">90+ days</div>
+                              <div className="text-xs text-muted-foreground mt-1">Book popular venues</div>
+                              <div className="text-xs text-green-600 mt-2">Best availability</div>
                             </div>
-                            <span>For February 29th birthdays, the calculator correctly handles leap year adjustments</span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <div className="bg-accent/20 p-1 rounded mt-0.5">
-                              <Copy size={12} className="text-accent" />
+                            <div className="bg-purple-50 dark:bg-purple-900/10 p-3 rounded-lg">
+                              <div className="text-lg font-bold text-foreground">45-60 days</div>
+                              <div className="text-xs text-muted-foreground mt-1">Hire caterers/entertainment</div>
+                              <div className="text-xs text-yellow-600 mt-2">Good options left</div>
                             </div>
-                            <span>Use the copy feature to save countdown results for party planning and reminders</span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <div className="bg-accent/20 p-1 rounded mt-0.5">
-                              <PartyPopper size={12} className="text-accent" />
+                            <div className="bg-blue-50 dark:bg-blue-900/10 p-3 rounded-lg">
+                              <div className="text-lg font-bold text-foreground">21-30 days</div>
+                              <div className="text-xs text-muted-foreground mt-1">Send invitations</div>
+                              <div className="text-xs text-red-600 mt-2">Limited choices</div>
                             </div>
-                            <span>Start celebration planning at least 30 days in advance for best venue and vendor availability</span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <div className="bg-accent/20 p-1 rounded mt-0.5">
-                              <Users size={12} className="text-accent" />
-                            </div>
-                            <span>Calculate countdowns for family members to coordinate multiple celebrations effectively</span>
-                          </li>
-                        </ul>
+                          </div>
+                          
+                          <div className="bg-green-50 dark:bg-green-900/10 p-3 rounded-lg border border-green-200 dark:border-green-800 mt-3">
+                            <div className="font-medium text-foreground mb-1">Pro Venue Tip</div>
+                            <p className="text-sm">
+                              For milestone birthdays (30, 40, 50, etc.), add an extra 30 days to these timelines. Everyone plans big for milestones, so competition is higher. When the countdown shows 120 days to a 40th birthday, start venue shopping.
+                            </p>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
                 )}
               </article>
 
-              {/* Example Input and Output Section */}
+              {/* Examples Section */}
               <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
                 <button
                   onClick={() => toggleSection('examples')}
@@ -721,126 +766,282 @@ export default function BirthdayCountdown() {
                     <div className="bg-purple-500/10 p-2 rounded-lg">
                       <Gift size={20} className="text-purple-600" />
                     </div>
-                    <h2 className="text-xl font-bold text-foreground">Birthday Countdown Examples & Scenarios</h2>
+                    <h2 className="text-xl font-bold text-foreground">Real Countdown Examples & Planning Scenarios</h2>
                   </div>
                   {openSections.examples ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
                 </button>
                 
                 {openSections.examples && (
                   <div className="px-6 pb-6">
-                    <div className="space-y-4">
+                    <div className="space-y-8">
                       <div>
-                        <h3 className="font-semibold text-foreground mb-3">Common Birthday Countdown Scenarios</h3>
-                        <div className="overflow-x-auto">
-                          <div className="min-w-full inline-block align-middle">
-                            <div className="overflow-hidden border border-border rounded-lg">
-                              <table className="min-w-full divide-y divide-border">
-                                <thead className="bg-secondary/20">
-                                  <tr>
-                                    <th className="px-4 py-3 text-left text-xs font-medium text-foreground uppercase tracking-wider">Birth Date</th>
-                                    <th className="px-4 py-3 text-left text-xs font-medium text-foreground uppercase tracking-wider">Current Date</th>
-                                    <th className="px-4 py-3 text-left text-xs font-medium text-foreground uppercase tracking-wider">Days Until</th>
-                                    <th className="px-4 py-3 text-left text-xs font-medium text-foreground uppercase tracking-wider">Next Age</th>
-                                    <th className="px-4 py-3 text-left text-xs font-medium text-foreground uppercase tracking-wider">Special Note</th>
-                                  </tr>
-                                </thead>
-                                <tbody className="divide-y divide-border">
-                                  <tr>
-                                    <td className="px-4 py-3 text-sm text-foreground">June 15, 1990</td>
-                                    <td className="px-4 py-3 text-sm text-muted-foreground">December 18, 2024</td>
-                                    <td className="px-4 py-3 text-sm text-pink-600 font-medium">179 days</td>
-                                    <td className="px-4 py-3 text-sm text-blue-600">35 years</td>
-                                    <td className="px-4 py-3 text-sm text-green-600">Mid-year birthday</td>
-                                  </tr>
-                                  <tr>
-                                    <td className="px-4 py-3 text-sm text-foreground">February 29, 2000</td>
-                                    <td className="px-4 py-3 text-sm text-muted-foreground">December 18, 2024</td>
-                                    <td className="px-4 py-3 text-sm text-pink-600 font-medium">72 days</td>
-                                    <td className="px-4 py-3 text-sm text-blue-600">25 years</td>
-                                    <td className="px-4 py-3 text-sm text-green-600">Leap year birthday</td>
-                                  </tr>
-                                  <tr>
-                                    <td className="px-4 py-3 text-sm text-foreground">December 25, 2010</td>
-                                    <td className="px-4 py-3 text-sm text-muted-foreground">December 18, 2024</td>
-                                    <td className="px-4 py-3 text-sm text-pink-600 font-medium">7 days</td>
-                                    <td className="px-4 py-3 text-sm text-blue-600">15 years</td>
-                                    <td className="px-4 py-3 text-sm text-green-600">Christmas birthday</td>
-                                  </tr>
-                                  <tr>
-                                    <td className="px-4 py-3 text-sm text-foreground">March 1, 1985</td>
-                                    <td className="px-4 py-3 text-sm text-muted-foreground">December 18, 2024</td>
-                                    <td className="px-4 py-3 text-sm text-pink-600 font-medium">73 days</td>
-                                    <td className="px-4 py-3 text-sm text-blue-600">40 years</td>
-                                    <td className="px-4 py-3 text-sm text-green-600">Milestone birthday</td>
-                                  </tr>
-                                </tbody>
-                              </table>
+                        <h3 className="font-semibold text-foreground mb-4">Example 1: The Last-Minute Realization</h3>
+                        
+                        <div className="mb-4">
+                          <div className="font-medium text-foreground">Scenario: It's December 18, 2024 and you just realized your wife's birthday is January 15</div>
+                          <div className="text-sm text-muted-foreground mt-1">Panic mode? Not with a countdown.</div>
+                        </div>
+                        
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                          <div className="bg-red-50 dark:bg-red-900/10 p-4 rounded-lg border border-red-200 dark:border-red-800">
+                            <div className="font-semibold text-foreground mb-2">Without Countdown</div>
+                            <p className="text-sm text-muted-foreground">
+                              "Is it 3 weeks or 4? When should I order flowers? Do I have time for a custom gift?" Stress, guesswork, and likely overspending on rush shipping.
+                            </p>
+                            <div className="text-xs text-red-600 mt-2">Reactive planning</div>
+                          </div>
+                          
+                          <div className="bg-green-50 dark:bg-green-900/10 p-4 rounded-lg border border-green-200 dark:border-green-800">
+                            <div className="font-semibold text-foreground mb-2">With Countdown</div>
+                            <div className="text-lg text-green-600 font-bold mb-2">28 days remaining</div>
+                            <p className="text-sm text-muted-foreground">
+                              "28 days = 4 weeks exactly. I need to order custom gifts this week (21-day lead time). Book restaurant next week. Order flowers at 7 days out."
+                            </p>
+                            <div className="text-xs text-green-600 mt-2">Strategic planning</div>
+                          </div>
+                        </div>
+                        
+                        <p className="text-sm text-muted-foreground">
+                          <strong>The difference:</strong> The countdown gives you exact time markers. At 28 days, you know you're at the edge of being able to order custom items. At 21 days, you know it's standard shipping territory. At 7 days, you're in rush territory.
+                        </p>
+                      </div>
+
+                      <div>
+                        <h3 className="font-semibold text-foreground mb-4">Example 2: Milestone Birthday Planning</h3>
+                        
+                        <div className="mb-4">
+                          <div className="font-medium text-foreground">Scenario: Your dad turns 65 on August 10, 2025. Today is December 18, 2024.</div>
+                          <div className="text-sm text-muted-foreground mt-1">Retirement and Medicare birthday—needs special planning</div>
+                        </div>
+                        
+                        <div className="overflow-x-auto mb-4">
+                          <table className="min-w-full text-sm">
+                            <thead className="bg-secondary/20">
+                              <tr>
+                                <th className="p-2 text-left">Countdown</th>
+                                <th className="p-2 text-left">What It Means</th>
+                                <th className="p-2 text-left">Action Items</th>
+                                <th className="p-2 text-left">Special Notes</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr className="border-b border-border">
+                                <td className="p-2 font-medium">235 days</td>
+                                <td className="p-2">Today's calculation</td>
+                                <td className="p-2">Start brainstorming ideas</td>
+                                <td className="p-2">Milestone needs extra planning</td>
+                              </tr>
+                              <tr className="border-b border-border">
+                                <td className="p-2 font-medium">~180 days</td>
+                                <td className="p-2">6 months out</td>
+                                <td className="p-2">Book venue, plan travel for family</td>
+                                <td className="p-2">Family may need to arrange time off</td>
+                              </tr>
+                              <tr className="border-b border-border">
+                                <td className="p-2 font-medium">90 days</td>
+                                <td className="p-2">3 months out</td>
+                                <td className="p-2">Send save-the-dates, hire photographer</td>
+                                <td className="p-2">Popular vendors book early</td>
+                              </tr>
+                              <tr>
+                                <td className="p-2 font-medium">30 days</td>
+                                <td className="p-2">1 month out</td>
+                                <td className="p-2">Finalize details, order cake</td>
+                                <td className="p-2">Medicare paperwork may be needed</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        
+                        <p className="text-sm text-muted-foreground">
+                          <strong>Why it works:</strong> Milestone birthdays have more moving parts. The countdown gives you clear markers for when to tackle each piece. At 235 days, you have plenty of time but know you should start thinking. The visual progression helps prevent "Oh no, it's next month!" panic.
+                        </p>
+                      </div>
+
+                      <div>
+                        <h3 className="font-semibold text-foreground mb-4">Example 3: The February 29th Birthday</h3>
+                        
+                        <div className="mb-4">
+                          <div className="font-medium text-foreground">Special Case: Born February 29, 2000. Current date: December 18, 2024.</div>
+                          <div className="text-sm text-muted-foreground mt-1">Leap year birthdays need special handling</div>
+                        </div>
+                        
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-center mb-4">
+                          <div className="p-4 bg-blue-50 dark:bg-blue-900/10 rounded-lg">
+                            <div className="text-2xl font-bold text-foreground">72 days</div>
+                            <div className="text-sm text-muted-foreground">Until celebration</div>
+                            <div className="text-xs text-blue-600 mt-2">March 1, 2025</div>
+                          </div>
+                          <div className="p-4 bg-green-50 dark:bg-green-900/10 rounded-lg">
+                            <div className="text-2xl font-bold text-foreground">24 years</div>
+                            <div className="text-sm text-muted-foreground">Actual age</div>
+                            <div className="text-xs text-green-600 mt-2">6 leap birthdays</div>
+                          </div>
+                          <div className="p-4 bg-purple-50 dark:bg-purple-900/10 rounded-lg">
+                            <div className="text-2xl font-bold text-foreground">25</div>
+                            <div className="text-sm text-muted-foreground">Celebrated age</div>
+                            <div className="text-xs text-purple-600 mt-2">"Official" milestone</div>
+                          </div>
+                        </div>
+                        
+                        <p className="text-sm text-muted-foreground">
+                          <strong>How the calculator helps:</strong> It automatically adjusts February 29th birthdays to March 1st in non-leap years (2025 isn't a leap year). This matches how most people with leap day birthdays celebrate. The age calculation shows both actual chronological age (24) and celebrated age (25), which matters for things like renting cars or ordering alcohol where legal age is based on anniversary of birth, not leap day calculations.
+                        </p>
+                        
+                        <div className="bg-pink-50 dark:bg-pink-900/10 p-3 rounded-lg border border-pink-200 dark:border-pink-800 mt-3">
+                          <div className="font-medium text-foreground mb-1">Note for Leap Day Birthdays</div>
+                          <p className="text-sm">
+                            The calculator follows standard convention: celebrate on March 1st in non-leap years. Some people prefer February 28th—if that's you, simply use February 28th as your birth date in the calculator. It will give you the correct countdown to your preferred celebration date.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </article>
+
+              {/* Accuracy Notes Section */}
+              <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
+                <button
+                  onClick={() => toggleSection('accuracyNotes')}
+                  className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="bg-blue-500/10 p-2 rounded-lg">
+                      <Target size={20} className="text-blue-600" />
+                    </div>
+                    <h2 className="text-xl font-bold text-foreground">Understanding the Precision of Birthday Countdowns</h2>
+                  </div>
+                  {openSections.accuracyNotes ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                </button>
+                
+                {openSections.accuracyNotes && (
+                  <div className="px-6 pb-6">
+                    <div className="space-y-6">
+                      <div>
+                        <h3 className="font-semibold text-foreground mb-3">What "Accurate" Really Means Here</h3>
+                        <div className="space-y-3 text-muted-foreground">
+                          <p>
+                            When we say this calculator is accurate, we mean it correctly calculates the number of calendar days between today and your next birthday. But there are some nuances worth understanding:
+                          </p>
+                          
+                          <div className="bg-secondary/10 p-4 rounded-lg">
+                            <div className="font-medium text-foreground mb-2">Days vs. Business Days</div>
+                            <p className="text-sm">
+                              The countdown shows calendar days, not business days. So if you have 14 days until a birthday and need something that takes "10 business days," you're actually cutting it close because weekends don't count toward business days. Always add buffer for weekends and holidays when planning.
+                            </p>
+                          </div>
+                          
+                          <div className="bg-secondary/10 p-4 rounded-lg">
+                            <div className="font-medium text-foreground mb-2">Month Calculations Are Estimates</div>
+                            <p className="text-sm">
+                              The "months until" number uses an average month length (30.44 days). Since months vary from 28 to 31 days, this is an estimate. If it says "3 months" and you have 92 days, those 92 days might span three calendar months (like Jan-Feb-Mar) or four partial months. Use the day count for precise planning.
+                            </p>
+                          </div>
+                          
+                          <div className="bg-secondary/10 p-4 rounded-lg">
+                            <div className="font-medium text-foreground mb-2">Time of Day Considerations</div>
+                            <p className="text-sm">
+                              The calculator counts full days. If today is December 18 and your birthday is December 19, it shows "1 day" even if it's 11:59 PM on the 18th. For most planning purposes, this works perfectly. For minute-by-minute countdowns, use our Countdown Timer tool instead.
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div>
+                        <h3 className="font-semibold text-foreground mb-3">Edge Cases We Handle Correctly</h3>
+                        <div className="space-y-3 text-muted-foreground">
+                          <p>
+                            These are the situations where many birthday calculators fail, but ours gets right:
+                          </p>
+                          
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div className="space-y-2">
+                              <div className="flex items-center gap-2">
+                                <div className="bg-green-500 text-white rounded-full p-1">
+                                  <Calendar size={12} />
+                                </div>
+                                <span className="font-medium text-foreground">Year Transitions</span>
+                              </div>
+                              <p className="text-sm">
+                                If your birthday was yesterday, it correctly shows ~364 days until next year. Many tools would incorrectly show 0 or negative numbers.
+                              </p>
+                            </div>
+                            
+                            <div className="space-y-2">
+                              <div className="flex items-center gap-2">
+                                <div className="bg-blue-500 text-white rounded-full p-1">
+                                  <Cake size={12} />
+                                </div>
+                                <span className="font-medium text-foreground">Leap Day Birthdays</span>
+                              </div>
+                              <p className="text-sm">
+                                February 29th handled correctly in both leap and non-leap years. No manual adjustment needed.
+                              </p>
+                            </div>
+                            
+                            <div className="space-y-2">
+                              <div className="flex items-center gap-2">
+                                <div className="bg-purple-500 text-white rounded-full p-1">
+                                  <Target size={12} />
+                                </div>
+                                <span className="font-medium text-foreground">Age Calculation</span>
+                              </div>
+                              <p className="text-sm">
+                                Calculates whether your birthday has occurred this year to give correct current age, not just current year minus birth year.
+                              </p>
+                            </div>
+                            
+                            <div className="space-y-2">
+                              <div className="flex items-center gap-2">
+                                <div className="bg-pink-500 text-white rounded-full p-1">
+                                  <Clock size={12} />
+                                </div>
+                                <span className="font-medium text-foreground">Time Zone Independence</span>
+                              </div>
+                              <p className="text-sm">
+                                Uses your device's local date, so you get accurate results regardless of where you or the birthday person are located.
+                              </p>
                             </div>
                           </div>
                         </div>
                       </div>
-                      
+
                       <div>
-                        <h3 className="font-semibold text-foreground mb-2">Detailed Calculation Example</h3>
-                        <div className="bg-secondary/20 p-4 rounded-lg border border-border overflow-x-auto">
-                          <pre className="text-sm text-muted-foreground whitespace-pre-wrap">
-{`Example: Calculate birthday countdown for birth date March 15, 1995 (Current date: December 18, 2024)
-
-Step 1: Calculate Current Age
-Current Year: 2024
-Birth Year: 1995
-Age = 2024 - 1995 = 29 years
-Check if birthday has passed this year: March 15 has passed (December > March)
-Current Age = 29 years
-
-Step 2: Determine Next Birthday Date
-Birth Month: March (3)
-Birth Day: 15
-Current Year: 2024
-Birthday this year was: March 15, 2024 (already passed)
-Next Birthday: March 15, 2025
-
-Step 3: Calculate Days Until Next Birthday
-Current Date: December 18, 2024
-Next Birthday: March 15, 2025
-
-Days in December 2024 (after Dec 18): 13 days (Dec 19-31)
-Days in January 2025: 31 days
-Days in February 2025: 28 days (2025 is not a leap year)
-Days in March 2025 until birthday: 14 days (Mar 1-15, inclusive)
-
-Total Days = 13 + 31 + 28 + 14 = 86 days
-
-Step 4: Calculate Other Time Units
-Weeks Until: 86 ÷ 7 = 12.28 ≈ 12 weeks
-Months Until: 86 ÷ 30.44 ≈ 2.82 ≈ 3 months
-
-Step 5: Determine Next Age
-Current Age: 29 years
-Next Age: 29 + 1 = 30 years (milestone birthday!)
-
-Step 6: Birthday Status
-Birthday has passed this year: Yes
-Next birthday is in: Next year (2025)
-
-Final Results:
-• Days Until Birthday: 86 days
-• Weeks Until Birthday: 12 weeks
-• Months Until Birthday: 3 months
-• Current Age: 29 years
-• Next Age: 30 years (milestone!)
-• Next Birthday Date: Saturday, March 15, 2025
-• Status: Birthday in next year
-
-Key Features Demonstrated:
-✓ Leap year handling (2025 not a leap year)
-✓ Accurate month length calculation
-✓ Automatic year adjustment for passed birthdays
-✓ Milestone age identification
-✓ Multiple time unit conversions
-✓ Clear date formatting`}
-                          </pre>
+                        <h3 className="font-semibold text-foreground mb-3">Limitations to Keep in Mind</h3>
+                        <div className="space-y-3 text-muted-foreground">
+                          <p>
+                            While accurate for its purpose, here's what this calculator doesn't do:
+                          </p>
+                          
+                          <div className="border-l-4 border-yellow-500 pl-4 py-2">
+                            <div className="font-medium text-foreground">No Automatic Updates</div>
+                            <p className="text-sm">
+                              It doesn't tick down in real-time. You need to recalculate to get updated counts. This keeps it lightweight and private—no background processes running.
+                            </p>
+                          </div>
+                          
+                          <div className="border-l-4 border-blue-500 pl-4 py-2">
+                            <div className="font-medium text-foreground">No Historical Dates</div>
+                            <p className="text-sm">
+                              You can't calculate how many days were until a birthday in the past. It's designed for upcoming birthdays. For historical date differences, use our Date Difference Calculator.
+                            </p>
+                          </div>
+                          
+                          <div className="border-l-4 border-green-500 pl-4 py-2">
+                            <div className="font-medium text-foreground">No Custom Holiday Adjustment</div>
+                            <p className="text-sm">
+                              The countdown is pure calendar days. It doesn't skip holidays or adjust for special circumstances. For business-day calculations with holidays, try our Work Days Calculator.
+                            </p>
+                          </div>
                         </div>
+                      </div>
+
+                      <div className="bg-green-50 dark:bg-green-900/10 p-4 rounded-lg border border-green-200 dark:border-green-800">
+                        <h4 className="font-semibold text-foreground mb-2">Verification Tip</h4>
+                        <p className="text-sm text-muted-foreground">
+                          Want to verify the countdown? Take a physical calendar and count the days manually. Start at tomorrow's date and count each day until the birthday date. Our calculation should match exactly. I encourage this—it helps build trust in the tool and gives you a tangible sense of the time remaining.
+                        </p>
                       </div>
                     </div>
                   </div>

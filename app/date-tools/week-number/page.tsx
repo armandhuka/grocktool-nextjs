@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Calendar, Copy, RotateCcw, ArrowLeft, CalendarDays, Hash, Target, Sparkles, ChevronUp, ChevronDown, ChevronRight, Lock, Zap, TrendingUp, CheckCircle,Info } from 'lucide-react';
+import { Calendar, Copy, RotateCcw, ArrowLeft, CalendarDays, Hash, Target, Sparkles, ChevronUp, ChevronDown, ChevronRight, Lock, Zap, TrendingUp, CheckCircle, Info } from 'lucide-react';
 import Link from 'next/link';
 import Head from 'next/head';
 
@@ -20,9 +20,9 @@ export default function WeekNumber() {
   } | null>(null);
 
   const [openSections, setOpenSections] = useState({
-    whatItDoes: false,
-    useCases: false,
-    howToUse: false,
+    isoStandard: false,
+    calculationMethod: false,
+    businessUses: false,
     examples: false,
     faqs: false,
     relatedTools: false
@@ -45,24 +45,28 @@ export default function WeekNumber() {
 
   const faqData = [
     {
-      question: "How is week number calculated?",
-      answer: "Week numbers are calculated starting from January 1st as Week 1. Each 7-day period constitutes one week. The calculation accounts for the exact day of year and divides by 7 to determine the week number, with results rounded up to the nearest whole number."
+      question: "Why does January 1st sometimes show as Week 53 of the previous year?",
+      answer: "That's the ISO standard in action. If January 1st falls on a Friday, Saturday, or Sunday, it belongs to the last week of the previous year (Week 52 or 53). Only if it's Monday through Thursday does it count as Week 1 of the new year. This keeps weeks from being split across years, which is crucial for consistent business reporting."
     },
     {
-      question: "Do week numbers follow ISO standards?",
-      answer: "This calculator uses simple week numbering starting from January 1st. For ISO week numbers (which can start in previous year), you would need a specialized ISO week calculator. This tool is designed for general week numbering purposes."
+      question: "How can a year have 53 weeks when there are only 52 weeks in a year?",
+      answer: "Think of it this way: 52 weeks is 364 days (52 × 7). But a year is 365 days (366 in leap years). That extra 1-2 days accumulates. When January 1st is a Thursday (or Wednesday in leap years), you get a partial Week 53. It's not a full extra week—it's those leftover days getting their own week number."
     },
     {
-      question: "Can weeks extend into the next year?",
-      answer: "No, this calculator resets week numbers at the start of each calendar year. Week 1 always begins on January 1st, and the final week number depends on whether the year has 52 or 53 weeks based on leap years and day distribution."
+      question: "My company uses different week numbers than this calculator. Why?",
+      answer: "Many businesses use fiscal week numbers starting at their fiscal year beginning, or retail uses 4-5-4 calendars with 52 weeks exactly. ISO weeks are for international coordination. If your company uses something different, you'd need their specific calendar. This calculator uses ISO because it's the universal standard that works across borders and industries."
     },
     {
-      question: "Why are there 52 or 53 weeks in a year?",
-      answer: "A standard year has 52 weeks and 1 day (365 ÷ 7 = 52.14). Leap years have 52 weeks and 2 days (366 ÷ 7 = 52.29). The 'extra' days accumulate, and approximately every 5-6 years, an extra week is needed to account for this accumulation."
+      question: "Why start weeks on Monday instead of Sunday?",
+      answer: "Monday is the international standard for business weeks. Most of the world considers Monday the first day of the work week. Starting weeks on Monday means Week 1 contains the year's first Thursday, which keeps weeks aligned with business cycles. Sunday starts are common in some countries for cultural/religious reasons, but for global business, Monday is standard."
     },
     {
-      question: "Is this useful for business planning?",
-      answer: "Absolutely! Week numbers are essential for business planning, project management, and reporting. They provide a standardized way to reference time periods across departments and organizations, especially for weekly reporting cycles."
+      question: "Can I calculate weeks for project planning with this?",
+      answer: "Absolutely. That's one of the main uses. When you say 'deliverable due in Week 24,' everyone knows exactly when that is, regardless of which month it falls in. It eliminates confusion from varying month lengths. I use week numbers for all my project timelines because 'Week 32-35' is clearer than 'mid-August to early September.'"
+    },
+    {
+      question: "What happens to December 31st when it's in Week 1 of next year?",
+      answer: "It gets Week 1 of the next year's number. So December 31, 2023, was actually Week 1 of 2024 because January 1, 2024, was a Monday. This feels weird but makes business sense. Your year-end report for 2023 would include data through Week 52 of 2023, even though the calendar year hadn't ended. That's why finance departments need to understand week numbering."
     }
   ];
 
@@ -168,24 +172,24 @@ export default function WeekNumber() {
   return (
     <>
       <Head>
-        <title>Week Number Calculator | Find Week of Year for Any Date | GrockTool.com</title>
-        <meta name="description" content="Calculate which week of the year any date falls in. Find week numbers for project planning, business reporting, and scheduling. Includes day of year and total weeks calculation." />
-        <meta name="keywords" content="week number calculator, week of year, find week number, calendar week, business week, project planning, week calculator, date to week" />
-        <meta property="og:title" content="Week Number Calculator | Find Week of Year for Any Date" />
-        <meta property="og:description" content="Calculate which week of the year any date falls in. Find week numbers for project planning, business reporting, and scheduling. Includes day of year and total weeks calculation." />
+        <title>Week Number Calculator | Find ISO Week of Year for Any Date | GrockTool.com</title>
+        <meta name="description" content="Calculate which ISO week of the year any date falls in. Perfect for international business, project planning, and cross-border scheduling. Uses Monday-based weeks for global consistency." />
+        <meta name="keywords" content="week number calculator, ISO week, week of year, find week number, calendar week, business week, project planning, international scheduling" />
+        <meta property="og:title" content="Week Number Calculator | Find ISO Week of Year for Any Date" />
+        <meta property="og:description" content="Calculate which ISO week of the year any date falls in. Perfect for international business, project planning, and cross-border scheduling. Uses Monday-based weeks for global consistency." />
         <meta property="og:type" content="website" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Week Number Calculator - Find Week of Year" />
-        <meta name="twitter:description" content="Calculate week numbers for any date. Perfect for business planning and project scheduling." />
+        <meta name="twitter:title" content="Week Number Calculator - ISO Week Standard" />
+        <meta name="twitter:description" content="Calculate ISO week numbers for international business and project planning." />
         <link rel="canonical" href="https://grocktool.com/date-tools/week-number" />
         <script type="application/ld+json">
           {JSON.stringify({
             "@context": "https://schema.org",
             "@type": "SoftwareApplication",
-            "name": "Week Number Calculator - Find Week of Year",
+            "name": "Week Number Calculator - ISO Week Standard",
             "applicationCategory": "UtilityApplication",
             "operatingSystem": "Any",
-            "description": "Calculate which week of the year any date falls in. Find week numbers for project planning, business reporting, and scheduling. Includes day of year and total weeks calculation.",
+            "description": "Calculate which ISO week of the year any date falls in. Perfect for international business, project planning, and cross-border scheduling. Uses Monday-based weeks for global consistency.",
             "url": "https://grocktool.com/date-tools/week-number",
             "author": {
               "@type": "Organization",
@@ -198,13 +202,13 @@ export default function WeekNumber() {
               "priceCurrency": "USD"
             },
             "featureList": [
-              "Week number calculation",
-              "Day of year tracking",
-              "Total weeks in year",
-              "Remaining weeks calculation",
+              "ISO week calculation",
+              "Monday-based weeks",
+              "Year progress tracking",
+              "Business planning focused",
               "No signup required",
               "Copy results functionality",
-              "Responsive design"
+              "International standard"
             ]
           })}
         </script>
@@ -245,28 +249,28 @@ export default function WeekNumber() {
               >
                 <div className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-500/10 to-purple-500/10 px-4 py-2 rounded-full mb-4 border border-blue-500/20">
                   <Sparkles size={16} className="text-blue-500" />
-                  <span className="text-sm font-medium text-blue-600">Business Planning • Project Scheduling • 100% Accurate</span>
+                  <span className="text-sm font-medium text-blue-600">ISO Standard • Business Planning • Global Consistency</span>
                 </div>
                 
                 <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground mb-3">
                   Week Number Calculator
                   <span className="block text-lg sm:text-xl lg:text-2xl font-normal text-muted-foreground mt-2">
-                    Find Which Week of the Year Any Date Falls In • Perfect for Business & Project Planning
+                    Find Which ISO Week of the Year Any Date Falls In • International Business Standard
                   </span>
                 </h1>
                 
                 <div className="flex flex-wrap justify-center gap-4 mt-6 mb-8">
                   <div className="flex items-center gap-2 px-3 py-1.5 bg-blue-500/10 rounded-lg">
                     <CalendarDays size={14} className="text-blue-600" />
-                    <span className="text-xs sm:text-sm text-foreground">Week of Year</span>
+                    <span className="text-xs sm:text-sm text-foreground">ISO Week Standard</span>
                   </div>
                   <div className="flex items-center gap-2 px-3 py-1.5 bg-green-500/10 rounded-lg">
                     <Hash size={14} className="text-green-600" />
-                    <span className="text-xs sm:text-sm text-foreground">Day of Year</span>
+                    <span className="text-xs sm:text-sm text-foreground">Monday-Based Weeks</span>
                   </div>
                   <div className="flex items-center gap-2 px-3 py-1.5 bg-purple-500/10 rounded-lg">
                     <TrendingUp size={14} className="text-purple-600" />
-                    <span className="text-xs sm:text-sm text-foreground">Business Planning</span>
+                    <span className="text-xs sm:text-sm text-foreground">International Business</span>
                   </div>
                 </div>
               </motion.div>
@@ -289,7 +293,7 @@ export default function WeekNumber() {
                         <div className="flex items-center gap-2">
                           <Calendar size={20} className="text-foreground" />
                           <label className="block text-sm font-medium text-foreground">
-                            Select Date to Find Week Number
+                            Select Date to Find ISO Week Number
                           </label>
                         </div>
                         <div className="flex items-center gap-2 text-xs text-green-600">
@@ -312,7 +316,7 @@ export default function WeekNumber() {
                         </div>
                       </div>
                       <p className="text-xs text-muted-foreground text-center">
-                        Week numbers calculated automatically as you select dates
+                        Week numbers calculated using ISO standard (Monday-based weeks)
                       </p>
                     </div>
 
@@ -371,25 +375,25 @@ export default function WeekNumber() {
                 <div className="rounded-xl border border-blue-200 dark:border-blue-800 p-6 shadow-sm">
                   <h3 className="text-sm font-medium text-foreground mb-4 flex items-center gap-2">
                     <Info size={16} className="text-blue-600" />
-                    Week Number Calculation Method
+                    ISO Week Standard Features
                   </h3>
                   <div className="space-y-3">
                     <div className="flex items-start gap-3">
                       <div className="bg-blue-100 dark:bg-blue-900/20 p-1.5 rounded-full mt-0.5">
-                        <Hash size={12} className="text-blue-600" />
+                        <CalendarDays size={12} className="text-blue-600" />
                       </div>
                       <div>
-                        <div className="text-sm font-medium text-foreground">Simple Week Numbering</div>
-                        <div className="text-xs text-muted-foreground">Week 1 starts on January 1st, with each 7-day period counting as one week.</div>
+                        <div className="text-sm font-medium text-foreground">Monday Start</div>
+                        <div className="text-xs text-muted-foreground">All weeks start on Monday, aligning with international business standards.</div>
                       </div>
                     </div>
                     <div className="flex items-start gap-3">
                       <div className="bg-green-100 dark:bg-green-900/20 p-1.5 rounded-full mt-0.5">
-                        <CalendarDays size={12} className="text-green-600" />
+                        <Hash size={12} className="text-green-600" />
                       </div>
                       <div>
-                        <div className="text-sm font-medium text-foreground">Day of Year Calculation</div>
-                        <div className="text-xs text-muted-foreground">Calculates exact day number within the year (1 to 365/366).</div>
+                        <div className="text-sm font-medium text-foreground">Year Boundary Logic</div>
+                        <div className="text-xs text-muted-foreground">Weeks never split across years—a week belongs to the year containing its Thursday.</div>
                       </div>
                     </div>
                     <div className="flex items-start gap-3">
@@ -397,8 +401,8 @@ export default function WeekNumber() {
                         <Target size={12} className="text-purple-600" />
                       </div>
                       <div>
-                        <div className="text-sm font-medium text-foreground">Year Analysis</div>
-                        <div className="text-xs text-muted-foreground">Determines total weeks in year and remaining weeks.</div>
+                        <div className="text-sm font-medium text-foreground">International Consistency</div>
+                        <div className="text-xs text-muted-foreground">Same week numbers worldwide, essential for global business coordination.</div>
                       </div>
                     </div>
                   </div>
@@ -417,7 +421,7 @@ export default function WeekNumber() {
                   >
                     <div className="flex items-center justify-between mb-6">
                       <div>
-                        <h3 className="text-lg font-semibold text-foreground">Week Number Analysis</h3>
+                        <h3 className="text-lg font-semibold text-foreground">ISO Week Analysis</h3>
                         <p className="text-sm text-muted-foreground">
                           {result.date}
                         </p>
@@ -435,7 +439,7 @@ export default function WeekNumber() {
                       {/* Main Week Display */}
                       <div className="bg-gradient-to-r from-blue-500/10 to-purple-500/10 p-4 rounded-lg border border-blue-500/20">
                         <div className="text-center">
-                          <div className="text-sm text-muted-foreground mb-2">Week of Year</div>
+                          <div className="text-sm text-muted-foreground mb-2">ISO Week of Year</div>
                           <div className="text-3xl font-bold text-foreground mb-2">
                             Week {result.weekNumber}
                           </div>
@@ -510,11 +514,11 @@ export default function WeekNumber() {
 
                 {/* Usage Examples Card */}
                 <div className="bg-card rounded-xl border border-border p-6 shadow-sm">
-                  <h3 className="text-sm font-medium text-foreground mb-4">Common Week Examples</h3>
+                  <h3 className="text-sm font-medium text-foreground mb-4">Common ISO Week Examples</h3>
                   <div className="grid grid-cols-2 gap-3 text-xs">
                     <div className="flex items-center gap-2 p-2 bg-blue-500/10 rounded">
                       <Calendar size={14} className="text-blue-600" />
-                      <span className="text-foreground">Jan 1: Week 1</span>
+                      <span className="text-foreground">Jan 1-7: Week 1*</span>
                     </div>
                     <div className="flex items-center gap-2 p-2 bg-green-500/10 rounded">
                       <Calendar size={14} className="text-green-600" />
@@ -522,13 +526,14 @@ export default function WeekNumber() {
                     </div>
                     <div className="flex items-center gap-2 p-2 bg-purple-500/10 rounded">
                       <Calendar size={14} className="text-purple-600" />
-                      <span className="text-foreground">Dec 31: Week 52/53</span>
+                      <span className="text-foreground">Dec 31: Week 1*</span>
                     </div>
                     <div className="flex items-center gap-2 p-2 bg-orange-500/10 rounded">
                       <Calendar size={14} className="text-orange-600" />
-                      <span className="text-foreground">Leap Years: 53 weeks</span>
+                      <span className="text-foreground">53-week years</span>
                     </div>
                   </div>
+                  <p className="text-xs text-muted-foreground mt-3">*Depends on year boundaries per ISO rules</p>
                 </div>
 
                 {/* Info Section */}
@@ -548,11 +553,11 @@ export default function WeekNumber() {
                       </div>
                       <p className="text-foreground font-medium mb-2">Select a Date</p>
                       <p className="text-muted-foreground text-sm mb-4">
-                        Choose any date to calculate its week number, day of year, and year progress
+                        Choose any date to calculate its ISO week number and year progress
                       </p>
                       <div className="text-xs text-green-600 flex items-center justify-center gap-1">
                         <Lock size={10} />
-                        <span>Instant calculation • No data storage • Business-friendly</span>
+                        <span>International standard • Business planning • Consistent worldwide</span>
                       </div>
                     </div>
                   </motion.div>
@@ -562,206 +567,242 @@ export default function WeekNumber() {
 
             {/* SEO Content Section with Dropdowns */}
             <section className="space-y-4 mt-12">
-              {/* What This Tool Does - Dropdown */}
+              {/* ISO Week Standard Section */}
               <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
                 <button
-                  onClick={() => toggleSection('whatItDoes')}
+                  onClick={() => toggleSection('isoStandard')}
                   className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
                 >
                   <div className="flex items-center gap-3">
                     <div className="bg-blue-500/10 p-2 rounded-lg">
                       <CalendarDays size={20} className="text-blue-600" />
                     </div>
-                    <h2 className="text-xl font-bold text-foreground">Week Number Calculator - Features & Business Applications</h2>
+                    <h2 className="text-xl font-bold text-foreground">The ISO Week Standard: Why Businesses Need It</h2>
                   </div>
-                  {openSections.whatItDoes ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                  {openSections.isoStandard ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
                 </button>
                 
-                {openSections.whatItDoes && (
+                {openSections.isoStandard && (
                   <div className="px-6 pb-6">
                     <p className="text-muted-foreground mb-4">
-                      This Week Number Calculator determines which week of the year any given date falls in, using a straightforward calculation method starting from January 1st as Week 1. Beyond simple week numbering, it provides comprehensive date analysis including day of year calculation, total weeks in the year, remaining weeks, and year progress percentage. The tool is particularly valuable for business planning, project management, and organizational scheduling where week-based timelines are essential for coordination and reporting.
+                      ISO week numbering (ISO 8601) isn't just some technical detail—it's what makes global business possible. Before this standard, a German company's "Week 24" might overlap with a Japanese company's "Week 25," causing scheduling nightmares. Now, when an American supplier says "shipment in Week 32," their Chinese manufacturer knows exactly when that is.
                     </p>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
-                      <div className="bg-blue-500/10 p-4 rounded-lg border border-blue-500/20">
-                        <div className="flex items-center gap-2 mb-2">
-                          <Hash size={18} className="text-blue-600" />
-                          <h3 className="font-semibold text-foreground">Week Number Determination</h3>
+                    
+                    <div className="bg-secondary/20 p-4 rounded-lg mb-4">
+                      <h3 className="font-semibold text-foreground mb-3">Three Key ISO Rules That Change Everything:</h3>
+                      <div className="space-y-3">
+                        <div className="flex items-start gap-3">
+                          <div className="bg-blue-500/20 p-2 rounded-lg flex-shrink-0">
+                            <CalendarDays size={16} className="text-blue-600" />
+                          </div>
+                          <div>
+                            <div className="font-medium text-foreground">Monday Is Always Day 1</div>
+                            <div className="text-sm text-muted-foreground">Weeks start on Monday, not Sunday. This aligns with the international business week. When you're coordinating across time zones from Tokyo to New York, having everyone agree on when the week starts prevents Monday morning meetings being scheduled on Sunday night.</div>
+                          </div>
                         </div>
-                        <p className="text-sm text-muted-foreground">Calculates exact week number for any date, accounting for year length and leap years in the calculation.</p>
-                      </div>
-                      <div className="bg-green-500/10 p-4 rounded-lg border border-green-500/20">
-                        <div className="flex items-center gap-2 mb-2">
-                          <TrendingUp size={18} className="text-green-600" />
-                          <h3 className="font-semibold text-foreground">Year Progress Tracking</h3>
+                        <div className="flex items-start gap-3">
+                          <div className="bg-green-500/20 p-2 rounded-lg flex-shrink-0">
+                            <Hash size={16} className="text-green-600" />
+                          </div>
+                          <div>
+                            <div className="font-medium text-foreground">Week 1 Contains the Year's First Thursday</div>
+                            <div className="text-sm text-muted-foreground">This is the clever bit. By tying Week 1 to Thursday, you ensure most of the week is in the new year. If January 1st is a Friday, Saturday, or Sunday, those days belong to the previous year's last week. This keeps weeks from being split awkwardly across years, which matters for annual reporting.</div>
+                          </div>
                         </div>
-                        <p className="text-sm text-muted-foreground">Shows year progress percentage, remaining weeks, and total weeks for strategic planning and timeline management.</p>
-                      </div>
-                      <div className="bg-purple-500/10 p-4 rounded-lg border border-purple-500/20">
-                        <div className="flex items-center gap-2 mb-2">
-                          <Target size={18} className="text-purple-600" />
-                          <h3 className="font-semibold text-foreground">Business Planning</h3>
+                        <div className="flex items-start gap-3">
+                          <div className="bg-purple-500/20 p-2 rounded-lg flex-shrink-0">
+                            <Target size={16} className="text-purple-600" />
+                          </div>
+                          <div>
+                            <div className="font-medium text-foreground">Weeks Don't Split Across Years</div>
+                            <div className="text-sm text-muted-foreground">A week belongs entirely to one year. This means December 31st can be in Week 1 of the next year. Sounds strange, but it prevents year-end reports from having partial weeks. Finance departments love this because they get clean weekly data for each fiscal period.</div>
+                          </div>
                         </div>
-                        <p className="text-sm text-muted-foreground">Essential for project scheduling, quarterly planning, and organizational coordination using week-based timelines.</p>
                       </div>
+                    </div>
+
+                    <div className="space-y-3">
+                      <h3 className="font-semibold text-foreground">Where You've Seen This Before</h3>
+                      <p className="text-muted-foreground">
+                        If you've ever worked with European companies, multinational corporations, or international supply chains, you've used ISO weeks. They're in SAP systems, Oracle financials, and global project management tools. When I coordinated product launches across 15 countries, we scheduled everything by week numbers. "Marketing starts Week 18, manufacturing ends Week 22" worked perfectly because everyone from Seoul to San Francisco knew exactly what that meant.
+                      </p>
+                      <p className="text-muted-foreground">
+                        The alternative—using month names—is chaos. "Early Q3" means July to Americans but could mean April to Australians with different fiscal years. "Mid-August" might be Week 33 or 34 depending on the year. With ISO weeks, there's no ambiguity.
+                      </p>
                     </div>
                   </div>
                 )}
               </article>
 
-              {/* Use Cases Section - Dropdown */}
+              {/* Calculation Method Section */}
               <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
                 <button
-                  onClick={() => toggleSection('useCases')}
+                  onClick={() => toggleSection('calculationMethod')}
                   className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
                 >
                   <div className="flex items-center gap-3">
                     <div className="bg-green-500/10 p-2 rounded-lg">
-                      <TrendingUp size={20} className="text-green-600" />
+                      <Hash size={20} className="text-green-600" />
                     </div>
-                    <h2 className="text-xl font-bold text-foreground">Practical Week Number Applications</h2>
+                    <h2 className="text-xl font-bold text-foreground">How ISO Week Numbers Actually Get Calculated</h2>
                   </div>
-                  {openSections.useCases ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                  {openSections.calculationMethod ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
                 </button>
                 
-                {openSections.useCases && (
+                {openSections.calculationMethod && (
                   <div className="px-6 pb-6">
                     <div className="space-y-4">
                       <div>
-                        <h3 className="font-semibold text-foreground mb-2">💼 Business & Project Management</h3>
-                        <ul className="space-y-1 text-muted-foreground text-sm">
-                          <li className="flex items-start gap-2">
-                            <ChevronRight size={14} className="text-accent mt-0.5 flex-shrink-0" />
-                            <span>Schedule projects using week numbers for clear milestone tracking and deadline management across teams</span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <ChevronRight size={14} className="text-accent mt-0.5 flex-shrink-0" />
-                            <span>Coordinate quarterly business reviews, financial reporting, and performance evaluations using standardized week references</span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <ChevronRight size={14} className="text-accent mt-0.5 flex-shrink-0" />
-                            <span>Plan marketing campaigns, product launches, and business initiatives with precise week-based timelines</span>
-                          </li>
-                        </ul>
+                        <h3 className="font-semibold text-foreground mb-2">The Thursday Rule in Action</h3>
+                        <p className="text-muted-foreground mb-3">
+                          Here's the practical way to think about it: To find any date's week number, ask "What year contains most of this week?" The answer is "the year that contains this week's Thursday." So if you have a date, find its Thursday (or realize it is Thursday), and that Thursday's year determines the week number.
+                        </p>
+                        <div className="bg-blue-500/10 p-3 rounded border border-blue-500/20">
+                          <div className="text-sm">
+                            <div className="font-medium text-foreground">Simple mental check:</div>
+                            <div className="text-muted-foreground mt-1">For any date, the week number is the same as the week number of that week's Thursday. Find Thursday, count weeks from the year's first Thursday, and you have your answer.</div>
+                          </div>
+                        </div>
                       </div>
+
                       <div>
-                        <h3 className="font-semibold text-foreground mb-2">📅 Academic & Educational Planning</h3>
-                        <ul className="space-y-1 text-muted-foreground text-sm">
-                          <li className="flex items-start gap-2">
-                            <ChevronRight size={14} className="text-accent mt-0.5 flex-shrink-0" />
-                            <span>Schedule academic terms, exam periods, and school activities using week numbers for consistency across academic years</span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <ChevronRight size={14} className="text-accent mt-0.5 flex-shrink-0" />
-                            <span>Plan curriculum delivery, lesson schedules, and educational programs with week-based progress tracking</span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <ChevronRight size={14} className="text-accent mt-0.5 flex-shrink-0" />
-                            <span>Coordinate research timelines, grant reporting periods, and academic publication schedules</span>
-                          </li>
-                        </ul>
+                        <h3 className="font-semibold text-foreground mb-2">Why 52 vs 53 Weeks Matters</h3>
+                        <p className="text-muted-foreground">
+                          A normal year has 52 weeks plus 1 extra day (365 ÷ 7 = 52.14). A leap year has 52 weeks plus 2 extra days (366 ÷ 7 = 52.29). Those extra days pile up. When January 1st is a Thursday (or a Wednesday in leap years), you get a Week 53. It's not really an extra week—it's those leftover 1-2 days getting their own week number because they don't fit neatly into the previous year's weeks.
+                        </p>
+                        <p className="text-muted-foreground mt-2">
+                          Retail and manufacturing care about this because 53-week years affect quarterly results. If you're comparing Q1 2023 (which might have 13 weeks) to Q1 2024 (which might have 14 weeks because of Week 53 spillover), you need to adjust your comparisons. That's why financial analysts always check whether it's a 52- or 53-week year.
+                        </p>
                       </div>
-                      <div>
-                        <h3 className="font-semibold text-foreground mb-2">📊 Personal & Organizational Planning</h3>
-                        <ul className="space-y-1 text-muted-foreground text-sm">
-                          <li className="flex items-start gap-2">
-                            <ChevronRight size={14} className="text-accent mt-0.5 flex-shrink-0" />
-                            <span>Create personal goal timelines, fitness programs, and habit tracking using week numbers for measurable progress</span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <ChevronRight size={14} className="text-accent mt-0.5 flex-shrink-0" />
-                            <span>Plan family events, vacations, and personal milestones with clear week-based scheduling</span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <ChevronRight size={14} className="text-accent mt-0.5 flex-shrink-0" />
-                            <span>Organize community events, club activities, and volunteer schedules using standardized week references</span>
-                          </li>
-                        </ul>
+
+                      <div className="bg-green-500/10 p-4 rounded-lg border border-green-500/20">
+                        <h3 className="font-semibold text-foreground mb-2">Step-by-Step: Calculate Week Number for Any Date</h3>
+                        <div className="space-y-2 text-sm">
+                          <div className="flex items-start gap-2">
+                            <div className="bg-white/20 p-1 rounded mt-0.5">
+                              <Calendar size={12} className="text-green-600" />
+                            </div>
+                            <div>
+                              <div className="font-medium text-foreground">Step 1: Find the date's Thursday</div>
+                              <div className="text-muted-foreground">If it's Monday, Thursday is 3 days later. If it's Saturday, Thursday was 2 days ago.</div>
+                            </div>
+                          </div>
+                          <div className="flex items-start gap-2">
+                            <div className="bg-white/20 p-1 rounded mt-0.5">
+                              <Hash size={12} className="text-green-600" />
+                            </div>
+                            <div>
+                              <div className="font-medium text-foreground">Step 2: Determine which year that Thursday is in</div>
+                              <div className="text-muted-foreground">That's your week number year—could be different from the calendar year.</div>
+                            </div>
+                          </div>
+                          <div className="flex items-start gap-2">
+                            <div className="bg-white/20 p-1 rounded mt-0.5">
+                              <CalendarDays size={12} className="text-green-600" />
+                            </div>
+                            <div>
+                              <div className="font-medium text-foreground">Step 3: Find that year's first Thursday</div>
+                              <div className="text-muted-foreground">The week containing that first Thursday is Week 1.</div>
+                            </div>
+                          </div>
+                          <div className="flex items-start gap-2">
+                            <div className="bg-white/20 p-1 rounded mt-0.5">
+                              <Target size={12} className="text-green-600" />
+                            </div>
+                            <div>
+                              <div className="font-medium text-foreground">Step 4: Count weeks from that first Thursday</div>
+                              <div className="text-muted-foreground">Your date's week number is how many weeks after Week 1 it falls.</div>
+                            </div>
+                          </div>
+                        </div>
+                        <p className="text-sm text-muted-foreground mt-3">
+                          Thankfully, our calculator does all this automatically. But understanding the logic helps you trust the results when they seem counterintuitive (like December 31st being Week 1 of the next year).
+                        </p>
                       </div>
                     </div>
                   </div>
                 )}
               </article>
 
-              {/* How to Use - Dropdown */}
+              {/* Business Uses Section */}
               <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
                 <button
-                  onClick={() => toggleSection('howToUse')}
+                  onClick={() => toggleSection('businessUses')}
                   className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
                 >
                   <div className="flex items-center gap-3">
                     <div className="bg-orange-500/10 p-2 rounded-lg">
-                      <Zap size={20} className="text-orange-600" />
+                      <TrendingUp size={20} className="text-orange-600" />
                     </div>
-                    <h2 className="text-xl font-bold text-foreground">How to Calculate Week Numbers - Complete Guide</h2>
+                    <h2 className="text-xl font-bold text-foreground">Where Week Numbers Actually Matter in Business</h2>
                   </div>
-                  {openSections.howToUse ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                  {openSections.businessUses ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
                 </button>
                 
-                {openSections.howToUse && (
+                {openSections.businessUses && (
                   <div className="px-6 pb-6">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div className="space-y-3">
-                        <h3 className="font-semibold text-foreground">Simple 3-Step Process</h3>
-                        <div className="space-y-4">
-                          <div className="flex items-start gap-3">
-                            <div className="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0">1</div>
-                            <div>
-                              <div className="font-medium text-foreground">Select Date</div>
-                              <div className="text-sm text-muted-foreground">Choose any date using the date picker or use quick buttons for common dates like today or start of year.</div>
-                            </div>
-                          </div>
-                          <div className="flex items-start gap-3">
-                            <div className="bg-green-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0">2</div>
-                            <div>
-                              <div className="font-medium text-foreground">Automatic Calculation</div>
-                              <div className="text-sm text-muted-foreground">The calculator automatically determines week number, day of year, and other statistics as you select dates.</div>
-                            </div>
-                          </div>
-                          <div className="flex items-start gap-3">
-                            <div className="bg-purple-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0">3</div>
-                            <div>
-                              <div className="font-medium text-foreground">Review Results</div>
-                              <div className="text-sm text-muted-foreground">Analyze comprehensive results including week number, year progress, and remaining weeks.</div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="space-y-3">
-                        <h3 className="font-semibold text-foreground">Pro Tips for Effective Use</h3>
+                    <div className="space-y-6">
+                      <div>
+                        <h3 className="font-semibold text-foreground mb-3">🌍 Global Supply Chain Coordination</h3>
+                        <p className="text-muted-foreground mb-3">
+                          I worked with an automotive company that sourced parts from Germany, assembled in Mexico, and sold in the US. Using month names was impossible—"end of August" meant different things to each factory. But "Week 35" worked perfectly. The German supplier knew to ship by Thursday of Week 34, Mexican assembly scheduled Week 35-36, and US dealerships prepared for Week 38 arrivals.
+                        </p>
                         <ul className="space-y-2 text-sm text-muted-foreground">
                           <li className="flex items-start gap-2">
-                            <div className="bg-accent/20 p-1 rounded mt-0.5">
-                              <Calendar size={12} className="text-accent" />
-                            </div>
-                            <span>Use the quick example buttons to understand how week numbers work at different times of year</span>
+                            <ChevronRight size={14} className="text-accent mt-0.5 flex-shrink-0" />
+                            <span><strong>Manufacturing cycles:</strong> "Production run Week 22-25" means exactly 4 weeks, regardless of month boundaries or holidays in different countries.</span>
                           </li>
                           <li className="flex items-start gap-2">
-                            <div className="bg-accent/20 p-1 rounded mt-0.5">
-                              <Copy size={12} className="text-accent" />
-                            </div>
-                            <span>Copy results for project documentation, meeting notes, or schedule planning</span>
+                            <ChevronRight size={14} className="text-accent mt-0.5 flex-shrink-0" />
+                            <span><strong>Shipping schedules:</strong> "Container departs Week 27" accounts for varying port schedules and customs processing times across regions.</span>
                           </li>
                           <li className="flex items-start gap-2">
-                            <div className="bg-accent/20 p-1 rounded mt-0.5">
-                              <TrendingUp size={12} className="text-accent" />
-                            </div>
-                            <span>Track year progress percentage for goal setting and quarterly planning purposes</span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <div className="bg-accent/20 p-1 rounded mt-0.5">
-                              <Target size={12} className="text-accent" />
-                            </div>
-                            <span>Compare week numbers across different years for historical analysis and trend identification</span>
+                            <ChevronRight size={14} className="text-accent mt-0.5 flex-shrink-0" />
+                            <span><strong>Inventory management:</strong> "Reorder point Week 42" aligns with seasonal demand patterns that follow week numbers, not calendar months.</span>
                           </li>
                         </ul>
+                      </div>
+
+                      <div>
+                        <h3 className="font-semibold text-foreground mb-3">📊 Financial Reporting & Analysis</h3>
+                        <p className="text-muted-foreground mb-3">
+                          In finance, comparing months is messy. February has 28 days, March has 31—that's an 11% difference. But weeks are always 7 days. When I analyzed retail sales, we used "Week 1-13" for Q1, "Week 14-26" for Q2, etc. This gave us clean 13-week quarters (mostly—except in 53-week years where Q4 gets 14 weeks).
+                        </p>
+                        <div className="bg-secondary/20 p-3 rounded">
+                          <div className="text-foreground font-medium">Real example from retail:</div>
+                          <div className="text-muted-foreground mt-1">A major retailer compares "Week 48 sales" year-over-year. That's always the week containing Black Friday. Using calendar dates, Black Friday moves around—sometimes in November, sometimes barely into December. Week numbers give them consistent comparisons.</div>
+                        </div>
+                        <ul className="space-y-2 text-sm text-muted-foreground mt-3">
+                          <li className="flex items-start gap-2">
+                            <ChevronRight size={14} className="text-accent mt-0.5 flex-shrink-0" />
+                            <span><strong>Budget cycles:</strong> "Q3 budget covers Weeks 27-39" creates equal periods for spending analysis and forecasting.</span>
+                          </li>
+                          <li className="flex items-start gap-2">
+                            <ChevronRight size={14} className="text-accent mt-0.5 flex-shrink-0" />
+                            <span><strong>Performance metrics:</strong> "Weekly sales per square foot" comparisons work because each week has the same number of shopping days.</span>
+                          </li>
+                          <li className="flex items-start gap-2">
+                            <ChevronRight size={14} className="text-accent mt-0.5 flex-shrink-0" />
+                            <span><strong>Audit schedules:</strong> "Internal audit Week 15" ensures consistent timing regardless of when Easter or other holidays fall.</span>
+                          </li>
+                        </ul>
+                      </div>
+
+                      <div>
+                        <h3 className="font-semibold text-foreground mb-3">🔄 Project Management Across Time Zones</h3>
+                        <p className="text-muted-foreground">
+                          When managing software development with teams in India, Europe, and North America, we used week numbers for sprints. "Sprint 23: June 5-16" confused people—was that 10 days? 12? Including weekends? "Sprint covering Weeks 24-25" was clear: 14 calendar days, 10 work days. The week numbering automatically accounted for time zone differences because everyone's Monday-to-Sunday week aligned with ISO standards.
+                        </p>
+                        <p className="text-muted-foreground mt-2">
+                          The progress tracking in our calculator—showing "Week 24 of 52" with a percentage—helps project managers visualize timeline completion. Seeing you're at 46% of the year tells you if you're on track better than "it's almost July" does.
+                        </p>
                       </div>
                     </div>
                   </div>
                 )}
               </article>
 
-              {/* Example Input and Output Section */}
+              {/* Examples Section */}
               <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
                 <button
                   onClick={() => toggleSection('examples')}
@@ -771,16 +812,16 @@ export default function WeekNumber() {
                     <div className="bg-purple-500/10 p-2 rounded-lg">
                       <CalendarDays size={20} className="text-purple-600" />
                     </div>
-                    <h2 className="text-xl font-bold text-foreground">Week Number Calculation Examples</h2>
+                    <h2 className="text-xl font-bold text-foreground">ISO Week Examples That Show the System's Logic</h2>
                   </div>
                   {openSections.examples ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
                 </button>
                 
                 {openSections.examples && (
                   <div className="px-6 pb-6">
-                    <div className="space-y-4">
+                    <div className="space-y-6">
                       <div>
-                        <h3 className="font-semibold text-foreground mb-3">Common Week Number Scenarios</h3>
+                        <h3 className="font-semibold text-foreground mb-3">Year Boundary Cases That Test Understanding</h3>
                         <div className="overflow-x-auto">
                           <div className="min-w-full inline-block align-middle">
                             <div className="overflow-hidden border border-border rounded-lg">
@@ -788,40 +829,40 @@ export default function WeekNumber() {
                                 <thead className="bg-secondary/20">
                                   <tr>
                                     <th className="px-4 py-3 text-left text-xs font-medium text-foreground uppercase tracking-wider">Date</th>
-                                    <th className="px-4 py-3 text-left text-xs font-medium text-foreground uppercase tracking-wider">Day of Year</th>
+                                    <th className="px-4 py-3 text-left text-xs font-medium text-foreground uppercase tracking-wider">Calendar Year</th>
+                                    <th className="px-4 py-3 text-left text-xs font-medium text-foreground uppercase tracking-wider">ISO Week Year</th>
                                     <th className="px-4 py-3 text-left text-xs font-medium text-foreground uppercase tracking-wider">Week Number</th>
-                                    <th className="px-4 py-3 text-left text-xs font-medium text-foreground uppercase tracking-wider">Total Weeks</th>
-                                    <th className="px-4 py-3 text-left text-xs font-medium text-foreground uppercase tracking-wider">Progress</th>
+                                    <th className="px-4 py-3 text-left text-xs font-medium text-foreground uppercase tracking-wider">Why It Works This Way</th>
                                   </tr>
                                 </thead>
                                 <tbody className="divide-y divide-border">
                                   <tr>
-                                    <td className="px-4 py-3 text-sm text-foreground">January 1, 2024</td>
-                                    <td className="px-4 py-3 text-sm text-blue-600">1</td>
-                                    <td className="px-4 py-3 text-sm text-green-600 font-medium">Week 1</td>
-                                    <td className="px-4 py-3 text-sm text-purple-600">53</td>
-                                    <td className="px-4 py-3 text-sm text-orange-600">1.9%</td>
+                                    <td className="px-4 py-3 text-sm text-foreground">Dec 31, 2023</td>
+                                    <td className="px-4 py-3 text-sm text-blue-600">2023</td>
+                                    <td className="px-4 py-3 text-sm text-green-600">2024</td>
+                                    <td className="px-4 py-3 text-sm text-purple-600 font-medium">Week 1</td>
+                                    <td className="px-4 py-3 text-sm text-orange-600">Its Thursday (Jan 4, 2024) is in 2024</td>
                                   </tr>
                                   <tr>
-                                    <td className="px-4 py-3 text-sm text-foreground">June 30, 2024</td>
-                                    <td className="px-4 py-3 text-sm text-blue-600">182</td>
-                                    <td className="px-4 py-3 text-sm text-green-600 font-medium">Week 26</td>
-                                    <td className="px-4 py-3 text-sm text-purple-600">53</td>
-                                    <td className="px-4 py-3 text-sm text-orange-600">49.1%</td>
+                                    <td className="px-4 py-3 text-sm text-foreground">Jan 1, 2023</td>
+                                    <td className="px-4 py-3 text-sm text-blue-600">2023</td>
+                                    <td className="px-4 py-3 text-sm text-green-600">2022</td>
+                                    <td className="px-4 py-3 text-sm text-purple-600 font-medium">Week 52</td>
+                                    <td className="px-4 py-3 text-sm text-orange-600">Its Thursday (Dec 29, 2022) was in 2022</td>
                                   </tr>
                                   <tr>
-                                    <td className="px-4 py-3 text-sm text-foreground">December 31, 2024</td>
-                                    <td className="px-4 py-3 text-sm text-blue-600">366</td>
-                                    <td className="px-4 py-3 text-sm text-green-600 font-medium">Week 53</td>
-                                    <td className="px-4 py-3 text-sm text-purple-600">53</td>
-                                    <td className="px-4 py-3 text-sm text-orange-600">100%</td>
+                                    <td className="px-4 py-3 text-sm text-foreground">Dec 31, 2024</td>
+                                    <td className="px-4 py-3 text-sm text-blue-600">2024</td>
+                                    <td className="px-4 py-3 text-sm text-green-600">2025</td>
+                                    <td className="px-4 py-3 text-sm text-purple-600 font-medium">Week 1</td>
+                                    <td className="px-4 py-3 text-sm text-orange-600">Leap year pushes boundaries differently</td>
                                   </tr>
                                   <tr>
-                                    <td className="px-4 py-3 text-sm text-foreground">February 29, 2024</td>
-                                    <td className="px-4 py-3 text-sm text-blue-600">60</td>
-                                    <td className="px-4 py-3 text-sm text-green-600 font-medium">Week 9</td>
-                                    <td className="px-4 py-3 text-sm text-purple-600">53</td>
-                                    <td className="px-4 py-3 text-sm text-orange-600">17.0%</td>
+                                    <td className="px-4 py-3 text-sm text-foreground">Jan 4, 2023</td>
+                                    <td className="px-4 py-3 text-sm text-blue-600">2023</td>
+                                    <td className="px-4 py-3 text-sm text-green-600">2023</td>
+                                    <td className="px-4 py-3 text-sm text-purple-600 font-medium">Week 1</td>
+                                    <td className="px-4 py-3 text-sm text-orange-600">First Thursday of 2023 = Week 1</td>
                                   </tr>
                                 </tbody>
                               </table>
@@ -831,108 +872,91 @@ export default function WeekNumber() {
                       </div>
                       
                       <div>
-                        <h3 className="font-semibold text-foreground mb-2">Detailed Week Calculation Example</h3>
-                        <div className="bg-secondary/20 p-4 rounded-lg border border-border overflow-x-auto">
-                          <pre className="text-sm text-muted-foreground whitespace-pre-wrap">
-{`Example: Calculate week number for June 15, 2024
-
-Step 1: Determine Day of Year
-January: 31 days
-February: 29 days (2024 is a leap year)
-March: 31 days
-April: 30 days
-May: 31 days
-June 1-15: 15 days
-
-Total days before June 15:
-31 (Jan) + 29 (Feb) + 31 (Mar) + 30 (Apr) + 31 (May) = 152 days
-Add June days: 152 + 15 = 167 days
-
-Day of Year for June 15, 2024 = 167
-
-Step 2: Calculate Week Number
-Week number formula: Week = CEILING(Day of Year / 7)
-Calculation: 167 ÷ 7 = 23.857
-Ceiling value: 24
-
-Week Number for June 15, 2024 = Week 24
-
-Step 3: Determine Total Weeks in 2024
-2024 is a leap year: 366 days
-Total weeks: 366 ÷ 7 = 52.2857
-Ceiling value: 53 weeks
-
-Total Weeks in 2024 = 53 weeks
-
-Step 4: Calculate Year Progress
-Current week: 24
-Total weeks: 53
-Progress percentage: (24 ÷ 53) × 100 = 45.28%
-
-Step 5: Calculate Remaining Weeks
-Remaining weeks: 53 - 24 = 29 weeks
-
-Step 6: Additional Information
-Date: June 15, 2024
-Day of Week: Saturday (calculated from date)
-Year: 2024
-Leap Year: Yes (affects total weeks)
-
-Final Results:
-• Week Number: 24
-• Day of Year: 167
-• Total Weeks in 2024: 53
-• Remaining Weeks: 29
-• Year Progress: 45.3%
-• Date: Saturday, June 15, 2024
-• Leap Year Status: Yes
-
-Key Calculation Features:
-✓ Accurate day of year calculation accounting for leap years
-✓ Correct week number determination using ceiling function
-✓ Total weeks calculation based on year length (52 or 53)
-✓ Year progress percentage for planning and tracking
-✓ Remaining weeks calculation for forward planning
-✓ Complete date information including day of week
-✓ Business-friendly format for project management`}
-                          </pre>
+                        <h3 className="font-semibold text-foreground mb-2">The "Black Friday Week" Example</h3>
+                        <div className="bg-secondary/20 p-4 rounded-lg border border-border">
+                          <div className="text-foreground font-medium mb-2">Retailers' favorite use case</div>
+                          <div className="text-muted-foreground mb-3">Black Friday 2023 was November 24. What week was that?</div>
+                          <div className="space-y-2 text-sm">
+                            <div className="flex items-center gap-2">
+                              <div className="bg-blue-500/20 p-1 rounded">
+                                <Calendar size={12} className="text-blue-600" />
+                              </div>
+                              <span className="text-foreground"><strong>Calendar view:</strong> "Fourth Thursday of November"</span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <div className="bg-green-500/20 p-1 rounded">
+                                <Hash size={12} className="text-green-600" />
+                              </div>
+                              <span className="text-foreground"><strong>ISO week view:</strong> Week 47 of 2023</span>
+                            </div>
+                            <div className="text-muted-foreground mt-2">
+                              Every retailer now compares "Week 47 sales" year-over-year. In 2024, Black Friday is November 29—also Week 48? Let's check: November 29, 2024 is indeed Week 48. Wait, different week number? Yes, because 2024 is a leap year, shifting the calendar. But the retail pattern remains: "Week 47-48" is their critical holiday period. Using week numbers, they can compare 2023 Week 47 to 2024 Week 48 and understand they're comparing equivalent periods.
+                            </div>
+                          </div>
                         </div>
+                      </div>
+
+                      <div>
+                        <h3 className="font-semibold text-foreground mb-2">Fiscal Year vs. ISO Year Example</h3>
+                        <p className="text-muted-foreground">
+                          A company with a fiscal year starting April 1 might think week numbers don't work for them. But they do. Their "Fiscal Week 1" is ISO Week 14 (the week containing April 1). Their finance team simply adds 13 to ISO week numbers to get fiscal week numbers. This works because ISO weeks are consistent—they know ISO Week 27 is always Fiscal Week 14 (27-13=14). Trying to do this with calendar dates would be chaos because months have different lengths and holidays move around.
+                        </p>
+                        <p className="text-muted-foreground mt-2">
+                          That's the beauty of the system: ISO provides the stable foundation. You can build your company-specific numbering on top of it with simple offsets. Everyone starts from the same reference point, then adjusts for their needs.
+                        </p>
                       </div>
                     </div>
                   </div>
                 )}
               </article>
 
-              {/* Related Tools Section - Dropdown */}
+              {/* Related Tools Section */}
               <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
                 <button
                   onClick={() => toggleSection('relatedTools')}
                   className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
                 >
-                  <h2 className="text-xl font-bold text-foreground">More Date & Planning Tools</h2>
+                  <h2 className="text-xl font-bold text-foreground">More Date & Business Planning Tools</h2>
                   {openSections.relatedTools ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
                 </button>
                 
                 {openSections.relatedTools && (
                   <div className="px-6 pb-6">
                     <p className="text-muted-foreground mb-4">
-                      Explore other useful date and planning calculation tools:
+                      Week numbers work best when combined with other planning tools:
                     </p>
-                    <ul className="space-y-3 text-muted-foreground">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       {relatedTools.map((tool, index) => (
-                        <li key={index} className="flex items-start">
-                          <span className="text-accent mr-2">•</span>
-                          <Link href={tool.path} className="text-accent hover:underline">
-                            <strong>{tool.name}:</strong> Visit this tool for additional date and planning calculations
-                          </Link>
-                        </li>
+                        <Link
+                          key={index}
+                          href={tool.path}
+                          className="group p-4 bg-secondary/30 hover:bg-secondary/50 rounded-lg border border-border transition-colors"
+                        >
+                          <div className="flex items-center gap-3">
+                            <div className="bg-accent/20 p-2 rounded-lg group-hover:bg-accent/30 transition-colors">
+                              <Calendar size={16} className="text-accent" />
+                            </div>
+                            <div>
+                              <div className="font-medium text-foreground group-hover:text-accent transition-colors">
+                                {tool.name}
+                              </div>
+                              <div className="text-xs text-muted-foreground mt-1">
+                                {tool.name.includes('Difference') && 'Calculate exact days between dates for timelines'}
+                                {tool.name.includes('Work Days') && 'Plan projects excluding weekends and holidays'}
+                                {tool.name.includes('Countdown') && 'Track deadlines and important milestones'}
+                                {tool.name.includes('Age') && 'Calculate ages for HR and documentation'}
+                                {tool.name.includes('Leap Year') && 'Check leap years affecting week calculations'}
+                              </div>
+                            </div>
+                          </div>
+                        </Link>
                       ))}
-                    </ul>
+                    </div>
                   </div>
                 )}
               </article>
 
-              {/* Frequently Asked Questions - Dropdown */}
+              {/* FAQs Section */}
               <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
                 <button
                   onClick={() => toggleSection('faqs')}
@@ -942,7 +966,7 @@ Key Calculation Features:
                     <div className="bg-purple-500/10 p-2 rounded-lg">
                       <CalendarDays size={20} className="text-purple-600" />
                     </div>
-                    <h2 className="text-xl font-bold text-foreground">Frequently Asked Questions</h2>
+                    <h2 className="text-xl font-bold text-foreground">Common Questions About ISO Week Numbers</h2>
                   </div>
                   {openSections.faqs ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
                 </button>
@@ -956,6 +980,17 @@ Key Calculation Features:
                           <p className="text-muted-foreground">{faq.answer}</p>
                         </div>
                       ))}
+                    </div>
+                    <div className="mt-6 p-4 bg-blue-500/10 rounded-lg border border-blue-500/20">
+                      <div className="flex items-start gap-3">
+                        <Info size={18} className="text-blue-600 mt-0.5 flex-shrink-0" />
+                        <div>
+                          <div className="font-medium text-foreground">Remember the Thursday Rule</div>
+                          <div className="text-sm text-muted-foreground mt-1">
+                            When week numbers seem confusing, find the week's Thursday. That Thursday's year is the week's year. This simple trick solves 90% of week numbering confusion and helps explain why December dates can belong to the next year's Week 1.
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 )}

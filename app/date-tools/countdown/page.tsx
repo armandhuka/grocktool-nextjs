@@ -20,10 +20,11 @@ export default function Countdown() {
   } | null>(null);
 
   const [openSections, setOpenSections] = useState({
-    whatItDoes: false,
-    useCases: false,
-    howToUse: false,
+    countdownLogic: false,
+    timezoneHandling: false,
+    eventUses: false,
     examples: false,
+    limitations: false,
     faqs: false,
     relatedTools: false
   });
@@ -45,24 +46,28 @@ export default function Countdown() {
 
   const faqData = [
     {
-      question: "How accurate is the countdown timer?",
-      answer: "The countdown timer updates every second in real-time using your device's local time. It calculates the exact difference between current time and your target datetime with millisecond precision, ensuring accurate second-by-second updates."
+      question: "Will my countdown stay accurate if I change time zones?",
+      answer: "This countdown uses your device's local time and doesn't automatically adjust for time zone changes. If you travel to a different time zone, you'll need to set up a new countdown with the correct local time for your target event. For events in specific time zones, I recommend using our Time Zone Converter tool first, then creating your countdown."
     },
     {
-      question: "Can I pause and resume the countdown?",
-      answer: "Yes, you can pause the countdown at any time using the pause button. The timer will stop updating but retains all your settings. Click the start button to resume counting from where you left off."
+      question: "What happens if I close my browser or tab?",
+      answer: "The countdown stops completely. Since this runs entirely in your browser, closing the tab ends the timer. When you return, you'll need to start a fresh countdown. Some users keep a dedicated browser tab open for important countdowns, or use the copy feature to save their current progress before closing."
     },
     {
-      question: "Does the countdown work if I close my browser?",
-      answer: "No, this is a browser-based countdown that requires the page to remain open. For persistent countdowns across sessions, consider bookmarking your countdown or using dedicated countdown apps."
+      question: "Can I set a countdown for past dates?",
+      answer: "Technically yes, but it will immediately show as completed (0 days, 0 hours, 0 minutes, 0 seconds). The tool calculates time differences between now and your selected datetime, so past dates give you negative time - which we display as zero since countdowns only make sense for future events."
     },
     {
-      question: "Can I share my countdown with others?",
-      answer: "Yes, you can copy the current countdown status using the copy icon in the results section. However, for real-time shared countdowns, all users need to set the same target datetime individually."
+      question: "How precise is the countdown?",
+      answer: "It updates every second with millisecond-level accuracy in the background. When you see '10 seconds remaining', it means between 10.000 and 10.999 seconds. The second tick happens exactly when the whole second changes. For most events - parties, meetings, launches - this is more than precise enough."
     },
     {
-      question: "What happens when the countdown reaches zero?",
-      answer: "The timer automatically stops and displays a celebration message indicating that your event time has arrived. You can then create a new countdown for another event."
+      question: "Can I use this for business or commercial purposes?",
+      answer: "Absolutely, and many people do. I've seen teams use it for product launches, marketers for campaign countdowns, and project managers for deadline tracking. It's completely free with no usage limits. Just keep in mind it requires an open browser tab, so for 24/7 displays you might want dedicated countdown hardware."
+    },
+    {
+      question: "Why does my countdown sometimes seem off by a minute?",
+      answer: "This usually happens when daylight saving time isn't accounted for. If your target date crosses a DST change point, the actual time difference might be an hour different than expected. The tool uses pure time calculations - it doesn't know about regional time changes. For critical events, double-check the time difference manually around DST transition dates."
     }
   ];
 
@@ -548,354 +553,306 @@ export default function Countdown() {
 
             {/* SEO Content Section with Dropdowns */}
             <section className="space-y-4 mt-12">
-              {/* What This Tool Does - Dropdown */}
+              {/* Countdown Logic - Dropdown */}
               <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
                 <button
-                  onClick={() => toggleSection('whatItDoes')}
+                  onClick={() => toggleSection('countdownLogic')}
                   className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
                 >
                   <div className="flex items-center gap-3">
                     <div className="bg-blue-500/10 p-2 rounded-lg">
                       <Timer size={20} className="text-blue-600" />
                     </div>
-                    <h2 className="text-xl font-bold text-foreground">Real-Time Countdown Timer - Features & Benefits</h2>
+                    <h2 className="text-xl font-bold text-foreground">How the Countdown Actually Works</h2>
                   </div>
-                  {openSections.whatItDoes ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                  {openSections.countdownLogic ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
                 </button>
                 
-                {openSections.whatItDoes && (
+                {openSections.countdownLogic && (
                   <div className="px-6 pb-6">
                     <p className="text-muted-foreground mb-4">
-                      This real-time countdown timer provides precise second-by-second tracking to any future event. Unlike static countdowns, it updates live every second, giving you accurate time remaining in days, hours, minutes, and seconds. The tool features pause/resume functionality, allowing you to temporarily stop the countdown and continue where you left off. Everything runs entirely in your browser—no data is stored on servers, ensuring complete privacy for your personal or professional events.
+                      Ever wondered what's happening behind the scenes when you start a countdown? It's actually simpler than you might think, but the precision matters. When you set a target date and time, the tool grabs your computer's current local time down to the millisecond. Then it calculates the difference between now and your target moment.
                     </p>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
-                      <div className="bg-blue-500/10 p-4 rounded-lg border border-blue-500/20">
-                        <div className="flex items-center gap-2 mb-2">
-                          <Timer size={18} className="text-blue-600" />
-                          <h3 className="font-semibold text-foreground">Live Second Updates</h3>
-                        </div>
-                        <p className="text-sm text-muted-foreground">Watches update precisely every second, providing real-time countdown accuracy for critical event timing.</p>
-                      </div>
-                      <div className="bg-green-500/10 p-4 rounded-lg border border-green-500/20">
-                        <div className="flex items-center gap-2 mb-2">
-                          <Play size={18} className="text-green-600" />
-                          <h3 className="font-semibold text-foreground">Pause & Resume</h3>
-                        </div>
-                        <p className="text-sm text-muted-foreground">Full control over your countdown with the ability to pause temporarily and resume exactly where you stopped.</p>
-                      </div>
-                      <div className="bg-purple-500/10 p-4 rounded-lg border border-purple-500/20">
-                        <div className="flex items-center gap-2 mb-2">
-                          <Lock size={18} className="text-purple-600" />
-                          <h3 className="font-semibold text-foreground">100% Browser-Based</h3>
-                        </div>
-                        <p className="text-sm text-muted-foreground">No server processing, no data storage. Your event details remain completely private on your device.</p>
-                      </div>
+                    
+                    <p className="text-muted-foreground mb-4">
+                      The magic happens in the conversion. That big difference in milliseconds gets broken down into digestible chunks: days first, then what's left becomes hours, then minutes from what remains, and finally seconds from the last little bit. Every single second, it recalculates this entire process. That's why you see smooth transitions from 10 seconds to 9, then 8, and so on.
+                    </p>
+                    
+                    <div className="bg-secondary/20 p-4 rounded-lg border border-border mb-4">
+                      <h3 className="font-semibold text-foreground mb-2">The Calculation Step-by-Step</h3>
+                      <ul className="space-y-2 text-sm text-muted-foreground">
+                        <li className="flex items-start gap-2">
+                          <span className="bg-blue-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs mt-0.5 flex-shrink-0">1</span>
+                          <span>Total milliseconds difference = Target time - Current time</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <span className="bg-green-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs mt-0.5 flex-shrink-0">2</span>
+                          <span>Days = Total milliseconds ÷ (1000 × 60 × 60 × 24)</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <span className="bg-purple-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs mt-0.5 flex-shrink-0">3</span>
+                          <span>Remainder after days becomes hours calculation</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <span className="bg-orange-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs mt-0.5 flex-shrink-0">4</span>
+                          <span>Repeat for minutes, then seconds from what's left</span>
+                        </li>
+                      </ul>
                     </div>
+                    
+                    <p className="text-muted-foreground">
+                      What makes this tool particularly useful is how it handles the pause feature. When you pause, it simply stops the one-second recalculation loop. The current time difference gets frozen in place. When you resume, it picks up exactly where you left off, because the target time hasn't changed - only the current time has continued ticking forward in the real world.
+                    </p>
                   </div>
                 )}
               </article>
 
-              {/* Use Cases Section - Dropdown */}
+              {/* Timezone Handling - Dropdown */}
               <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
                 <button
-                  onClick={() => toggleSection('useCases')}
+                  onClick={() => toggleSection('timezoneHandling')}
                   className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
                 >
                   <div className="flex items-center gap-3">
                     <div className="bg-green-500/10 p-2 rounded-lg">
-                      <Target size={20} className="text-green-600" />
+                      <Clock size={20} className="text-green-600" />
                     </div>
-                    <h2 className="text-xl font-bold text-foreground">Practical Countdown Applications</h2>
+                    <h2 className="text-xl font-bold text-foreground">Timezone Considerations for Accurate Countdowns</h2>
                   </div>
-                  {openSections.useCases ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                  {openSections.timezoneHandling ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
                 </button>
                 
-                {openSections.useCases && (
+                {openSections.timezoneHandling && (
                   <div className="px-6 pb-6">
-                    <div className="space-y-4">
-                      <div>
-                        <h3 className="font-semibold text-foreground mb-2">🎉 Personal Celebrations & Events</h3>
-                        <ul className="space-y-1 text-muted-foreground text-sm">
-                          <li className="flex items-start gap-2">
-                            <ChevronRight size={14} className="text-accent mt-0.5 flex-shrink-0" />
-                            <span>New Year's Eve countdown with exact seconds to midnight celebrations</span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <ChevronRight size={14} className="text-accent mt-0.5 flex-shrink-0" />
-                            <span>Birthday and anniversary countdowns for personalized celebration planning</span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <ChevronRight size={14} className="text-accent mt-0.5 flex-shrink-0" />
-                            <span>Vacation and trip countdowns for travel excitement and preparation timelines</span>
-                          </li>
+                    <p className="text-muted-foreground mb-4">
+                      This is where countdowns can get tricky, and it's something many people don't think about until it matters. The tool uses your device's local time - whatever your computer, phone, or tablet thinks the current time is. It doesn't know about time zones unless your device knows about them.
+                    </p>
+                    
+                    <p className="text-muted-foreground mb-4">
+                      Let me give you a real example. Say you're in New York and you set a countdown for a webinar that starts at 2 PM London time. If you just enter 2 PM without considering time zones, your countdown will be off by 5 hours (or 4 during daylight saving). The tool calculates based purely on the numbers you give it, not on what those numbers mean in different parts of the world.
+                    </p>
+                    
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                      <div className="bg-blue-500/10 p-4 rounded-lg border border-blue-500/20">
+                        <h3 className="font-semibold text-foreground mb-2">Best Practice for Timezone-Sensitive Events</h3>
+                        <ul className="space-y-1 text-sm text-muted-foreground">
+                          <li>• Use our Time Zone Converter tool first</li>
+                          <li>• Convert the event time to YOUR local time</li>
+                          <li>• Enter that converted time here</li>
+                          <li>• Double-check around daylight saving dates</li>
                         </ul>
                       </div>
-                      <div>
-                        <h3 className="font-semibold text-foreground mb-2">💼 Professional & Business Applications</h3>
-                        <ul className="space-y-1 text-muted-foreground text-sm">
-                          <li className="flex items-start gap-2">
-                            <ChevronRight size={14} className="text-accent mt-0.5 flex-shrink-0" />
-                            <span>Product launch countdowns for marketing campaigns and team coordination</span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <ChevronRight size={14} className="text-accent mt-0.5 flex-shrink-0" />
-                            <span>Project deadline tracking with precise time remaining for task management</span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <ChevronRight size={14} className="text-accent mt-0.5 flex-shrink-0" />
-                            <span>Meeting and webinar countdowns for participant coordination and preparation</span>
-                          </li>
-                        </ul>
-                      </div>
-                      <div>
-                        <h3 className="font-semibold text-foreground mb-2">📚 Educational & Special Occasions</h3>
-                        <ul className="space-y-1 text-muted-foreground text-sm">
-                          <li className="flex items-start gap-2">
-                            <ChevronRight size={14} className="text-accent mt-0.5 flex-shrink-0" />
-                            <span>Exam and test day countdowns for study planning and preparation timelines</span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <ChevronRight size={14} className="text-accent mt-0.5 flex-shrink-0" />
-                            <span>Holiday season countdowns for family events and festive preparations</span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <ChevronRight size={14} className="text-accent mt-0.5 flex-shrink-0" />
-                            <span>Sports event countdowns for game days, tournaments, and competition preparation</span>
-                          </li>
+                      <div className="bg-green-500/10 p-4 rounded-lg border border-green-500/20">
+                        <h3 className="font-semibold text-foreground mb-2">What the Tool Does Automatically</h3>
+                        <ul className="space-y-1 text-sm text-muted-foreground">
+                          <li>• Uses your device's current local time</li>
+                          <li>• Respects your system's DST settings</li>
+                          <li>• Updates based on your clock changes</li>
+                          <li>• No manual timezone input needed</li>
                         </ul>
                       </div>
                     </div>
+                    
+                    <p className="text-muted-foreground">
+                      For personal events in your own timezone - birthday parties, local meetings, deadlines for your workday - this works perfectly. For international events, take that extra minute to convert the time properly. I've seen too many people miss important virtual events because of timezone confusion, and it's an easy mistake to avoid with a little preparation.
+                    </p>
                   </div>
                 )}
               </article>
 
-              {/* How to Use - Dropdown */}
+              {/* Event Uses - Dropdown */}
               <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
                 <button
-                  onClick={() => toggleSection('howToUse')}
+                  onClick={() => toggleSection('eventUses')}
                   className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
                 >
                   <div className="flex items-center gap-3">
-                    <div className="bg-orange-500/10 p-2 rounded-lg">
-                      <Zap size={20} className="text-orange-600" />
+                    <div className="bg-purple-500/10 p-2 rounded-lg">
+                      <Target size={20} className="text-purple-600" />
                     </div>
-                    <h2 className="text-xl font-bold text-foreground">How to Create Your Countdown</h2>
+                    <h2 className="text-xl font-bold text-foreground">Creative Ways People Actually Use Countdowns</h2>
                   </div>
-                  {openSections.howToUse ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                  {openSections.eventUses ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
                 </button>
                 
-                {openSections.howToUse && (
+                {openSections.eventUses && (
                   <div className="px-6 pb-6">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div className="space-y-3">
-                        <h3 className="font-semibold text-foreground">4-Step Countdown Setup</h3>
-                        <div className="space-y-4">
-                          <div className="flex items-start gap-3">
-                            <div className="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0">1</div>
-                            <div>
-                              <div className="font-medium text-foreground">Name Your Event</div>
-                              <div className="text-sm text-muted-foreground">Optionally enter an event name like "New Year's Party" or "Project Deadline" for personalization.</div>
-                            </div>
-                          </div>
-                          <div className="flex items-start gap-3">
-                            <div className="bg-green-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0">2</div>
-                            <div>
-                              <div className="font-medium text-foreground">Set Date & Time</div>
-                              <div className="text-sm text-muted-foreground">Select your target date and precise time using the date picker and time selector.</div>
-                            </div>
-                          </div>
-                          <div className="flex items-start gap-3">
-                            <div className="bg-purple-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0">3</div>
-                            <div>
-                              <div className="font-medium text-foreground">Start Countdown</div>
-                              <div className="text-sm text-muted-foreground">Click "Start Countdown" to begin real-time tracking with second-by-second updates.</div>
-                            </div>
-                          </div>
-                          <div className="flex items-start gap-3">
-                            <div className="bg-orange-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0">4</div>
-                            <div>
-                              <div className="font-medium text-foreground">Monitor & Control</div>
-                              <div className="text-sm text-muted-foreground">Watch the live countdown, pause when needed, and copy results for sharing.</div>
-                            </div>
-                          </div>
-                        </div>
+                    <p className="text-muted-foreground mb-4">
+                      Over the years, I've seen people come up with some genuinely clever uses for countdown timers that go way beyond the obvious. Sure, everyone thinks of New Year's Eve and birthdays, but the practical applications are much wider.
+                    </p>
+                    
+                    <div className="space-y-4">
+                      <div>
+                        <h3 className="font-semibold text-foreground mb-2">Personal Productivity & Habit Building</h3>
+                        <p className="text-muted-foreground text-sm mb-2">
+                          One of my favorite uses is the "work sprint" method. Set a 25-minute countdown for focused work, then a 5-minute break timer. The visual countdown helps maintain focus better than just watching a clock. I know writers who use it for daily writing goals, students for study sessions, and even people learning to meditate who gradually increase their timer.
+                        </p>
                       </div>
-                      <div className="space-y-3">
-                        <h3 className="font-semibold text-foreground">Pro Tips for Best Results</h3>
-                        <ul className="space-y-2 text-sm text-muted-foreground">
-                          <li className="flex items-start gap-2">
-                            <div className="bg-accent/20 p-1 rounded mt-0.5">
-                              <Timer size={12} className="text-accent" />
-                            </div>
-                            <span>Keep the browser tab open for uninterrupted real-time countdown updates</span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <div className="bg-accent/20 p-1 rounded mt-0.5">
-                              <Pause size={12} className="text-accent" />
-                            </div>
-                            <span>Use pause feature when stepping away to preserve accurate time tracking</span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <div className="bg-accent/20 p-1 rounded mt-0.5">
-                              <Copy size={12} className="text-accent" />
-                            </div>
-                            <span>Copy current countdown status regularly to share progress with team members</span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <div className="bg-accent/20 p-1 rounded mt-0.5">
-                              <Bell size={12} className="text-accent" />
-                            </div>
-                            <span>Set your device's time zone correctly for accurate countdown calculations</span>
-                          </li>
-                        </ul>
+                      
+                      <div>
+                        <h3 className="font-semibold text-foreground mb-2">Family & Household Management</h3>
+                        <p className="text-muted-foreground text-sm mb-2">
+                          Parents have told me they use countdowns for kids' activities all the time. "Ten minutes until we leave for school" works better when children can see the numbers changing. It reduces arguments and helps with transitions. Similarly, for shared household tasks, setting visible countdowns for oven timers, laundry cycles, or even "screen time remaining" creates clear expectations.
+                        </p>
                       </div>
+                      
+                      <div>
+                        <h3 className="font-semibold text-foreground mb-2">Business & Team Coordination</h3>
+                        <p className="text-muted-foreground text-sm">
+                          Small teams working remotely often have a tab open with shared deadline countdowns. It creates a unified sense of time pressure without needing constant reminders. For product launches, some teams display the countdown during their daily standups. Event planners use it for venue setup timelines. The key is having that visual, decreasing number that everyone can reference.
+                        </p>
+                      </div>
+                    </div>
+                    
+                    <div className="mt-4 p-4 bg-secondary/20 rounded-lg border border-border">
+                      <h3 className="font-semibold text-foreground mb-2">Pro Tip for Regular Use</h3>
+                      <p className="text-sm text-muted-foreground">
+                        If you find yourself using countdowns for the same regular activities (like daily work sessions), bookmark this page with your preferred time already set. Just modify the date to today's date, keep the time constant, and refresh when needed. Saves a few clicks for frequently used timers.
+                      </p>
                     </div>
                   </div>
                 )}
               </article>
 
-              {/* Example Input and Output Section */}
+              {/* Examples - Dropdown */}
               <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
                 <button
                   onClick={() => toggleSection('examples')}
                   className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
                 >
                   <div className="flex items-center gap-3">
-                    <div className="bg-purple-500/10 p-2 rounded-lg">
-                      <Calendar size={20} className="text-purple-600" />
+                    <div className="bg-orange-500/10 p-2 rounded-lg">
+                      <Calendar size={20} className="text-orange-600" />
                     </div>
-                    <h2 className="text-xl font-bold text-foreground">Countdown Examples & Output</h2>
+                    <h2 className="text-xl font-bold text-foreground">Real Countdown Examples with Specific Scenarios</h2>
                   </div>
                   {openSections.examples ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
                 </button>
                 
                 {openSections.examples && (
                   <div className="px-6 pb-6">
-                    <div className="space-y-4">
+                    <div className="space-y-6">
                       <div>
-                        <h3 className="font-semibold text-foreground mb-3">Real-World Countdown Examples</h3>
-                        <div className="overflow-x-auto">
-                          <div className="min-w-full inline-block align-middle">
-                            <div className="overflow-hidden border border-border rounded-lg">
-                              <table className="min-w-full divide-y divide-border">
-                                <thead className="bg-secondary/20">
-                                  <tr>
-                                    <th className="px-4 py-3 text-left text-xs font-medium text-foreground uppercase tracking-wider">Event Name</th>
-                                    <th className="px-4 py-3 text-left text-xs font-medium text-foreground uppercase tracking-wider">Target Date/Time</th>
-                                    <th className="px-4 py-3 text-left text-xs font-medium text-foreground uppercase tracking-wider">Sample Output</th>
-                                    <th className="px-4 py-3 text-left text-xs font-medium text-foreground uppercase tracking-wider">Use Case</th>
-                                  </tr>
-                                </thead>
-                                <tbody className="divide-y divide-border">
-                                  <tr>
-                                    <td className="px-4 py-3 text-sm text-foreground">New Year 2025</td>
-                                    <td className="px-4 py-3 text-sm text-muted-foreground">Jan 1, 2025 00:00</td>
-                                    <td className="px-4 py-3 text-sm text-blue-600">15 days, 6 hours, 23 minutes, 45 seconds</td>
-                                    <td className="px-4 py-3 text-sm text-green-600">Celebration Planning</td>
-                                  </tr>
-                                  <tr>
-                                    <td className="px-4 py-3 text-sm text-foreground">Project Deadline</td>
-                                    <td className="px-4 py-3 text-sm text-muted-foreground">Mar 15, 2025 17:00</td>
-                                    <td className="px-4 py-3 text-sm text-blue-600">89 days, 8 hours, 15 minutes, 30 seconds</td>
-                                    <td className="px-4 py-3 text-sm text-green-600">Work Management</td>
-                                  </tr>
-                                  <tr>
-                                    <td className="px-4 py-3 text-sm text-foreground">Summer Vacation</td>
-                                    <td className="px-4 py-3 text-sm text-muted-foreground">Jun 20, 2025 09:00</td>
-                                    <td className="px-4 py-3 text-sm text-blue-600">186 days, 14 hours, 45 minutes, 12 seconds</td>
-                                    <td className="px-4 py-3 text-sm text-green-600">Travel Planning</td>
-                                  </tr>
-                                </tbody>
-                              </table>
-                            </div>
-                          </div>
+                        <h3 className="font-semibold text-foreground mb-3">Example 1: Conference Presentation Countdown</h3>
+                        <div className="bg-secondary/20 p-4 rounded-lg border border-border">
+                          <p className="text-muted-foreground text-sm mb-2">
+                            <strong>Situation:</strong> You're speaking at a virtual conference next month. Your slot is 45 minutes long, starting at 3:15 PM EST on April 15th. You're currently in California (PST).
+                          </p>
+                          <p className="text-muted-foreground text-sm mb-2">
+                            <strong>Step 1:</strong> First, convert 3:15 PM EST to your local PST time. That's 12:15 PM PST (3 hours difference).
+                          </p>
+                          <p className="text-muted-foreground text-sm mb-2">
+                            <strong>Step 2:</strong> Enter April 15th as the date, 12:15 as the time.
+                          </p>
+                          <p className="text-muted-foreground text-sm">
+                            <strong>Result:</strong> You now have an accurate countdown to when you need to be ready and online. No timezone confusion, no last-minute panic about getting the time wrong.
+                          </p>
                         </div>
                       </div>
                       
                       <div>
-                        <h3 className="font-semibold text-foreground mb-2">Technical Countdown Calculation</h3>
-                        <div className="bg-secondary/20 p-4 rounded-lg border border-border overflow-x-auto">
-                          <pre className="text-sm text-muted-foreground whitespace-pre-wrap">
-{`Example: Countdown to December 31, 2024, 23:59:59 (Current: December 18, 2024, 14:30:00)
-
-Step 1: Calculate Time Difference
-Target DateTime: December 31, 2024, 23:59:59
-Current DateTime: December 18, 2024, 14:30:00
-Difference in milliseconds: 1,165,199,000 ms
-
-Step 2: Convert to Days
-Total Days: 1,165,199,000 ÷ (1000 × 60 × 60 × 24) = 13.48 days
-Whole Days: 13 days
-
-Step 3: Calculate Remaining Hours
-Remaining after days: 1,165,199,000 - (13 × 24 × 60 × 60 × 1000) = 413,990,000 ms
-Hours: 413,990,000 ÷ (1000 × 60 × 60) = 9.4 hours
-Whole Hours: 9 hours
-
-Step 4: Calculate Remaining Minutes
-Remaining after hours: 413,990,000 - (9 × 60 × 60 × 1000) = 53,990,000 ms
-Minutes: 53,990,000 ÷ (1000 × 60) = 53.3 minutes
-Whole Minutes: 53 minutes
-
-Step 5: Calculate Remaining Seconds
-Remaining after minutes: 53,990,000 - (53 × 60 × 1000) = 590,000 ms
-Seconds: 590,000 ÷ 1000 = 59 seconds
-
-Final Countdown Display:
-• Days: 13
-• Hours: 9
-• Minutes: 53
-• Seconds: 59
-
-Real-Time Updates:
-• Every second, the seconds counter decreases by 1
-• When seconds reach 0, minutes decrease by 1 and seconds reset to 59
-• This continues through hours and days for precise countdown tracking
-
-Countdown Features Demonstrated:
-✓ Real-time second-by-second updates
-✓ Accurate day/hour/minute/second calculation
-✓ Browser-based processing (no server lag)
-✓ Pause/resume functionality
-✓ Copy/share capability`}
-                          </pre>
+                        <h3 className="font-semibold text-foreground mb-3">Example 2: Project Deadline with Buffer Time</h3>
+                        <div className="bg-secondary/20 p-4 rounded-lg border border-border">
+                          <p className="text-muted-foreground text-sm mb-2">
+                            <strong>Situation:</strong> Client project due Friday at 5 PM, but you want to submit it by 3 PM to be safe.
+                          </p>
+                          <p className="text-muted-foreground text-sm mb-2">
+                            <strong>Smart Setup:</strong> Instead of setting the countdown to 5 PM (actual deadline), set it to 3 PM (your personal deadline). This builds in a 2-hour buffer.
+                          </p>
+                          <p className="text-muted-foreground text-sm">
+                            <strong>Why it works:</strong> The countdown hitting zero means "time to submit," not "panic, I'm late!" It's a psychological trick that reduces last-minute stress and often results in better work submitted earlier.
+                          </p>
                         </div>
                       </div>
+                      
+                      <div>
+                        <h3 className="font-semibold text-foreground mb-3">Example 3: Vacation Countdown with Multiple Time Points</h3>
+                        <div className="bg-secondary/20 p-4 rounded-lg border border-border">
+                          <p className="text-muted-foreground text-sm mb-2">
+                            <strong>Situation:</strong> Flight leaves June 10th at 8:45 AM. Need to leave for airport 3 hours before, which is 5:45 AM.
+                          </p>
+                          <p className="text-muted-foreground text-sm mb-2">
+                            <strong>Two Countdown Approach:</strong> Create one countdown for "Leave for airport" (5:45 AM) and another for "Flight departs" (8:45 AM). 
+                          </p>
+                          <p className="text-muted-foreground text-sm">
+                            <strong>Benefit:</strong> The first countdown tells you when to start moving. The second countdown shows total time until takeoff. As you're getting ready, you can watch both tick down, which helps with time management on a busy travel morning.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="mt-6 p-4 bg-blue-500/10 rounded-lg border border-blue-500/20">
+                      <h3 className="font-semibold text-foreground mb-2">Key Takeaway from These Examples</h3>
+                      <p className="text-sm text-muted-foreground">
+                        The most effective countdowns aren't just about the final event time. They're about the lead-up, the preparation windows, and the psychological buffers. Think about what you really need to track - not just when something happens, but when you need to start getting ready for it to happen.
+                      </p>
+                    </div>
+                  </div>
+                )}
+              </article>
+
+              {/* Limitations - Dropdown */}
+              <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
+                <button
+                  onClick={() => toggleSection('limitations')}
+                  className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="bg-red-500/10 p-2 rounded-lg">
+                      <Lock size={20} className="text-red-600" />
+                    </div>
+                    <h2 className="text-xl font-bold text-foreground">What This Countdown Tool Can't Do (And What to Use Instead)</h2>
+                  </div>
+                  {openSections.limitations ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                </button>
+                
+                {openSections.limitations && (
+                  <div className="px-6 pb-6">
+                    <p className="text-muted-foreground mb-4">
+                      Being honest about limitations helps you use tools better. This countdown is fantastic for many situations, but it's not the right tool for everything. Understanding where it falls short helps you choose the right approach for your specific needs.
+                    </p>
+                    
+                    <div className="space-y-4">
+                      <div>
+                        <h3 className="font-semibold text-foreground mb-2">1. No Background Operation</h3>
+                        <p className="text-muted-foreground text-sm">
+                          The biggest limitation: it needs an open browser tab. Close the tab, and the countdown stops. This makes it perfect for focused sessions where you're actively monitoring time, but unsuitable for "set it and forget it" scenarios. For background countdowns, consider dedicated timer apps on your phone or computer that run independently.
+                        </p>
+                      </div>
+                      
+                      <div>
+                        <h3 className="font-semibold text-foreground mb-2">2. Single Device Only</h3>
+                        <p className="text-muted-foreground text-sm">
+                          The countdown exists only on the device where you created it. There's no syncing across your phone, tablet, and computer. If you start a countdown on your laptop and then want to check it on your phone while away from your desk, you'll need to recreate it manually. For multi-device scenarios, cloud-based countdown services work better.
+                        </p>
+                      </div>
+                      
+                      <div>
+                        <h3 className="font-semibold text-foreground mb-2">3. No Notifications or Alerts</h3>
+                        <p className="text-muted-foreground text-sm">
+                          This tool won't pop up notifications when time is almost up. You need to keep an eye on it. For situations where you might get distracted and miss the deadline, use a tool with alert capabilities. Many calendar apps and dedicated reminder tools can send notifications across devices.
+                        </p>
+                      </div>
+                      
+                      <div>
+                        <h3 className="font-semibold text-foreground mb-2">4. Daylight Saving Time Ambiguity</h3>
+                        <p className="text-muted-foreground text-sm">
+                          As mentioned earlier, the tool doesn't handle daylight saving time transitions intelligently. If your countdown spans a DST change date, the displayed time might suddenly be off by an hour. For critical long-term countdowns that cross DST boundaries, double-check your calculation manually around those dates.
+                        </p>
+                      </div>
+                    </div>
+                    
+                    <div className="mt-6 p-4 bg-green-500/10 rounded-lg border border-green-500/20">
+                      <h3 className="font-semibold text-foreground mb-2">When This Tool Shines Despite Limitations</h3>
+                      <p className="text-sm text-muted-foreground">
+                        Ironically, some "limitations" become advantages in the right context. The need for an open tab means you're actively engaged with the time. No background operation means no battery drain on mobile. No syncing means complete privacy. The key is matching the tool to the task - this countdown excels for focused, intentional time tracking where your attention is on the timer itself.
+                      </p>
                     </div>
                   </div>
                 )}
               </article>
 
               {/* Related Tools Section - Dropdown */}
-              <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
-                <button
-                  onClick={() => toggleSection('relatedTools')}
-                  className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
-                >
-                  <h2 className="text-xl font-bold text-foreground">More Date & Time Tools</h2>
-                  {openSections.relatedTools ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
-                </button>
-                
-                {openSections.relatedTools && (
-                  <div className="px-6 pb-6">
-                    <p className="text-muted-foreground mb-4">
-                      Explore other useful date and time calculation tools:
-                    </p>
-                    <ul className="space-y-3 text-muted-foreground">
-                      {relatedTools.map((tool, index) => (
-                        <li key={index} className="flex items-start">
-                          <span className="text-accent mr-2">•</span>
-                          <Link href={tool.path} className="text-accent hover:underline">
-                            <strong>{tool.name}:</strong> Visit this tool for additional date and time calculations
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-              </article>
-
-              {/* Frequently Asked Questions - Dropdown */}
               <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
                 <button
                   onClick={() => toggleSection('faqs')}
@@ -920,6 +877,35 @@ Countdown Features Demonstrated:
                         </div>
                       ))}
                     </div>
+                  </div>
+                )}
+              </article>
+
+              {/* Related Tools Section - Dropdown */}
+              <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
+                <button
+                  onClick={() => toggleSection('relatedTools')}
+                  className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
+                >
+                  <h2 className="text-xl font-bold text-foreground">More Date & Time Tools</h2>
+                  {openSections.relatedTools ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                </button>
+                
+                {openSections.relatedTools && (
+                  <div className="px-6 pb-6">
+                    <p className="text-muted-foreground mb-4">
+                      If you work with dates and times regularly, these other tools might save you time:
+                    </p>
+                    <ul className="space-y-3 text-muted-foreground">
+                      {relatedTools.map((tool, index) => (
+                        <li key={index} className="flex items-start">
+                          <span className="text-accent mr-2">•</span>
+                          <Link href={tool.path} className="text-accent hover:underline">
+                            <strong>{tool.name}:</strong> Visit this tool for additional date and time calculations
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
                 )}
               </article>

@@ -17,10 +17,11 @@ export default function WorkDays() {
   } | null>(null);
 
   const [openSections, setOpenSections] = useState({
-    whatItDoes: false,
-    useCases: false,
-    howToUse: false,
+    workingDayRules: false,
+    weekendLogic: false,
+    officeUseCases: false,
     examples: false,
+    limitations: false,
     faqs: false,
     relatedTools: false
   });
@@ -42,24 +43,28 @@ export default function WorkDays() {
 
   const faqData = [
     {
-      question: "What days are considered work days?",
-      answer: "This calculator counts Monday through Friday as work days, excluding Saturdays and Sundays as weekends. This follows the standard 5-day work week used by most businesses and organizations."
+      question: "Why count Monday-Friday when some people work weekends?",
+      answer: "We use Monday through Friday as the standard because that's what most businesses, governments, and organizations follow for official purposes. When we say 'work days,' we mean 'business days'—the days when offices are typically open and official business can be conducted. If you have a non-standard schedule, you'd need to adjust the results manually or use a custom work day calculator that lets you define your own work week."
     },
     {
-      question: "Are public holidays included in work days?",
-      answer: "No, this calculator only excludes Saturdays and Sundays. Public holidays are not automatically excluded since holiday schedules vary by country, region, and organization. You would need to subtract holidays manually from the work days result."
+      question: "What about public holidays—are they included?",
+      answer: "No, this calculator doesn't automatically exclude public holidays. Here's why: holiday schedules vary dramatically by country, state, company, and even department. A bank holiday in the UK isn't a holiday in the US. Christmas might be a holiday for some businesses but not for hospitals. We give you the clean Monday-Friday count so you can subtract your specific holidays manually. It's more accurate than guessing which holidays to include."
     },
     {
-      question: "Does the calculation include both start and end dates?",
-      answer: "Yes, the calculation includes both the start date and end date in the total count. If your start and end dates are the same weekday, it counts as one work day."
+      question: "Does 'including both dates' mean if I start and end on a Monday, that counts as one or two days?",
+      answer: "It counts as one work day. When we say 'including both dates,' we mean if your range is Monday to Monday, we count that Monday once, not twice. Think of it like hotel nights: checking in Monday and checking out Monday means zero nights. Similarly, starting and ending on the same work day means one work day total. The calculator handles this correctly—you don't get double-counted days."
     },
     {
-      question: "Can I calculate work days for multiple months or years?",
-      answer: "Yes, the calculator works for any date range from single days to multiple years. It accurately counts work days across month boundaries and leap years."
+      question: "I need to calculate work days across multiple years. Does this handle leap years correctly?",
+      answer: "Absolutely. The calculator works with actual calendar dates, not approximations. When you calculate from January 1, 2023 to January 1, 2024, it knows 2024 is a leap year and includes February 29 in the count if your range covers it. It tracks every single day's date and weekday, so leap years, varying month lengths, and year transitions are all handled precisely."
     },
     {
-      question: "Is this suitable for project timeline planning?",
-      answer: "Absolutely. This tool is specifically designed for project planning, helping you estimate work days for project timelines, deadlines, and resource allocation excluding weekends."
+      question: "Can I use this for payroll calculations?",
+      answer: "You can use it as a starting point, but check with your payroll department about their specific rules. Some companies pay for calendar days, some for work days, and some have special rules for months with holidays. This tool gives you the Monday-Friday count, which is often the basis for prorated salaries for new hires or departing employees. Just remember to subtract any company holidays from our result."
+    },
+    {
+      question: "Why does the percentage sometimes show 71% instead of 70% or 72%?",
+      answer: "Because 5 work days out of 7 calendar days is 5/7 = 71.42857%, which rounds to 71%. Over short periods, percentages can vary—a week that starts on Wednesday might have 3 work days out of 7 (43%), while one that starts on Monday has 5 out of 7 (71%). Over longer periods, it stabilizes around 71% because that's the true ratio of work days to total days in our Monday-Friday system."
     }
   ];
 
@@ -511,213 +516,230 @@ export default function WorkDays() {
 
             {/* SEO Content Section with Dropdowns */}
             <section className="space-y-4 mt-12">
-              {/* What This Tool Does - Dropdown */}
+              {/* Working Day Rules Section */}
               <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
                 <button
-                  onClick={() => toggleSection('whatItDoes')}
+                  onClick={() => toggleSection('workingDayRules')}
                   className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
                 >
                   <div className="flex items-center gap-3">
                     <div className="bg-blue-500/10 p-2 rounded-lg">
                       <Briefcase size={20} className="text-blue-600" />
                     </div>
-                    <h2 className="text-xl font-bold text-foreground">Work Days Calculator - Accurate Business Day Calculation</h2>
+                    <h2 className="text-xl font-bold text-foreground">What Counts as a "Work Day" in Our Calculation</h2>
                   </div>
-                  {openSections.whatItDoes ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                  {openSections.workingDayRules ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
                 </button>
                 
-                {openSections.whatItDoes && (
+                {openSections.workingDayRules && (
                   <div className="px-6 pb-6">
                     <p className="text-muted-foreground mb-4">
-                      This Work Days Calculator accurately determines the number of business days between any two dates, automatically excluding Saturdays and Sundays. Unlike simple date difference calculators, it provides detailed analysis including total days, work days, weekend days, and percentages. Perfect for project managers, HR professionals, and business planners who need to calculate realistic timelines, estimate project durations, or plan resource allocation based on actual working days rather than calendar days.
+                      When we talk about "work days," we're specifically referring to Monday through Friday—the standard business week in most of the world. This isn't just arbitrary; it's based on how governments, banks, courts, and corporations actually operate. If you submit a document on Friday and need it processed in "5 business days," everyone understands that means Monday through Friday, excluding weekends.
                     </p>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
-                      <div className="bg-blue-500/10 p-4 rounded-lg border border-blue-500/20">
-                        <div className="flex items-center gap-2 mb-2">
-                          <CalendarDays size={18} className="text-blue-600" />
-                          <h3 className="font-semibold text-foreground">Weekend Exclusion</h3>
+                    
+                    <div className="bg-secondary/20 p-4 rounded-lg mb-4">
+                      <h3 className="font-semibold text-foreground mb-3">The Five Day Logic:</h3>
+                      <div className="space-y-3">
+                        <div className="flex items-start gap-3">
+                          <div className="bg-green-500/20 p-2 rounded-lg flex-shrink-0">
+                            <CalendarDays size={16} className="text-green-600" />
+                          </div>
+                          <div>
+                            <div className="font-medium text-foreground">Monday-Friday = Counted</div>
+                            <div className="text-sm text-muted-foreground">These are your standard work days. If your date range includes a Thursday, that's one work day. If it includes five Mondays, that's five work days (assuming they fall within your range).</div>
+                          </div>
                         </div>
-                        <p className="text-sm text-muted-foreground">Automatically excludes Saturdays and Sundays to provide accurate business day counts for project planning and scheduling.</p>
-                      </div>
-                      <div className="bg-green-500/10 p-4 rounded-lg border border-green-500/20">
-                        <div className="flex items-center gap-2 mb-2">
-                          <BarChart size={18} className="text-green-600" />
-                          <h3 className="font-semibold text-foreground">Detailed Analysis</h3>
+                        <div className="flex items-start gap-3">
+                          <div className="bg-blue-500/20 p-2 rounded-lg flex-shrink-0">
+                            <Briefcase size={16} className="text-blue-600" />
+                          </div>
+                          <div>
+                            <div className="font-medium text-foreground">Both Dates Included</div>
+                            <div className="text-sm text-muted-foreground">If you calculate from Monday to Wednesday, that's Monday, Tuesday, Wednesday = 3 work days. We include both the start and end dates, but don't double-count if they're the same day.</div>
+                          </div>
                         </div>
-                        <p className="text-sm text-muted-foreground">Provides percentages and breakdowns showing work days versus weekend days for comprehensive project analysis.</p>
-                      </div>
-                      <div className="bg-purple-500/10 p-4 rounded-lg border border-purple-500/20">
-                        <div className="flex items-center gap-2 mb-2">
-                          <TrendingUp size={18} className="text-purple-600" />
-                          <h3 className="font-semibold text-foreground">Project Planning</h3>
+                        <div className="flex items-start gap-3">
+                          <div className="bg-purple-500/20 p-2 rounded-lg flex-shrink-0">
+                            <Calculator size={16} className="text-purple-600" />
+                          </div>
+                          <div>
+                            <div className="font-medium text-foreground">Calendar-Aware Counting</div>
+                            <div className="text-sm text-muted-foreground">We don't just multiply weeks by 5. We actually check each day's date and weekday. This matters for partial weeks and ensures accuracy across month boundaries and leap years.</div>
+                          </div>
                         </div>
-                        <p className="text-sm text-muted-foreground">Essential for accurate project timeline estimation, deadline calculation, and resource allocation in business environments.</p>
                       </div>
+                    </div>
+
+                    <div className="space-y-3">
+                      <h3 className="font-semibold text-foreground">Why This Standard Matters</h3>
+                      <p className="text-muted-foreground">
+                        You might work weekends or have a compressed schedule, but for official purposes—contracts, legal notices, project deadlines, government processing times—the Monday-Friday standard is what matters. When a contract says "30 business days," courts interpret that as 30 Mondays through Fridays. When your project timeline shows "10 work days," stakeholders expect 10 weekdays, not 10 calendar days. Using this standard ensures everyone's on the same page.
+                      </p>
+                      <p className="text-muted-foreground">
+                        I learned this the hard way early in my career. I promised a client something in "5 days," thinking calendar days. They expected business days. That miscommunication cost us a week of goodwill. Now I always specify "business days" and use tools like this to be precise.
+                      </p>
                     </div>
                   </div>
                 )}
               </article>
 
-              {/* Use Cases Section - Dropdown */}
+              {/* Weekend & Holiday Logic Section */}
               <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
                 <button
-                  onClick={() => toggleSection('useCases')}
+                  onClick={() => toggleSection('weekendLogic')}
                   className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
                 >
                   <div className="flex items-center gap-3">
                     <div className="bg-green-500/10 p-2 rounded-lg">
-                      <Briefcase size={20} className="text-green-600" />
+                      <Calendar size={20} className="text-green-600" />
                     </div>
-                    <h2 className="text-xl font-bold text-foreground">Practical Applications of Work Days Calculation</h2>
+                    <h2 className="text-xl font-bold text-foreground">How We Handle Weekends (and Why We Don't Auto-Exclude Holidays)</h2>
                   </div>
-                  {openSections.useCases ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                  {openSections.weekendLogic ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
                 </button>
                 
-                {openSections.useCases && (
+                {openSections.weekendLogic && (
                   <div className="px-6 pb-6">
                     <div className="space-y-4">
                       <div>
-                        <h3 className="font-semibold text-foreground mb-2">💼 Project Management & Business Planning</h3>
-                        <ul className="space-y-1 text-muted-foreground text-sm">
-                          <li className="flex items-start gap-2">
-                            <ChevronRight size={14} className="text-accent mt-0.5 flex-shrink-0" />
-                            <span>Calculate realistic project timelines excluding weekends for accurate delivery date estimation</span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <ChevronRight size={14} className="text-accent mt-0.5 flex-shrink-0" />
-                            <span>Estimate work days for resource allocation, team scheduling, and workload distribution</span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <ChevronRight size={14} className="text-accent mt-0.5 flex-shrink-0" />
-                            <span>Determine business day counts for contract durations, service level agreements, and delivery commitments</span>
-                          </li>
-                        </ul>
+                        <h3 className="font-semibold text-foreground mb-2">The Weekend Exclusion Rule</h3>
+                        <p className="text-muted-foreground mb-3">
+                          Saturdays and Sundays are automatically excluded because they're non-working days almost everywhere. Even in countries where the weekend falls on different days (like Friday-Saturday in some Middle Eastern countries), the concept of "weekend days" as non-working days is universal. Our calculator assumes Saturday and Sunday as weekend days because that's the international business standard.
+                        </p>
+                        <div className="bg-blue-500/10 p-3 rounded border border-blue-500/20">
+                          <div className="text-sm">
+                            <div className="font-medium text-foreground">Technical detail:</div>
+                            <div className="text-muted-foreground mt-1">In JavaScript (which powers this calculator), Sunday is day 0 and Saturday is day 6. So we exclude days where <code className="bg-secondary/50 px-1 rounded">getDay()</code> returns 0 or 6.</div>
+                          </div>
+                        </div>
                       </div>
+
                       <div>
-                        <h3 className="font-semibold text-foreground mb-2">📊 HR & Payroll Calculations</h3>
-                        <ul className="space-y-1 text-muted-foreground text-sm">
-                          <li className="flex items-start gap-2">
-                            <ChevronRight size={14} className="text-accent mt-0.5 flex-shrink-0" />
-                            <span>Calculate actual work days for payroll processing, especially for new hires or departing employees</span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <ChevronRight size={14} className="text-accent mt-0.5 flex-shrink-0" />
-                            <span>Determine probation period durations in business days for performance evaluation scheduling</span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <ChevronRight size={14} className="text-accent mt-0.5 flex-shrink-0" />
-                            <span>Calculate notice period requirements in working days for employment contract compliance</span>
-                          </li>
-                        </ul>
+                        <h3 className="font-semibold text-foreground mb-2">The Holiday Dilemma</h3>
+                        <p className="text-muted-foreground">
+                          Here's where it gets interesting: we <em>don't</em> automatically exclude public holidays. Why? Because holiday schedules are incredibly local. Christmas might be a holiday in Christian-majority countries but not elsewhere. Banks have different holidays than schools. Some companies give the day after Thanksgiving off; others don't. Some countries have "bridge days" when a holiday falls on a Tuesday or Thursday.
+                        </p>
+                        <p className="text-muted-foreground mt-2">
+                          If we tried to include holidays, we'd either have to ask you for your country, state, industry, and company—making the tool cumbersome—or we'd guess wrong. It's better to give you the clean Monday-Friday count and let you subtract your specific holidays manually. You know your schedule better than any calculator could.
+                        </p>
                       </div>
-                      <div>
-                        <h3 className="font-semibold text-foreground mb-2">📅 Legal & Compliance Requirements</h3>
-                        <ul className="space-y-1 text-muted-foreground text-sm">
-                          <li className="flex items-start gap-2">
-                            <ChevronRight size={14} className="text-accent mt-0.5 flex-shrink-0" />
-                            <span>Calculate statutory response times and compliance deadlines in business days</span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <ChevronRight size={14} className="text-accent mt-0.5 flex-shrink-0" />
-                            <span>Determine legal notice periods and contractual obligations excluding weekends and holidays</span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <ChevronRight size={14} className="text-accent mt-0.5 flex-shrink-0" />
-                            <span>Calculate business day requirements for regulatory filings, submissions, and documentation</span>
-                          </li>
-                        </ul>
+
+                      <div className="bg-green-500/10 p-4 rounded-lg border border-green-500/20">
+                        <h3 className="font-semibold text-foreground mb-2">Practical Approach for Holidays</h3>
+                        <div className="space-y-2 text-sm">
+                          <div className="flex items-start gap-2">
+                            <div className="bg-white/20 p-1 rounded mt-0.5">
+                              <Calendar size={12} className="text-green-600" />
+                            </div>
+                            <div>
+                              <div className="font-medium text-foreground">Step 1: Get our work day count</div>
+                              <div className="text-muted-foreground">Use this calculator to get Monday-Friday days.</div>
+                            </div>
+                          </div>
+                          <div className="flex items-start gap-2">
+                            <div className="bg-white/20 p-1 rounded mt-0.5">
+                              <Briefcase size={12} className="text-green-600" />
+                            </div>
+                            <div>
+                              <div className="font-medium text-foreground">Step 2: List your holidays</div>
+                              <div className="text-muted-foreground">Check your company calendar or government website.</div>
+                            </div>
+                          </div>
+                          <div className="flex items-start gap-2">
+                            <div className="bg-white/20 p-1 rounded mt-0.5">
+                              <Calculator size={12} className="text-green-600" />
+                            </div>
+                            <div>
+                              <div className="font-medium text-foreground">Step 3: Subtract holiday work days</div>
+                              <div className="text-muted-foreground">If a holiday falls on a Monday-Friday, subtract it from our count.</div>
+                            </div>
+                          </div>
+                        </div>
+                        <p className="text-sm text-muted-foreground mt-3">
+                          This manual approach might seem like extra work, but it's actually more accurate. I've seen projects derailed because someone used a calculator that included the wrong holidays.
+                        </p>
                       </div>
                     </div>
                   </div>
                 )}
               </article>
 
-              {/* How to Use - Dropdown */}
+              {/* Office Use Cases Section */}
               <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
                 <button
-                  onClick={() => toggleSection('howToUse')}
+                  onClick={() => toggleSection('officeUseCases')}
                   className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
                 >
                   <div className="flex items-center gap-3">
                     <div className="bg-orange-500/10 p-2 rounded-lg">
-                      <Zap size={20} className="text-orange-600" />
+                      <TrendingUp size={20} className="text-orange-600" />
                     </div>
-                    <h2 className="text-xl font-bold text-foreground">How to Calculate Work Days - Step by Step</h2>
+                    <h2 className="text-xl font-bold text-foreground">Real Office Situations Where This Calculator Saves Time</h2>
                   </div>
-                  {openSections.howToUse ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                  {openSections.officeUseCases ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
                 </button>
                 
-                {openSections.howToUse && (
+                {openSections.officeUseCases && (
                   <div className="px-6 pb-6">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div className="space-y-3">
-                        <h3 className="font-semibold text-foreground">4-Step Calculation Process</h3>
-                        <div className="space-y-4">
-                          <div className="flex items-start gap-3">
-                            <div className="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0">1</div>
-                            <div>
-                              <div className="font-medium text-foreground">Select Start Date</div>
-                              <div className="text-sm text-muted-foreground">Choose your project or period start date using the date picker or manual entry.</div>
-                            </div>
-                          </div>
-                          <div className="flex items-start gap-3">
-                            <div className="bg-green-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0">2</div>
-                            <div>
-                              <div className="font-medium text-foreground">Select End Date</div>
-                              <div className="text-sm text-muted-foreground">Choose your project or period end date. The calculation includes both dates.</div>
-                            </div>
-                          </div>
-                          <div className="flex items-start gap-3">
-                            <div className="bg-purple-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0">3</div>
-                            <div>
-                              <div className="font-medium text-foreground">Calculate Work Days</div>
-                              <div className="text-sm text-muted-foreground">Click calculate to instantly get work days excluding Saturdays and Sundays.</div>
-                            </div>
-                          </div>
-                          <div className="flex items-start gap-3">
-                            <div className="bg-orange-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0">4</div>
-                            <div>
-                              <div className="font-medium text-foreground">Analyze Results</div>
-                              <div className="text-sm text-muted-foreground">Review detailed breakdown including percentages and copy results for reporting.</div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="space-y-3">
-                        <h3 className="font-semibold text-foreground">Pro Tips for Accurate Calculations</h3>
+                    <div className="space-y-6">
+                      <div>
+                        <h3 className="font-semibold text-foreground mb-3">📋 Project Management Reality Checks</h3>
+                        <p className="text-muted-foreground mb-3">
+                          I've managed enough projects to know the #1 mistake is assuming "30 days" means "30 work days." It doesn't. When a stakeholder says "I need this in a month," they often mean "by the end of next month," not "30 calendar days from now." But when you're building a timeline, you need the work day count.
+                        </p>
                         <ul className="space-y-2 text-sm text-muted-foreground">
                           <li className="flex items-start gap-2">
-                            <div className="bg-accent/20 p-1 rounded mt-0.5">
-                              <Calendar size={12} className="text-accent" />
-                            </div>
-                            <span>Remember that both start and end dates are included in the calculation</span>
+                            <ChevronRight size={14} className="text-accent mt-0.5 flex-shrink-0" />
+                            <span><strong>Resource allocation:</strong> If a task takes 40 hours of work, that's 5 work days (assuming 8-hour days). But if those 5 days span a weekend, the calendar duration is 7 days. This affects when you can assign the next task.</span>
                           </li>
                           <li className="flex items-start gap-2">
-                            <div className="bg-accent/20 p-1 rounded mt-0.5">
-                              <Briefcase size={12} className="text-accent" />
-                            </div>
-                            <span>For project planning, add buffer days for holidays and unexpected delays</span>
+                            <ChevronRight size={14} className="text-accent mt-0.5 flex-shrink-0" />
+                            <span><strong>Client expectations:</strong> "Two weeks" to a client might mean 10 work days. But if you start on Thursday, two calendar weeks later is 14 days later, which includes 2 weekends = only 8 work days. That mismatch causes problems.</span>
                           </li>
                           <li className="flex items-start gap-2">
-                            <div className="bg-accent/20 p-1 rounded mt-0.5">
-                              <Copy size={12} className="text-accent" />
-                            </div>
-                            <span>Use the copy feature to save results for project documentation and reporting</span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <div className="bg-accent/20 p-1 rounded mt-0.5">
-                              <BarChart size={12} className="text-accent" />
-                            </div>
-                            <span>Analyze the percentage breakdown for resource planning and timeline optimization</span>
+                            <ChevronRight size={14} className="text-accent mt-0.5 flex-shrink-0" />
+                            <span><strong>Dependency planning:</strong> Task B can't start until Task A finishes. If Task A ends Friday, Task B starts Monday (not Saturday). The calendar gap matters for critical path analysis.</span>
                           </li>
                         </ul>
+                      </div>
+
+                      <div>
+                        <h3 className="font-semibold text-foreground mb-3">💼 HR & Legal Compliance</h3>
+                        <p className="text-muted-foreground mb-3">
+                          In HR, precision matters. Get a calculation wrong, and you could underpay an employee or miss a legal deadline. I once helped an HR manager who was struggling to calculate prorated vacation for an employee leaving mid-month. They were trying to do it manually and kept getting different numbers.
+                        </p>
+                        <div className="bg-secondary/20 p-3 rounded">
+                          <div className="text-foreground font-medium">The solution we found:</div>
+                          <div className="text-muted-foreground mt-1">Calculate work days from the 1st to their last day, divide by total work days that month, multiply by their monthly vacation accrual. Our calculator gave them the work day count instantly, and the formula did the rest.</div>
+                        </div>
+                        <ul className="space-y-2 text-sm text-muted-foreground mt-3">
+                          <li className="flex items-start gap-2">
+                            <ChevronRight size={14} className="text-accent mt-0.5 flex-shrink-0" />
+                            <span><strong>Notice periods:</strong> "Two weeks notice" typically means 10 work days, not 14 calendar days. If you resign on Tuesday, your last day is typically 10 work days later (which might be a Monday two weeks later).</span>
+                          </li>
+                          <li className="flex items-start gap-2">
+                            <ChevronRight size={14} className="text-accent mt-0.5 flex-shrink-0" />
+                            <span><strong>Probation periods:</strong> "90-day probation" often means 90 work days, which is about 4.5 calendar months. That's a significant difference for performance review scheduling.</span>
+                          </li>
+                          <li className="flex items-start gap-2">
+                            <ChevronRight size={14} className="text-accent mt-0.5 flex-shrink-0" />
+                            <span><strong>Legal deadlines:</strong> Many regulations specify "business days" for responses. Missing by one day because you counted weekends can have real consequences.</span>
+                          </li>
+                        </ul>
+                      </div>
+
+                      <div>
+                        <h3 className="font-semibold text-foreground mb-3">📊 Reporting & Analysis</h3>
+                        <p className="text-muted-foreground">
+                          When I analyze team productivity, I don't look at calendar days—I look at work days. If Team A completed 20 tasks in January (23 work days) and Team B completed 20 tasks in February (20 work days), Team B was actually more productive per work day. The percentage breakdown our calculator provides helps with these comparisons. Seeing that 71% of days are work days helps set realistic expectations for what can be accomplished in any given period.
+                        </p>
                       </div>
                     </div>
                   </div>
                 )}
               </article>
 
-              {/* Example Input and Output Section */}
+              {/* Examples Section */}
               <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
                 <button
                   onClick={() => toggleSection('examples')}
@@ -727,57 +749,57 @@ export default function WorkDays() {
                     <div className="bg-purple-500/10 p-2 rounded-lg">
                       <Calculator size={20} className="text-purple-600" />
                     </div>
-                    <h2 className="text-xl font-bold text-foreground">Work Days Calculation Examples</h2>
+                    <h2 className="text-xl font-bold text-foreground">Work Days Calculation Examples from Real Work</h2>
                   </div>
                   {openSections.examples ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
                 </button>
                 
                 {openSections.examples && (
                   <div className="px-6 pb-6">
-                    <div className="space-y-4">
+                    <div className="space-y-6">
                       <div>
-                        <h3 className="font-semibold text-foreground mb-3">Common Work Days Calculation Scenarios</h3>
+                        <h3 className="font-semibold text-foreground mb-3">Common Work Scenarios</h3>
                         <div className="overflow-x-auto">
                           <div className="min-w-full inline-block align-middle">
                             <div className="overflow-hidden border border-border rounded-lg">
                               <table className="min-w-full divide-y divide-border">
                                 <thead className="bg-secondary/20">
                                   <tr>
-                                    <th className="px-4 py-3 text-left text-xs font-medium text-foreground uppercase tracking-wider">Scenario</th>
+                                    <th className="px-4 py-3 text-left text-xs font-medium text-foreground uppercase tracking-wider">Situation</th>
                                     <th className="px-4 py-3 text-left text-xs font-medium text-foreground uppercase tracking-wider">Date Range</th>
+                                    <th className="px-4 py-3 text-left text-xs font-medium text-foreground uppercase tracking-wider">Calendar Days</th>
                                     <th className="px-4 py-3 text-left text-xs font-medium text-foreground uppercase tracking-wider">Work Days</th>
-                                    <th className="px-4 py-3 text-left text-xs font-medium text-foreground uppercase tracking-wider">Weekends</th>
-                                    <th className="px-4 py-3 text-left text-xs font-medium text-foreground uppercase tracking-wider">Work %</th>
+                                    <th className="px-4 py-3 text-left text-xs font-medium text-foreground uppercase tracking-wider">What People Often Get Wrong</th>
                                   </tr>
                                 </thead>
                                 <tbody className="divide-y divide-border">
                                   <tr>
-                                    <td className="px-4 py-3 text-sm text-foreground">Two-Week Project</td>
-                                    <td className="px-4 py-3 text-sm text-muted-foreground">Jan 1 - Jan 14</td>
+                                    <td className="px-4 py-3 text-sm text-foreground">Q1 Planning Cycle</td>
+                                    <td className="px-4 py-3 text-sm text-muted-foreground">Jan 1 - Mar 31</td>
+                                    <td className="px-4 py-3 text-sm text-blue-600">90 days</td>
+                                    <td className="px-4 py-3 text-sm text-green-600 font-medium">64 days</td>
+                                    <td className="px-4 py-3 text-sm text-orange-600">Thinking "quarter = 90 days" when only ~64 are work days</td>
+                                  </tr>
+                                  <tr>
+                                    <td className="px-4 py-3 text-sm text-foreground">New Hire Training</td>
+                                    <td className="px-4 py-3 text-sm text-muted-foreground">Start Mon, 2 weeks</td>
+                                    <td className="px-4 py-3 text-sm text-blue-600">14 days</td>
                                     <td className="px-4 py-3 text-sm text-green-600 font-medium">10 days</td>
-                                    <td className="px-4 py-3 text-sm text-orange-600">4 days</td>
-                                    <td className="px-4 py-3 text-sm text-blue-600">71%</td>
+                                    <td className="px-4 py-3 text-sm text-orange-600">Scheduling 14 days of training when only 10 are work days</td>
                                   </tr>
                                   <tr>
-                                    <td className="px-4 py-3 text-sm text-foreground">Month-Long Initiative</td>
-                                    <td className="px-4 py-3 text-sm text-muted-foreground">Feb 1 - Feb 28</td>
-                                    <td className="px-4 py-3 text-sm text-green-600 font-medium">20 days</td>
-                                    <td className="px-4 py-3 text-sm text-orange-600">8 days</td>
-                                    <td className="px-4 py-3 text-sm text-blue-600">71%</td>
-                                  </tr>
-                                  <tr>
-                                    <td className="px-4 py-3 text-sm text-foreground">Quarter Planning</td>
-                                    <td className="px-4 py-3 text-sm text-muted-foreground">Apr 1 - Jun 30</td>
-                                    <td className="px-4 py-3 text-sm text-green-600 font-medium">65 days</td>
-                                    <td className="px-4 py-3 text-sm text-orange-600">26 days</td>
-                                    <td className="px-4 py-3 text-sm text-blue-600">71%</td>
-                                  </tr>
-                                  <tr>
-                                    <td className="px-4 py-3 text-sm text-foreground">Week Start to End</td>
-                                    <td className="px-4 py-3 text-sm text-muted-foreground">Mon - Fri (5 days)</td>
+                                    <td className="px-4 py-3 text-sm text-foreground">Contract Review Period</td>
+                                    <td className="px-4 py-3 text-sm text-muted-foreground">Given Fri, 5 business days</td>
+                                    <td className="px-4 py-3 text-sm text-blue-600">7 days</td>
                                     <td className="px-4 py-3 text-sm text-green-600 font-medium">5 days</td>
-                                    <td className="px-4 py-3 text-sm text-orange-600">0 days</td>
-                                    <td className="px-4 py-3 text-sm text-blue-600">100%</td>
+                                    <td className="px-4 py-3 text-sm text-orange-600">Thinking deadline is Wednesday (5 days) when it's actually next Friday</td>
+                                  </tr>
+                                  <tr>
+                                    <td className="px-4 py-3 text-sm text-foreground">Month-End Closing</td>
+                                    <td className="px-4 py-3 text-sm text-muted-foreground">Last week of month</td>
+                                    <td className="px-4 py-3 text-sm text-blue-600">7 days</td>
+                                    <td className="px-4 py-3 text-sm text-green-600 font-medium">5 days</td>
+                                    <td className="px-4 py-3 text-sm text-orange-600">Trying to complete month-end in 5 days but planning for 7</td>
                                   </tr>
                                 </tbody>
                               </table>
@@ -787,58 +809,111 @@ export default function WorkDays() {
                       </div>
                       
                       <div>
-                        <h3 className="font-semibold text-foreground mb-2">Detailed Calculation Example</h3>
-                        <div className="bg-secondary/20 p-4 rounded-lg border border-border overflow-x-auto">
-                          <pre className="text-sm text-muted-foreground whitespace-pre-wrap">
-{`Example: Calculate work days from January 1, 2024 to January 31, 2024
-
-Step 1: List All Dates in Range
-January 2024:
-1 (Mon) - 2 (Tue) - 3 (Wed) - 4 (Thu) - 5 (Fri) - 6 (Sat) - 7 (Sun)
-8 (Mon) - 9 (Tue) - 10 (Wed) - 11 (Thu) - 12 (Fri) - 13 (Sat) - 14 (Sun)
-15 (Mon) - 16 (Tue) - 17 (Wed) - 18 (Thu) - 19 (Fri) - 20 (Sat) - 21 (Sun)
-22 (Mon) - 23 (Tue) - 24 (Wed) - 25 (Thu) - 26 (Fri) - 27 (Sat) - 28 (Sun)
-29 (Mon) - 30 (Tue) - 31 (Wed)
-
-Step 2: Identify Work Days (Monday-Friday)
-Work Days: January 1, 2, 3, 4, 5, 8, 9, 10, 11, 12, 15, 16, 17, 18, 19, 
-22, 23, 24, 25, 26, 29, 30, 31
-
-Step 3: Identify Weekend Days (Saturday-Sunday)
-Weekend Days: January 6, 7, 13, 14, 20, 21, 27, 28
-
-Step 4: Calculate Totals
-Total Days in January 2024: 31 days
-Total Work Days: 23 days
-Total Weekend Days: 8 days
-
-Step 5: Calculate Percentages
-Work Days Percentage: (23 ÷ 31) × 100 = 74.19% ≈ 74%
-Weekend Days Percentage: (8 ÷ 31) × 100 = 25.81% ≈ 26%
-
-Final Results:
-• Total Days: 31
-• Work Days: 23 (Monday-Friday)
-• Weekend Days: 8 (Saturday-Sunday)
-• Work Days Percentage: 74%
-• Weekend Days Percentage: 26%
-
-Key Calculation Features:
-✓ Automatically excludes Saturdays and Sundays
-✓ Includes both start and end dates in calculation
-✓ Handles varying month lengths correctly
-✓ Accounts for leap years in date ranges
-✓ Provides percentage breakdowns
-✓ Suitable for any date range from days to years`}
-                          </pre>
+                        <h3 className="font-semibold text-foreground mb-2">The "Starting on Thursday" Problem</h3>
+                        <div className="bg-secondary/20 p-4 rounded-lg border border-border">
+                          <div className="text-foreground font-medium mb-2">Scenario: You start a project on Thursday, November 1st</div>
+                          <div className="text-muted-foreground mb-3">Client says: "Give me an update in 5 business days"</div>
+                          <div className="space-y-2 text-sm">
+                            <div className="flex items-center gap-2">
+                              <div className="bg-green-500/20 p-1 rounded">
+                                <Calendar size={12} className="text-green-600" />
+                              </div>
+                              <span className="text-foreground"><strong>Incorrect thinking:</strong> "5 days from Thursday is Tuesday"</span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <div className="bg-blue-500/20 p-1 rounded">
+                                <Calculator size={12} className="text-blue-600" />
+                              </div>
+                              <span className="text-foreground"><strong>Actual business days:</strong> Thu 1st (1), Fri 2nd (2), Mon 5th (3), Tue 6th (4), Wed 7th (5)</span>
+                            </div>
+                            <div className="text-muted-foreground mt-2">
+                              The update is due Wednesday, November 7th—not Tuesday the 6th. That one-day difference matters when you're coordinating with teams and clients. Our calculator would show: Nov 1-7 = 7 calendar days, 5 work days. The visual breakdown makes the pattern clear.
+                            </div>
+                          </div>
                         </div>
+                      </div>
+
+                      <div>
+                        <h3 className="font-semibold text-foreground mb-2">Year-End Calculation That Surprises People</h3>
+                        <p className="text-muted-foreground">
+                          Here's one that catches project managers off guard: Calculate work days from December 1 to December 31. Many assume "about 20 work days" because December has holidays. But our calculator shows 23 work days (in a typical year). The holidays are just a few days—most of December is regular work days. This realization helps with realistic year-end planning. You have almost as many work days in December as in October (typically 23 vs 23), just with different holiday interruptions.
+                        </p>
                       </div>
                     </div>
                   </div>
                 )}
               </article>
 
-              {/* Related Tools Section - Dropdown */}
+              {/* Limitations Section */}
+              <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
+                <button
+                  onClick={() => toggleSection('limitations')}
+                  className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="bg-red-500/10 p-2 rounded-lg">
+                      <Calendar size={20} className="text-red-600" />
+                    </div>
+                    <h2 className="text-xl font-bold text-foreground">What This Calculator Doesn't Do (And When to Use Something Else)</h2>
+                  </div>
+                  {openSections.limitations ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                </button>
+                
+                {openSections.limitations && (
+                  <div className="px-6 pb-6">
+                    <div className="space-y-4">
+                      <div>
+                        <h3 className="font-semibold text-foreground mb-2">Non-Standard Work Weeks</h3>
+                        <p className="text-muted-foreground mb-3">
+                          This tool assumes Monday-Friday. If you work Tuesday-Saturday, Sunday-Thursday, or any other pattern, you'll need to adjust the results manually. For example, if you work Tuesday through Saturday, you'd take our work day count, subtract Mondays (which we count as work days but you don't work), and add Saturdays (which we exclude but you work).
+                        </p>
+                        <div className="bg-secondary/20 p-3 rounded text-sm">
+                          <div className="text-foreground">Alternative approach:</div>
+                          <div className="text-muted-foreground mt-1">For complex schedules, consider using a spreadsheet where you can mark your specific work days and use formulas to count them. Some specialized project management tools also handle custom work weeks.</div>
+                        </div>
+                      </div>
+
+                      <div>
+                        <h3 className="font-semibold text-foreground mb-2">Half-Days and Partial Work Days</h3>
+                        <p className="text-muted-foreground">
+                          We count whole days. If your company has half-day Fridays or you're calculating for someone who works part-time, you'll need to adjust. A half-day Friday counts as 0.5 work days, not 1. Someone working 3 days a week might have those days spread across the week. Our calculator can't handle these fractional or partial patterns—it's designed for standard full-time schedules.
+                        </p>
+                      </div>
+
+                      <div>
+                        <h3 className="font-semibold text-foreground mb-2">Time Zone Considerations for Global Teams</h3>
+                        <p className="text-muted-foreground mb-3">
+                          If you're working with teams across time zones, a "work day" might not align perfectly. When it's Friday in New York, it might already be Saturday in Sydney. For deadline calculations across time zones, you often need to use the most restrictive time zone (usually the earliest one) and then check what day it is there. Our calculator uses your local device time, which works for most situations but might need adjustment for global coordination.
+                        </p>
+                        <div className="bg-blue-500/10 p-3 rounded border border-blue-500/20">
+                          <div className="text-sm text-muted-foreground">
+                            <strong>Pro tip:</strong> When working with international teams, specify time zones in deadlines: "Close of business Friday EST" rather than just "Friday."
+                          </div>
+                        </div>
+                      </div>
+
+                      <div>
+                        <h3 className="font-semibold text-foreground mb-2">Historical Date Quirks</h3>
+                        <p className="text-muted-foreground">
+                          For dates before the widespread adoption of the 5-day work week (which became standard in the early 20th century), our calculation might not reflect historical reality. If you're calculating work days for historical research—like how long it took to build something in the 1800s when 6-day work weeks were common—you'd need a different approach. This tool is designed for modern business contexts, not historical analysis.
+                        </p>
+                      </div>
+
+                      <div className="bg-green-500/10 p-4 rounded-lg border border-green-500/20">
+                        <h3 className="font-semibold text-foreground mb-2">When This Calculator Is Perfect</h3>
+                        <p className="text-muted-foreground">
+                          Despite these limitations, this tool is exactly right for: project timelines in standard businesses, HR calculations for full-time employees, legal deadline estimations, contract duration planning, and any situation where you need to convert between calendar days and Monday-Friday business days. It does that one job very well.
+                        </p>
+                        <p className="text-muted-foreground mt-2">
+                          I keep it bookmarked because it handles 90% of my work day calculation needs. For the other 10%, I use it as a starting point and adjust manually or with additional tools.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </article>
+
+              {/* Related Tools Section */}
               <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
                 <button
                   onClick={() => toggleSection('relatedTools')}
@@ -851,23 +926,40 @@ Key Calculation Features:
                 {openSections.relatedTools && (
                   <div className="px-6 pb-6">
                     <p className="text-muted-foreground mb-4">
-                      Explore other useful date and business calculation tools:
+                      Work days are just one piece of business planning. These other tools might help with related calculations:
                     </p>
-                    <ul className="space-y-3 text-muted-foreground">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       {relatedTools.map((tool, index) => (
-                        <li key={index} className="flex items-start">
-                          <span className="text-accent mr-2">•</span>
-                          <Link href={tool.path} className="text-accent hover:underline">
-                            <strong>{tool.name}:</strong> Visit this tool for additional date and business calculations
-                          </Link>
-                        </li>
+                        <Link
+                          key={index}
+                          href={tool.path}
+                          className="group p-4 bg-secondary/30 hover:bg-secondary/50 rounded-lg border border-border transition-colors"
+                        >
+                          <div className="flex items-center gap-3">
+                            <div className="bg-accent/20 p-2 rounded-lg group-hover:bg-accent/30 transition-colors">
+                              <Calendar size={16} className="text-accent" />
+                            </div>
+                            <div>
+                              <div className="font-medium text-foreground group-hover:text-accent transition-colors">
+                                {tool.name}
+                              </div>
+                              <div className="text-xs text-muted-foreground mt-1">
+                                {tool.name.includes('Difference') && 'Calculate exact days between any dates'}
+                                {tool.name.includes('Age') && 'Calculate precise ages for HR and documentation'}
+                                {tool.name.includes('Countdown') && 'Track time remaining for deadlines and events'}
+                                {tool.name.includes('Business Days') && 'More advanced business day calculations'}
+                                {tool.name.includes('Project Timeline') && 'Plan complete project schedules'}
+                              </div>
+                            </div>
+                          </div>
+                        </Link>
                       ))}
-                    </ul>
+                    </div>
                   </div>
                 )}
               </article>
 
-              {/* Frequently Asked Questions - Dropdown */}
+              {/* FAQs Section */}
               <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
                 <button
                   onClick={() => toggleSection('faqs')}
@@ -877,7 +969,7 @@ Key Calculation Features:
                     <div className="bg-purple-500/10 p-2 rounded-lg">
                       <Briefcase size={20} className="text-purple-600" />
                     </div>
-                    <h2 className="text-xl font-bold text-foreground">Frequently Asked Questions</h2>
+                    <h2 className="text-xl font-bold text-foreground">Common Questions About Work Day Calculations</h2>
                   </div>
                   {openSections.faqs ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
                 </button>
@@ -891,6 +983,17 @@ Key Calculation Features:
                           <p className="text-muted-foreground">{faq.answer}</p>
                         </div>
                       ))}
+                    </div>
+                    <div className="mt-6 p-4 bg-blue-500/10 rounded-lg border border-blue-500/20">
+                      <div className="flex items-start gap-3">
+                        <Calculator size={18} className="text-blue-600 mt-0.5 flex-shrink-0" />
+                        <div>
+                          <div className="font-medium text-foreground">Remember the 71% Rule</div>
+                          <div className="text-sm text-muted-foreground mt-1">
+                            Over longer periods, about 71% of calendar days are work days (5 out of 7). This quick mental check helps validate our calculator's results. If you get 80% or 60%, double-check your date range—you might have included/excluded something incorrectly.
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 )}

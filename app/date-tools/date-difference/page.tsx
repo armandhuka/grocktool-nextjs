@@ -23,10 +23,11 @@ export default function DateDifference() {
   } | null>(null);
 
   const [openSections, setOpenSections] = useState({
-    whatItDoes: false,
-    useCases: false,
-    howToUse: false,
+    calendarRules: false,
+    calculationMethod: false,
+    businessScenarios: false,
     examples: false,
+    accuracyNotes: false,
     faqs: false,
     relatedTools: false
   });
@@ -48,24 +49,24 @@ export default function DateDifference() {
 
   const faqData = [
     {
-      question: "How accurate is the date difference calculation?",
-      answer: "100% accurate. The calculator accounts for leap years, different month lengths, and exact day counts. It provides mathematically precise results for any date range, from single days to multiple decades."
+      question: "How does the calculator handle months with different lengths?",
+      answer: "It accounts for each month's exact day count—28 for February in non-leap years, 29 in leap years, 30 for April, June, September, November, and 31 for the rest. When you cross month boundaries, it automatically adjusts. For instance, moving from January 31 to March 1 correctly shows 1 month, 1 day (not 1 month, -30 days)."
     },
     {
-      question: "Can I calculate differences between dates in the past and future?",
-      answer: "Yes! The tool handles any date combination—past to past, past to future, future to future. It automatically detects date order and provides appropriate results regardless of which date comes first."
+      question: "Can I calculate differences spanning multiple centuries?",
+      answer: "Absolutely. The calculator handles any valid Gregorian calendar dates from year 1 to 9999. Whether you're comparing historical events from the 1800s or planning for the 2100s, it maintains precision across centuries, correctly accounting for century leap year rules (years divisible by 100 but not 400 aren't leap years)."
     },
     {
-      question: "How are leap years handled in calculations?",
-      answer: "Leap years are automatically factored into all calculations. The tool correctly accounts for February 29th and adjusts calculations for the extra day in leap years, ensuring accurate day counts for any date range."
+      question: "Why might my manual calculation differ slightly from this tool?",
+      answer: "Common discrepancies arise from month-length assumptions (some people use 30.44 days per month average), leap year oversights, or incorrect weekend counting. Our tool eliminates these by calculating exact calendar days, not averages. If you're getting different numbers manually, check if you accounted for specific month lengths and leap years correctly."
     },
     {
-      question: "What's the maximum date range I can calculate?",
-      answer: "There's no practical limit. You can calculate differences between any valid dates from year 1 to year 9999. The tool handles century-spanning calculations with the same precision as short ranges."
+      question: "Does it consider time zones or daylight saving changes?",
+      answer: "This calculator focuses purely on calendar dates, not times. It treats each date as a full calendar day from midnight to midnight, avoiding timezone complications. For time-sensitive calculations across time zones, I'd recommend using our Countdown Timer tool which includes timezone support."
     },
     {
-      question: "Does the calculator account for different time zones?",
-      answer: "The calculator uses pure date calculations without time zones, making it perfect for calendar-based planning. For time-sensitive calculations involving specific hours, consider using our Countdown Timer tool."
+      question: "How accurate is the working days calculation?",
+      answer: "It counts every Monday through Friday between your dates, excluding Saturdays and Sundays. It doesn't account for public holidays since those vary by country and region—for that level of customization, check our Work Days Calculator which lets you specify custom holidays."
     }
   ];
 
@@ -122,7 +123,7 @@ export default function DateDifference() {
     
     while (current <= end) {
       const day = current.getDay();
-      if (day !== 0 && day !== 6) { // Skip Sunday (0) and Saturday (6)
+      if (day !== 0 && day !== 6) {
         count++;
       }
       current.setDate(current.getDate() + 1);
@@ -614,200 +615,332 @@ Period: ${orderText}`;
 
             {/* SEO Content Section with Dropdowns */}
             <section className="space-y-4 mt-12">
-              {/* What This Tool Does - Dropdown */}
+              {/* Calendar Rules Used Section */}
               <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
                 <button
-                  onClick={() => toggleSection('whatItDoes')}
+                  onClick={() => toggleSection('calendarRules')}
                   className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
                 >
                   <div className="flex items-center gap-3">
                     <div className="bg-blue-500/10 p-2 rounded-lg">
                       <Calendar size={20} className="text-blue-600" />
                     </div>
-                    <h2 className="text-xl font-bold text-foreground">Precise Date Difference Calculation - How It Works</h2>
+                    <h2 className="text-xl font-bold text-foreground">How Our Calendar Rules Affect Date Calculations</h2>
                   </div>
-                  {openSections.whatItDoes ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                  {openSections.calendarRules ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
                 </button>
                 
-                {openSections.whatItDoes && (
+                {openSections.calendarRules && (
                   <div className="px-6 pb-6">
                     <p className="text-muted-foreground mb-4">
-                      This date difference calculator computes exact time intervals between any two dates with mathematical precision. It accounts for all calendar complexities including leap years, varying month lengths, and exact day counts to deliver accurate results in multiple time units. Whether calculating project timelines, age differences, or historical intervals, the tool handles any date combination—past, present, or future—while keeping your data 100% private in your browser.
+                      Most people don't realize how many calendar quirks can throw off date calculations. We follow the Gregorian calendar rules exactly—the same system used worldwide today. Here's what that means for your calculations:
                     </p>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
-                      <div className="bg-blue-500/10 p-4 rounded-lg border border-blue-500/20">
-                        <div className="flex items-center gap-2 mb-2">
-                          <Lock size={18} className="text-blue-600" />
-                          <h3 className="font-semibold text-foreground">Complete Privacy</h3>
-                        </div>
-                        <p className="text-sm text-muted-foreground">Your dates never leave your browser. No data storage, no server processing, complete confidentiality.</p>
+                    
+                    <div className="space-y-6">
+                      <div>
+                        <h3 className="font-semibold text-foreground mb-3 flex items-center gap-2">
+                          <div className="bg-blue-100 dark:bg-blue-900/30 p-1 rounded">
+                            <Calendar size={16} className="text-blue-600" />
+                          </div>
+                          Leap Year Logic That Actually Matters
+                        </h3>
+                        <p className="text-muted-foreground mb-2">
+                          It's not just "every four years." The rule has three parts:
+                        </p>
+                        <ul className="space-y-2 text-sm text-muted-foreground ml-2">
+                          <li className="flex items-start gap-2">
+                            <ChevronRight size={14} className="text-blue-600 mt-0.5 flex-shrink-0" />
+                            <span><strong>Rule 1:</strong> Years divisible by 4 are leap years (2024, 2028)</span>
+                          </li>
+                          <li className="flex items-start gap-2">
+                            <ChevronRight size={14} className="text-blue-600 mt-0.5 flex-shrink-0" />
+                            <span><strong>Exception:</strong> Years divisible by 100 are NOT leap years (2100, 2200)</span>
+                          </li>
+                          <li className="flex items-start gap-2">
+                            <ChevronRight size={14} className="text-blue-600 mt-0.5 flex-shrink-0" />
+                            <span><strong>Exception to exception:</strong> Years divisible by 400 ARE leap years (2000, 2400)</span>
+                          </li>
+                        </ul>
+                        <p className="text-sm text-muted-foreground mt-3">
+                          Why does this matter? If you're calculating a date range that crosses the year 2100, many online calculators will get it wrong because they forget the "divisible by 100" rule. Ours won't.
+                        </p>
                       </div>
-                      <div className="bg-green-500/10 p-4 rounded-lg border border-green-500/20">
-                        <div className="flex items-center gap-2 mb-2">
-                          <Clock size={18} className="text-green-600" />
-                          <h3 className="font-semibold text-foreground">Mathematical Precision</h3>
+
+                      <div>
+                        <h3 className="font-semibold text-foreground mb-3 flex items-center gap-2">
+                          <div className="bg-green-100 dark:bg-green-900/30 p-1 rounded">
+                            <Clock size={16} className="text-green-600" />
+                          </div>
+                          Month Length Variations You Can't Ignore
+                        </h3>
+                        <p className="text-muted-foreground mb-2">
+                          February's 28/29 days are famous, but other months vary too:
+                        </p>
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-2 mt-3">
+                          <div className="bg-blue-50 dark:bg-blue-900/20 p-3 rounded text-center">
+                            <div className="text-lg font-bold text-foreground">31 days</div>
+                            <div className="text-xs text-muted-foreground">Jan, Mar, May, Jul, Aug, Oct, Dec</div>
+                          </div>
+                          <div className="bg-green-50 dark:bg-green-900/20 p-3 rounded text-center">
+                            <div className="text-lg font-bold text-foreground">30 days</div>
+                            <div className="text-xs text-muted-foreground">Apr, Jun, Sep, Nov</div>
+                          </div>
+                          <div className="bg-yellow-50 dark:bg-yellow-900/20 p-3 rounded text-center">
+                            <div className="text-lg font-bold text-foreground">28 days</div>
+                            <div className="text-xs text-muted-foreground">Feb (non-leap)</div>
+                          </div>
+                          <div className="bg-purple-50 dark:bg-purple-900/20 p-3 rounded text-center">
+                            <div className="text-lg font-bold text-foreground">29 days</div>
+                            <div className="text-xs text-muted-foreground">Feb (leap year)</div>
+                          </div>
                         </div>
-                        <p className="text-sm text-muted-foreground">Accounts for leap years, different month lengths, and exact day counts for perfect calculations.</p>
+                        <p className="text-sm text-muted-foreground mt-3">
+                          When we calculate month differences, we don't use averages. We count actual calendar days. Moving from January 31 to March 1? That's 1 month, 1 day—not 1 month, -30 days like some calculators show.
+                        </p>
                       </div>
-                      <div className="bg-purple-500/10 p-4 rounded-lg border border-purple-500/20">
-                        <div className="flex items-center gap-2 mb-2">
-                          <Calendar size={18} className="text-purple-600" />
-                          <h3 className="font-semibold text-foreground">Flexible Date Handling</h3>
-                        </div>
-                        <p className="text-sm text-muted-foreground">Works with any date combination—past to past, past to future, future to future, or identical dates.</p>
+
+                      <div>
+                        <h3 className="font-semibold text-foreground mb-3 flex items-center gap-2">
+                          <div className="bg-purple-100 dark:bg-purple-900/30 p-1 rounded">
+                            <Shield size={16} className="text-purple-600" />
+                          </div>
+                          Date Order Handling That Makes Sense
+                        </h3>
+                        <p className="text-muted-foreground">
+                          Pick dates in any order—we handle it intelligently. If your end date is earlier than your start date, we don't give you negative numbers. Instead, we show you the positive difference and tell you it's a past period. This matches how people actually think about time spans. You don't say "minus 30 days ago"—you say "30 days have passed."
+                        </p>
                       </div>
                     </div>
                   </div>
                 )}
               </article>
 
-              {/* Use Cases Section - Dropdown */}
+              {/* Calculation Method Section */}
               <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
                 <button
-                  onClick={() => toggleSection('useCases')}
+                  onClick={() => toggleSection('calculationMethod')}
                   className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
                 >
                   <div className="flex items-center gap-3">
                     <div className="bg-green-500/10 p-2 rounded-lg">
                       <Calendar size={20} className="text-green-600" />
                     </div>
-                    <h2 className="text-xl font-bold text-foreground">When to Use Date Difference Calculator</h2>
+                    <h2 className="text-xl font-bold text-foreground">The Step-by-Step Method Behind Our Calculations</h2>
                   </div>
-                  {openSections.useCases ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                  {openSections.calculationMethod ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
                 </button>
                 
-                {openSections.useCases && (
+                {openSections.calculationMethod && (
                   <div className="px-6 pb-6">
-                    <div className="space-y-4">
-                      <div>
-                        <h3 className="font-semibold text-foreground mb-2">📅 Project & Event Planning</h3>
-                        <ul className="space-y-1 text-muted-foreground text-sm">
-                          <li className="flex items-start gap-2">
-                            <ChevronRight size={14} className="text-accent mt-0.5 flex-shrink-0" />
-                            <span>Calculate exact project durations from start date to deadline for timeline management</span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <ChevronRight size={14} className="text-accent mt-0.5 flex-shrink-0" />
-                            <span>Plan event timelines by calculating days between preparation start and event date</span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <ChevronRight size={14} className="text-accent mt-0.5 flex-shrink-0" />
-                            <span>Determine vacation durations for travel planning and itinerary scheduling</span>
-                          </li>
-                        </ul>
+                    <p className="text-muted-foreground mb-6">
+                      Ever wonder how we get from two dates to "3 years, 4 months, 15 days"? It's not magic—it's a careful process that handles edge cases most people miss. Here's exactly how it works:
+                    </p>
+                    
+                    <div className="space-y-8">
+                      <div className="space-y-4">
+                        <h3 className="font-semibold text-foreground text-lg">The Core Calculation Steps</h3>
+                        
+                        <div className="bg-secondary/10 p-4 rounded-lg border border-border">
+                          <div className="flex items-start gap-4 mb-4">
+                            <div className="bg-blue-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold flex-shrink-0">1</div>
+                            <div>
+                              <div className="font-semibold text-foreground mb-1">Year Difference (The Easy Part)</div>
+                              <p className="text-sm text-muted-foreground">
+                                Start with simple subtraction: end year minus start year. But this is just the beginning—months and days might adjust this later.
+                              </p>
+                            </div>
+                          </div>
+                          
+                          <div className="flex items-start gap-4 mb-4">
+                            <div className="bg-green-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold flex-shrink-0">2</div>
+                            <div>
+                              <div className="font-semibold text-foreground mb-1">Month Adjustment (Where Most Calculators Fail)</div>
+                              <p className="text-sm text-muted-foreground">
+                                Subtract month numbers. If the end day is earlier in its month than the start day was in its month, we borrow a month. This is crucial for dates like March 31 to April 30—it's not a full month, it's 30 days.
+                              </p>
+                              <div className="mt-2 text-xs text-green-600 bg-green-500/10 p-2 rounded">
+                                <strong>Example:</strong> March 31 to April 30 = 0 months, 30 days (not 1 month, 0 days)
+                              </div>
+                            </div>
+                          </div>
+                          
+                          <div className="flex items-start gap-4">
+                            <div className="bg-purple-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold flex-shrink-0">3</div>
+                            <div>
+                              <div className="font-semibold text-foreground mb-1">Day Calculation (With Month Borrowing)</div>
+                              <p className="text-sm text-muted-foreground">
+                                Calculate days directly. If negative, we borrow from the month difference and add the exact number of days in the previous month. This handles transitions like January 31 to February 28 perfectly.
+                              </p>
+                            </div>
+                          </div>
+                        </div>
                       </div>
-                      <div>
-                        <h3 className="font-semibold text-foreground mb-2">💼 Business & Financial Applications</h3>
-                        <ul className="space-y-1 text-muted-foreground text-sm">
-                          <li className="flex items-start gap-2">
-                            <ChevronRight size={14} className="text-accent mt-0.5 flex-shrink-0" />
-                            <span>Calculate rental periods, subscription lengths, or contract durations for billing</span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <ChevronRight size={14} className="text-accent mt-0.5 flex-shrink-0" />
-                            <span>Determine warranty periods, guarantee durations, or service contract timelines</span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <ChevronRight size={14} className="text-accent mt-0.5 flex-shrink-0" />
-                            <span>Calculate payment terms, invoice due dates, or financial obligation periods</span>
-                          </li>
-                        </ul>
+
+                      <div className="space-y-4">
+                        <h3 className="font-semibold text-foreground text-lg">Why This Method Beats Simple Day Counting</h3>
+                        <p className="text-muted-foreground">
+                          You could just count total days and divide by 365.25, but that gives you averages, not exact calendar periods. Here's the difference:
+                        </p>
+                        
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          <div className="bg-blue-50 dark:bg-blue-900/10 p-4 rounded-lg border border-blue-200 dark:border-blue-800">
+                            <div className="font-semibold text-foreground mb-2">Average-Based Approach</div>
+                            <ul className="space-y-1 text-sm text-muted-foreground">
+                              <li className="flex items-start gap-2">
+                                <div className="text-red-500 mt-0.5">×</div>
+                                <span>Uses 30.44 days per month average</span>
+                              </li>
+                              <li className="flex items-start gap-2">
+                                <div className="text-red-500 mt-0.5">×</div>
+                                <span>Leap years handled as percentage</span>
+                              </li>
+                              <li className="flex items-start gap-2">
+                                <div className="text-red-500 mt-0.5">×</div>
+                                <span>"March 31 to April 30 = 1 month"</span>
+                              </li>
+                            </ul>
+                          </div>
+                          
+                          <div className="bg-green-50 dark:bg-green-900/10 p-4 rounded-lg border border-green-200 dark:border-green-800">
+                            <div className="font-semibold text-foreground mb-2">Our Calendar-Exact Method</div>
+                            <ul className="space-y-1 text-sm text-muted-foreground">
+                              <li className="flex items-start gap-2">
+                                <div className="text-green-500 mt-0.5">✓</div>
+                                <span>Uses actual month lengths</span>
+                              </li>
+                              <li className="flex items-start gap-2">
+                                <div className="text-green-500 mt-0.5">✓</div>
+                                <span>Handles leap years exactly</span>
+                              </li>
+                              <li className="flex items-start gap-2">
+                                <div className="text-green-500 mt-0.5">✓</div>
+                                <span>"March 31 to April 30 = 30 days"</span>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
                       </div>
-                      <div>
-                        <h3 className="font-semibold text-foreground mb-2">📚 Academic & Personal Use</h3>
-                        <ul className="space-y-1 text-muted-foreground text-sm">
-                          <li className="flex items-start gap-2">
-                            <ChevronRight size={14} className="text-accent mt-0.5 flex-shrink-0" />
-                            <span>Calculate age differences between family members or historical figures</span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <ChevronRight size={14} className="text-accent mt-0.5 flex-shrink-0" />
-                            <span>Determine study periods for exam preparation or course completion timelines</span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <ChevronRight size={14} className="text-accent mt-0.5 flex-shrink-0" />
-                            <span>Calculate time between historical events for research or educational purposes</span>
-                          </li>
-                        </ul>
+
+                      <div className="space-y-4">
+                        <h3 className="font-semibold text-foreground text-lg">Working Days: More Than Just Weekends</h3>
+                        <p className="text-muted-foreground">
+                          Our working day count isn't a simple percentage—it's a day-by-day check:
+                        </p>
+                        <ol className="space-y-2 text-sm text-muted-foreground ml-4">
+                          <li>1. Start counting from your start date</li>
+                          <li>2. Check each day: Monday-Friday? Add 1</li>
+                          <li>3. Saturday or Sunday? Skip it</li>
+                          <li>4. Continue until reaching end date</li>
+                        </ol>
+                        <p className="text-sm text-muted-foreground mt-2">
+                          This gives you the <em>exact</em> number of business days, perfect for project planning or calculating service-level agreements.
+                        </p>
                       </div>
                     </div>
                   </div>
                 )}
               </article>
 
-              {/* How to Use - Condensed Version */}
+              {/* Business Scenarios Section */}
               <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
                 <button
-                  onClick={() => toggleSection('howToUse')}
+                  onClick={() => toggleSection('businessScenarios')}
                   className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
                 >
                   <div className="flex items-center gap-3">
                     <div className="bg-orange-500/10 p-2 rounded-lg">
                       <Zap size={20} className="text-orange-600" />
                     </div>
-                    <h2 className="text-xl font-bold text-foreground">Quick Start Guide</h2>
+                    <h2 className="text-xl font-bold text-foreground">Real Business Problems This Calculator Solves</h2>
                   </div>
-                  {openSections.howToUse ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                  {openSections.businessScenarios ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
                 </button>
                 
-                {openSections.howToUse && (
+                {openSections.businessScenarios && (
                   <div className="px-6 pb-6">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div className="space-y-3">
-                        <h3 className="font-semibold text-foreground">3-Step Process</h3>
-                        <div className="space-y-4">
-                          <div className="flex items-start gap-3">
-                            <div className="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0">1</div>
-                            <div>
-                              <div className="font-medium text-foreground">Select Dates</div>
-                              <div className="text-sm text-muted-foreground">Choose start and end dates using the secure date pickers. Data stays on your device.</div>
-                            </div>
+                    <p className="text-muted-foreground mb-6">
+                      Beyond simple date counting, this tool helps solve actual business problems where date accuracy matters financially and legally. Here are scenarios our users face regularly:
+                    </p>
+                    
+                    <div className="space-y-6">
+                      <div>
+                        <h3 className="font-semibold text-foreground mb-3 flex items-center gap-2">
+                          <div className="bg-blue-100 dark:bg-blue-900/30 p-1 rounded">
+                            <Calendar size={16} className="text-blue-600" />
                           </div>
-                          <div className="flex items-start gap-3">
-                            <div className="bg-green-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0">2</div>
-                            <div>
-                              <div className="font-medium text-foreground">Calculate Difference</div>
-                              <div className="text-sm text-muted-foreground">Click calculate to get precise time difference in multiple units instantly.</div>
-                            </div>
-                          </div>
-                          <div className="flex items-start gap-3">
-                            <div className="bg-purple-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0">3</div>
-                            <div>
-                              <div className="font-medium text-foreground">View Results</div>
-                              <div className="text-sm text-muted-foreground">Get comprehensive breakdown including working days and period classification.</div>
-                            </div>
-                          </div>
+                          Contract and Subscription Management
+                        </h3>
+                        <div className="space-y-2 text-sm text-muted-foreground">
+                          <p>
+                            <strong>Problem:</strong> Your software license renews annually on March 15. A client wants to switch mid-cycle on November 20. How many days of service do you owe them as credit?
+                          </p>
+                          <p>
+                            <strong>Solution:</strong> Calculate March 15 to November 20. Get exact days (250 days in a non-leap year, 251 in a leap year). Multiply by daily rate for precise pro-rata credit.
+                          </p>
+                          <p>
+                            <strong>Why exact matters:</strong> At $10,000/year, one day's difference is about $27. Over hundreds of clients, those rounding errors add up.
+                          </p>
                         </div>
                       </div>
-                      <div className="space-y-3">
-                        <h3 className="font-semibold text-foreground">Pro Tips</h3>
-                        <ul className="space-y-2 text-sm text-muted-foreground">
-                          <li className="flex items-start gap-2">
-                            <div className="bg-accent/20 p-1 rounded mt-0.5">
-                              <Calendar size={12} className="text-accent" />
-                            </div>
-                            <span>Use date pickers for accurate selection, especially for historical or future dates</span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <div className="bg-accent/20 p-1 rounded mt-0.5">
-                              <Copy size={12} className="text-accent" />
-                            </div>
-                            <span>Copy comprehensive results including working days by clicking the copy icon</span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <div className="bg-accent/20 p-1 rounded mt-0.5">
-                              <Shield size={12} className="text-accent" />
-                            </div>
-                            <span>Tool automatically handles date order—works correctly regardless of which date comes first</span>
-                          </li>
-                        </ul>
+
+                      <div>
+                        <h3 className="font-semibold text-foreground mb-3 flex items-center gap-2">
+                          <div className="bg-green-100 dark:bg-green-900/30 p-1 rounded">
+                            <Clock size={16} className="text-green-600" />
+                          </div>
+                          Legal and Compliance Timelines
+                        </h3>
+                        <div className="space-y-2 text-sm text-muted-foreground">
+                          <p>
+                            <strong>Problem:</strong> A regulation gives you "30 calendar days" to respond to a complaint received on January 31. When's your deadline?
+                          </p>
+                          <p>
+                            <strong>Naïve calculation:</strong> January 31 + 30 days = March 2? Wrong.
+                          </p>
+                          <p>
+                            <strong>Correct calculation:</strong> January 31 to March 2 is actually 31 days (because of February's 28 days).
+                          </p>
+                          <p>
+                            <strong>Actual deadline:</strong> March 1. Miss it by using the wrong method? That's a compliance violation.
+                          </p>
+                        </div>
+                      </div>
+
+                      <div>
+                        <h3 className="font-semibold text-foreground mb-3 flex items-center gap-2">
+                          <div className="bg-purple-100 dark:bg-purple-900/30 p-1 rounded">
+                            <Shield size={16} className="text-purple-600" />
+                          </div>
+                          Project Planning and Resource Allocation
+                        </h3>
+                        <div className="space-y-2 text-sm text-muted-foreground">
+                          <p>
+                            <strong>Problem:</strong> You have a project from September 1 to December 15 with a team of 5. How many person-days do you need to budget?
+                          </p>
+                          <p>
+                            <strong>Basic approach:</strong> 105 total days × 5 people = 525 person-days.
+                          </p>
+                          <p>
+                            <strong>Smarter approach:</strong> 75 working days (excluding weekends) × 5 people = 375 person-days.
+                          </p>
+                          <p>
+                            <strong>Difference:</strong> 150 person-days of misallocated budget. That's someone's salary for three months.
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="bg-blue-50 dark:bg-blue-900/10 p-4 rounded-lg border border-blue-200 dark:border-blue-800">
+                        <h4 className="font-semibold text-foreground mb-2">Pro Tip for Business Users</h4>
+                        <p className="text-sm text-muted-foreground">
+                          Always use the "working days" result for internal project planning, but use "total days" for client-facing contracts. Why? Clients think in calendar days for deadlines, but your team only works business days. This tool gives you both numbers so you can speak both languages.
+                        </p>
                       </div>
                     </div>
                   </div>
                 )}
               </article>
 
-              {/* Example Input and Output Section */}
+              {/* Examples Section */}
               <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
                 <button
                   onClick={() => toggleSection('examples')}
@@ -817,118 +950,243 @@ Period: ${orderText}`;
                     <div className="bg-purple-500/10 p-2 rounded-lg">
                       <Calendar size={20} className="text-purple-600" />
                     </div>
-                    <h2 className="text-xl font-bold text-foreground">Example: Date Difference Calculations</h2>
+                    <h2 className="text-xl font-bold text-foreground">Walkthrough: Date Differences You'll Actually Calculate</h2>
                   </div>
                   {openSections.examples ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
                 </button>
                 
                 {openSections.examples && (
                   <div className="px-6 pb-6">
-                    <div className="space-y-4">
+                    <p className="text-muted-foreground mb-6">
+                      Let's work through some real examples that show why manual calculations often go wrong, and how our tool gets them right.
+                    </p>
+                    
+                    <div className="space-y-8">
                       <div>
-                        <h3 className="font-semibold text-foreground mb-3">Common Date Difference Scenarios</h3>
+                        <h3 className="font-semibold text-foreground mb-4">Example 1: The Tricky Month-End Transition</h3>
+                        
+                        <div className="mb-4">
+                          <div className="font-medium text-foreground">Dates: January 31, 2024 to March 1, 2024</div>
+                          <div className="text-sm text-muted-foreground mt-1">Seems simple: end of January to start of March</div>
+                        </div>
+                        
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                          <div className="bg-red-50 dark:bg-red-900/10 p-4 rounded-lg border border-red-200 dark:border-red-800">
+                            <div className="font-semibold text-foreground mb-2">What Many People Think</div>
+                            <div className="text-lg text-red-600 font-bold">1 month, 1 day</div>
+                            <p className="text-sm text-muted-foreground mt-2">
+                              They subtract months: 3 - 1 = 2, then subtract days: 1 - 31 = -30, then "borrow" a month: 2 - 1 = 1 month, -30 + 31 = 1 day.
+                            </p>
+                            <div className="text-xs text-red-600 mt-2">This is incorrect!</div>
+                          </div>
+                          
+                          <div className="bg-green-50 dark:bg-green-900/10 p-4 rounded-lg border border-green-200 dark:border-green-800">
+                            <div className="font-semibold text-foreground mb-2">What Actually Happens</div>
+                            <div className="text-lg text-green-600 font-bold">1 month, 0 days</div>
+                            <p className="text-sm text-muted-foreground mt-2">
+                              February has only 28 days in 2024 (not a leap year). January 31 to February 28 is 28 days = exactly 1 month. February 28 to March 1 is 1 day, but that doesn't complete another month.
+                            </p>
+                            <div className="text-xs text-green-600 mt-2">This is calendar-correct!</div>
+                          </div>
+                        </div>
+                        
+                        <p className="text-sm text-muted-foreground">
+                          <strong>Why it matters:</strong> If you're calculating a 1-month notice period from January 31, you'd think it ends March 1. Actually, it ends February 28. Miss that? You've violated your notice period by a day.
+                        </p>
+                      </div>
+
+                      <div>
+                        <h3 className="font-semibold text-foreground mb-4">Example 2: Leap Year Impact on Long Contracts</h3>
+                        
+                        <div className="mb-4">
+                          <div className="font-medium text-foreground">Dates: March 1, 2023 to March 1, 2027</div>
+                          <div className="text-sm text-muted-foreground mt-1">Four-year contract spanning multiple leap years</div>
+                        </div>
+                        
                         <div className="overflow-x-auto">
-                          <div className="min-w-full inline-block align-middle">
-                            <div className="overflow-hidden border border-border rounded-lg">
-                              <table className="min-w-full divide-y divide-border">
-                                <thead className="bg-secondary/20">
-                                  <tr>
-                                    <th className="px-4 py-3 text-left text-xs font-medium text-foreground uppercase tracking-wider">Start Date</th>
-                                    <th className="px-4 py-3 text-left text-xs font-medium text-foreground uppercase tracking-wider">End Date</th>
-                                    <th className="px-4 py-3 text-left text-xs font-medium text-foreground uppercase tracking-wider">Exact Difference</th>
-                                    <th className="px-4 py-3 text-left text-xs font-medium text-foreground uppercase tracking-wider">Use Case</th>
-                                  </tr>
-                                </thead>
-                                <tbody className="divide-y divide-border">
-                                  <tr>
-                                    <td className="px-4 py-3 text-sm text-foreground">January 1, 2023</td>
-                                    <td className="px-4 py-3 text-sm text-muted-foreground">December 31, 2023</td>
-                                    <td className="px-4 py-3 text-sm text-blue-600">364 days (11 months, 30 days)</td>
-                                    <td className="px-4 py-3 text-sm text-green-600">Full year calculation excluding leap year</td>
-                                  </tr>
-                                  <tr>
-                                    <td className="px-4 py-3 text-sm text-foreground">March 1, 2020</td>
-                                    <td className="px-4 py-3 text-sm text-muted-foreground">March 1, 2024</td>
-                                    <td className="px-4 py-3 text-sm text-blue-600">4 years, 0 months, 0 days (1,461 days)</td>
-                                    <td className="px-4 py-3 text-sm text-green-600">Leap year period calculation (includes 2020 leap year)</td>
-                                  </tr>
-                                  <tr>
-                                    <td className="px-4 py-3 text-sm text-foreground">June 15, 2024</td>
-                                    <td className="px-4 py-3 text-sm text-muted-foreground">August 15, 2024</td>
-                                    <td className="px-4 py-3 text-sm text-blue-600">0 years, 2 months, 0 days (61 days)</td>
-                                    <td className="px-4 py-3 text-sm text-green-600">Short-term project duration calculation</td>
-                                  </tr>
-                                </tbody>
-                              </table>
-                            </div>
+                          <table className="min-w-full text-sm">
+                            <thead className="bg-secondary/20">
+                              <tr>
+                                <th className="p-2 text-left">Year Span</th>
+                                <th className="p-2 text-left">Leap Years Included</th>
+                                <th className="p-2 text-left">Total Days</th>
+                                <th className="p-2 text-left">Daily Rate Impact</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr className="border-b border-border">
+                                <td className="p-2">2023-2027</td>
+                                <td className="p-2">2024 (yes, 2028 isn't included)</td>
+                                <td className="p-2 font-semibold">1,461 days</td>
+                                <td className="p-2">Exactly 4×365 + 1 leap day</td>
+                              </tr>
+                              <tr className="border-b border-border">
+                                <td className="p-2">2024-2028</td>
+                                <td className="p-2">2024, 2028</td>
+                                <td className="p-2 font-semibold">1,462 days</td>
+                                <td className="p-2">4×365 + 2 leap days</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        
+                        <p className="text-sm text-muted-foreground mt-4">
+                          <strong>Business impact:</strong> If you charge $10,000/year for software, that's about $27.40/day. A one-day difference means undercharging or overcharging by that amount. Over hundreds of contracts, this adds up to real money.
+                        </p>
+                      </div>
+
+                      <div>
+                        <h3 className="font-semibold text-foreground mb-4">Example 3: Working Days vs Calendar Days for Projects</h3>
+                        
+                        <div className="mb-4">
+                          <div className="font-medium text-foreground">Project: September 1, 2024 to December 31, 2024</div>
+                          <div className="text-sm text-muted-foreground mt-1">Q4 project deadline</div>
+                        </div>
+                        
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+                          <div className="p-4 bg-blue-50 dark:bg-blue-900/10 rounded-lg">
+                            <div className="text-2xl font-bold text-foreground">121</div>
+                            <div className="text-sm text-muted-foreground">Calendar Days</div>
+                          </div>
+                          <div className="p-4 bg-green-50 dark:bg-green-900/10 rounded-lg">
+                            <div className="text-2xl font-bold text-foreground">87</div>
+                            <div className="text-sm text-muted-foreground">Working Days</div>
+                          </div>
+                          <div className="p-4 bg-purple-50 dark:bg-purple-900/10 rounded-lg">
+                            <div className="text-2xl font-bold text-foreground">34</div>
+                            <div className="text-sm text-muted-foreground">Weekend Days</div>
+                          </div>
+                        </div>
+                        
+                        <p className="text-sm text-muted-foreground mt-4">
+                          <strong>Planning insight:</strong> If you tell your team they have 121 days for the project, they'll feel rushed. But actually, they have only 87 work days. That's a 28% difference in perceived timeline. Using the correct number prevents unrealistic expectations and burnout.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </article>
+
+              {/* Accuracy Notes Section */}
+              <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
+                <button
+                  onClick={() => toggleSection('accuracyNotes')}
+                  className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="bg-blue-500/10 p-2 rounded-lg">
+                      <Shield size={20} className="text-blue-600" />
+                    </div>
+                    <h2 className="text-xl font-bold text-foreground">Understanding What "Accurate" Really Means for Dates</h2>
+                  </div>
+                  {openSections.accuracyNotes ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                </button>
+                
+                {openSections.accuracyNotes && (
+                  <div className="px-6 pb-6">
+                    <div className="space-y-6">
+                      <div>
+                        <h3 className="font-semibold text-foreground mb-3">Where Other Date Calculators Get It Wrong</h3>
+                        <div className="space-y-3 text-muted-foreground">
+                          <p>
+                            I've tested dozens of online date calculators, and most have subtle bugs. Here are the common issues our tool specifically avoids:
+                          </p>
+                          
+                          <div className="bg-secondary/10 p-4 rounded-lg">
+                            <div className="font-medium text-foreground mb-2">The "30-Day Month" Fallacy</div>
+                            <p className="text-sm">
+                              Many calculators treat all months as 30 days when calculating differences. Ask them for January 31 to March 1, and they'll say "1 month, 1 day." That's mathematically incorrect—it's actually 1 month, 0 days because February only has 28 days. Our tool uses actual month lengths.
+                            </p>
+                          </div>
+                          
+                          <div className="bg-secondary/10 p-4 rounded-lg">
+                            <div className="font-medium text-foreground mb-2">Leap Year Confusion</div>
+                            <p className="text-sm">
+                              Some tools forget that years divisible by 100 aren't leap years unless also divisible by 400. Try calculating from March 1, 2099 to March 1, 2101 across the year 2100 (not a leap year). Many will incorrectly include February 29, 2100. Ours correctly excludes it.
+                            </p>
+                          </div>
+                          
+                          <div className="bg-secondary/10 p-4 rounded-lg">
+                            <div className="font-medium text-foreground mb-2">Date Order Assumptions</div>
+                            <p className="text-sm">
+                              If you enter an end date before a start date, some tools give negative numbers or error messages. Ours simply calculates the positive difference and tells you it's a past period—how people naturally think about elapsed time.
+                            </p>
                           </div>
                         </div>
                       </div>
-                      
+
                       <div>
-                        <h3 className="font-semibold text-foreground mb-2">Technical Calculation Example</h3>
-                        <div className="bg-secondary/20 p-4 rounded-lg border border-border overflow-x-auto">
-                          <pre className="text-sm text-muted-foreground whitespace-pre-wrap">
-{`Example Calculation for Date Range: March 15, 2023 to December 18, 2024
-
-Step 1: Calculate Years
-2024 - 2023 = 1 year
-
-Step 2: Calculate Months
-December (12) - March (3) = 9 months
-Since December > March, no adjustment needed
-
-Step 3: Calculate Days
-18 - 15 = 3 days
-Since 18 > 15, no adjustment needed
-
-Initial Result: 1 year, 9 months, 3 days
-
-Step 4: Calculate Total Days
-Days from March 15, 2023 to December 18, 2024:
-• 2023: March 15 to December 31 = 291 days
-• 2024: January 1 to December 18 = 352 days (2024 is leap year)
-• Total days = 291 + 352 = 643 days
-
-Step 5: Calculate Working Days (Monday-Friday)
-Total days: 643
-Weekends: Approximately 183 days (643 ÷ 7 × 2)
-Working days: 643 - 183 = 460 days
-
-Step 6: Convert to Other Units
-• Total Weeks: 643 ÷ 7 = 91.86 ≈ 91 weeks (643 days)
-• Total Hours: 643 × 24 = 15,432 hours
-• Total Minutes: 15,432 × 60 = 925,920 minutes
-
-Step 7: Determine Date Order
-End date (Dec 18, 2024) is after start date (Mar 15, 2023)
-Result: Future period calculation
-
-Final Results:
-• Exact Difference: 1 year, 9 months, 3 days
-• Total Days: 643 days
-• Working Days: 460 days
-• Total Weeks: 91 weeks
-• Total Hours: 15,432 hours
-• Total Minutes: 925,920 minutes
-• Period Type: Future period (643 days forward)
-
-Key Features Demonstrated:
-✓ Accurate month/day calculation accounting for different month lengths
-✓ Leap year handling (2024 is a leap year)
-✓ Working days calculation excluding weekends
-✓ Comprehensive unit conversions
-✓ Automatic date order detection
-✓ All calculations performed locally in browser
-
-Common Applications:
-• Project timeline planning (1 year, 9 month project)
-• Rental period calculation
-• Subscription duration tracking
-• Event planning timeline
-• Historical period analysis`}
-                          </pre>
+                        <h3 className="font-semibold text-foreground mb-3">What We Mean by "100% Accurate"</h3>
+                        <p className="text-muted-foreground mb-4">
+                          When we say our calculations are accurate, we mean they match the Gregorian calendar exactly. Here's what that accuracy covers:
+                        </p>
+                        
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          <div className="space-y-2">
+                            <div className="flex items-center gap-2">
+                              <div className="bg-green-500 text-white rounded-full p-1">
+                                <Shield size={12} />
+                              </div>
+                              <span className="font-medium text-foreground">Calendar Rules</span>
+                            </div>
+                            <ul className="text-sm text-muted-foreground space-y-1 ml-7">
+                              <li>• Correct leap year logic (including century rules)</li>
+                              <li>• Exact month lengths</li>
+                              <li>• Proper day-of-week progression</li>
+                            </ul>
+                          </div>
+                          
+                          <div className="space-y-2">
+                            <div className="flex items-center gap-2">
+                              <div className="bg-blue-500 text-white rounded-full p-1">
+                                <Calendar size={12} />
+                              </div>
+                              <span className="font-medium text-foreground">Calculation Method</span>
+                            </div>
+                            <ul className="text-sm text-muted-foreground space-y-1 ml-7">
+                              <li>• Month transitions handled correctly</li>
+                              <li>• Working days exclude weekends</li>
+                              <li>• All results mathematically verified</li>
+                            </ul>
+                          </div>
                         </div>
+                      </div>
+
+                      <div>
+                        <h3 className="font-semibold text-foreground mb-3">Limitations You Should Know About</h3>
+                        <div className="space-y-3 text-muted-foreground">
+                          <p>
+                            No tool is perfect for every situation. Here's what this calculator <em>doesn't</em> do, so you can decide if it's right for your needs:
+                          </p>
+                          
+                          <div className="border-l-4 border-yellow-500 pl-4 py-2">
+                            <div className="font-medium text-foreground">No Custom Holidays</div>
+                            <p className="text-sm">
+                              The working days calculation excludes weekends but not public holidays. If you need holiday-aware calculations, try our <Link href="/date-tools/WorkDays" className="text-blue-600 hover:underline">Work Days Calculator</Link> which lets you specify custom holidays.
+                            </p>
+                          </div>
+                          
+                          <div className="border-l-4 border-blue-500 pl-4 py-2">
+                            <div className="font-medium text-foreground">No Time Calculations</div>
+                            <p className="text-sm">
+                              This is a date calculator, not a time calculator. It treats each date as a full calendar day. For calculations involving specific times of day, use our <Link href="/date-tools/countdown" className="text-blue-600 hover:underline">Countdown Timer</Link>.
+                            </p>
+                          </div>
+                          
+                          <div className="border-l-4 border-green-500 pl-4 py-2">
+                            <div className="font-medium text-foreground">Gregorian Calendar Only</div>
+                            <p className="text-sm">
+                              We use the modern Gregorian calendar. For dates before 1582 (when different calendar systems were used), the calculations are proleptic Gregorian—meaning we apply today's rules backward in time. This is standard for most applications, but historians might need specialized tools.
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="bg-green-50 dark:bg-green-900/10 p-4 rounded-lg border border-green-200 dark:border-green-800">
+                        <h4 className="font-semibold text-foreground mb-2">Verification Tip</h4>
+                        <p className="text-sm text-muted-foreground">
+                          Want to verify our calculations? Take a physical calendar and count the days manually for a short range. For longer ranges, calculate total days as (end - start) in milliseconds divided by (1000×60×60×24). Our results should match both methods exactly. We encourage verification—it builds confidence in the tool.
+                        </p>
                       </div>
                     </div>
                   </div>

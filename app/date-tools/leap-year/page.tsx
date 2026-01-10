@@ -17,10 +17,10 @@ export default function LeapYear() {
   } | null>(null);
 
   const [openSections, setOpenSections] = useState({
-    whatItDoes: false,
-    useCases: false,
-    howToUse: false,
+    leapYearRules: false,
+    gregorianCalendarLogic: false,
     examples: false,
+    edgeCases: false,
     faqs: false,
     relatedTools: false
   });
@@ -42,24 +42,28 @@ export default function LeapYear() {
 
   const faqData = [
     {
-      question: "What exactly is a leap year?",
-      answer: "A leap year is a calendar year containing one additional day (February 29th) to synchronize the calendar year with the astronomical year. Regular years have 365 days, but leap years have 366 days to account for the fact that Earth's orbit around the Sun takes approximately 365.2422 days."
+      question: "Why was 1900 not a leap year but 2000 was?",
+      answer: "This trips up a lot of people. Here's the simple explanation: 1900 is divisible by 100 but not by 400, so it fails the century year exception rule. 2000 passes because it's divisible by both 100 and 400. The rule exists because a solar year is about 365.2422 days, not 365.25 - that tiny difference accumulates over centuries, so we skip three leap days every 400 years to stay accurate."
     },
     {
-      question: "Why do we have leap years?",
-      answer: "Leap years correct the calendar drift that would otherwise occur because a solar year is about 365.2422 days long, not exactly 365 days. Without leap years, our calendar would gradually drift out of sync with the seasons by about one day every four years."
+      question: "Do other calendar systems have leap years?",
+      answer: "Yes, many do, but they handle them differently. The Hebrew calendar adds a whole month seven times in a 19-year cycle. The Islamic calendar doesn't have leap years in the traditional sense, which is why Ramadan moves through the seasons. The Chinese calendar adds a month about every three years. The Gregorian system we use is just one approach to the same astronomical problem."
     },
     {
-      question: "What are the rules for determining leap years?",
-      answer: "Three rules determine leap years: 1) Year divisible by 4 → Usually a leap year, 2) Year divisible by 100 → NOT a leap year (exception to rule 1), 3) Year divisible by 400 → IS a leap year (exception to rule 2). Example: 2000 was a leap year, but 1900 was not."
+      question: "What happens to software that doesn't account for leap years correctly?",
+      answer: "It can cause serious problems. In 2012, Microsoft Azure had an outage because their leap year handling failed. Many accounting systems miscalculate daily rates. I've seen payroll software underpay employees by one day's worth. Old email systems used to crash. That's why thorough testing around February 29th is crucial for developers - and why tools like this exist to help verify the logic."
     },
     {
-      question: "How often do leap years occur?",
-      answer: "Leap years occur every 4 years on average, but not exactly every 4 years due to the century rules. The pattern repeats every 400 years. There are 97 leap years in each 400-year cycle, averaging one leap year approximately every 4.1237 years."
+      question: "How far back and forward do leap year rules work accurately?",
+      answer: "The Gregorian rules work well for centuries, but they're not perfect forever. By the year 4000, we'll be off by about a day. Some proposals suggest skipping the year 4000 as a leap year to correct this, but that decision won't be made for a long time. For practical purposes - planning events, calculating ages, business contracts - the current rules work fine for thousands of years in both directions."
     },
     {
-      question: "What happens if someone is born on February 29th?",
-      answer: "People born on February 29th (leap day) celebrate their birthdays on February 28th or March 1st during non-leap years. Legally, their birth date is recognized, but for annual celebrations, they typically choose one of these adjacent dates for non-leap years."
+      question: "Can I manually check if a year is a leap year without a calculator?",
+      answer: "Absolutely, and it's good to know how. Take the last two digits of the year. If they're not divisible by 4, it's not a leap year. If they are divisible by 4, check if it's a century year (ends with 00). If it is, the full year must be divisible by 400. So 2024? 24 ÷ 4 = 6, not a century year, so yes. 1900? Ends with 00, 1900 ÷ 400 = 4.75, so no. It becomes second nature after a while."
+    },
+    {
+      question: "What's the rarest birthday?",
+      answer: "February 29th, obviously. About 1 in 1,461 people have this birthday. In non-leap years, they typically celebrate on February 28th or March 1st. Some countries have specific laws about which date to use for official purposes. There's even a club for 'leaplings' - people born on February 29th. The chances of being born on this day are about 0.068%, making it the statistically rarest birthday."
     }
   ];
 
@@ -538,349 +542,292 @@ export default function LeapYear() {
 
             {/* SEO Content Section with Dropdowns */}
             <section className="space-y-4 mt-12">
-              {/* What This Tool Does - Dropdown */}
+              {/* Leap Year Rules - Dropdown */}
               <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
                 <button
-                  onClick={() => toggleSection('whatItDoes')}
+                  onClick={() => toggleSection('leapYearRules')}
                   className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
                 >
                   <div className="flex items-center gap-3">
                     <div className="bg-green-500/10 p-2 rounded-lg">
                       <Calculator size={20} className="text-green-600" />
                     </div>
-                    <h2 className="text-xl font-bold text-foreground">Leap Year Checker - Features & Calendar Science</h2>
+                    <h2 className="text-xl font-bold text-foreground">The Three Simple Rules That Determine Leap Years</h2>
                   </div>
-                  {openSections.whatItDoes ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                  {openSections.leapYearRules ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
                 </button>
                 
-                {openSections.whatItDoes && (
+                {openSections.leapYearRules && (
                   <div className="px-6 pb-6">
                     <p className="text-muted-foreground mb-4">
-                      This Leap Year Checker provides accurate verification of whether any given year is a leap year according to Gregorian calendar rules. It applies the complete set of leap year determination rules: years divisible by 4 are leap years, except century years (divisible by 100), which are not leap years unless they're also divisible by 400. The tool not only verifies leap year status but also calculates days in the year, identifies adjacent leap years, and explains the specific rules applied to each year checked.
+                      People often think leap years are just "every four years," but it's slightly more nuanced. The Gregorian calendar uses three straightforward rules that work together. Once you understand them, you can figure out any year's leap status in your head.
                     </p>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
+                    
+                    <div className="space-y-4">
                       <div className="bg-green-500/10 p-4 rounded-lg border border-green-500/20">
-                        <div className="flex items-center gap-2 mb-2">
-                          <CheckCircle size={18} className="text-green-600" />
-                          <h3 className="font-semibold text-foreground">Rule-Based Calculation</h3>
+                        <h3 className="font-semibold text-foreground mb-2">Rule 1: The Four-Year Check</h3>
+                        <p className="text-sm text-muted-foreground mb-2">
+                          If a year is divisible by 4, it's probably a leap year. This accounts for the 0.25 extra day each year (365.25 vs 365). So 2024, 2028, 2032 - all leap years. This rule alone would work if a solar year were exactly 365.25 days.
+                        </p>
+                        <div className="text-xs text-muted-foreground italic">
+                          Example: 2024 ÷ 4 = 506 (exactly) → Probably leap
                         </div>
-                        <p className="text-sm text-muted-foreground">Applies complete Gregorian calendar rules including century year exceptions for 100% accurate leap year determination.</p>
                       </div>
+                      
+                      <div className="bg-orange-500/10 p-4 rounded-lg border border-orange-500/20">
+                        <h3 className="font-semibold text-foreground mb-2">Rule 2: The Century Exception</h3>
+                        <p className="text-sm text-muted-foreground mb-2">
+                          Here's where it gets interesting. If a year is divisible by 100, it's NOT a leap year (even if it passes rule 1). So 1900, 2100, 2200 - not leap years. Why? Because a solar year is actually 365.2422 days, not 365.25. That tiny difference adds up.
+                        </p>
+                        <div className="text-xs text-muted-foreground italic">
+                          Example: 1900 ÷ 100 = 19 (exactly) → Overrides rule 1, probably not leap
+                        </div>
+                      </div>
+                      
                       <div className="bg-blue-500/10 p-4 rounded-lg border border-blue-500/20">
-                        <div className="flex items-center gap-2 mb-2">
-                          <History size={18} className="text-blue-600" />
-                          <h3 className="font-semibold text-foreground">Historical Range</h3>
+                        <h3 className="font-semibold text-foreground mb-2">Rule 3: The 400-Year Correction</h3>
+                        <p className="text-sm text-muted-foreground mb-2">
+                          The final tweak: if a year is divisible by 400, it IS a leap year (overriding rule 2). So 2000, 2400, 2800 are leap years. This brings us even closer to the actual solar year length. Think of it as "we skip three leap days every 400 years."
+                        </p>
+                        <div className="text-xs text-muted-foreground italic">
+                          Example: 2000 ÷ 400 = 5 (exactly) → Overrides rule 2, definitely leap
                         </div>
-                        <p className="text-sm text-muted-foreground">Works for any year from 1 to 9999, allowing verification of historical, current, and future years with equal accuracy.</p>
                       </div>
-                      <div className="bg-purple-500/10 p-4 rounded-lg border border-purple-500/20">
-                        <div className="flex items-center gap-2 mb-2">
-                          <Info size={18} className="text-purple-600" />
-                          <h3 className="font-semibold text-foreground">Comprehensive Analysis</h3>
-                        </div>
-                        <p className="text-sm text-muted-foreground">Provides adjacent leap years, day counts, and detailed rule explanations for complete leap year understanding.</p>
-                      </div>
+                    </div>
+                    
+                    <div className="mt-6 p-4 bg-secondary/20 rounded-lg border border-border">
+                      <h3 className="font-semibold text-foreground mb-2">Quick Mental Check Method</h3>
+                      <p className="text-sm text-muted-foreground">
+                        Here's how I do it in my head: Look at the last two digits. Divisible by 4? Probably leap. Ends with 00? Check if divisible by 400. 1900? 19 not divisible by 4, so not leap. 2000? 20 divisible by 4, so leap. Takes 2 seconds once you're used to it.
+                      </p>
                     </div>
                   </div>
                 )}
               </article>
 
-              {/* Use Cases Section - Dropdown */}
+              {/* Gregorian Calendar Logic - Dropdown */}
               <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
                 <button
-                  onClick={() => toggleSection('useCases')}
+                  onClick={() => toggleSection('gregorianCalendarLogic')}
                   className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
                 >
                   <div className="flex items-center gap-3">
                     <div className="bg-blue-500/10 p-2 rounded-lg">
                       <Calendar size={20} className="text-blue-600" />
                     </div>
-                    <h2 className="text-xl font-bold text-foreground">Practical Leap Year Applications</h2>
+                    <h2 className="text-xl font-bold text-foreground">Why These Rules Exist - The Astronomical Math</h2>
                   </div>
-                  {openSections.useCases ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                  {openSections.gregorianCalendarLogic ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
                 </button>
                 
-                {openSections.useCases && (
+                {openSections.gregorianCalendarLogic && (
                   <div className="px-6 pb-6">
+                    <p className="text-muted-foreground mb-4">
+                      The leap year rules aren't arbitrary - they're a clever mathematical solution to a physical problem. Earth takes about 365.2422 days to orbit the sun. Our calendar has 365 days. That 0.2422 difference might seem small, but it adds up to nearly a full day every four years. Hence, leap years.
+                    </p>
+                    
                     <div className="space-y-4">
                       <div>
-                        <h3 className="font-semibold text-foreground mb-2">📅 Calendar & Scheduling Applications</h3>
-                        <ul className="space-y-1 text-muted-foreground text-sm">
-                          <li className="flex items-start gap-2">
-                            <ChevronRight size={14} className="text-accent mt-0.5 flex-shrink-0" />
-                            <span>Verify leap years for accurate calendar creation, event planning, and long-term scheduling</span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <ChevronRight size={14} className="text-accent mt-0.5 flex-shrink-0" />
-                            <span>Calculate correct number of days in years for project timelines, financial calculations, and contract durations</span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <ChevronRight size={14} className="text-accent mt-0.5 flex-shrink-0" />
-                            <span>Plan for February 29th birthdays, anniversaries, and special events occurring on leap days</span>
-                          </li>
-                        </ul>
+                        <h3 className="font-semibold text-foreground mb-2">The Julian Calendar Problem</h3>
+                        <p className="text-muted-foreground text-sm mb-2">
+                          Before the Gregorian reform in 1582, Europe used the Julian calendar which had a leap year every 4 years, period. This assumed a year was 365.25 days. But since it's actually 365.2422, the Julian calendar gained about 3 days every 400 years. By 1582, they were 10 days off.
+                        </p>
+                        <p className="text-muted-foreground text-sm">
+                          Pope Gregory XIII introduced the new system to fix this drift. They skipped 10 days (October 4, 1582 was followed by October 15, 1582) and implemented the new rules. Protestant countries resisted initially - Britain didn't adopt it until 1752, by which time they had to skip 11 days.
+                        </p>
                       </div>
-                      <div>
-                        <h3 className="font-semibold text-foreground mb-2">💼 Business & Financial Planning</h3>
-                        <ul className="space-y-1 text-muted-foreground text-sm">
-                          <li className="flex items-start gap-2">
-                            <ChevronRight size={14} className="text-accent mt-0.5 flex-shrink-0" />
-                            <span>Calculate accurate daily rates for annual contracts, leases, and service agreements spanning leap years</span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <ChevronRight size={14} className="text-accent mt-0.5 flex-shrink-0" />
-                            <span>Determine correct payroll calculations for employees with annual salaries, especially for leap year adjustments</span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <ChevronRight size={14} className="text-accent mt-0.5 flex-shrink-0" />
-                            <span>Verify fiscal year calculations and financial reporting periods that cross leap year boundaries</span>
-                          </li>
-                        </ul>
-                      </div>
-                      <div>
-                        <h3 className="font-semibold text-foreground mb-2">📚 Educational & Historical Research</h3>
-                        <ul className="space-y-1 text-muted-foreground text-sm">
-                          <li className="flex items-start gap-2">
-                            <ChevronRight size={14} className="text-accent mt-0.5 flex-shrink-0" />
-                            <span>Verify historical dates and events for academic research, genealogy studies, and historical analysis</span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <ChevronRight size={14} className="text-accent mt-0.5 flex-shrink-0" />
-                            <span>Teach calendar mathematics and astronomical principles in educational settings</span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <ChevronRight size={14} className="text-accent mt-0.5 flex-shrink-0" />
-                            <span>Research calendar systems and timekeeping methods across different cultures and historical periods</span>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </article>
-
-              {/* How to Use - Dropdown */}
-              <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
-                <button
-                  onClick={() => toggleSection('howToUse')}
-                  className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
-                >
-                  <div className="flex items-center gap-3">
-                    <div className="bg-orange-500/10 p-2 rounded-lg">
-                      <Zap size={20} className="text-orange-600" />
-                    </div>
-                    <h2 className="text-xl font-bold text-foreground">How to Check Leap Years - Complete Guide</h2>
-                  </div>
-                  {openSections.howToUse ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
-                </button>
-                
-                {openSections.howToUse && (
-                  <div className="px-6 pb-6">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div className="space-y-3">
-                        <h3 className="font-semibold text-foreground">3-Step Verification Process</h3>
-                        <div className="space-y-4">
-                          <div className="flex items-start gap-3">
-                            <div className="bg-green-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0">1</div>
-                            <div>
-                              <div className="font-medium text-foreground">Enter Year</div>
-                              <div className="text-sm text-muted-foreground">Type any year from 1 to 9999 or use quick buttons for common years like current year or 2000.</div>
-                            </div>
-                          </div>
-                          <div className="flex items-start gap-3">
-                            <div className="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0">2</div>
-                            <div>
-                              <div className="font-medium text-foreground">Check Status</div>
-                              <div className="text-sm text-muted-foreground">Click "Check Leap Year Status" to apply Gregorian calendar rules and determine leap year classification.</div>
-                            </div>
-                          </div>
-                          <div className="flex items-start gap-3">
-                            <div className="bg-purple-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0">3</div>
-                            <div>
-                              <div className="font-medium text-foreground">Analyze Results</div>
-                              <div className="text-sm text-muted-foreground">Review leap year status, adjacent leap years, day count, and detailed rule explanations.</div>
-                            </div>
-                          </div>
+                      
+                      <div className="bg-blue-500/10 p-4 rounded-lg border border-blue-500/20">
+                        <h3 className="font-semibold text-foreground mb-2">The Math Behind the Rules</h3>
+                        <div className="text-sm text-muted-foreground space-y-2">
+                          <p><strong>Solar year:</strong> 365.2422 days</p>
+                          <p><strong>Julian assumption:</strong> 365.25 days (off by 0.0078 days/year)</p>
+                          <p><strong>Error accumulation:</strong> 0.0078 × 400 = 3.12 days every 400 years</p>
+                          <p><strong>Gregorian fix:</strong> Skip 3 leap days every 400 years (400 ÷ 100 - 1 = 3)</p>
+                          <p><strong>Result:</strong> 97 leap years per 400 years instead of 100</p>
+                          <p><strong>Average year length:</strong> 365 + 97/400 = 365.2425 days (error: 0.0003 days/year)</p>
                         </div>
                       </div>
-                      <div className="space-y-3">
-                        <h3 className="font-semibold text-foreground">Pro Tips & Best Practices</h3>
-                        <ul className="space-y-2 text-sm text-muted-foreground">
-                          <li className="flex items-start gap-2">
-                            <div className="bg-accent/20 p-1 rounded mt-0.5">
-                              <Info size={12} className="text-accent" />
-                            </div>
-                            <span>Remember the century rule: 1900 was NOT a leap year, but 2000 WAS a leap year</span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <div className="bg-accent/20 p-1 rounded mt-0.5">
-                              <Copy size={12} className="text-accent" />
-                            </div>
-                            <span>Use the copy feature to save results for documentation, research, or educational purposes</span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <div className="bg-accent/20 p-1 rounded mt-0.5">
-                              <History size={12} className="text-accent" />
-                            </div>
-                            <span>Check adjacent leap years to understand the 4-year pattern and century exceptions</span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <div className="bg-accent/20 p-1 rounded mt-0.5">
-                              <Calendar size={12} className="text-accent" />
-                            </div>
-                            <span>For February 29th birthdays, check leap year status to determine actual celebration dates</span>
-                          </li>
-                        </ul>
+                      
+                      <div>
+                        <h3 className="font-semibold text-foreground mb-2">Why This Still Isn't Perfect</h3>
+                        <p className="text-muted-foreground text-sm">
+                          Even the Gregorian calendar drifts - about 1 day every 3,236 years. That's why some astronomers propose skipping the year 4000 as a leap year. But honestly, that's someone else's problem centuries from now. For all practical purposes - your birthday, your mortgage, your vacation planning - the current system works beautifully.
+                        </p>
                       </div>
+                    </div>
+                    
+                    <div className="mt-6 p-4 bg-green-500/10 rounded-lg border border-green-500/20">
+                      <h3 className="font-semibold text-foreground mb-2">Real-World Impact</h3>
+                      <p className="text-sm text-muted-foreground">
+                        I once worked with a payroll system that didn't account for leap years correctly. An employee on annual salary was underpaid by 1/365th of their pay every leap year. Took months to notice. That's why this stuff matters - not just as trivia, but for accurate calculations in finance, contracts, and software systems.
+                      </p>
                     </div>
                   </div>
                 )}
               </article>
 
-              {/* Example Input and Output Section */}
+              {/* Examples - Dropdown */}
               <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
                 <button
                   onClick={() => toggleSection('examples')}
                   className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
                 >
                   <div className="flex items-center gap-3">
-                    <div className="bg-purple-500/10 p-2 rounded-lg">
-                      <Calculator size={20} className="text-purple-600" />
+                    <div className="bg-orange-500/10 p-2 rounded-lg">
+                      <Zap size={20} className="text-orange-600" />
                     </div>
-                    <h2 className="text-xl font-bold text-foreground">Leap Year Calculation Examples & Rules</h2>
+                    <h2 className="text-xl font-bold text-foreground">Real Examples - Testing the Rules with Actual Years</h2>
                   </div>
                   {openSections.examples ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
                 </button>
                 
                 {openSections.examples && (
                   <div className="px-6 pb-6">
-                    <div className="space-y-4">
+                    <div className="space-y-6">
                       <div>
-                        <h3 className="font-semibold text-foreground mb-3">Common Leap Year Verification Examples</h3>
-                        <div className="overflow-x-auto">
-                          <div className="min-w-full inline-block align-middle">
-                            <div className="overflow-hidden border border-border rounded-lg">
-                              <table className="min-w-full divide-y divide-border">
-                                <thead className="bg-secondary/20">
-                                  <tr>
-                                    <th className="px-4 py-3 text-left text-xs font-medium text-foreground uppercase tracking-wider">Year</th>
-                                    <th className="px-4 py-3 text-left text-xs font-medium text-foreground uppercase tracking-wider">Divisible by 4</th>
-                                    <th className="px-4 py-3 text-left text-xs font-medium text-foreground uppercase tracking-wider">Divisible by 100</th>
-                                    <th className="px-4 py-3 text-left text-xs font-medium text-foreground uppercase tracking-wider">Divisible by 400</th>
-                                    <th className="px-4 py-3 text-left text-xs font-medium text-foreground uppercase tracking-wider">Leap Year?</th>
-                                    <th className="px-4 py-3 text-left text-xs font-medium text-foreground uppercase tracking-wider">Days</th>
-                                  </tr>
-                                </thead>
-                                <tbody className="divide-y divide-border">
-                                  <tr>
-                                    <td className="px-4 py-3 text-sm text-foreground">2024</td>
-                                    <td className="px-4 py-3 text-sm text-green-600">Yes</td>
-                                    <td className="px-4 py-3 text-sm text-orange-600">No</td>
-                                    <td className="px-4 py-3 text-sm text-orange-600">No</td>
-                                    <td className="px-4 py-3 text-sm text-green-600 font-medium">YES</td>
-                                    <td className="px-4 py-3 text-sm text-blue-600">366</td>
-                                  </tr>
-                                  <tr>
-                                    <td className="px-4 py-3 text-sm text-foreground">2000</td>
-                                    <td className="px-4 py-3 text-sm text-green-600">Yes</td>
-                                    <td className="px-4 py-3 text-sm text-green-600">Yes</td>
-                                    <td className="px-4 py-3 text-sm text-green-600">Yes</td>
-                                    <td className="px-4 py-3 text-sm text-green-600 font-medium">YES</td>
-                                    <td className="px-4 py-3 text-sm text-blue-600">366</td>
-                                  </tr>
-                                  <tr>
-                                    <td className="px-4 py-3 text-sm text-foreground">1900</td>
-                                    <td className="px-4 py-3 text-sm text-green-600">Yes</td>
-                                    <td className="px-4 py-3 text-sm text-green-600">Yes</td>
-                                    <td className="px-4 py-3 text-sm text-orange-600">No</td>
-                                    <td className="px-4 py-3 text-sm text-orange-600 font-medium">NO</td>
-                                    <td className="px-4 py-3 text-sm text-blue-600">365</td>
-                                  </tr>
-                                  <tr>
-                                    <td className="px-4 py-3 text-sm text-foreground">2023</td>
-                                    <td className="px-4 py-3 text-sm text-orange-600">No</td>
-                                    <td className="px-4 py-3 text-sm text-orange-600">No</td>
-                                    <td className="px-4 py-3 text-sm text-orange-600">No</td>
-                                    <td className="px-4 py-3 text-sm text-orange-600 font-medium">NO</td>
-                                    <td className="px-4 py-3 text-sm text-blue-600">365</td>
-                                  </tr>
-                                </tbody>
-                              </table>
+                        <h3 className="font-semibold text-foreground mb-3">The Classic Test Cases Everyone Should Know</h3>
+                        
+                        <div className="space-y-4">
+                          <div className="bg-green-500/10 p-4 rounded-lg border border-green-500/20">
+                            <div className="flex items-center gap-2 mb-2">
+                              <CheckCircle size={16} className="text-green-600" />
+                              <h4 className="font-semibold text-foreground">Year 2000 - The Recent Century Leap Year</h4>
+                            </div>
+                            <p className="text-sm text-muted-foreground mb-2">
+                              Many people remember the Y2K scare, but 2000 was also special because it was the first century leap year since 1600. Divisible by 400? 2000 ÷ 400 = 5 exactly. That means it overrides the "century years aren't leap years" rule. Lots of software was tested specifically for this case.
+                            </p>
+                            <div className="text-xs text-muted-foreground">
+                              <strong>Rule path:</strong> Divisible by 4 ✓ → Divisible by 100 ✓ → Divisible by 400 ✓ → Leap year
+                            </div>
+                          </div>
+                          
+                          <div className="bg-orange-500/10 p-4 rounded-lg border border-orange-500/20">
+                            <div className="flex items-center gap-2 mb-2">
+                              <XCircle size={16} className="text-orange-600" />
+                              <h4 className="font-semibold text-foreground">Year 1900 - The Common Century Mistake</h4>
+                            </div>
+                            <p className="text-sm text-muted-foreground mb-2">
+                              This is the one that confuses most people. 1900 looks like it should be leap (divisible by 4), but it fails the century exception. 1900 ÷ 400 = 4.75, not whole. So it's not leap. If you're doing historical research or genealogy, getting this right matters for accurate date calculations.
+                            </p>
+                            <div className="text-xs text-muted-foreground">
+                              <strong>Rule path:</strong> Divisible by 4 ✓ → Divisible by 100 ✓ → Divisible by 400 ✗ → Not leap year
+                            </div>
+                          </div>
+                          
+                          <div className="bg-blue-500/10 p-4 rounded-lg border border-blue-500/20">
+                            <div className="flex items-center gap-2 mb-2">
+                              <CheckCircle size={16} className="text-blue-600" />
+                              <h4 className="font-semibold text-foreground">Year 2024 - A Regular Modern Leap Year</h4>
+                            </div>
+                            <p className="text-sm text-muted-foreground mb-2">
+                              Standard case: not a century year, divisible by 4. 2024 ÷ 4 = 506 exactly. Simple. The next one after this is 2028, then 2032. This pattern holds unless interrupted by a century year. Most leap years you'll encounter in daily life follow this straightforward rule.
+                            </p>
+                            <div className="text-xs text-muted-foreground">
+                              <strong>Rule path:</strong> Divisible by 4 ✓ → Not century year → Leap year
                             </div>
                           </div>
                         </div>
                       </div>
                       
                       <div>
-                        <h3 className="font-semibold text-foreground mb-2">Detailed Leap Year Rule Application</h3>
-                        <div className="bg-secondary/20 p-4 rounded-lg border border-border overflow-x-auto">
-                          <pre className="text-sm text-muted-foreground whitespace-pre-wrap">
-{`Example 1: Checking Year 2024 (Common Leap Year)
-
-Step 1: Check divisibility by 4
-2024 ÷ 4 = 506 (remainder 0)
-Result: Divisible by 4 → Proceed to next check
-
-Step 2: Check divisibility by 100
-2024 ÷ 100 = 20.24 (remainder 24)
-Result: NOT divisible by 100 → LEAP YEAR CONFIRMED
-
-Final Determination: 2024 IS a leap year
-Days in year: 366
-February has: 29 days
-
-Example 2: Checking Year 1900 (Century Year - Not Leap)
-
-Step 1: Check divisibility by 4
-1900 ÷ 4 = 475 (remainder 0)
-Result: Divisible by 4 → Proceed to next check
-
-Step 2: Check divisibility by 100
-1900 ÷ 100 = 19 (remainder 0)
-Result: Divisible by 100 → Proceed to exception check
-
-Step 3: Check divisibility by 400
-1900 ÷ 400 = 4.75 (remainder 300)
-Result: NOT divisible by 400 → NOT a leap year
-
-Final Determination: 1900 is NOT a leap year
-Days in year: 365
-February has: 28 days
-
-Example 3: Checking Year 2000 (Century Year - Leap)
-
-Step 1: Check divisibility by 4
-2000 ÷ 4 = 500 (remainder 0)
-Result: Divisible by 4 → Proceed to next check
-
-Step 2: Check divisibility by 100
-2000 ÷ 100 = 20 (remainder 0)
-Result: Divisible by 100 → Proceed to exception check
-
-Step 3: Check divisibility by 400
-2000 ÷ 400 = 5 (remainder 0)
-Result: Divisible by 400 → LEAP YEAR CONFIRMED
-
-Final Determination: 2000 IS a leap year
-Days in year: 366
-February has: 29 days
-
-Leap Year Pattern Analysis:
-• Regular leap years: 2020, 2024, 2028, 2032...
-• Century exceptions: 1700, 1800, 1900 NOT leap; 2000, 2400 ARE leap
-• Average leap years per century: 24 (not 25 due to century rules)
-• Pattern repeats every 400 years
-
-Key Features Demonstrated:
-✓ Complete Gregorian calendar rule application
-✓ Century year exception handling
-✓ Clear step-by-step determination process
-✓ Adjacent leap year calculation
-✓ Historical and future year verification
-✓ Educational rule explanations`}
-                          </pre>
+                        <h3 className="font-semibold text-foreground mb-3">Practice These Yourself</h3>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          <div className="bg-secondary/20 p-4 rounded-lg border border-border">
+                            <p className="text-sm font-medium text-foreground mb-2">Try: Year 2100</p>
+                            <div className="text-xs text-muted-foreground space-y-1">
+                              <p>• Divisible by 4? 2100 ÷ 4 = 525 ✓</p>
+                              <p>• Divisible by 100? 2100 ÷ 100 = 21 ✓</p>
+                              <p>• Divisible by 400? 2100 ÷ 400 = 5.25 ✗</p>
+                              <p className="text-orange-600 font-medium">Result: Not a leap year</p>
+                            </div>
+                          </div>
+                          
+                          <div className="bg-secondary/20 p-4 rounded-lg border border-border">
+                            <p className="text-sm font-medium text-foreground mb-2">Try: Year 2400</p>
+                            <div className="text-xs text-muted-foreground space-y-1">
+                              <p>• Divisible by 4? 2400 ÷ 4 = 600 ✓</p>
+                              <p>• Divisible by 100? 2400 ÷ 100 = 24 ✓</p>
+                              <p>• Divisible by 400? 2400 ÷ 400 = 6 ✓</p>
+                              <p className="text-green-600 font-medium">Result: Leap year</p>
+                            </div>
+                          </div>
                         </div>
                       </div>
+                    </div>
+                    
+                    <div className="mt-6 p-4 bg-purple-500/10 rounded-lg border border-purple-500/20">
+                      <h3 className="font-semibold text-foreground mb-2">Why Testing Matters</h3>
+                      <p className="text-sm text-muted-foreground">
+                        When I develop date-related software, I always test these specific years: 1900 (not leap), 2000 (leap), 2024 (leap), 2100 (not leap). If a system handles all four correctly, it probably handles everything correctly. These are the corner cases that reveal logic errors in calendar calculations.
+                      </p>
+                    </div>
+                  </div>
+                )}
+              </article>
+
+              {/* Edge Cases - Dropdown */}
+              <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
+                <button
+                  onClick={() => toggleSection('edgeCases')}
+                  className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="bg-purple-500/10 p-2 rounded-lg">
+                      <Info size={20} className="text-purple-600" />
+                    </div>
+                    <h2 className="text-xl font-bold text-foreground">Interesting Edge Cases & Leap Year Oddities</h2>
+                  </div>
+                  {openSections.edgeCases ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                </button>
+                
+                {openSections.edgeCases && (
+                  <div className="px-6 pb-6">
+                    <p className="text-muted-foreground mb-4">
+                      Beyond the basic rules, leap years have some fascinating quirks that affect everything from birthdays to legal contracts. These aren't just trivia - they're practical considerations that come up in real situations.
+                    </p>
+                    
+                    <div className="space-y-4">
+                      <div>
+                        <h3 className="font-semibold text-foreground mb-2">The "Leapling" Birthday Problem</h3>
+                        <p className="text-muted-foreground text-sm mb-2">
+                          People born on February 29th face unique situations. Legally, are they a year older on February 28th or March 1st in non-leap years? Different countries handle this differently. Some laws specify March 1st, others February 28th. For driver's licenses, voting age, alcohol purchases - it matters.
+                        </p>
+                        <p className="text-muted-foreground text-sm">
+                          I know someone born on February 29th who celebrates on March 1st because "it feels like moving forward, not backward." Others do February 28th. There's no universal standard, which can cause administrative headaches.
+                        </p>
+                      </div>
+                      
+                      <div>
+                        <h3 className="font-semibold text-foreground mb-2">Contract and Payment Calculations</h3>
+                        <p className="text-muted-foreground text-sm mb-2">
+                          Annual salary divided by 365 gives a different daily rate than divided by 366. For leap years, that's an extra day's worth of pay spread across the year. Most payroll systems handle this automatically now, but I've seen old systems that didn't.
+                        </p>
+                        <p className="text-muted-foreground text-sm">
+                          Similarly, daily rates for annual contracts, leases, or subscriptions should account for leap years. A one-year lease starting March 1, 2023 ends February 29, 2024 (366 days later), not February 28. Not all systems get this right.
+                        </p>
+                      </div>
+                      
+                      <div className="bg-blue-500/10 p-4 rounded-lg border border-blue-500/20">
+                        <h3 className="font-semibold text-foreground mb-2">Historical Transition Dates</h3>
+                        <p className="text-sm text-muted-foreground">
+                          When countries adopted the Gregorian calendar, they had to skip days. Great Britain skipped September 3-13, 1752. People rioted, thinking they'd lost 11 days of life. Russia didn't adopt it until 1918, which is why the "October Revolution" actually occurred in November by our calendar. These transitions affect historical research - you need to know which calendar was in use when.
+                        </p>
+                      </div>
+                      
+                      <div>
+                        <h3 className="font-semibold text-foreground mb-2">Software and System Failures</h3>
+                        <p className="text-muted-foreground text-sm">
+                          Every leap year, some software fails. In 2012, Microsoft Azure had issues. In 2016, various point-of-sale systems crashed. The problem is often developers testing with "normal" years and forgetting February 29th exists. That's why good date libraries and thorough testing with tools like this one are essential.
+                        </p>
+                      </div>
+                    </div>
+                    
+                    <div className="mt-6 p-4 bg-green-500/10 rounded-lg border border-green-500/20">
+                      <h3 className="font-semibold text-foreground mb-2">Practical Advice for Handling Leap Years</h3>
+                      <p className="text-sm text-muted-foreground">
+                        If you're working with dates in any professional capacity: always use established date libraries (they handle leap years correctly), test with known edge cases (1900, 2000), and for long-term calculations, consider whether the Gregorian rules will still apply (they will for centuries). And when in doubt, use this tool to verify - it's saved me from several embarrassing mistakes over the years.
+                      </p>
                     </div>
                   </div>
                 )}
@@ -899,7 +846,7 @@ Key Features Demonstrated:
                 {openSections.relatedTools && (
                   <div className="px-6 pb-6">
                     <p className="text-muted-foreground mb-4">
-                      Explore other useful date and calendar calculation tools:
+                      If you work with dates regularly, these other tools might save you time:
                     </p>
                     <ul className="space-y-3 text-muted-foreground">
                       {relatedTools.map((tool, index) => (
