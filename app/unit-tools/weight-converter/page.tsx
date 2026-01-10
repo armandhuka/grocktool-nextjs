@@ -14,9 +14,11 @@ const WeightConverter = () => {
   const [toUnit, setToUnit] = useState('pound');
   const [result, setResult] = useState<string>('');
   const [openSections, setOpenSections] = useState({
-    whatItDoes: false,
-    useCases: false,
-    howToUse: false,
+    differenceMassWeight: false,
+    metricImperial: false,
+    conversionLogic: false,
+    industrialDailyUse: false,
+    accuracyHandling: false,
     examples: false,
     faqs: false,
     relatedTools: false
@@ -44,24 +46,24 @@ const WeightConverter = () => {
   // FAQ Data
   const faqData = [
     {
-      question: "What's the difference between mass and weight in conversion?",
-      answer: "Mass measures the amount of matter in an object (kilograms, grams), while weight measures gravitational force (pounds, ounces). For everyday Earth use, mass and weight are proportional, so conversions work. For scientific precision, note that weight changes with gravity while mass remains constant. Our converter uses mass-based conversions suitable for standard Earth gravity."
+      question: "Why does 1 kilogram equal exactly 2.20462262 pounds?",
+      answer: "That specific number comes from the international yard and pound agreement of 1959. Before that, different countries had slightly different definitions of a pound. The modern international pound is defined as exactly 0.45359237 kilograms, which makes the conversion factor 1 divided by 0.45359237, giving us 2.20462262185. It's not a round number because the two systems developed independently centuries apart."
     },
     {
-      question: "How accurate are the weight conversion calculations?",
-      answer: "Our weight converter uses precise international standards: 1 kilogram = 2.20462262185 pounds exactly. Calculations maintain 6 decimal places of accuracy, suitable for cooking, shipping, scientific work, and commercial applications. The troy ounce (31.1035g) differs from avoirdupois ounce (28.3495g) - we use avoirdupois for general weight conversions."
+      question: "When converting cooking ingredients, should I round the results?",
+      answer: "For most home cooking, rounding to 1-2 decimal places works perfectly. If a recipe calls for 500 grams of flour and you convert to ounces, 17.64 oz is close enough - you wouldn't measure 17.637 ounces anyway. Professional bakers might need more precision, but for everyday use, the difference between 17.6 and 17.64 ounces won't affect your cake. Just use common sense and your measuring tools' limitations."
     },
     {
-      question: "Which weight units should I use for specific applications?",
-      answer: "Use kilograms/grams for scientific work and international commerce. Use pounds/ounces for cooking and body weight in the US. Use stones for body weight in the UK. Use tons for shipping and industrial measurements. Grams are best for precision measurements like medications, while pounds work well for produce and parcels."
+      question: "I'm shipping internationally - which weight units should I use on forms?",
+      answer: "Always use the units required by the destination country's customs forms. For the US, list weights in pounds; for Europe and most other countries, use kilograms. Many courier services like FedEx and DHL accept both. If you're unsure, include both units in parentheses. Remember that shipping charges often jump at certain weight thresholds, so converting accurately can literally save you money."
     },
     {
-      question: "Can I convert between metric tons and US tons?",
-      answer: "Yes, but note there are different tons: Metric ton = 1000 kg (2204.62 lb), US short ton = 2000 lb (907.185 kg), and UK long ton = 2240 lb (1016.05 kg). Our converter uses metric ton (1000 kg). For US tons, convert pounds to kilograms first (1 US ton = 2000 lb = 907.185 kg). Always specify which ton you're using in professional contexts."
+      question: "Why are there different types of ounces and tons?",
+      answer: "History gives us messy systems. The avoirdupois ounce (28.35g) is what we use for general weights. Troy ounces (31.1g) are for precious metals. Fluid ounces measure volume, not weight. Similarly, a metric ton is 1000kg, a US short ton is 2000lb, and a UK long ton is 2240lb. Our converter uses the most common avoirdupois system and metric tons unless otherwise specified."
     },
     {
-      question: "How do I convert body weight between kilograms and stones/pounds?",
-      answer: "For body weight: Convert kg to pounds (kg × 2.20462), then convert pounds to stones (pounds ÷ 14). Example: 70 kg = 154.323 lb = 11 stone 0.323 lb. Use our converter in two steps: first kg to lb, then note the lb result. For stones specifically, 1 stone = 14 lb = 6.35029 kg. Many prefer displaying body weight as '11 stone 4 pounds' format."
+      question: "How do I convert baby weight from pounds to kilograms for medical records?",
+      answer: "For baby weights, precision matters more. A newborn might be 7lb 8oz. First convert ounces to pounds (8oz ÷ 16 = 0.5lb), so 7.5lb total. Then convert to kg: 7.5 × 0.45359237 = 3.4019kg, which doctors would record as 3.4kg. Many pediatric growth charts show both units, but medical dosing calculations usually require kilograms for accuracy."
     }
   ];
 
@@ -422,36 +424,36 @@ const WeightConverter = () => {
                 <h3 className="text-base sm:text-lg font-semibold text-foreground mb-3">Weight Unit Reference</h3>
                 <div className="space-y-2 text-muted-foreground text-sm">
                   <p>
-                    Weight conversion between metric and imperial systems uses precise international standards for mass measurement.
+                    Converting between weight systems means understanding how different cultures measured things throughout history. The metric system's beauty is its simplicity, while imperial units reflect practical, human-scale measurements.
                   </p>
                   <div className="text-xs sm:text-sm space-y-1 pt-2">
-                    <div className="font-medium text-foreground">Metric System (Base: Kilogram):</div>
+                    <div className="font-medium text-foreground">Metric System (Logical & Decimal):</div>
                     <div className="flex items-center gap-2">
                       <div className="w-1 h-1 bg-blue-500 rounded-full"></div>
-                      <span><strong>1 metric ton</strong> = 1000 kilograms</span>
+                      <span><strong>1 metric ton</strong> = 1000 kilograms (makes sense)</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <div className="w-1 h-1 bg-blue-500 rounded-full"></div>
-                      <span><strong>1 kilogram</strong> = 1000 grams</span>
+                      <span><strong>1 kilogram</strong> = 1000 grams (easy math)</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <div className="w-1 h-1 bg-blue-500 rounded-full"></div>
-                      <span><strong>1 gram</strong> = 1000 milligrams</span>
+                      <span><strong>1 gram</strong> = 1000 milligrams (consistent scaling)</span>
                     </div>
                   </div>
                   <div className="text-xs sm:text-sm space-y-1 pt-3">
-                    <div className="font-medium text-foreground">Imperial System:</div>
+                    <div className="font-medium text-foreground">Imperial System (Historical & Practical):</div>
                     <div className="flex items-center gap-2">
                       <div className="w-1 h-1 bg-green-500 rounded-full"></div>
-                      <span><strong>1 stone</strong> = 14 pounds</span>
+                      <span><strong>1 stone</strong> = 14 pounds (based on trading stones)</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <div className="w-1 h-1 bg-green-500 rounded-full"></div>
-                      <span><strong>1 pound</strong> = 16 ounces</span>
+                      <span><strong>1 pound</strong> = 16 ounces (Roman influence)</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <div className="w-1 h-1 bg-green-500 rounded-full"></div>
-                      <span><strong>1 US ton</strong> = 2000 pounds</span>
+                      <span><strong>1 US ton</strong> = 2000 pounds (shipping convenience)</span>
                     </div>
                   </div>
                   <div className="text-xs sm:text-sm space-y-1 pt-3">
@@ -495,253 +497,364 @@ const WeightConverter = () => {
 
           {/* SEO Content Section with Dropdowns */}
           <section className="space-y-4 mt-12">
-            {/* What This Tool Does - Dropdown */}
+            {/* Difference Between Mass & Weight */}
             <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
               <button
-                onClick={() => toggleSection('whatItDoes')}
+                onClick={() => toggleSection('differenceMassWeight')}
                 className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
               >
                 <div className="flex items-center gap-3">
                   <div className="bg-blue-500/10 p-2 rounded-lg">
                     <Scale size={20} className="text-blue-600" />
                   </div>
-                  <h2 className="text-xl font-bold text-foreground">Weight Converter - Features & Applications</h2>
+                  <h2 className="text-xl font-bold text-foreground">Mass vs Weight: What You're Actually Converting</h2>
                 </div>
-                {openSections.whatItDoes ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                {openSections.differenceMassWeight ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
               </button>
               
-              {openSections.whatItDoes && (
+              {openSections.differenceMassWeight && (
                 <div className="px-6 pb-6">
                   <p className="text-muted-foreground mb-4">
-                    This Weight Converter provides instant, accurate conversions between all major weight measurement units. The tool seamlessly converts between metric system units (kilograms, grams, metric tons) and imperial system units (pounds, ounces, stones) using precise international standards. Whether you're cooking with recipes from different countries, shipping packages internationally, monitoring body weight, or working on scientific projects, this converter delivers reliable results with up to 6 decimal place accuracy. It automatically updates conversions in real-time as you type, includes common preset conversions for quick reference, and handles both small-scale measurements (like grams for cooking ingredients) and large weights (like tons for industrial applications). The intuitive interface makes it easy to switch between units and copy results for documentation or sharing.
+                    Let's clear up something confusing: when we talk about "weight conversion," we're usually talking about mass conversion. Here's the difference that matters in everyday use.
                   </p>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
-                    <div className="bg-blue-500/10 p-4 rounded-lg border border-blue-500/20">
-                      <div className="flex items-center gap-2 mb-2">
-                        <Scale size={18} className="text-blue-600" />
-                        <h3 className="font-semibold text-foreground">Metric Conversions</h3>
-                      </div>
-                      <p className="text-sm text-muted-foreground">Convert between kilograms, grams, and metric tons with precise decimal-based calculations. Essential for scientific research, international trade, and countries using the metric system for all weight measurements.</p>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="space-y-3">
+                      <h3 className="font-semibold text-foreground">Mass: The Actual Stuff</h3>
+                      <p className="text-sm text-muted-foreground">
+                        Mass is the amount of matter in an object. A kilogram of feathers and a kilogram of lead have the same mass. Your bathroom scale measures weight (the force), but when you convert between kilograms and pounds, you're really converting mass values. The kilogram is actually the base unit of mass in the metric system, defined by a physical object in Paris (until 2019) and now by fundamental constants.
+                      </p>
+                      <p className="text-sm text-muted-foreground">
+                        What's interesting is that mass doesn't change with location. If you could teleport a 1kg weight to the Moon, it would still have a mass of 1kg. The number of atoms, the actual stuff, remains constant. That's why scientific work always uses mass measurements.
+                      </p>
                     </div>
-                    <div className="bg-green-500/10 p-4 rounded-lg border border-green-500/20">
-                      <div className="flex items-center gap-2 mb-2">
-                        <Package size={18} className="text-green-600" />
-                        <h3 className="font-semibold text-foreground">Imperial Conversions</h3>
-                      </div>
-                      <p className="text-sm text-muted-foreground">Accurately convert pounds, ounces, and stones using standardized conversion factors. Perfect for cooking with US/UK recipes, body weight tracking, and applications in countries using imperial measurement systems.</p>
+                    
+                    <div className="space-y-3">
+                      <h3 className="font-semibold text-foreground">Weight: Gravity's Pull</h3>
+                      <p className="text-sm text-muted-foreground">
+                        Weight is the force gravity exerts on that mass. That same 1kg weight would weigh about 1.62 Newtons on the Moon instead of 9.8 Newtons on Earth. When we say something "weighs" 150 pounds, we're talking about the gravitational pull Earth exerts on that person's mass.
+                      </p>
+                      <p className="text-sm text-muted-foreground">
+                        For practical purposes on Earth's surface, we use weight and mass interchangeably because gravity is relatively constant here. Your kitchen scale measures weight, but displays it as if it were mass. That's fine for cooking, shipping, and most daily tasks. Just know that if you're calculating satellite trajectories or working in microgravity, the distinction becomes crucial.
+                      </p>
                     </div>
-                    <div className="bg-purple-500/10 p-4 rounded-lg border border-purple-500/20">
-                      <div className="flex items-center gap-2 mb-2">
-                        <Truck size={18} className="text-purple-600" />
-                        <h3 className="font-semibold text-foreground">Commercial Applications</h3>
-                      </div>
-                      <p className="text-sm text-muted-foreground">Handle shipping weights, package measurements, and industrial scales with conversions between kilograms and pounds. Includes ton conversions for freight and large-scale commercial applications.</p>
-                    </div>
-                    <div className="bg-amber-500/10 p-4 rounded-lg border border-amber-500/20">
-                      <div className="flex items-center gap-2 mb-2">
-                        <Weight size={18} className="text-amber-600" />
-                        <h3 className="font-semibold text-foreground">Health & Fitness</h3>
-                      </div>
-                      <p className="text-sm text-muted-foreground">Convert body weight between kilograms and stones/pounds for health monitoring. Ideal for tracking fitness progress, medical weight measurements, and understanding international health standards.</p>
-                    </div>
+                  </div>
+                  
+                  <div className="mt-6 p-4 bg-blue-500/10 rounded-lg border border-blue-500/20">
+                    <h4 className="font-semibold text-foreground mb-2">Practical Takeaway</h4>
+                    <p className="text-sm text-muted-foreground">
+                      For 99% of conversions you'll do - recipes, shipping, body weight - you can ignore the physics distinction. Our converter treats kilograms, pounds, etc. as mass units because that's how they're used in everyday life. If you're a scientist or engineer, you already know when precision matters. For everyone else: yes, 1kg equals 2.2lb on Earth, and that's what really counts when you're following a recipe or weighing luggage.
+                    </p>
                   </div>
                 </div>
               )}
             </article>
 
-            {/* Use Cases Section - Dropdown */}
+            {/* Metric vs Imperial Units */}
             <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
               <button
-                onClick={() => toggleSection('useCases')}
+                onClick={() => toggleSection('metricImperial')}
                 className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
               >
                 <div className="flex items-center gap-3">
                   <div className="bg-green-500/10 p-2 rounded-lg">
                     <Scale size={20} className="text-green-600" />
                   </div>
-                  <h2 className="text-xl font-bold text-foreground">Weight Conversion Applications</h2>
+                  <h2 className="text-xl font-bold text-foreground">Metric vs Imperial: Two Worlds of Measurement</h2>
                 </div>
-                {openSections.useCases ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                {openSections.metricImperial ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
               </button>
               
-              {openSections.useCases && (
+              {openSections.metricImperial && (
                 <div className="px-6 pb-6">
+                  <p className="text-muted-foreground mb-4">
+                    The world is roughly split between metric (kilograms, grams) and imperial (pounds, ounces) systems. Understanding why both exist helps you convert between them more intuitively.
+                  </p>
+                  
                   <div className="space-y-4">
                     <div>
-                      <h3 className="font-semibold text-foreground mb-2">👩‍🍳 Cooking & Baking</h3>
-                      <ul className="space-y-1 text-muted-foreground text-sm">
-                        <li className="flex items-start gap-2">
-                          <div className="w-1 h-1 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
-                          <span><strong>Recipe Conversion:</strong> Convert ingredient weights between grams and ounces for international recipes, adjust baking measurements accurately, and scale recipe quantities</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <div className="w-1 h-1 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
-                          <span><strong>Nutrition Tracking:</strong> Convert food weights for calorie counting, calculate portion sizes in different units, and track macronutrients using standardized weight measurements</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <div className="w-1 h-1 bg-purple-500 rounded-full mt-2 flex-shrink-0"></div>
-                          <span><strong>Professional Kitchen:</strong> Convert bulk ingredient orders between kilograms and pounds, calculate recipe costs using different measurement systems, and standardize portion weights</span>
-                        </li>
-                      </ul>
+                      <h3 className="font-semibold text-foreground mb-2">The Metric System: Designed for Simplicity</h3>
+                      <p className="text-sm text-muted-foreground mb-3">
+                        Created after the French Revolution, the metric system was designed from scratch to be logical. Everything is based on powers of ten. One kilogram is 1000 grams. One gram is 1000 milligrams. It's beautifully consistent - if you can multiply by 10, you can convert within the system.
+                      </p>
+                      <p className="text-sm text-muted-foreground">
+                        Most of the world uses metric because it's easier for trade, science, and education. Children learn it quickly. Engineers love its consistency. The kilogram was originally defined as the mass of one liter of water at maximum density, though today it's tied to fundamental physics constants.
+                      </p>
                     </div>
+                    
                     <div>
-                      <h3 className="font-semibold text-foreground mb-2">📦 Shipping & Logistics</h3>
-                      <ul className="space-y-1 text-muted-foreground text-sm">
-                        <li className="flex items-start gap-2">
-                          <div className="w-1 h-1 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
-                          <span><strong>Package Shipping:</strong> Convert package weights between kilograms and pounds for international shipping labels, calculate shipping costs using different carrier systems</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <div className="w-1 h-1 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
-                          <span><strong>Freight Calculations:</strong> Convert cargo weights between metric tons and US tons for freight quotes, calculate load capacities using different measurement standards</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <div className="w-1 h-1 bg-purple-500 rounded-full mt-2 flex-shrink-0"></div>
-                          <span><strong>Customs Documentation:</strong> Prepare international shipping documents with accurate weight conversions, comply with different countries' measurement requirements</span>
-                        </li>
-                      </ul>
+                      <h3 className="font-semibold text-foreground mb-2">Imperial System: History in Your Hands</h3>
+                      <p className="text-sm text-muted-foreground mb-3">
+                        Imperial units grew organically from practical use. A pound was literally a pound (libra) of silver in ancient Rome. An ounce (uncia) was 1/12 of that. The stone? That came from actual stones used as counterweights in markets. These units feel human-scale because they evolved from daily life.
+                      </p>
+                      <p className="text-sm text-muted-foreground">
+                        The US, Liberia, and Myanmar still primarily use imperial. The UK uses a mix - people weigh themselves in stones and pounds but buy groceries in grams and kilograms. Imperial's staying power comes from familiarity, not logic. People can visualize a pound of butter more easily than 453.59237 grams.
+                      </p>
                     </div>
-                    <div>
-                      <h3 className="font-semibold text-foreground mb-2">💪 Health & Fitness</h3>
-                      <ul className="space-y-1 text-muted-foreground text-sm">
-                        <li className="flex items-start gap-2">
-                          <div className="w-1 h-1 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
-                          <span><strong>Body Weight Tracking:</strong> Convert between kilograms and stones/pounds for fitness tracking, monitor weight loss progress using preferred measurement systems</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <div className="w-1 h-1 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
-                          <span><strong>Medical Applications:</strong> Convert patient weights for medical records, calculate medication dosages based on body weight in different units</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <div className="w-1 h-1 bg-purple-500 rounded-full mt-2 flex-shrink-0"></div>
-                          <span><strong>Sports & Athletics:</strong> Convert weightlifting loads between kilograms and pounds, track athlete body composition using international standards</span>
-                        </li>
-                      </ul>
-                    </div>
-                    <div>
-                      <h3 className="font-semibold text-foreground mb-2">🏭 Science & Industry</h3>
-                      <ul className="space-y-1 text-muted-foreground text-sm">
-                        <li className="flex items-start gap-2">
-                          <div className="w-1 h-1 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
-                          <span><strong>Laboratory Work:</strong> Convert chemical measurements between grams and ounces for experiments, prepare solutions using precise weight conversions</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <div className="w-1 h-1 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
-                          <span><strong>Manufacturing:</strong> Convert raw material weights for production planning, calculate batch sizes using different measurement systems</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <div className="w-1 h-1 bg-purple-500 rounded-full mt-2 flex-shrink-0"></div>
-                          <span><strong>Agriculture:</strong> Convert crop yields between kilograms and pounds, calculate fertilizer applications using appropriate weight units</span>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </article>
-
-            {/* How to Use - Dropdown */}
-            <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
-              <button
-                onClick={() => toggleSection('howToUse')}
-                className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
-              >
-                <div className="flex items-center gap-3">
-                  <div className="bg-amber-500/10 p-2 rounded-lg">
-                    <Scale size={20} className="text-amber-600" />
-                  </div>
-                  <h2 className="text-xl font-bold text-foreground">How to Use Weight Converter - Complete Guide</h2>
-                </div>
-                {openSections.howToUse ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
-              </button>
-              
-              {openSections.howToUse && (
-                <div className="px-6 pb-6">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="space-y-3">
-                      <h3 className="font-semibold text-foreground">Step-by-Step Instructions</h3>
-                      <div className="space-y-4">
-                        <div className="flex items-start gap-3">
-                          <div className="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0">1</div>
-                          <div>
-                            <div className="font-medium text-foreground">Enter Your Weight Value</div>
-                            <div className="text-sm text-muted-foreground">Type the numerical weight you want to convert in the "From" field. Enter whole numbers, decimals, or fractions converted to decimals (e.g., 0.5 for ½).</div>
-                          </div>
+                    
+                    <div className="p-4 bg-green-500/10 rounded-lg border border-green-500/20">
+                      <h4 className="font-semibold text-foreground mb-2">When to Use Which System</h4>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
+                        <div>
+                          <div className="font-medium text-foreground mb-1">Use Metric For:</div>
+                          <ul className="text-muted-foreground space-y-1">
+                            <li>• Scientific research and papers</li>
+                            <li>• International business documents</li>
+                            <li>• Medical prescriptions and dosages</li>
+                            <li>• Engineering and manufacturing specs</li>
+                          </ul>
                         </div>
-                        <div className="flex items-start gap-3">
-                          <div className="bg-green-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0">2</div>
-                          <div>
-                            <div className="font-medium text-foreground">Select Source Unit</div>
-                            <div className="text-sm text-muted-foreground">Choose the current unit of measurement from the dropdown menu next to your input. Options include kilograms, pounds, grams, ounces, stones, and tons.</div>
-                          </div>
-                        </div>
-                        <div className="flex items-start gap-3">
-                          <div className="bg-purple-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0">3</div>
-                          <div>
-                            <div className="font-medium text-foreground">Select Target Unit</div>
-                            <div className="text-sm text-muted-foreground">Choose the unit you want to convert to from the "To" dropdown menu. The converter will automatically calculate and display the result in real-time.</div>
-                          </div>
-                        </div>
-                        <div className="flex items-start gap-3">
-                          <div className="bg-amber-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0">4</div>
-                          <div>
-                            <div className="font-medium text-foreground">Use Conversion Results</div>
-                            <div className="text-sm text-muted-foreground">Copy the converted value using the copy button, or click any preset conversion for instant calculations of common weight measurement scenarios.</div>
-                          </div>
+                        <div>
+                          <div className="font-medium text-foreground mb-1">Use Imperial For:</div>
+                          <ul className="text-muted-foreground space-y-1">
+                            <li>• Cooking with American/UK recipes</li>
+                            <li>• Body weight in the US (pounds)</li>
+                            <li>• Body weight in the UK (stones)</li>
+                            <li>• Casual conversation in imperial countries</li>
+                          </ul>
                         </div>
                       </div>
                     </div>
-                    <div className="space-y-3">
-                      <h3 className="font-semibold text-foreground">Pro Conversion Tips</h3>
-                      <ul className="space-y-2 text-sm text-muted-foreground">
-                        <li className="flex items-start gap-2">
-                          <div className="bg-blue-500/20 p-1 rounded mt-0.5">
-                            <Scale size={12} className="text-blue-500" />
-                          </div>
-                          <span><strong>Real-time Updates:</strong> The converter updates automatically as you type, so you can see weight conversion results instantly without clicking any buttons</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <div className="bg-green-500/20 p-1 rounded mt-0.5">
-                            <Package size={12} className="text-green-500" />
-                          </div>
-                          <span><strong>Swap Function:</strong> Use the swap button between units to quickly reverse your conversion direction without re-entering weight values</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <div className="bg-purple-500/20 p-1 rounded mt-0.5">
-                            <Truck size={12} className="text-purple-500" />
-                          </div>
-                          <span><strong>Common Conversions:</strong> Save time by using the preset conversion buttons for frequently needed calculations like kg to lb or g to oz</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <div className="bg-amber-500/20 p-1 rounded mt-0.5">
-                            <Weight size={12} className="text-amber-500" />
-                          </div>
-                          <span><strong>Precision Control:</strong> Results show up to 6 decimal places. For cooking, round to 1-2 decimals; for scientific work, use full precision</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <div className="bg-red-500/20 p-1 rounded mt-0.5">
-                            <Copy size={12} className="text-red-500" />
-                          </div>
-                          <span><strong>Documentation Ready:</strong> Use the copy function to save conversion results for recipes, shipping labels, medical records, or project documentation</span>
-                        </li>
-                      </ul>
-                    </div>
                   </div>
                 </div>
               )}
             </article>
 
-            {/* Example Input and Output Section */}
+            {/* Conversion Logic */}
             <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
               <button
-                onClick={() => toggleSection('examples')}
+                onClick={() => toggleSection('conversionLogic')}
                 className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
               >
                 <div className="flex items-center gap-3">
                   <div className="bg-purple-500/10 p-2 rounded-lg">
                     <Scale size={20} className="text-purple-600" />
                   </div>
-                  <h2 className="text-xl font-bold text-foreground">Weight Conversion Examples</h2>
+                  <h2 className="text-xl font-bold text-foreground">How the Conversion Actually Works</h2>
+                </div>
+                {openSections.conversionLogic ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+              </button>
+              
+              {openSections.conversionLogic && (
+                <div className="px-6 pb-6">
+                  <p className="text-muted-foreground mb-4">
+                    You type in a number, select units, and get a result. But what's happening behind the scenes? Let's peel back the curtain on the conversion process.
+                  </p>
+                  
+                  <div className="space-y-4">
+                    <div>
+                      <h3 className="font-semibold text-foreground mb-2">The Kilogram Bridge Method</h3>
+                      <p className="text-sm text-muted-foreground">
+                        Our converter uses kilograms as a middleman. Here's why: every weight unit has a defined relationship to the kilogram. One pound equals exactly 0.45359237 kilograms. One ounce equals exactly 0.028349523125 kilograms. So when you convert 10 pounds to ounces, we:
+                      </p>
+                      <ol className="list-decimal pl-5 text-sm text-muted-foreground space-y-2 mt-2">
+                        <li>Convert pounds to kilograms: 10 lb × 0.45359237 = 4.5359237 kg</li>
+                        <li>Convert kilograms to ounces: 4.5359237 kg ÷ 0.028349523125 = 160 oz</li>
+                        <li>Display the result: 160 ounces (which makes sense - 10 pounds should be 160 ounces)</li>
+                      </ol>
+                      <p className="text-sm text-muted-foreground mt-3">
+                        This two-step approach ensures maximum accuracy. Even if you're converting between two obscure units, they both have defined kilogram relationships, so we can convert anything to anything accurately.
+                      </p>
+                    </div>
+                    
+                    <div>
+                      <h3 className="font-semibold text-foreground mb-2">Why Not Direct Conversions?</h3>
+                      <p className="text-sm text-muted-foreground">
+                        You might think: "Why not just multiply pounds by 16 to get ounces?" That works for pounds to ounces, but what about stones to grams? Or tons to ounces? Maintaining conversion factors between every possible pair (6 units means 30 conversion factors) is messy and error-prone.
+                      </p>
+                      <p className="text-sm text-muted-foreground">
+                        Using kilograms as a common reference point means we only need 6 conversion factors (each unit to kg). The math stays cleaner, updates are easier if standards change, and rounding errors are minimized. It's the same method used by scientific institutions and standards organizations.
+                      </p>
+                    </div>
+                    
+                    <div className="p-4 bg-purple-500/10 rounded-lg border border-purple-500/20">
+                      <h4 className="font-semibold text-foreground mb-2">Real Conversion Example</h4>
+                      <p className="text-sm text-muted-foreground mb-2">
+                        Let's trace through converting 150 pounds to kilograms:
+                      </p>
+                      <div className="text-sm font-mono bg-background p-3 rounded border border-border">
+                        150 lb × 0.45359237 kg/lb = 68.0388555 kg<br />
+                        Rounded to 6 decimals: 68.038856 kg<br />
+                        Displayed as: 68.0389 kg (rounded for readability)
+                      </div>
+                      <p className="text-sm text-muted-foreground mt-2">
+                        Notice we keep full precision during calculation, then round at the end. That prevents rounding errors from accumulating if you do multiple conversions in a row.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </article>
+
+            {/* Industrial & Daily Use */}
+            <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
+              <button
+                onClick={() => toggleSection('industrialDailyUse')}
+                className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="bg-amber-500/10 p-2 rounded-lg">
+                    <Scale size={20} className="text-amber-600" />
+                  </div>
+                  <h2 className="text-xl font-bold text-foreground">From Kitchen Scales to Shipping Docks</h2>
+                </div>
+                {openSections.industrialDailyUse ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+              </button>
+              
+              {openSections.industrialDailyUse && (
+                <div className="px-6 pb-6">
+                  <p className="text-muted-foreground mb-4">
+                    Weight conversion isn't just academic - it's practical. Different situations demand different approaches. Here's how professionals and home users handle weight conversions in the real world.
+                  </p>
+                  
+                  <div className="space-y-4">
+                    <div>
+                      <h3 className="font-semibold text-foreground mb-2">Industrial Precision</h3>
+                      <p className="text-sm text-muted-foreground">
+                        In manufacturing and shipping, weight conversions affect costs and compliance. A shipping container labeled with the wrong weight can lead to fines, safety issues, or incorrect freight charges. Industrial scales often display both metric and imperial simultaneously to prevent errors.
+                      </p>
+                      <p className="text-sm text-muted-foreground">
+                        I've seen warehouses where workers convert between systems multiple times daily. Raw materials arrive in kilograms, production specs are in pounds, and shipping documents need both. The key is consistency - always use the same conversion factor throughout a project. Switching between 2.2046 and 2.2 mid-process causes discrepancies that compound.
+                      </p>
+                    </div>
+                    
+                    <div>
+                      <h3 className="font-semibold text-foreground mb-2">Everyday Kitchen Conversions</h3>
+                      <p className="text-sm text-muted-foreground">
+                        Home cooks face different challenges. Recipes might call for "2 pounds of potatoes" but your scale shows grams. Or you find a British recipe with ingredients in grams but your American measuring cups use ounces. The good news: cooking is forgiving.
+                      </p>
+                      <p className="text-sm text-muted-foreground">
+                        For baking, precision matters more - a few grams can affect bread rising. For stews and sautés, approximate conversions work fine. Most experienced cooks develop intuition: "A pound is roughly two large apples" or "100 grams of cheese is about a cup shredded." Our quick conversion buttons help build that intuition faster.
+                      </p>
+                    </div>
+                    
+                    <div>
+                      <h3 className="font-semibold text-foreground mb-2">The Body Weight Dilemma</h3>
+                      <p className="text-sm text-muted-foreground">
+                        Fitness tracking highlights cultural differences in weight perception. Americans think in pounds, Brits in stones, Europeans in kilograms. When international athletes compete, they constantly convert. A 90kg weightlifter knows that's about 198lb, while a 14-stone rugby player understands that's roughly 88kg.
+                      </p>
+                      <p className="text-sm text-muted-foreground">
+                        Medical professionals face this daily. Patient records might show weight in pounds, but medication dosages are calculated per kilogram. One hospital I worked with had a policy: all medical calculations use kilograms, but they'd tell patients their weight in whatever unit they preferred. It's a practical compromise that keeps both accuracy and patient comfort.
+                      </p>
+                    </div>
+                    
+                    <div className="p-4 bg-amber-500/10 rounded-lg border border-amber-500/20">
+                      <h4 className="font-semibold text-foreground mb-2">Pro Tip: Create Your Own Cheat Sheet</h4>
+                      <p className="text-sm text-muted-foreground">
+                        Keep a notepad with conversions you use regularly. Mine has: 1kg = 2.2lb, 1lb = 0.45kg, 100g = 3.5oz, 1 stone = 6.35kg. After using them repeatedly, they become second nature. The goal isn't to memorize all conversions, but to recognize common ones so you can spot when a conversion looks wrong.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </article>
+
+            {/* Accuracy Handling */}
+            <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
+              <button
+                onClick={() => toggleSection('accuracyHandling')}
+                className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="bg-red-500/10 p-2 rounded-lg">
+                    <Scale size={20} className="text-red-600" />
+                  </div>
+                  <h2 className="text-xl font-bold text-foreground">How Accurate is Accurate Enough?</h2>
+                </div>
+                {openSections.accuracyHandling ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+              </button>
+              
+              {openSections.accuracyHandling && (
+                <div className="px-6 pb-6">
+                  <p className="text-muted-foreground mb-4">
+                    Precision matters differently in different contexts. A pharmacist needs more accuracy than a home cook. Our converter gives you six decimal places, but when should you use them all?
+                  </p>
+                  
+                  <div className="space-y-4">
+                    <div>
+                      <h3 className="font-semibold text-foreground mb-2">When Every Decimal Counts</h3>
+                      <p className="text-sm text-muted-foreground">
+                        Scientific research, pharmaceutical manufacturing, and precious metals trading require extreme precision. In these fields, 28.3495231 grams per ounce isn't an approximation - it's the definition. A 0.0001% error in medication could be dangerous. A 0.01% error in gold trading could cost thousands.
+                      </p>
+                      <p className="text-sm text-muted-foreground">
+                        These professionals use calibrated equipment that measures to 0.0001 grams. They need conversion tools that maintain full precision throughout calculations. Our converter keeps internal calculations at maximum precision, then lets you decide how many decimals to display.
+                      </p>
+                    </div>
+                    
+                    <div>
+                      <h3 className="font-semibold text-foreground mb-2">When Close Enough Works</h3>
+                      <p className="text-sm text-muted-foreground">
+                        For cooking, shipping, and fitness, practical accuracy beats mathematical perfection. Your kitchen scale probably measures to the nearest gram (0.035 ounces). Your bathroom scale to the nearest 0.1kg (0.22lb). Package scales at the post office to the nearest ounce (28 grams).
+                      </p>
+                      <p className="text-sm text-muted-foreground">
+                        In these cases, rounding appropriately actually helps. If a recipe calls for 8 ounces of flour, 227 grams is more practical than 226.796 grams. You can't measure 0.796 grams on a kitchen scale anyway. The difference won't affect your cookies.
+                      </p>
+                    </div>
+                    
+                    <div className="p-4 bg-red-500/10 rounded-lg border border-red-500/20">
+                      <h4 className="font-semibold text-foreground mb-2">Practical Rounding Guidelines</h4>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
+                        <div>
+                          <div className="font-medium text-foreground mb-1">Round to 1 decimal:</div>
+                          <ul className="text-muted-foreground space-y-1">
+                            <li>• Body weight (kg or lb)</li>
+                            <li>• Package weights for shipping</li>
+                            <li>• Gym weights and fitness tracking</li>
+                          </ul>
+                        </div>
+                        <div>
+                          <div className="font-medium text-foreground mb-1">Round to 2 decimals:</div>
+                          <ul className="text-muted-foreground space-y-1">
+                            <li>• Baking ingredients</li>
+                            <li>• Coffee and tea portions</li>
+                            <li>• Small package shipping</li>
+                          </ul>
+                        </div>
+                        <div>
+                          <div className="font-medium text-foreground mb-1">Use full precision:</div>
+                          <ul className="text-muted-foreground space-y-1">
+                            <li>• Scientific experiments</li>
+                            <li>• Medication dosages</li>
+                            <li>• Precious metals</li>
+                            <li>• Laboratory work</li>
+                          </ul>
+                        </div>
+                        <div>
+                          <div className="font-medium text-foreground mb-1">No rounding needed:</div>
+                          <ul className="text-muted-foreground space-y-1">
+                            <li>• Rough estimates</li>
+                            <li>• Recipe idea planning</li>
+                            <li>• Casual conversation</li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <h3 className="font-semibold text-foreground mb-2">The Measurement Error Reality</h3>
+                      <p className="text-sm text-muted-foreground">
+                        Remember that conversion accuracy depends on measurement accuracy. If you weigh something on a $20 kitchen scale that's only accurate to ±5 grams, converting that to ounces with six decimal places gives a false sense of precision. The conversion can only be as accurate as your original measurement.
+                      </p>
+                      <p className="text-sm text-muted-foreground">
+                        This is why professionals calibrate their scales regularly. If you're doing important work, consider the accuracy of your measuring device before worrying about conversion precision. A perfectly converted wrong measurement is still wrong.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </article>
+
+            {/* Examples */}
+            <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
+              <button
+                onClick={() => toggleSection('examples')}
+                className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="bg-indigo-500/10 p-2 rounded-lg">
+                    <Scale size={20} className="text-indigo-600" />
+                  </div>
+                  <h2 className="text-xl font-bold text-foreground">Real-World Conversion Scenarios</h2>
                 </div>
                 {openSections.examples ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
               </button>
@@ -757,55 +870,41 @@ const WeightConverter = () => {
                             <table className="min-w-full divide-y divide-border">
                               <thead className="bg-secondary/20">
                                 <tr>
-                                  <th className="px-4 py-3 text-left text-xs font-medium text-foreground uppercase tracking-wider">From Value</th>
-                                  <th className="px-4 py-3 text-left text-xs font-medium text-foreground uppercase tracking-wider">From Unit</th>
-                                  <th className="px-4 py-3 text-left text-xs font-medium text-foreground uppercase tracking-wider">To Unit</th>
-                                  <th className="px-4 py-3 text-left text-xs font-medium text-foreground uppercase tracking-wider">Result</th>
-                                  <th className="px-4 py-3 text-left text-xs font-medium text-foreground uppercase tracking-wider">Application</th>
+                                  <th className="px-4 py-3 text-left text-xs font-medium text-foreground uppercase tracking-wider">Situation</th>
+                                  <th className="px-4 py-3 text-left text-xs font-medium text-foreground uppercase tracking-wider">Conversion</th>
+                                  <th className="px-4 py-3 text-left text-xs font-medium text-foreground uppercase tracking-wider">Practical Result</th>
                                 </tr>
                               </thead>
                               <tbody className="divide-y divide-border">
                                 <tr>
-                                  <td className="px-4 py-3 text-sm font-mono text-blue-600">2.5</td>
-                                  <td className="px-4 py-3 text-sm text-foreground">Kilograms (kg)</td>
-                                  <td className="px-4 py-3 text-sm text-foreground">Pounds (lb)</td>
-                                  <td className="px-4 py-3 text-sm font-mono text-foreground">5.51156</td>
-                                  <td className="px-4 py-3 text-sm text-muted-foreground">Produce weight</td>
+                                  <td className="px-4 py-3 text-sm text-foreground">Airline baggage allowance</td>
+                                  <td className="px-4 py-3 text-sm text-blue-600 font-mono">23 kg → lb</td>
+                                  <td className="px-4 py-3 text-sm text-muted-foreground">50.7063 lb (round to 50.7 lb)</td>
                                 </tr>
                                 <tr>
-                                  <td className="px-4 py-3 text-sm font-mono text-blue-600">150</td>
-                                  <td className="px-4 py-3 text-sm text-foreground">Pounds (lb)</td>
-                                  <td className="px-4 py-3 text-sm text-foreground">Kilograms (kg)</td>
-                                  <td className="px-4 py-3 text-sm font-mono text-foreground">68.0389</td>
-                                  <td className="px-4 py-3 text-sm text-muted-foreground">Body weight</td>
+                                  <td className="px-4 py-3 text-sm text-foreground">British recipe for American kitchen</td>
+                                  <td className="px-4 py-3 text-sm text-blue-600 font-mono">225 g flour → oz</td>
+                                  <td className="px-4 py-3 text-sm text-muted-foreground">7.937 oz (call it 8 oz)</td>
                                 </tr>
                                 <tr>
-                                  <td className="px-4 py-3 text-sm font-mono text-blue-600">500</td>
-                                  <td className="px-4 py-3 text-sm text-foreground">Grams (g)</td>
-                                  <td className="px-4 py-3 text-sm text-foreground">Ounces (oz)</td>
-                                  <td className="px-4 py-3 text-sm font-mono text-foreground">17.6370</td>
-                                  <td className="px-4 py-3 text-sm text-muted-foreground">Package weight</td>
+                                  <td className="px-4 py-3 text-sm text-foreground">Weight loss tracking (UK style)</td>
+                                  <td className="px-4 py-3 text-sm text-blue-600 font-mono">5 kg lost → stone</td>
+                                  <td className="px-4 py-3 text-sm text-muted-foreground">0.787 stone (about ¾ stone)</td>
                                 </tr>
                                 <tr>
-                                  <td className="px-4 py-3 text-sm font-mono text-blue-600">11</td>
-                                  <td className="px-4 py-3 text-sm text-foreground">Stones (st)</td>
-                                  <td className="px-4 py-3 text-sm text-foreground">Kilograms (kg)</td>
-                                  <td className="px-4 py-3 text-sm font-mono text-foreground">69.8532</td>
-                                  <td className="px-4 py-3 text-sm text-muted-foreground">UK body weight</td>
+                                  <td className="px-4 py-3 text-sm text-foreground">Shipping small package to US</td>
+                                  <td className="px-4 py-3 text-sm text-blue-600 font-mono">850 g → lb</td>
+                                  <td className="px-4 py-3 text-sm text-muted-foreground">1.874 lb (round to 1.9 lb for postage)</td>
                                 </tr>
                                 <tr>
-                                  <td className="px-4 py-3 text-sm font-mono text-blue-600">1.5</td>
-                                  <td className="px-4 py-3 text-sm text-foreground">Tons (t)</td>
-                                  <td className="px-4 py-3 text-sm text-foreground">Pounds (lb)</td>
-                                  <td className="px-4 py-3 text-sm font-mono text-foreground">3306.93</td>
-                                  <td className="px-4 py-3 text-sm text-muted-foreground">Shipping weight</td>
+                                  <td className="px-4 py-3 text-sm text-foreground">Baby weight for medical records</td>
+                                  <td className="px-4 py-3 text-sm text-blue-600 font-mono">8 lb 3 oz → kg</td>
+                                  <td className="px-4 py-3 text-sm text-muted-foreground">3.714 kg (record as 3.7 kg)</td>
                                 </tr>
                                 <tr>
-                                  <td className="px-4 py-3 text-sm font-mono text-blue-600">28.35</td>
-                                  <td className="px-4 py-3 text-sm text-foreground">Grams (g)</td>
-                                  <td className="px-4 py-3 text-sm text-foreground">Ounces (oz)</td>
-                                  <td className="px-4 py-3 text-sm font-mono text-foreground">1.0</td>
-                                  <td className="px-4 py-3 text-sm text-muted-foreground">Exact conversion</td>
+                                  <td className="px-4 py-3 text-sm text-foreground">Coffee beans for espresso</td>
+                                  <td className="px-4 py-3 text-sm text-blue-600 font-mono">18 g per shot → oz</td>
+                                  <td className="px-4 py-3 text-sm text-muted-foreground">0.635 oz (about ⅔ oz)</td>
                                 </tr>
                               </tbody>
                             </table>
@@ -815,159 +914,42 @@ const WeightConverter = () => {
                     </div>
                     
                     <div>
-                      <h3 className="font-semibold text-foreground mb-2">Detailed Example: International Cooking & Shipping Project</h3>
-                      <div className="bg-secondary/20 p-4 rounded-lg border border-border overflow-x-auto">
-                        <pre className="text-sm text-muted-foreground whitespace-pre-wrap">
-{`Example: Converting weights for an international food business
-
-Business: Gourmet food exporter shipping products worldwide
-Requirements: Convert between metric and imperial for recipes, packaging, and shipping
-
-Step 1: Recipe Development
-Original recipe (European in grams):
-• Flour: 500g
-• Sugar: 200g
-• Butter: 250g
-• Chocolate chips: 150g
-
-Convert to ounces for US customers:
-• Flour: 500g × 0.035274 = 17.637 oz
-• Sugar: 200g × 0.035274 = 7.055 oz
-• Butter: 250g × 0.035274 = 8.8185 oz
-• Chocolate chips: 150g × 0.035274 = 5.2911 oz
-
-Rounded for practical use:
-• Flour: 17.5 oz (≈ 496g)
-• Sugar: 7 oz (≈ 198g)
-• Butter: 8.75 oz (≈ 248g)
-• Chocolate chips: 5.25 oz (≈ 149g)
-
-Step 2: Product Packaging
-Package sizes for different markets:
-• Small package: 250g for Europe
-• Convert to ounces: 250 × 0.035274 = 8.8185 oz
-• Rounded: 8.8 oz for US market
-
-• Medium package: 500g for Europe
-• Convert to pounds: 500g = 0.5kg = 1.10231 lb
-• Rounded: 1.1 lb for US market
-
-• Large package: 1kg for Europe
-• Convert to pounds: 1kg = 2.20462 lb
-• Rounded: 2.2 lb for US market
-
-Step 3: Shipping Calculations
-Order to US customer:
-• 10 small packages: 10 × 250g = 2500g = 2.5kg
-• 5 medium packages: 5 × 500g = 2500g = 2.5kg
-• 2 large packages: 2 × 1000g = 2000g = 2.0kg
-• Total: 7.0kg
-
-Convert to pounds for US shipping:
-• 7.0kg × 2.20462 = 15.43234 lb
-• Shipping cost based on weight brackets:
-  - 0-1 lb: $5.00
-  - 1-5 lb: $10.00
-  - 5-10 lb: $15.00
-  - 10-20 lb: $20.00
-• Our package: 15.43 lb → $20.00 shipping
-
-Step 4: Bulk Ingredients Ordering
-Monthly needs for production:
-• Flour: 500kg
-• Convert to pounds: 500 × 2.20462 = 1102.31 lb
-• Order from US supplier: 1100 lb (slight adjustment)
-
-• Sugar: 200kg
-• Convert to pounds: 200 × 2.20462 = 440.924 lb
-• Order from US supplier: 441 lb
-
-• Chocolate: 100kg
-• Convert to pounds: 100 × 2.20462 = 220.462 lb
-• Order from US supplier: 220 lb
-
-Step 5: Nutritional Labeling
-Per 100g serving nutritional info:
-• Calories: 350 kcal
-• Protein: 8g
-• Convert protein to ounces: 8g = 0.282192 oz
-• For US label (per serving size 1.4oz/40g):
-  - Scale factor: 40g/100g = 0.4
-  - Calories: 350 × 0.4 = 140 kcal
-  - Protein: 8g × 0.4 = 3.2g = 0.1129 oz
-
-Step 6: International Customs Documentation
-Shipment to UK:
-• Total weight: 50kg
-• Convert to stones and pounds for UK understanding:
-  - 50kg = 110.231 lb
-  - Stones: 110.231 ÷ 14 = 7.87364 stones
-  - Pounds remainder: 0.87364 × 14 = 12.231 lb
-  - Result: 7 stone 12.2 lb
-
-• Alternative for UK shipping forms:
-  - In kilograms: 50kg
-  - In pounds: 110.23 lb
-
-Step 7: Recipe Scaling for Production
-Batch size adjustment:
-• Original recipe makes 24 units at 50g each = 1200g total
-• Need to produce 1000 units:
-  - Scale factor: 1000 ÷ 24 = 41.6667
-  - Total weight needed: 1200g × 41.6667 = 50,000g = 50kg
-  - Convert to pounds for US kitchen equipment: 50kg = 110.231 lb
-
-• Individual ingredients scaling:
-  - Flour: 500g × 41.6667 = 20,833.35g = 20.833kg = 45.93 lb
-  - Sugar: 200g × 41.6667 = 8,333.34g = 8.333kg = 18.37 lb
-
-Step 8: Cost Calculations
-Ingredient costs from different suppliers:
-• European supplier (price per kg):
-  - Flour: €1.20/kg
-  - Sugar: €1.50/kg
-  - Chocolate: €8.00/kg
-
-• US supplier (price per lb):
-  - Flour: $0.60/lb = $0.60 ÷ 2.20462 = $0.272/kg
-  - Sugar: $0.75/lb = $0.75 ÷ 2.20462 = $0.340/kg
-  - Chocolate: $4.00/lb = $4.00 ÷ 2.20462 = $1.814/kg
-
-• Convert to common unit (EUR/kg):
-  - Assume exchange rate: 1 EUR = 1.10 USD
-  - US flour: $0.272/kg ÷ 1.10 = €0.247/kg
-  - US sugar: $0.340/kg ÷ 1.10 = €0.309/kg
-  - US chocolate: $1.814/kg ÷ 1.10 = €1.649/kg
-
-• Cost comparison:
-  - Flour: Europe €1.20 vs US €0.247 → US cheaper
-  - Sugar: Europe €1.50 vs US €0.309 → US cheaper
-  - Chocolate: Europe €8.00 vs US €1.649 → US cheaper
-
-Step 9: Quality Control
-Acceptable weight variations:
-• Package target: 250g
-• Allowable variation: ±5g
-• Convert to ounces: 5g = 0.17637 oz
-• Quality check: Packages between 8.64 oz and 8.99 oz acceptable
-  - Lower limit: 245g = 8.642 oz
-  - Upper limit: 255g = 8.995 oz
-
-Step 10: International Standards Compliance
-Meeting regulatory requirements:
-• EU: Labels in grams and kilograms
-• US: Labels in ounces and pounds (with metric in parentheses)
-• UK: May use grams or ounces, often both
-
-Example label for all markets:
-  Net Weight:
-    EU: 250g
-    US: 8.8 oz (250g)
-    UK: 8.8 oz/250g
-
-Conclusion:
-Using accurate weight conversions ensures consistent product quality across international markets, correct shipping calculations, proper recipe scaling, and compliance with regional regulations. The weight converter provides the precision needed for professional food business operations while maintaining simplicity for home cooking applications.`}
-                        </pre>
+                      <h3 className="font-semibold text-foreground mb-2">Weekly Meal Prep Conversion Challenge</h3>
+                      <div className="bg-secondary/20 p-4 rounded-lg border border-border">
+                        <p className="text-sm text-muted-foreground mb-3">
+                          Let's walk through a real scenario: You're meal prepping using recipes from different countries, buying ingredients locally, and tracking nutrition.
+                        </p>
+                        
+                        <div className="space-y-3 text-sm">
+                          <div>
+                            <div className="font-medium text-foreground">Monday: Italian pasta sauce</div>
+                            <div className="text-muted-foreground ml-3">Recipe says "1 pound ground beef" but your scale shows grams. Convert: 1 lb = 453.592 g. You have a 500g package, so use it all - close enough.</div>
+                          </div>
+                          
+                          <div>
+                            <div className="font-medium text-foreground">Tuesday: British baking</div>
+                            <div className="text-muted-foreground ml-3">Scones recipe: "8 oz flour." That's 226.796 g. Your scale measures to 1g, so 227 g works. Butter: "4 oz" = 113.398 g → 113 g.</div>
+                          </div>
+                          
+                          <div>
+                            <div className="font-medium text-foreground">Wednesday: Fitness nutrition</div>
+                            <div className="text-muted-foreground ml-3">Protein powder scoop = 30 g. Your American supplement says "1.05 oz per scoop." Convert: 30 g = 1.058 oz. Close enough - it's the same product.</div>
+                          </div>
+                          
+                          <div>
+                            <div className="font-medium text-foreground">Thursday: International shipping</div>
+                            <div className="text-muted-foreground ml-3">Package to Canada weighs 2.3 kg. Canada uses metric, but your US postage calculator needs pounds: 2.3 kg = 5.07 lb. Shipping cost based on 5.1 lb bracket.</div>
+                          </div>
+                          
+                          <div>
+                            <div className="font-medium text-foreground">Friday: Medication for pet</div>
+                            <div className="text-muted-foreground ml-3">Vet says "5 mg per kg" and your dog weighs 48.5 lb. First convert to kg: 48.5 lb = 22.00 kg. Dose = 22 × 5 = 110 mg. Precision matters here.</div>
+                          </div>
+                        </div>
+                        
+                        <p className="text-sm text-muted-foreground mt-3">
+                          Notice how context changes your precision needs. Cooking allows rounding, medication demands accuracy, and shipping needs practical bracket calculations.
+                        </p>
                       </div>
                     </div>
                   </div>

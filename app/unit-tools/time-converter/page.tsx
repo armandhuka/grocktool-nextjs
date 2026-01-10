@@ -14,9 +14,10 @@ const TimeConverter = () => {
   const [toUnit, setToUnit] = useState('minutes');
   const [result, setResult] = useState<string>('');
   const [openSections, setOpenSections] = useState({
-    whatItDoes: false,
-    useCases: false,
-    howToUse: false,
+    timeUnitsExplained: false,
+    conversionMethod: false,
+    productivityScenarios: false,
+    formattingPrecision: false,
     examples: false,
     faqs: false,
     relatedTools: false
@@ -44,24 +45,24 @@ const TimeConverter = () => {
   // FAQ Data
   const faqData = [
     {
-      question: "How do you calculate months and years in time conversion?",
-      answer: "We use standardized time units: 1 month = 30.436875 days (average month length), 1 year = 365.25 days (accounting for leap years). For precise conversions: seconds = base unit, minutes = 60s, hours = 3600s, days = 86400s, weeks = 604800s, months = 2,629,746s, years = 31,556,952s. For exact calendar calculations, use specific dates, but for general time conversion, these averages work well."
+      question: "Why do months have different lengths in your converter?",
+      answer: "We use an average of 30.44 days per month because actual calendar months vary from 28 to 31 days. This average gives consistent results for planning and calculations. If you're working with specific calendar months, you'd need to know the exact start and end dates, but for most project planning or general time estimation, the average works perfectly well."
     },
     {
-      question: "What's the difference between calendar months and converted months?",
-      answer: "Calendar months vary from 28 to 31 days, while converted months use an average of 30.44 days. Our converter uses the average for consistency. For specific date calculations, use calendar tools. For time duration conversions between units, the average provides accurate results for planning, scheduling, and general time measurements across different scales."
+      question: "How accurate should I be with time conversions for work projects?",
+      answer: "It depends on what you're tracking. For billing clients, round to the nearest 6-minute increment (0.1 hours) - it's standard in many industries. For internal project tracking, 15-minute blocks work well. Only scientific research needs second-by-second precision. Most business applications are fine with rounding to quarter-hours or half-hours."
     },
     {
-      question: "Can I convert between very small and very large time units?",
-      answer: "Yes, the converter handles microseconds through millennia. For smaller units than seconds, enter decimal values (0.001s = 1ms). For larger units like centuries, convert years first. The tool maintains precision up to 8 decimal places, suitable for scientific calculations, project planning, and any application requiring time unit conversions across vastly different scales."
+      question: "What's the difference between calendar days and business days?",
+      answer: "Calendar days include weekends and holidays - every day counts. Business days typically mean Monday through Friday, excluding public holidays. Our converter shows calendar time. For business days, you'd multiply by 5/7 (about 0.714) to convert calendar days to business days. So 10 calendar days equals roughly 7 business days."
     },
     {
-      question: "How accurate are leap year calculations in time conversion?",
-      answer: "We use the average year length of 365.25 days (including leap years) for conversions. This provides accuracy for most applications. For exact date calculations or financial applications requiring precise day counts, use specialized date calculators. For general time duration conversions between units, the 365.25-day year gives reliable results that account for leap years over time."
+      question: "How do leap years affect long-term conversions?",
+      answer: "We build leap years into our year calculation automatically. One year equals 365.25 days on average, which accounts for that extra quarter-day each year. Over a decade, that adds up to about 2.5 extra days. For most personal or business planning, this level of accuracy is sufficient. Only astronomical calculations need more precision."
     },
     {
-      question: "What time units are best for different applications?",
-      answer: "Use seconds for scientific measurements and precise timing. Use minutes and hours for everyday activities and meetings. Use days for project deadlines and travel planning. Use weeks for work schedules and pregnancy tracking. Use months for billing cycles and subscriptions. Use years for long-term planning and age calculations. Choose units appropriate for your specific time scale needs."
+      question: "Can I convert really small time units like milliseconds?",
+      answer: "Absolutely. Just use decimal values. One millisecond is 0.001 seconds, so enter 0.001 in the seconds field. For microseconds, that's 0.000001 seconds. The converter handles these tiny values without issue. If you work with scientific or computing time measurements frequently, you might want to stick to seconds and use decimals for fractions."
     }
   ];
 
@@ -515,243 +516,548 @@ const TimeConverter = () => {
 
           {/* SEO Content Section with Dropdowns */}
           <section className="space-y-4 mt-12">
-            {/* What This Tool Does - Dropdown */}
+            {/* Time Units Explained */}
             <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
               <button
-                onClick={() => toggleSection('whatItDoes')}
+                onClick={() => toggleSection('timeUnitsExplained')}
                 className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
               >
                 <div className="flex items-center gap-3">
                   <div className="bg-blue-500/10 p-2 rounded-lg">
                     <Clock size={20} className="text-blue-600" />
                   </div>
-                  <h2 className="text-xl font-bold text-foreground">Time Converter - Features & Applications</h2>
+                  <h2 className="text-xl font-bold text-foreground">Time Units Explained - From Seconds to Years</h2>
                 </div>
-                {openSections.whatItDoes ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                {openSections.timeUnitsExplained ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
               </button>
               
-              {openSections.whatItDoes && (
+              {openSections.timeUnitsExplained && (
                 <div className="px-6 pb-6">
-                  <p className="text-muted-foreground mb-4">
-                    This Time Converter provides instant, accurate conversions between all major time measurement units. The tool seamlessly converts between seconds, minutes, hours, days, weeks, months, and years using precise standardized conversion factors. Whether you're managing project timelines, calculating billing hours, planning schedules, or working with scientific data, this converter delivers reliable results with up to 8 decimal place accuracy. It automatically updates conversions in real-time as you type, includes common preset conversions for quick reference, and handles both small time intervals (like seconds for precise measurements) and large durations (like years for long-term planning). The intuitive interface makes it easy to switch between time units and copy results for documentation, reporting, or sharing with team members.
-                  </p>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
-                    <div className="bg-blue-500/10 p-4 rounded-lg border border-blue-500/20">
-                      <div className="flex items-center gap-2 mb-2">
-                        <Clock size={18} className="text-blue-600" />
-                        <h3 className="font-semibold text-foreground">Precise Time Calculations</h3>
+                  <div className="space-y-4">
+                    <div>
+                      <p className="text-muted-foreground mb-4">
+                        Understanding time units goes beyond just memorizing conversion factors. Each unit has its own practical purpose and context where it makes the most sense to use. Let's break down what each time measurement really represents in everyday life.
+                      </p>
+                      
+                      <div className="space-y-4">
+                        <div className="bg-blue-500/5 p-4 rounded-lg">
+                          <h3 className="font-semibold text-foreground mb-2">Seconds & Minutes - The Human-Scale Units</h3>
+                          <p className="text-sm text-muted-foreground mb-2">
+                            Seconds are our most precise everyday time unit. A second is about the time it takes to take one breath at rest, or to blink twice. We use seconds for cooking times (boil eggs for 45 seconds), exercise intervals (hold for 30 seconds), and anything requiring precise timing.
+                          </p>
+                          <p className="text-sm text-muted-foreground">
+                            Minutes work perfectly for human attention spans. Most meetings, phone calls, and quick tasks fit into minute increments. What's interesting is that 5 minutes feels like "just a moment" while 10 minutes starts feeling like actual time has passed. That's why TV commercials are often exactly 30 seconds or 60 seconds - they fit neatly into our psychological time perception.
+                          </p>
+                        </div>
+                        
+                        <div className="bg-green-500/5 p-4 rounded-lg">
+                          <h3 className="font-semibold text-foreground mb-2">Hours & Days - The Work & Life Units</h3>
+                          <p className="text-sm text-muted-foreground mb-2">
+                            Hours match our natural energy cycles. Most people can focus for about 50-90 minutes before needing a break. The 8-hour workday came from industrial revolution factories, but it stuck because it roughly matches how long humans can be productive in a day.
+                          </p>
+                          <p className="text-sm text-muted-foreground">
+                            Days are our biological rhythm unit. Our bodies run on circadian cycles that reset every 24 hours. That's why jet lag happens when we cross time zones - our internal clock gets confused. Days work well for planning because they're tangible: "I'll finish this tomorrow" makes immediate sense, while "I'll finish this in 86,400 seconds" doesn't.
+                          </p>
+                        </div>
+                        
+                        <div className="bg-purple-500/5 p-4 rounded-lg">
+                          <h3 className="font-semibold text-foreground mb-2">Weeks & Months - The Planning Units</h3>
+                          <p className="text-sm text-muted-foreground mb-2">
+                            Weeks come from ancient agricultural cycles and religious observances. The 7-day week doesn't have astronomical basis like days (Earth's rotation) or years (Earth's orbit), but it's deeply embedded in human culture. Weeks work perfectly for project planning because they're long enough to make progress but short enough to stay focused.
+                          </p>
+                          <p className="text-sm text-muted-foreground">
+                            Months originally tracked lunar cycles (about 29.5 days), but our calendar months now vary from 28 to 31 days. That inconsistency makes monthly conversions tricky - hence we use 30.44 days as an average. Months are great for billing cycles, subscriptions, and anything that repeats regularly but needs more time than a week.
+                          </p>
+                        </div>
+                        
+                        <div className="bg-amber-500/5 p-4 rounded-lg">
+                          <h3 className="font-semibold text-foreground mb-2">Years & Beyond - The Long-Term Units</h3>
+                          <p className="text-sm text-muted-foreground mb-2">
+                            Years measure Earth's journey around the sun. That 365.25-day cycle affects everything from seasons to agriculture to human aging. The quarter-day leftover is why we have leap years every four years (except century years not divisible by 400 - 1900 wasn't a leap year, but 2000 was).
+                          </p>
+                          <p className="text-sm text-muted-foreground">
+                            Beyond years, we have decades (10 years), centuries (100 years), and millennia (1000 years). These large units help us think about historical periods, long-term investments, and generational changes. A decade feels like a natural unit for reflecting on personal growth or technological change.
+                          </p>
+                        </div>
+                        
+                        <div className="bg-secondary/20 p-4 rounded-lg">
+                          <h4 className="font-medium text-foreground mb-2">When to Use Which Unit</h4>
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                            <div>
+                              <div className="font-medium text-foreground">Use seconds for:</div>
+                              <ul className="space-y-1 text-muted-foreground mt-1">
+                                <li>• Cooking & baking times</li>
+                                <li>• Exercise intervals</li>
+                                <li>• Scientific measurements</li>
+                                <li>• Computer operations</li>
+                              </ul>
+                            </div>
+                            <div>
+                              <div className="font-medium text-foreground">Use months for:</div>
+                              <ul className="space-y-1 text-muted-foreground mt-1">
+                                <li>• Rent & mortgage payments</li>
+                                <li>• Subscription renewals</li>
+                                <li>• Project phases</li>
+                                <li>• Pregnancy tracking</li>
+                              </ul>
+                            </div>
+                            <div>
+                              <div className="font-medium text-foreground">Use hours for:</div>
+                              <ul className="space-y-1 text-muted-foreground mt-1">
+                                <li>• Work shifts</li>
+                                <li>• Movie lengths</li>
+                                <li>• Travel times</li>
+                                <li>• Meeting durations</li>
+                              </ul>
+                            </div>
+                            <div>
+                              <div className="font-medium text-foreground">Use years for:</div>
+                              <ul className="space-y-1 text-muted-foreground mt-1">
+                                <li>• Age calculations</li>
+                                <li>• Long-term investments</li>
+                                <li>• Education programs</li>
+                                <li>• Career planning</li>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
                       </div>
-                      <p className="text-sm text-muted-foreground">Convert between seconds, minutes, and hours with exact mathematical precision. Essential for scientific experiments, cooking timers, exercise routines, and any application requiring accurate time measurement conversions.</p>
-                    </div>
-                    <div className="bg-green-500/10 p-4 rounded-lg border border-green-500/20">
-                      <div className="flex items-center gap-2 mb-2">
-                        <Calendar size={18} className="text-green-600" />
-                        <h3 className="font-semibold text-foreground">Calendar Time Conversions</h3>
-                      </div>
-                      <p className="text-sm text-muted-foreground">Accurately convert between days, weeks, months, and years using standardized calendar approximations. Perfect for project planning, event scheduling, subscription management, and long-term goal setting across different time scales.</p>
-                    </div>
-                    <div className="bg-purple-500/10 p-4 rounded-lg border border-purple-500/20">
-                      <div className="flex items-center gap-2 mb-2">
-                        <Timer size={18} className="text-purple-600" />
-                        <h3 className="font-semibold text-foreground">Project Management</h3>
-                      </div>
-                      <p className="text-sm text-muted-foreground">Handle complex time conversions for work scheduling, deadline calculations, and resource allocation. Convert between work hours, business days, project weeks, and delivery timelines for efficient project planning and management.</p>
-                    </div>
-                    <div className="bg-amber-500/10 p-4 rounded-lg border border-amber-500/20">
-                      <div className="flex items-center gap-2 mb-2">
-                        <Watch size={18} className="text-amber-600" />
-                        <h3 className="font-semibold text-foreground">Financial & Billing</h3>
-                      </div>
-                      <p className="text-sm text-muted-foreground">Convert time units for hourly billing, interest calculations, loan durations, and investment timelines. Calculate precise time conversions for financial planning, contract durations, and billing cycle management across different time periods.</p>
                     </div>
                   </div>
                 </div>
               )}
             </article>
 
-            {/* Use Cases Section - Dropdown */}
+            {/* Conversion Method */}
             <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
               <button
-                onClick={() => toggleSection('useCases')}
+                onClick={() => toggleSection('conversionMethod')}
                 className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
               >
                 <div className="flex items-center gap-3">
                   <div className="bg-green-500/10 p-2 rounded-lg">
-                    <Clock size={20} className="text-green-600" />
+                    <Calendar size={20} className="text-green-600" />
                   </div>
-                  <h2 className="text-xl font-bold text-foreground">Time Conversion Applications</h2>
+                  <h2 className="text-xl font-bold text-foreground">How Time Conversion Actually Works</h2>
                 </div>
-                {openSections.useCases ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                {openSections.conversionMethod ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
               </button>
               
-              {openSections.useCases && (
+              {openSections.conversionMethod && (
                 <div className="px-6 pb-6">
                   <div className="space-y-4">
                     <div>
-                      <h3 className="font-semibold text-foreground mb-2">📊 Project Management & Business</h3>
-                      <ul className="space-y-1 text-muted-foreground text-sm">
-                        <li className="flex items-start gap-2">
-                          <div className="w-1 h-1 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
-                          <span><strong>Work Scheduling:</strong> Convert between work hours, business days, and project weeks for team scheduling, calculate delivery timelines across different time units, and allocate resources based on time estimates</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <div className="w-1 h-1 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
-                          <span><strong>Billing & Invoicing:</strong> Convert hourly work to weekly or monthly billing periods, calculate project costs across different time scales, and create invoices with accurate time conversions for client reporting</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <div className="w-1 h-1 bg-purple-500 rounded-full mt-2 flex-shrink-0"></div>
-                          <span><strong>Deadline Management:</strong> Convert project deadlines between days, weeks, and months for milestone tracking, calculate time remaining in different units for progress reporting, and plan deliverables across multiple time scales</span>
-                        </li>
-                      </ul>
-                    </div>
-                    <div>
-                      <h3 className="font-semibold text-foreground mb-2">🎓 Education & Research</h3>
-                      <ul className="space-y-1 text-muted-foreground text-sm">
-                        <li className="flex items-start gap-2">
-                          <div className="w-1 h-1 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
-                          <span><strong>Academic Scheduling:</strong> Convert class durations between minutes and hours for timetable planning, calculate semester lengths in weeks and months, and plan academic years across different time units</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <div className="w-1 h-1 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
-                          <span><strong>Scientific Experiments:</strong> Convert experiment durations between seconds, minutes, and hours for protocol documentation, calculate reaction times in appropriate units, and standardize time measurements across research papers</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <div className="w-1 h-1 bg-purple-500 rounded-full mt-2 flex-shrink-0"></div>
-                          <span><strong>Study Planning:</strong> Convert study sessions between hours per day and hours per week for curriculum planning, calculate preparation time for exams in different time units, and track learning progress across time scales</span>
-                        </li>
-                      </ul>
-                    </div>
-                    <div>
-                      <h3 className="font-semibold text-foreground mb-2">💰 Finance & Personal Planning</h3>
-                      <ul className="space-y-1 text-muted-foreground text-sm">
-                        <li className="flex items-start gap-2">
-                          <div className="w-1 h-1 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
-                          <span><strong>Investment Calculations:</strong> Convert between days, months, and years for compound interest calculations, calculate investment horizons across different time periods, and plan financial goals using various time units</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <div className="w-1 h-1 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
-                          <span><strong>Loan & Mortgage Planning:</strong> Convert loan terms between months and years for repayment planning, calculate interest accrual across different time scales, and compare financial products using standardized time units</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <div className="w-1 h-1 bg-purple-500 rounded-full mt-2 flex-shrink-0"></div>
-                          <span><strong>Budget Management:</strong> Convert between daily, weekly, monthly, and yearly budgets for financial planning, calculate savings goals across different time periods, and track expenses using consistent time units</span>
-                        </li>
-                      </ul>
-                    </div>
-                    <div>
-                      <h3 className="font-semibold text-foreground mb-2">🏃 Health & Fitness</h3>
-                      <ul className="space-y-1 text-muted-foreground text-sm">
-                        <li className="flex items-start gap-2">
-                          <div className="w-1 h-1 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
-                          <span><strong>Exercise Planning:</strong> Convert workout durations between minutes and hours for fitness routines, calculate training schedules across weeks and months, and track exercise time using different measurement units</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <div className="w-1 h-1 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
-                          <span><strong>Medical Treatment:</strong> Convert medication schedules between hours, days, and weeks for treatment plans, calculate recovery timelines in different time units, and track health progress across various time scales</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <div className="w-1 h-1 bg-purple-500 rounded-full mt-2 flex-shrink-0"></div>
-                          <span><strong>Wellness Tracking:</strong> Convert between daily, weekly, and monthly habit tracking for wellness goals, calculate sleep cycles in hours and minutes, and monitor health metrics using consistent time measurements</span>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </article>
-
-            {/* How to Use - Dropdown */}
-            <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
-              <button
-                onClick={() => toggleSection('howToUse')}
-                className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
-              >
-                <div className="flex items-center gap-3">
-                  <div className="bg-amber-500/10 p-2 rounded-lg">
-                    <Clock size={20} className="text-amber-600" />
-                  </div>
-                  <h2 className="text-xl font-bold text-foreground">How to Use Time Converter - Complete Guide</h2>
-                </div>
-                {openSections.howToUse ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
-              </button>
-              
-              {openSections.howToUse && (
-                <div className="px-6 pb-6">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="space-y-3">
-                      <h3 className="font-semibold text-foreground">Step-by-Step Instructions</h3>
+                      <p className="text-muted-foreground mb-4">
+                        Time conversion might seem straightforward, but there are nuances that matter depending on what you're calculating. The method changes slightly when you're dealing with exact scientific time versus calendar time for planning purposes.
+                      </p>
+                      
                       <div className="space-y-4">
-                        <div className="flex items-start gap-3">
-                          <div className="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0">1</div>
-                          <div>
-                            <div className="font-medium text-foreground">Enter Your Time Value</div>
-                            <div className="text-sm text-muted-foreground">Type the numerical time duration you want to convert in the "From" field. Enter whole numbers, decimals, or large values for extended time periods.</div>
+                        <div className="bg-blue-500/5 p-4 rounded-lg">
+                          <h3 className="font-semibold text-foreground mb-2">The Two-Step Process Our Converter Uses</h3>
+                          <p className="text-sm text-muted-foreground mb-3">
+                            Every conversion goes through seconds as the common ground. Here's exactly what happens when you convert, say, 3 days to hours:
+                          </p>
+                          <div className="bg-secondary/30 p-3 rounded mb-3">
+                            <div className="text-sm font-mono mb-1">Step 1: Convert source to seconds</div>
+                            <div className="text-sm">3 days × 86,400 seconds/day = 259,200 seconds</div>
+                            <div className="text-sm font-mono mt-2 mb-1">Step 2: Convert seconds to target</div>
+                            <div className="text-sm">259,200 seconds ÷ 3,600 seconds/hour = 72 hours</div>
+                          </div>
+                          <p className="text-sm text-muted-foreground">
+                            This two-step method ensures accuracy because every conversion factor is defined precisely in terms of seconds. It prevents rounding errors that can creep in when you use approximate shortcuts.
+                          </p>
+                        </div>
+                        
+                        <div className="bg-green-500/5 p-4 rounded-lg">
+                          <h3 className="font-semibold text-foreground mb-2">Calendar Time vs Exact Time</h3>
+                          <p className="text-sm text-muted-foreground mb-2">
+                            This is where things get interesting. When we say "1 month = 30.44 days," we're using an average. But actual months vary:
+                          </p>
+                          <div className="grid grid-cols-3 gap-2 mb-3 text-xs">
+                            <div className="text-center p-2 bg-blue-500/10 rounded">
+                              <div className="font-medium">February</div>
+                              <div>28 days</div>
+                              <div className="text-muted-foreground">(29 in leap years)</div>
+                            </div>
+                            <div className="text-center p-2 bg-green-500/10 rounded">
+                              <div className="font-medium">April, June</div>
+                              <div>30 days</div>
+                              <div className="text-muted-foreground">September, November</div>
+                            </div>
+                            <div className="text-center p-2 bg-purple-500/10 rounded">
+                              <div className="font-medium">January, March</div>
+                              <div>31 days</div>
+                              <div className="text-muted-foreground">May, July, etc.</div>
+                            </div>
+                          </div>
+                          <p className="text-sm text-muted-foreground">
+                            For project planning, the average works fine. But if you're calculating rent from March 15 to April 15, you need to count actual days (31 in March). Our converter gives you the average - for specific date calculations, you'd need a calendar.
+                          </p>
+                        </div>
+                        
+                        <div className="bg-purple-500/5 p-4 rounded-lg">
+                          <h3 className="font-semibold text-foreground mb-2">Leap Seconds & Other Quirks</h3>
+                          <p className="text-sm text-muted-foreground">
+                            Occasionally, scientists add a "leap second" to keep atomic clocks synchronized with Earth's slowing rotation. We don't account for these in everyday conversions - they're only critical for astronomical or precise scientific work. For 99.9% of applications, our conversions are accurate enough.
+                          </p>
+                          <div className="mt-3 text-xs bg-secondary/30 p-3 rounded">
+                            <div className="font-medium">Quick Reference: Common Conversion Factors</div>
+                            <div className="grid grid-cols-2 gap-2 mt-2">
+                              <div>1 minute = 60 seconds</div>
+                              <div>1 hour = 3,600 seconds</div>
+                              <div>1 day = 86,400 seconds</div>
+                              <div>1 week = 604,800 seconds</div>
+                              <div>1 month ≈ 2,629,746 seconds</div>
+                              <div>1 year ≈ 31,556,952 seconds</div>
+                            </div>
                           </div>
                         </div>
-                        <div className="flex items-start gap-3">
-                          <div className="bg-green-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0">2</div>
-                          <div>
-                            <div className="font-medium text-foreground">Select Source Unit</div>
-                            <div className="text-sm text-muted-foreground">Choose the current time unit from the dropdown menu next to your input. Options include seconds, minutes, hours, days, weeks, months, and years for comprehensive conversion coverage.</div>
-                          </div>
-                        </div>
-                        <div className="flex items-start gap-3">
-                          <div className="bg-purple-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0">3</div>
-                          <div>
-                            <div className="font-medium text-foreground">Select Target Unit</div>
-                            <div className="text-sm text-muted-foreground">Choose the time unit you want to convert to from the "To" dropdown menu. The converter will automatically calculate and display the result in real-time as you make selections.</div>
-                          </div>
-                        </div>
-                        <div className="flex items-start gap-3">
-                          <div className="bg-amber-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0">4</div>
-                          <div>
-                            <div className="font-medium text-foreground">Use Conversion Results</div>
-                            <div className="text-sm text-muted-foreground">Copy the converted value using the copy button, or click any preset conversion for instant calculations of common time scenarios like work hours or project timelines.</div>
+                        
+                        <div className="bg-amber-500/5 p-4 rounded-lg">
+                          <h3 className="font-semibold text-foreground mb-2">Mental Math Shortcuts That Actually Work</h3>
+                          <p className="text-sm text-muted-foreground mb-3">
+                            While our converter does exact math, here are some quick approximations you can do in your head:
+                          </p>
+                          <div className="space-y-2 text-sm">
+                            <div className="flex items-start gap-2">
+                              <div className="w-4 h-4 bg-blue-500/20 rounded flex items-center justify-center flex-shrink-0 mt-0.5">
+                                <div className="w-1.5 h-1.5 bg-blue-500 rounded-full"></div>
+                              </div>
+                              <span><strong>Days to hours:</strong> Multiply by 24, or easier - multiply by 25 then subtract one day's worth (the original number)</span>
+                            </div>
+                            <div className="flex items-start gap-2">
+                              <div className="w-4 h-4 bg-green-500/20 rounded flex items-center justify-center flex-shrink-0 mt-0.5">
+                                <div className="w-1.5 h-1.5 bg-green-500 rounded-full"></div>
+                              </div>
+                              <span><strong>Weeks to days:</strong> Multiply by 7 obviously, but remember 4 weeks is about 28 days, not quite a month</span>
+                            </div>
+                            <div className="flex items-start gap-2">
+                              <div className="w-4 h-4 bg-purple-500/20 rounded flex items-center justify-center flex-shrink-0 mt-0.5">
+                                <div className="w-1.5 h-1.5 bg-purple-500 rounded-full"></div>
+                              </div>
+                              <span><strong>Months to weeks:</strong> Multiply by 4.35 (or just 4.3 for quick estimates). 3 months ≈ 13 weeks</span>
+                            </div>
+                            <div className="flex items-start gap-2">
+                              <div className="w-4 h-4 bg-amber-500/20 rounded flex items-center justify-center flex-shrink-0 mt-0.5">
+                                <div className="w-1.5 h-1.5 bg-amber-500 rounded-full"></div>
+                              </div>
+                              <span><strong>Years to days:</strong> Multiply by 365, then add a quarter of the years for leap days. 4 years = 1,461 days</span>
+                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                    <div className="space-y-3">
-                      <h3 className="font-semibold text-foreground">Pro Conversion Tips</h3>
-                      <ul className="space-y-2 text-sm text-muted-foreground">
-                        <li className="flex items-start gap-2">
-                          <div className="bg-blue-500/20 p-1 rounded mt-0.5">
-                            <Clock size={12} className="text-blue-500" />
+                  </div>
+                </div>
+              )}
+            </article>
+
+            {/* Productivity Scenarios */}
+            <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
+              <button
+                onClick={() => toggleSection('productivityScenarios')}
+                className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="bg-purple-500/10 p-2 rounded-lg">
+                    <Timer size={20} className="text-purple-600" />
+                  </div>
+                  <h2 className="text-xl font-bold text-foreground">Time Conversion for Productivity & Planning</h2>
+                </div>
+                {openSections.productivityScenarios ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+              </button>
+              
+              {openSections.productivityScenarios && (
+                <div className="px-6 pb-6">
+                  <div className="space-y-4">
+                    <div>
+                      <p className="text-muted-foreground mb-4">
+                        Time conversion isn't just math - it's a practical skill for getting things done. Whether you're planning a project, tracking work hours, or trying to be more productive, choosing the right time units makes all the difference.
+                      </p>
+                      
+                      <div className="space-y-4">
+                        <div className="bg-blue-500/5 p-4 rounded-lg">
+                          <h3 className="font-semibold text-foreground mb-2">Work Hour Conversions That Make Sense</h3>
+                          <p className="text-sm text-muted-foreground mb-3">
+                            If you bill by the hour or track work time, these conversions will save you headaches:
+                          </p>
+                          <div className="space-y-3">
+                            <div className="flex items-center justify-between border-b border-border/50 pb-2">
+                              <div className="text-sm">Billable time tracking</div>
+                              <div className="text-xs font-mono bg-blue-500/10 px-2 py-1 rounded">15 min = 0.25 hours</div>
+                            </div>
+                            <div className="flex items-center justify-between border-b border-border/50 pb-2">
+                              <div className="text-sm">Weekly capacity calculation</div>
+                              <div className="text-xs font-mono bg-green-500/10 px-2 py-1 rounded">40 hours = 1 work week</div>
+                            </div>
+                            <div className="flex items-center justify-between border-b border-border/50 pb-2">
+                              <div className="text-sm">Project estimation</div>
+                              <div className="text-xs font-mono bg-purple-500/10 px-2 py-1 rounded">1 month ≈ 160 work hours</div>
+                            </div>
+                            <div className="flex items-center justify-between">
+                              <div className="text-sm">Overtime calculation</div>
+                              <div className="text-xs font-mono bg-amber-500/10 px-2 py-1 rounded">10 hours overtime = 1.25 days</div>
+                            </div>
                           </div>
-                          <span><strong>Quick Estimates:</strong> For approximate conversions: 1 day ≈ 8.64×10⁴ seconds, 1 week = 7 days, 1 month ≈ 4.33 weeks, 1 year = 52 weeks + 1 day</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <div className="bg-green-500/20 p-1 rounded mt-0.5">
-                            <Calendar size={12} className="text-green-500" />
+                          <p className="text-sm text-muted-foreground mt-3">
+                            Remember: A "work month" isn't the same as a calendar month. With weekends, a typical work month has about 20-22 working days, which equals 160-176 work hours at 8 hours per day.
+                          </p>
+                        </div>
+                        
+                        <div className="bg-green-500/5 p-4 rounded-lg">
+                          <h3 className="font-semibold text-foreground mb-2">Project Planning Across Time Scales</h3>
+                          <p className="text-sm text-muted-foreground mb-3">
+                            Different project phases need different time units. Here's how to think about it:
+                          </p>
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
+                            <div>
+                              <div className="font-medium text-foreground mb-1">Daily Standups</div>
+                              <div className="text-muted-foreground">Think in minutes: 15-minute meetings, 2-hour focused work blocks, 30-minute breaks</div>
+                            </div>
+                            <div>
+                              <div className="font-medium text-foreground mb-1">Weekly Sprints</div>
+                              <div className="text-muted-foreground">Think in hours: 40-hour work weeks, 20-hour tasks, 8-hour days</div>
+                            </div>
+                            <div>
+                              <div className="font-medium text-foreground mb-1">Monthly Milestones</div>
+                              <div className="text-muted-foreground">Think in days: 30-day challenges, 21-day habits, 14-day deliveries</div>
+                            </div>
+                            <div>
+                              <div className="font-medium text-foreground mb-1">Quarterly Goals</div>
+                              <div className="text-muted-foreground">Think in weeks: 13-week quarters, 6-week sprints, 4-week iterations</div>
+                            </div>
                           </div>
-                          <span><strong>Swap Function:</strong> Use the swap button between units to quickly reverse your conversion direction without re-entering time values - perfect for checking calculations</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <div className="bg-purple-500/20 p-1 rounded mt-0.5">
-                            <Timer size={12} className="text-purple-500" />
+                          <p className="text-sm text-muted-foreground mt-3">
+                            Pro tip: When estimating project time, always convert to hours first, then to your reporting unit. If a task takes 3 days, that's 24 work hours. Much easier to track than "0.6 weeks" or "0.1 months."
+                          </p>
+                        </div>
+                        
+                        <div className="bg-purple-500/5 p-4 rounded-lg">
+                          <h3 className="font-semibold text-foreground mb-2">Personal Productivity Hacks</h3>
+                          <p className="text-sm text-muted-foreground mb-3">
+                            Time conversion can help you be more productive in surprising ways:
+                          </p>
+                          <div className="space-y-2 text-sm">
+                            <div className="flex items-start gap-2">
+                              <div className="w-4 h-4 bg-blue-500/20 rounded flex items-center justify-center flex-shrink-0 mt-0.5">
+                                <Clock size={10} className="text-blue-500" />
+                              </div>
+                              <span><strong>The 15-Minute Rule:</strong> Instead of "I'll work on this later," say "I'll spend 15 minutes now." 15 minutes = 0.25 hours = 900 seconds. Small enough to start, big enough to make progress.</span>
+                            </div>
+                            <div className="flex items-start gap-2">
+                              <div className="w-4 h-4 bg-green-500/20 rounded flex items-center justify-center flex-shrink-0 mt-0.5">
+                                <Calendar size={10} className="text-green-500" />
+                              </div>
+                              <span><strong>Annual Perspective:</strong> 1% improvement daily = 37.78 times better in a year (1.01³⁶⁵). Viewing time annually makes small daily efforts feel more meaningful.</span>
+                            </div>
+                            <div className="flex items-start gap-2">
+                              <div className="w-4 h-4 bg-purple-500/20 rounded flex items-center justify-center flex-shrink-0 mt-0.5">
+                                <Timer size={10} className="text-purple-500" />
+                              </div>
+                              <span><strong>Meeting Math:</strong> A 1-hour meeting with 5 people costs 5 work hours. Could the same be accomplished with a 15-minute call (1.25 work hours total)?</span>
+                            </div>
+                            <div className="flex items-start gap-2">
+                              <div className="w-4 h-4 bg-amber-500/20 rounded flex items-center justify-center flex-shrink-0 mt-0.5">
+                                <Watch size={10} className="text-amber-500" />
+                              </div>
+                              <span><strong>Commuting Conversion:</strong> 30 minutes each way = 5 hours weekly = 260 hours annually = 10.8 days per year just commuting. That perspective might motivate remote work requests.</span>
+                            </div>
                           </div>
-                          <span><strong>Common Conversions:</strong> Save time by using the preset conversion buttons for frequently needed calculations like work hours to days or project weeks to months</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <div className="bg-amber-500/20 p-1 rounded mt-0.5">
-                            <Watch size={12} className="text-amber-500" />
+                        </div>
+                        
+                        <div className="bg-amber-500/5 p-4 rounded-lg">
+                          <h3 className="font-semibold text-foreground mb-2">Real Business Scenarios</h3>
+                          <div className="space-y-3 text-sm">
+                            <div className="border-l-4 border-blue-500 pl-3 py-1">
+                              <div className="font-medium text-foreground">Freelancer Billing</div>
+                              <div className="text-muted-foreground">Client wants project estimate in weeks, but you track hours. 3-week project = 15 work days = 120 hours at $75/hour = $9,000. Much clearer than "about 3 weeks."</div>
+                            </div>
+                            <div className="border-l-4 border-green-500 pl-3 py-1">
+                              <div className="font-medium text-foreground">Team Capacity Planning</div>
+                              <div className="text-muted-foreground">5 developers × 40 hours/week = 200 hours weekly capacity. 1,000-hour project ÷ 200 = 5 weeks. Add 20% buffer = 6 weeks total.</div>
+                            </div>
+                            <div className="border-l-4 border-purple-500 pl-3 py-1">
+                              <div className="font-medium text-foreground">Annual Budget Breakdown</div>
+                              <div className="text-muted-foreground">$120,000 annual salary ÷ 2,080 work hours/year = $57.69/hour cost to company. Now you can accurately price projects based on actual time.</div>
+                            </div>
                           </div>
-                          <span><strong>Precision Control:</strong> Results show up to 8 decimal places. For project planning, round to practical units; for scientific work, use full precision as needed</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <div className="bg-red-500/20 p-1 rounded mt-0.5">
-                            <Copy size={12} className="text-red-500" />
-                          </div>
-                          <span><strong>Documentation Ready:</strong> Use the copy function to save conversion results for reports, schedules, financial documents, or project plans requiring accurate time measurements</span>
-                        </li>
-                      </ul>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
               )}
             </article>
 
-            {/* Example Input and Output Section */}
+            {/* Formatting & Precision */}
+            <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
+              <button
+                onClick={() => toggleSection('formattingPrecision')}
+                className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="bg-red-500/10 p-2 rounded-lg">
+                    <Clock size={20} className="text-red-600" />
+                  </div>
+                  <h2 className="text-xl font-bold text-foreground">Formatting & Precision - Getting Time Right</h2>
+                </div>
+                {openSections.formattingPrecision ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+              </button>
+              
+              {openSections.formattingPrecision && (
+                <div className="px-6 pb-6">
+                  <div className="space-y-4">
+                    <div>
+                      <p className="text-muted-foreground mb-4">
+                        How you present time matters almost as much as the calculation itself. Different fields have different conventions, and using the wrong format can confuse clients, colleagues, or even yourself when you look back at notes.
+                      </p>
+                      
+                      <div className="space-y-4">
+                        <div className="bg-blue-500/5 p-4 rounded-lg">
+                          <h3 className="font-semibold text-foreground mb-2">Time Notation Standards</h3>
+                          <div className="overflow-x-auto">
+                            <div className="min-w-full inline-block align-middle">
+                              <div className="overflow-hidden border border-border rounded-lg">
+                                <table className="min-w-full divide-y divide-border">
+                                  <thead className="bg-secondary/20">
+                                    <tr>
+                                      <th className="px-4 py-2 text-left text-xs font-medium text-foreground">Field</th>
+                                      <th className="px-4 py-2 text-left text-xs font-medium text-foreground">Standard Format</th>
+                                      <th className="px-4 py-2 text-left text-xs font-medium text-foreground">Example</th>
+                                      <th className="px-4 py-2 text-left text-xs font-medium text-foreground">When to Use</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody className="divide-y divide-border">
+                                    <tr>
+                                      <td className="px-4 py-2 text-xs font-medium text-foreground">Business/General</td>
+                                      <td className="px-4 py-2 text-xs">Decimal hours</td>
+                                      <td className="px-4 py-2 text-xs font-mono">3.5 hours</td>
+                                      <td className="px-4 py-2 text-xs">Timesheets, billing, meetings</td>
+                                    </tr>
+                                    <tr>
+                                      <td className="px-4 py-2 text-xs font-medium text-foreground">Scientific</td>
+                                      <td className="px-4 py-2 text-xs">Seconds with decimals</td>
+                                      <td className="px-4 py-2 text-xs font-mono">125.67 s</td>
+                                      <td className="px-4 py-2 text-xs">Experiments, research papers</td>
+                                    </tr>
+                                    <tr>
+                                      <td className="px-4 py-2 text-xs font-medium text-foreground">Project Management</td>
+                                      <td className="px-4 py-2 text-xs">Days with fractions</td>
+                                      <td className="px-4 py-2 text-xs font-mono">2.5 days</td>
+                                      <td className="px-4 py-2 text-xs">Gantt charts, schedules</td>
+                                    </tr>
+                                    <tr>
+                                      <td className="px-4 py-2 text-xs font-medium text-foreground">Construction</td>
+                                      <td className="px-4 py-2 text-xs">Hours & minutes</td>
+                                      <td className="px-4 py-2 text-xs font-mono">3h 45m</td>
+                                      <td className="px-4 py-2 text-xs">Labor tracking, site work</td>
+                                    </tr>
+                                    <tr>
+                                      <td className="px-4 py-2 text-xs font-medium text-foreground">Legal</td>
+                                      <td className="px-4 py-2 text-xs">Exact calendar days</td>
+                                      <td className="px-4 py-2 text-xs font-mono">30 calendar days</td>
+                                      <td className="px-4 py-2 text-xs">Contracts, deadlines</td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <div className="bg-green-500/5 p-4 rounded-lg">
+                          <h3 className="font-semibold text-foreground mb-2">How Many Decimal Places Do You Really Need?</h3>
+                          <div className="space-y-3 text-sm">
+                            <div className="flex items-start gap-2">
+                              <div className="w-4 h-4 bg-red-500/20 rounded flex items-center justify-center flex-shrink-0 mt-0.5">
+                                <div className="w-1.5 h-1.5 bg-red-500 rounded-full"></div>
+                              </div>
+                              <span><strong>Over-precision:</strong> Reporting 3.14159265 hours for a meeting is absurd when you scheduled it for "about 3 hours." You measured with a clock showing minutes, not nanoseconds.</span>
+                            </div>
+                            <div className="flex items-start gap-2">
+                              <div className="w-4 h-4 bg-yellow-500/20 rounded flex items-center justify-center flex-shrink-0 mt-0.5">
+                                <div className="w-1.5 h-1.5 bg-yellow-500 rounded-full"></div>
+                              </div>
+                              <span><strong>Under-precision:</strong> Saying "a couple weeks" when you mean "14 calendar days" can cause project delays. Two people might interpret "a couple" differently.</span>
+                            </div>
+                            <div className="flex items-start gap-2">
+                              <div className="w-4 h-4 bg-green-500/20 rounded flex items-center justify-center flex-shrink-0 mt-0.5">
+                                <div className="w-1.5 h-1.5 bg-green-500 rounded-full"></div>
+                              </div>
+                              <span><strong>Just right:</strong> "The task took 3.5 hours" uses appropriate precision. You worked about 3 hours and 30 minutes, not 3 hours 27 minutes 14 seconds.</span>
+                            </div>
+                          </div>
+                          <div className="mt-3 p-3 bg-secondary/30 rounded">
+                            <div className="font-medium text-foreground text-sm mb-1">Practical Precision Guidelines:</div>
+                            <div className="grid grid-cols-2 gap-2 text-xs">
+                              <div>• Billing clients: 0.25 hours (15 min)</div>
+                              <div>• Project estimates: 0.5 days</div>
+                              <div>• Scientific work: 0.01 seconds</div>
+                              <div>• Cooking: 1 minute</div>
+                              <div>• Exercise: 5 seconds</div>
+                              <div>• Travel planning: 1 hour</div>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <div className="bg-purple-500/5 p-4 rounded-lg">
+                          <h3 className="font-semibold text-foreground mb-2">Common Formatting Mistakes to Avoid</h3>
+                          <div className="space-y-3 text-sm">
+                            <div className="border-l-4 border-red-500 pl-3 py-1">
+                              <div className="font-medium text-foreground">Mixing Units Unnecessarily</div>
+                              <div className="text-muted-foreground">"The project will take 2 weeks, 3 days, and 5 hours" - convert to one unit: "About 2.5 weeks" or "17.2 days"</div>
+                            </div>
+                            <div className="border-l-4 border-yellow-500 pl-3 py-1">
+                              <div className="font-medium text-foreground">Using 24-hour Time Incorrectly</div>
+                              <div className="text-muted-foreground">14:00 means 2 PM, not "14 o'clock." And 14.5 hours means 14 hours 30 minutes, not 2:30 PM.</div>
+                            </div>
+                            <div className="border-l-4 border-blue-500 pl-3 py-1">
+                              <div className="font-medium text-foreground">Confusing Business & Calendar Days</div>
+                              <div className="text-muted-foreground">"5 days" in a contract usually means 5 calendar days, not 5 business days. Be explicit.</div>
+                            </div>
+                            <div className="border-l-4 border-green-500 pl-3 py-1">
+                              <div className="font-medium text-foreground">Inconsistent Rounding</div>
+                              <div className="text-muted-foreground">Rounding 2.4 hours to 2 hours in one place but 2.6 hours to 3 hours in another looks sloppy. Pick a rule and stick to it.</div>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <div className="bg-amber-500/5 p-4 rounded-lg">
+                          <h3 className="font-semibold text-foreground mb-2">Time Format Conversion Examples</h3>
+                          <div className="space-y-2 text-sm">
+                            <div className="flex items-center justify-between">
+                              <div>Duration: 90 minutes</div>
+                              <div className="font-mono text-xs bg-blue-500/10 px-2 py-1 rounded">= 1.5 hours</div>
+                            </div>
+                            <div className="flex items-center justify-between">
+                              <div>Work week: 40 hours</div>
+                              <div className="font-mono text-xs bg-green-500/10 px-2 py-1 rounded">= 1.0 work weeks</div>
+                            </div>
+                            <div className="flex items-center justify-between">
+                              <div>Project: 3 months</div>
+                              <div className="font-mono text-xs bg-purple-500/10 px-2 py-1 rounded">≈ 13.04 weeks</div>
+                            </div>
+                            <div className="flex items-center justify-between">
+                              <div>Billing: 0.75 hours</div>
+                              <div className="font-mono text-xs bg-amber-500/10 px-2 py-1 rounded">= 45 minutes</div>
+                            </div>
+                            <div className="flex items-center justify-between">
+                              <div>Yearly: 365.25 days</div>
+                              <div className="font-mono text-xs bg-red-500/10 px-2 py-1 rounded">= 8,766 hours</div>
+                            </div>
+                          </div>
+                          <p className="text-sm text-muted-foreground mt-3">
+                            Pro tip: When presenting time to others, use the unit that makes the most sense for your audience. Engineers might want seconds, managers prefer days, executives think in quarters.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </article>
+
+            {/* Examples */}
             <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
               <button
                 onClick={() => toggleSection('examples')}
@@ -761,7 +1067,7 @@ const TimeConverter = () => {
                   <div className="bg-purple-500/10 p-2 rounded-lg">
                     <Clock size={20} className="text-purple-600" />
                   </div>
-                  <h2 className="text-xl font-bold text-foreground">Time Conversion Examples</h2>
+                  <h2 className="text-xl font-bold text-foreground">Real-World Time Conversion Examples</h2>
                 </div>
                 {openSections.examples ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
               </button>
@@ -770,235 +1076,192 @@ const TimeConverter = () => {
                 <div className="px-6 pb-6">
                   <div className="space-y-4">
                     <div>
-                      <h3 className="font-semibold text-foreground mb-3">Common Time Conversion Examples</h3>
-                      <div className="overflow-x-auto">
-                        <div className="min-w-full inline-block align-middle">
-                          <div className="overflow-hidden border border-border rounded-lg">
-                            <table className="min-w-full divide-y divide-border">
-                              <thead className="bg-secondary/20">
-                                <tr>
-                                  <th className="px-4 py-3 text-left text-xs font-medium text-foreground uppercase tracking-wider">From Value</th>
-                                  <th className="px-4 py-3 text-left text-xs font-medium text-foreground uppercase tracking-wider">From Unit</th>
-                                  <th className="px-4 py-3 text-left text-xs font-medium text-foreground uppercase tracking-wider">To Unit</th>
-                                  <th className="px-4 py-3 text-left text-xs font-medium text-foreground uppercase tracking-wider">Result</th>
-                                  <th className="px-4 py-3 text-left text-xs font-medium text-foreground uppercase tracking-wider">Application</th>
-                                </tr>
-                              </thead>
-                              <tbody className="divide-y divide-border">
-                                <tr>
-                                  <td className="px-4 py-3 text-sm font-mono text-blue-600">90</td>
-                                  <td className="px-4 py-3 text-sm text-foreground">Minutes (min)</td>
-                                  <td className="px-4 py-3 text-sm text-foreground">Hours (h)</td>
-                                  <td className="px-4 py-3 text-sm font-mono text-foreground">1.5</td>
-                                  <td className="px-4 py-3 text-sm text-muted-foreground">Meeting duration</td>
-                                </tr>
-                                <tr>
-                                  <td className="px-4 py-3 text-sm font-mono text-blue-600">8</td>
-                                  <td className="px-4 py-3 text-sm text-foreground">Hours (h)</td>
-                                  <td className="px-4 py-3 text-sm text-foreground">Days (d)</td>
-                                  <td className="px-4 py-3 text-sm font-mono text-foreground">0.3333</td>
-                                  <td className="px-4 py-3 text-sm text-muted-foreground">Work day</td>
-                                </tr>
-                                <tr>
-                                  <td className="px-4 py-3 text-sm font-mono text-blue-600">30</td>
-                                  <td className="px-4 py-3 text-sm text-foreground">Days (d)</td>
-                                  <td className="px-4 py-3 text-sm text-foreground">Months (mo)</td>
-                                  <td className="px-4 py-3 text-sm font-mono text-foreground">0.9863</td>
-                                  <td className="px-4 py-3 text-sm text-muted-foreground">Billing cycle</td>
-                                </tr>
-                                <tr>
-                                  <td className="px-4 py-3 text-sm font-mono text-blue-600">52</td>
-                                  <td className="px-4 py-3 text-sm text-foreground">Weeks (w)</td>
-                                  <td className="px-4 py-3 text-sm text-foreground">Years (y)</td>
-                                  <td className="px-4 py-3 text-sm font-mono text-foreground">0.9973</td>
-                                  <td className="px-4 py-3 text-sm text-muted-foreground">Work year</td>
-                                </tr>
-                                <tr>
-                                  <td className="px-4 py-3 text-sm font-mono text-blue-600">2.5</td>
-                                  <td className="px-4 py-3 text-sm text-foreground">Years (y)</td>
-                                  <td className="px-4 py-3 text-sm text-foreground">Months (mo)</td>
-                                  <td className="px-4 py-3 text-sm font-mono text-foreground">30.0</td>
-                                  <td className="px-4 py-3 text-sm text-muted-foreground">Loan term</td>
-                                </tr>
-                                <tr>
-                                  <td className="px-4 py-3 text-sm font-mono text-blue-600">3600</td>
-                                  <td className="px-4 py-3 text-sm text-foreground">Seconds (s)</td>
-                                  <td className="px-4 py-3 text-sm text-foreground">Hours (h)</td>
-                                  <td className="px-4 py-3 text-sm font-mono text-foreground">1.0</td>
-                                  <td className="px-4 py-3 text-sm text-muted-foreground">Exact conversion</td>
-                                </tr>
-                              </tbody>
-                            </table>
+                      <p className="text-muted-foreground mb-4">
+                        Let's walk through some actual situations where time conversion matters. These examples show how choosing the right units and doing the math correctly can prevent problems and save time.
+                      </p>
+                      
+                      <div className="space-y-4">
+                        <div className="bg-blue-500/5 p-4 rounded-lg">
+                          <h3 className="font-semibold text-foreground mb-2">Example 1: Freelance Web Design Project</h3>
+                          <div className="space-y-3 text-sm">
+                            <p><strong>Situation:</strong> You're quoting a website redesign. Client asks for timeline in weeks, but you estimate in hours.</p>
+                            
+                            <div className="pl-4 border-l-2 border-blue-500">
+                              <div className="font-medium text-foreground">Your hour estimates:</div>
+                              <ul className="space-y-1 mt-1 text-muted-foreground">
+                                <li>• Discovery & planning: 16 hours</li>
+                                <li>• Design mockups: 24 hours</li>
+                                <li>• Development: 40 hours</li>
+                                <li>• Testing & revisions: 20 hours</li>
+                                <li>• Total: 100 hours</li>
+                              </ul>
+                            </div>
+                            
+                            <div className="pl-4 border-l-2 border-green-500">
+                              <div className="font-medium text-foreground">Conversion to weeks:</div>
+                              <p className="mt-1 text-muted-foreground">100 hours ÷ 40 hours/week = 2.5 weeks of full-time work</p>
+                              <p className="mt-1 text-muted-foreground">But you have other clients, so you can dedicate 20 hours/week to this project:</p>
+                              <p className="font-mono mt-1">100 hours ÷ 20 hours/week = 5 calendar weeks</p>
+                            </div>
+                            
+                            <div className="pl-4 border-l-2 border-purple-500">
+                              <div className="font-medium text-foreground">What you tell the client:</div>
+                              <p className="mt-1 text-muted-foreground">"The project requires about 100 hours of work. At my available capacity, that will take approximately 5 weeks to complete."</p>
+                              <p className="mt-1 text-muted-foreground"><strong>Why this works:</strong> You've given them the total effort (hours) and the calendar time (weeks) separately. They understand both the cost (if you bill hourly) and the wait time.</p>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <div className="bg-green-500/5 p-4 rounded-lg">
+                          <h3 className="font-semibold text-foreground mb-2">Example 2: Marathon Training Plan</h3>
+                          <div className="space-y-3 text-sm">
+                            <p><strong>Situation:</strong> 16-week training plan with daily time commitments.</p>
+                            
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                              <div>
+                                <div className="font-medium text-foreground mb-1">Weekly breakdown:</div>
+                                <ul className="space-y-1 text-muted-foreground">
+                                  <li>• Monday: 45 min run</li>
+                                  <li>• Tuesday: 60 min cross-train</li>
+                                  <li>• Wednesday: 30 min run</li>
+                                  <li>• Thursday: 45 min strength</li>
+                                  <li>• Friday: Rest</li>
+                                  <li>• Saturday: Long run (starts 60 min)</li>
+                                  <li>• Sunday: 30 min recovery</li>
+                                </ul>
+                              </div>
+                              <div>
+                                <div className="font-medium text-foreground mb-1">Time conversions:</div>
+                                <div className="space-y-1 text-muted-foreground">
+                                  <div>Week 1 total: 4.5 hours</div>
+                                  <div>Over 16 weeks: 72 hours</div>
+                                  <div>Convert to days: 72 ÷ 24 = 3 full days</div>
+                                  <div>Monthly average: 72 ÷ 3.7 = 19.5 hours/month</div>
+                                </div>
+                              </div>
+                            </div>
+                            
+                            <div className="bg-secondary/30 p-3 rounded">
+                              <div className="font-medium text-foreground">The insight:</div>
+                              <div className="text-xs mt-1 text-muted-foreground">When you realize training for a marathon takes the equivalent of 3 full 24-hour days spread over 4 months, it puts the commitment in perspective. That's 0.75 days per month, or about 4.5 hours per week on average.</div>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <div className="bg-purple-500/5 p-4 rounded-lg">
+                          <h3 className="font-semibold text-foreground mb-2">Example 3: Software Subscription Cost Analysis</h3>
+                          <div className="space-y-3 text-sm">
+                            <p><strong>Situation:</strong> Comparing monthly vs annual billing for a $15/month tool.</p>
+                            
+                            <div className="overflow-x-auto">
+                              <div className="min-w-full inline-block align-middle">
+                                <div className="overflow-hidden border border-border rounded-lg">
+                                  <table className="min-w-full divide-y divide-border">
+                                    <thead className="bg-secondary/20">
+                                      <tr>
+                                        <th className="px-4 py-2 text-left text-xs font-medium text-foreground">Time Period</th>
+                                        <th className="px-4 py-2 text-left text-xs font-medium text-foreground">Monthly Cost</th>
+                                        <th className="px-4 py-2 text-left text-xs font-medium text-foreground">Annual Cost</th>
+                                        <th className="px-4 py-2 text-left text-xs font-medium text-foreground">Daily Equivalent</th>
+                                        <th className="px-4 py-2 text-left text-xs font-medium text-foreground">Hourly Equivalent</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody className="divide-y divide-border">
+                                      <tr>
+                                        <td className="px-4 py-2 text-xs">1 month</td>
+                                        <td className="px-4 py-2 text-xs font-mono">$15.00</td>
+                                        <td className="px-4 py-2 text-xs font-mono">$180.00</td>
+                                        <td className="px-4 py-2 text-xs font-mono">$0.50/day</td>
+                                        <td className="px-4 py-2 text-xs font-mono">$0.021/hour</td>
+                                      </tr>
+                                      <tr>
+                                        <td className="px-4 py-2 text-xs">3 months</td>
+                                        <td className="px-4 py-2 text-xs font-mono">$45.00</td>
+                                        <td className="px-4 py-2 text-xs font-mono">$180.00</td>
+                                        <td className="px-4 py-2 text-xs font-mono">$0.50/day</td>
+                                        <td className="px-4 py-2 text-xs font-mono">$0.021/hour</td>
+                                      </tr>
+                                      <tr>
+                                        <td className="px-4 py-2 text-xs">Annual (save 20%)</td>
+                                        <td className="px-4 py-2 text-xs font-mono">$12.00/mo</td>
+                                        <td className="px-4 py-2 text-xs font-mono">$144.00</td>
+                                        <td className="px-4 py-2 text-xs font-mono">$0.39/day</td>
+                                        <td className="px-4 py-2 text-xs font-mono">$0.016/hour</td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </div>
+                              </div>
+                            </div>
+                            
+                            <p className="text-sm text-muted-foreground">
+                              <strong>The decision:</strong> When you see the annual plan costs less than 2 cents per hour of use ($0.016), and you use the tool 2 hours daily, that's about 3.2 cents per day of use. Suddenly the "expensive" $144 annual fee feels reasonable compared to the value.
+                            </p>
+                          </div>
+                        </div>
+                        
+                        <div className="bg-amber-500/5 p-4 rounded-lg">
+                          <h3 className="font-semibold text-foreground mb-2">Example 4: Time Zone Meeting Coordination</h3>
+                          <div className="space-y-3 text-sm">
+                            <p><strong>Situation:</strong> Scheduling between New York (EST), London (GMT), and Tokyo (JST).</p>
+                            
+                            <div className="grid grid-cols-3 gap-2 text-center mb-3">
+                              <div className="p-2 bg-blue-500/10 rounded">
+                                <div className="font-medium">New York</div>
+                                <div className="text-xs">EST (UTC-5)</div>
+                              </div>
+                              <div className="p-2 bg-green-500/10 rounded">
+                                <div className="font-medium">London</div>
+                                <div className="text-xs">GMT (UTC+0)</div>
+                              </div>
+                              <div className="p-2 bg-purple-500/10 rounded">
+                                <div className="font-medium">Tokyo</div>
+                                <div className="text-xs">JST (UTC+9)</div>
+                              </div>
+                            </div>
+                            
+                            <div className="space-y-2">
+                              <div className="flex items-center justify-between">
+                                <div>When it's 9:00 AM in New York:</div>
+                                <div className="font-mono text-xs bg-blue-500/10 px-2 py-1 rounded">14:00 in London (5 hours ahead)</div>
+                              </div>
+                              <div className="flex items-center justify-between">
+                                <div>When it's 9:00 AM in New York:</div>
+                                <div className="font-mono text-xs bg-purple-500/10 px-2 py-1 rounded">23:00 in Tokyo (14 hours ahead)</div>
+                              </div>
+                              <div className="flex items-center justify-between">
+                                <div>Finding overlap for 1-hour meeting:</div>
+                                <div className="font-mono text-xs bg-green-500/10 px-2 py-1 rounded">NY 8-9 AM = London 1-2 PM = Tokyo 10-11 PM</div>
+                              </div>
+                            </div>
+                            
+                            <p className="text-sm text-muted-foreground">
+                              <strong>The solution:</strong> The only reasonable overlap for all three is early morning in New York (8-9 AM), afternoon in London (1-2 PM), and late evening in Tokyo (10-11 PM). Tokyo team sacrifices evening time, but it's the only slot that works.
+                            </p>
                           </div>
                         </div>
                       </div>
-                    </div>
-                    
-                    <div>
-                      <h3 className="font-semibold text-foreground mb-2">Detailed Example: International Project Management</h3>
-                      <div className="bg-secondary/20 p-4 rounded-lg border border-border overflow-x-auto">
-                        <pre className="text-sm text-muted-foreground whitespace-pre-wrap">
-{`Example: Time conversions for a global software development project
-
-Project: Multi-timezone software deployment with international teams
-Duration: 6-month project with phased deliveries
-
-Step 1: Project Timeline Planning
-Overall project duration: 6 months
-Convert to other units:
-• 6 months to days: 6 × 30.44 = 182.64 days
-• 6 months to weeks: 182.64 ÷ 7 = 26.09 weeks
-• 6 months to hours: 182.64 × 24 = 4,383.36 hours
-• 6 months to work hours (8h/day): 182.64 × 8 = 1,461.12 hours
-
-Step 2: Phase 1 - Requirements & Design (Weeks 1-4)
-Duration: 4 weeks
-Convert to other units:
-• 4 weeks to days: 4 × 7 = 28 days
-• 4 weeks to hours: 28 × 24 = 672 hours
-• 4 weeks to work hours: 28 × 8 = 224 hours
-• 4 weeks to months: 28 ÷ 30.44 = 0.92 months
-
-Team allocation: 3 developers × 8h/day × 5d/week
-• Weekly capacity: 3 × 8 × 5 = 120 work-hours/week
-• Phase capacity: 120 × 4 = 480 work-hours
-• Utilization: 224 ÷ 480 = 46.67% of available capacity
-
-Step 3: Phase 2 - Development (Weeks 5-16)
-Duration: 12 weeks
-Convert to other units:
-• 12 weeks to days: 12 × 7 = 84 days
-• 12 weeks to work days: 84 × (5/7) = 60 work days
-• 12 weeks to months: 84 ÷ 30.44 = 2.76 months
-• 12 weeks to hours: 84 × 24 = 2,016 hours
-
-Development tasks:
-• Feature A: Estimated 120 work-hours
-  Convert to work days: 120 ÷ 8 = 15 days
-  Convert to calendar days: 15 ÷ (5/7) = 21 calendar days
-  Convert to weeks: 21 ÷ 7 = 3 weeks
-
-• Feature B: Estimated 80 work-hours
-  Convert to work days: 80 ÷ 8 = 10 days
-  Convert to calendar days: 10 ÷ (5/7) = 14 calendar days
-  Convert to weeks: 14 ÷ 7 = 2 weeks
-
-• Feature C: Estimated 200 work-hours
-  Convert to work days: 200 ÷ 8 = 25 days
-  Convert to calendar days: 25 ÷ (5/7) = 35 calendar days
-  Convert to weeks: 35 ÷ 7 = 5 weeks
-
-Step 4: Phase 3 - Testing & Deployment (Weeks 17-24)
-Duration: 8 weeks
-Convert to other units:
-• 8 weeks to days: 8 × 7 = 56 days
-• 8 weeks to work days: 56 × (5/7) = 40 work days
-• 8 weeks to months: 56 ÷ 30.44 = 1.84 months
-• 8 weeks to hours: 56 × 24 = 1,344 hours
-
-Testing schedule:
-• Unit testing: 2 weeks = 14 calendar days
-• Integration testing: 3 weeks = 21 calendar days
-• User acceptance testing: 2 weeks = 14 calendar days
-• Deployment preparation: 1 week = 7 calendar days
-
-Step 5: International Team Coordination
-Team locations:
-• US team: 8h/day, 5d/week
-• India team: 8h/day, 6d/week
-• Germany team: 7.5h/day, 5d/week
-
-Weekly capacity calculations:
-• US team: 5 developers × 8h × 5d = 200 work-hours/week
-• India team: 4 developers × 8h × 6d = 192 work-hours/week
-• Germany team: 3 developers × 7.5h × 5d = 112.5 work-hours/week
-• Total weekly capacity: 200 + 192 + 112.5 = 504.5 work-hours/week
-
-Project total capacity:
-• 24 weeks × 504.5 work-hours/week = 12,108 work-hours
-• Convert to work days: 12,108 ÷ 8 = 1,513.5 work days
-• Convert to calendar days: 1,513.5 ÷ (5/7) = 2,118.9 calendar days
-• Convert to years: 2,118.9 ÷ 365.25 = 5.80 years (theoretical single-team time)
-
-Step 6: Milestone Tracking
-Milestone 1: Requirements complete
-• Due: Week 4, Day 28
-• Time from start: 28 days = 4 weeks = 0.92 months
-• Work hours invested: 224 hours
-• Percentage complete: (28 ÷ 182.64) × 100 = 15.33%
-
-Milestone 2: Development complete
-• Due: Week 16, Day 112
-• Time from start: 112 days = 16 weeks = 3.68 months
-• Work hours invested: 224 + 960 = 1,184 hours
-• Percentage complete: (112 ÷ 182.64) × 100 = 61.33%
-
-Milestone 3: Project complete
-• Due: Week 24, Day 168
-• Time from start: 168 days = 24 weeks = 5.52 months
-• Total work hours: 1,184 + 672 = 1,856 hours
-• Percentage complete: 100%
-
-Step 7: Resource Allocation Over Time
-Monthly resource planning:
-• Month 1: 3 developers full-time
-  Hours: 3 × 8 × 22 work days = 528 work-hours
-  Convert to weeks: 528 ÷ (3 × 8 × 5) = 4.4 weeks of work
-
-• Month 2: 5 developers full-time
-  Hours: 5 × 8 × 20 work days = 800 work-hours
-  Convert to weeks: 800 ÷ (5 × 8 × 5) = 4 weeks of work
-
-• Month 3: 7 developers full-time
-  Hours: 7 × 8 × 22 work days = 1,232 work-hours
-  Convert to weeks: 1,232 ÷ (7 × 8 × 5) = 4.4 weeks of work
-
-Step 8: Budget Calculations
-Development cost: $75/hour
-• Phase 1 cost: 224 hours × $75 = $16,800
-  Convert to monthly: $16,800 ÷ 0.92 = $18,261/month
-
-• Phase 2 cost: 960 hours × $75 = $72,000
-  Convert to monthly: $72,000 ÷ 2.76 = $26,087/month
-
-• Phase 3 cost: 672 hours × $75 = $50,400
-  Convert to monthly: $50,400 ÷ 1.84 = $27,391/month
-
-• Total cost: $139,200
-  Convert to weekly cost: $139,200 ÷ 24 = $5,800/week
-  Convert to daily cost: $139,200 ÷ 168 = $828.57/day
-
-Step 9: Risk Management
-Buffer time allocation:
-• Development buffer: 2 weeks = 14 days
-  Convert to hours: 14 × 24 = 336 hours
-  Convert to work hours: 14 × 8 = 112 hours
-
-• Testing buffer: 1 week = 7 days
-  Convert to hours: 7 × 24 = 168 hours
-  Convert to work hours: 7 × 8 = 56 hours
-
-• Total buffer: 3 weeks = 21 days = 168 work-hours
-  As percentage of project: (21 ÷ 168) × 100 = 12.5%
-
-Step 10: Progress Reporting
-Weekly status report conversions:
-• This week: Completed 40 work-hours
-  Convert to days: 40 ÷ 8 = 5 work days
-  Convert to calendar days: 5 ÷ (5/7) = 7 calendar days
-
-• Total to date: 800 work-hours completed
-  Convert to weeks: 800 ÷ 504.5 = 1.59 weeks of team work
-  Convert to months: (800 ÷ 504.5) × (7 ÷ 30.44) = 0.36 months
-
-• Remaining: 1,056 work-hours
-  Convert to weeks at current pace: 1,056 ÷ 504.5 = 2.09 weeks
-  Convert to calendar days: 2.09 × 7 = 14.63 days
-  Convert to months: 2.09 ÷ 4.33 = 0.48 months
-
-Conclusion:
-Using accurate time conversions ensures realistic project planning, proper resource allocation, effective international team coordination, and precise budget calculations. The time converter provides the flexibility needed for complex project management while maintaining simplicity for everyday time calculations across different units and scales.`}
-                        </pre>
+                      
+                      <div className="mt-6 p-4 bg-secondary/20 rounded-lg">
+                        <h4 className="font-medium text-foreground mb-2">Key Takeaways from These Examples</h4>
+                        <ul className="space-y-2 text-sm text-muted-foreground">
+                          <li className="flex items-start gap-2">
+                            <div className="w-1 h-1 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
+                            <span>Always convert to the most relevant unit for your audience (hours for freelancers, weeks for clients, days for training plans)</span>
+                          </li>
+                          <li className="flex items-start gap-2">
+                            <div className="w-1 h-1 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
+                            <span>Break large time periods into smaller units to make them understandable (3 days of training sounds more manageable than 72 hours)</span>
+                          </li>
+                          <li className="flex items-start gap-2">
+                            <div className="w-1 h-1 bg-purple-500 rounded-full mt-2 flex-shrink-0"></div>
+                            <span>Use time conversion to compare apples to apples (monthly vs annual costs converted to daily rates)</span>
+                          </li>
+                          <li className="flex items-start gap-2">
+                            <div className="w-1 h-1 bg-amber-500 rounded-full mt-2 flex-shrink-0"></div>
+                            <span>Consider human factors in time calculations (time zone differences, work hours, attention spans)</span>
+                          </li>
+                        </ul>
                       </div>
                     </div>
                   </div>
@@ -1030,6 +1293,18 @@ Using accurate time conversions ensures realistic project planning, proper resou
                         <p className="text-muted-foreground">{faq.answer}</p>
                       </div>
                     ))}
+                    
+                    <div className="pt-4">
+                      <h3 className="text-lg font-semibold text-foreground mb-2">How do I convert work hours to calendar time for project planning?</h3>
+                      <p className="text-muted-foreground mb-3">
+                        Divide work hours by daily capacity. If a task takes 40 work hours and you can dedicate 4 hours daily to it, that's 10 calendar days. But remember weekends - 10 calendar days might be 14 actual days if you don't work weekends. The formula is: Calendar days = Work hours ÷ Daily capacity × (7 ÷ Work days per week).
+                      </p>
+                      
+                      <h3 className="text-lg font-semibold text-foreground mb-2">What's the most common time conversion mistake people make?</h3>
+                      <p className="text-muted-foreground">
+                        Assuming months have 4 weeks. They don't - they average 4.35 weeks. That small difference adds up: a "3-month project" isn't 12 weeks, it's about 13 weeks. Over a year, assuming 4-week months gives you 48 weeks instead of 52. That's a whole month of error! Always use 4.35 weeks per month for accurate planning.
+                      </p>
+                    </div>
                   </div>
                 </div>
               )}

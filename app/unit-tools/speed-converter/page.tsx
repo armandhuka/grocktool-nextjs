@@ -14,9 +14,10 @@ const SpeedConverter = () => {
   const [toUnit, setToUnit] = useState('mph');
   const [result, setResult] = useState<string>('');
   const [openSections, setOpenSections] = useState({
-    whatItDoes: false,
-    useCases: false,
-    howToUse: false,
+    speedUnitsOverview: false,
+    transportEngineering: false,
+    conversionFormula: false,
+    precisionRules: false,
     examples: false,
     faqs: false,
     relatedTools: false
@@ -44,24 +45,24 @@ const SpeedConverter = () => {
   // FAQ Data
   const faqData = [
     {
-      question: "What's the difference between km/h and mph speed measurements?",
-      answer: "km/h (kilometers per hour) is metric system used worldwide, mph (miles per hour) is imperial system used primarily in the US and UK. 1 km/h = 0.621371 mph, 1 mph = 1.60934 km/h. Highway speed limits are typically 100-120 km/h (62-75 mph) internationally. For precise conversions, use exact factor 1 km/h = 0.62137119223733 mph."
+      question: "Why does Europe use km/h while America uses mph?",
+      answer: "It's all about historical choices. The US kept the British imperial system after independence, while France created the metric system during their revolution. Most of Europe adopted metric for its simplicity. There's no technical reason - just tradition. The practical difference matters when you're driving: 100 km/h feels slower than 62 mph, but they're actually the same speed. Your brain just processes the numbers differently."
     },
     {
-      question: "How is Mach speed calculated and what does it represent?",
-      answer: "Mach number represents speed relative to sound speed in air. Mach 1 = speed of sound = 1,234.8 km/h (767 mph) at sea level (20°C). Speed of sound varies with temperature and altitude. Our converter uses sea level standard: 1 Mach = 1,234.8 km/h. For precise aviation calculations, consider altitude-specific sound speeds."
+      question: "How do pilots and sailors use knots instead of km/h or mph?",
+      answer: "Knots make navigation math easier. One knot equals one nautical mile per hour, and a nautical mile is one minute of latitude. So if you sail at 10 knots north or south, you cover 10 minutes of latitude in an hour. On charts, this simplifies distance calculations dramatically. Pilots use knots for the same reason - it connects speed directly to navigation. The system feels clunky until you're actually plotting a course, then it becomes brilliantly simple."
     },
     {
-      question: "What are knots and why are they used in aviation/maritime?",
-      answer: "Knots (kn) measure speed in nautical miles per hour. 1 knot = 1.852 km/h = 1.15078 mph. Used in aviation, maritime, and meteorology because nautical miles correspond to one minute of latitude. This makes navigation calculations easier. Knots are standard for aircraft airspeed and ship speed internationally."
+      question: "When I see 'Mach 2' on a jet, what does that actually mean?",
+      answer: "Mach numbers tell you how fast something is moving compared to the speed of sound in that particular air. Mach 1 equals the speed of sound, which varies with temperature and altitude. At sea level on a standard day, that's about 1225 km/h (761 mph). At 35,000 feet where jets cruise, it's around 1062 km/h (660 mph) because the air is colder. So Mach 2 at altitude isn't the same ground speed as Mach 2 at sea level - it's relative to local conditions."
     },
     {
-      question: "How accurate are speed conversion calculations for different applications?",
-      answer: "Our converter uses precise conversion factors: km/h to mph 0.621371, m/s to km/h 3.6, knots to km/h 1.852. Calculations maintain 6 decimal place accuracy. For scientific applications, this precision is sufficient. For real-world applications like speed limit conversion, rounding to whole numbers is practical (100 km/h ≈ 62 mph)."
+      question: "How accurate do my speed conversions need to be for everyday use?",
+      answer: "For driving, ±1-2% is fine. If a sign says 100 km/h, converting to 62 mph (instead of 62.137) won't get you a ticket. For aviation, precision matters more - a few knots can affect fuel calculations on long flights. For scientific work, use full precision. Most importantly: be consistent. If you round 100 km/h to 62 mph, round all your conversions the same way. Mixing precise and rounded conversions causes confusion."
     },
     {
-      question: "Which speed units should I use for specific modes of transportation?",
-      answer: "Use km/h for cars and trains worldwide. Use mph for US/UK road vehicles. Use knots for aircraft and ships. Use m/s for scientific calculations and wind speeds. Use ft/s for engineering applications in imperial countries. Use Mach for high-speed aviation (supersonic). Choose units appropriate for your context and location."
+      question: "Why do weather reports use different speed units for wind?",
+      answer: "Different countries and applications prefer different units. Meteorologists often use knots because it connects to nautical miles and marine/aviation users. TV weather in the US shows mph, in Europe shows km/h. Scientists use m/s for calculations. The rule of thumb: use what your audience understands. If you're telling a friend about storm winds, use the units they know. If filing a flight plan, use knots. Context determines the appropriate unit."
     }
   ];
 
@@ -425,82 +426,82 @@ const SpeedConverter = () => {
                 <h3 className="text-base sm:text-lg font-semibold text-foreground mb-3">Speed Unit Reference</h3>
                 <div className="space-y-2 text-muted-foreground text-sm">
                   <p>
-                    Speed conversion between different units uses standardized factors based on kilometers per hour as the reference unit.
+                    Converting between speed systems means understanding what each unit represents in real-world terms, not just memorizing numbers.
                   </p>
                   <div className="text-xs sm:text-sm space-y-1 pt-2">
-                    <div className="font-medium text-foreground">Standard Speed Relationships:</div>
+                    <div className="font-medium text-foreground">What These Units Feel Like:</div>
                     <div className="flex items-center gap-2">
                       <div className="w-1 h-1 bg-blue-500 rounded-full"></div>
-                      <span><strong>1 km/h</strong> = 0.621371 mph = 0.277778 m/s</span>
+                      <span><strong>5 km/h</strong> = Brisk walking pace</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <div className="w-1 h-1 bg-blue-500 rounded-full"></div>
-                      <span><strong>1 m/s</strong> = 3.6 km/h = 2.23694 mph</span>
+                      <span><strong>20 km/h</strong> = Fast cycling, slow car in traffic</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <div className="w-1 h-1 bg-blue-500 rounded-full"></div>
-                      <span><strong>1 knot</strong> = 1.852 km/h = 1.15078 mph</span>
+                      <span><strong>50 km/h</strong> = Typical city driving speed</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <div className="w-1 h-1 bg-blue-500 rounded-full"></div>
-                      <span><strong>1 ft/s</strong> = 1.09728 km/h = 0.681818 mph</span>
+                      <span><strong>100 km/h</strong> = Highway cruising, feels fast but controlled</span>
                     </div>
                   </div>
                   <div className="text-xs sm:text-sm space-y-1 pt-3">
-                    <div className="font-medium text-foreground">High-Speed References:</div>
+                    <div className="font-medium text-foreground">High-Speed Context:</div>
                     <div className="flex items-center gap-2">
                       <div className="w-1 h-1 bg-green-500 rounded-full"></div>
-                      <span><strong>Mach 1</strong> = Speed of sound = 1,234.8 km/h (sea level)</span>
+                      <span><strong>300 km/h</strong> = High-speed train, exhilarating on open road</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <div className="w-1 h-1 bg-green-500 rounded-full"></div>
-                      <span><strong>Commercial jets</strong> typically cruise at Mach 0.78-0.85</span>
+                      <span><strong>900 km/h</strong> = Jet airliner at cruising altitude</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <div className="w-1 h-1 bg-green-500 rounded-full"></div>
-                      <span><strong>Supersonic</strong> = Above Mach 1 (faster than sound)</span>
+                      <span><strong>1,235 km/h</strong> = Sound barrier at sea level (loud!)</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <div className="w-1 h-1 bg-green-500 rounded-full"></div>
-                      <span><strong>Hypersonic</strong> = Above Mach 5 (extreme speeds)</span>
+                      <span><strong>28,000 km/h</strong> = Space station orbital speed (mind-blowing)</span>
                     </div>
                   </div>
                   <div className="text-xs sm:text-sm space-y-1 pt-3">
-                    <div className="font-medium text-foreground">Precise Conversions (to km/h):</div>
+                    <div className="font-medium text-foreground">Quick Mental Conversions:</div>
                     <div className="flex justify-between">
-                      <span>1 mph =</span>
-                      <span>1.609344 km/h</span>
+                      <span>km/h to mph:</span>
+                      <span>Multiply by 0.6 (close enough)</span>
                     </div>
                     <div className="flex justify-between">
-                      <span>1 m/s =</span>
-                      <span>3.6 km/h</span>
+                      <span>mph to km/h:</span>
+                      <span>Multiply by 1.6 (easy estimate)</span>
                     </div>
                     <div className="flex justify-between">
-                      <span>1 knot =</span>
-                      <span>1.852 km/h</span>
+                      <span>m/s to km/h:</span>
+                      <span>Multiply by 3.6 (exact)</span>
                     </div>
                     <div className="flex justify-between">
-                      <span>1 ft/s =</span>
-                      <span>1.09728 km/h</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>1 Mach =</span>
-                      <span>1,234.8 km/h</span>
+                      <span>knots to km/h:</span>
+                      <span>Multiply by 1.85 (almost double)</span>
                     </div>
                   </div>
                   <div className="text-xs sm:text-sm space-y-1 pt-3">
-                    <div className="font-medium text-foreground">Common Applications:</div>
+                    <div className="font-medium text-foreground">When You'll Use Each:</div>
                     <div className="flex items-center gap-2">
                       <div className="w-1 h-1 bg-purple-500 rounded-full"></div>
-                      <span><strong>Driving:</strong> km/h worldwide, mph in US/UK for speed limits and vehicle specifications</span>
+                      <span><strong>km/h/mph:</strong> Driving anywhere, vehicle specs, speed limits</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <div className="w-1 h-1 bg-purple-500 rounded-full"></div>
-                      <span><strong>Aviation:</strong> Knots for airspeed, Mach for high-altitude jet speeds</span>
+                      <span><strong>knots:</strong> Boating, flying, weather reports (wind)</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <div className="w-1 h-1 bg-purple-500 rounded-full"></div>
-                      <span><strong>Science:</strong> m/s for physics calculations, km/h for everyday science</span>
+                      <span><strong>m/s:</strong> Science class, physics problems, precise measurements</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <div className="w-1 h-1 bg-purple-500 rounded-full"></div>
+                      <span><strong>Mach:</strong> Jet fighters, supersonic travel, aerospace engineering</span>
                     </div>
                   </div>
                 </div>
@@ -510,253 +511,371 @@ const SpeedConverter = () => {
 
           {/* SEO Content Section with Dropdowns */}
           <section className="space-y-4 mt-12">
-            {/* What This Tool Does - Dropdown */}
+            {/* Speed Units Overview */}
             <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
               <button
-                onClick={() => toggleSection('whatItDoes')}
+                onClick={() => toggleSection('speedUnitsOverview')}
                 className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
               >
                 <div className="flex items-center gap-3">
                   <div className="bg-blue-500/10 p-2 rounded-lg">
                     <Zap size={20} className="text-blue-600" />
                   </div>
-                  <h2 className="text-xl font-bold text-foreground">Speed Converter - Features & Applications</h2>
+                  <h2 className="text-xl font-bold text-foreground">Making Sense of Different Speed Measurements</h2>
                 </div>
-                {openSections.whatItDoes ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                {openSections.speedUnitsOverview ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
               </button>
               
-              {openSections.whatItDoes && (
+              {openSections.speedUnitsOverview && (
                 <div className="px-6 pb-6">
                   <p className="text-muted-foreground mb-4">
-                    This Speed Converter provides instant, accurate conversions between all major speed measurement units. The tool seamlessly converts between kilometers per hour (metric), miles per hour (imperial), meters per second (scientific), knots (nautical/aviation), Mach (supersonic), and feet per second (engineering) using precise standardized conversion factors. Whether you're planning international travel, comparing vehicle specifications, analyzing sports performance, working on aviation projects, or conducting scientific research, this converter delivers reliable results with up to 6 decimal place accuracy. It automatically updates conversions in real-time as you type, includes common preset conversions for quick reference, and handles both everyday speeds (like driving limits) and extreme velocities (like supersonic flight). The intuitive interface makes it easy to switch between speed units and copy results for documentation, reports, or sharing with colleagues.
+                    Speed units aren't just random numbers - each one tells a story about why it was created and what it's good for. Understanding this context makes conversion more intuitive.
                   </p>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
-                    <div className="bg-blue-500/10 p-4 rounded-lg border border-blue-500/20">
-                      <div className="flex items-center gap-2 mb-2">
-                        <Zap size={18} className="text-blue-600" />
-                        <h3 className="font-semibold text-foreground">Driving & Transportation</h3>
-                      </div>
-                      <p className="text-sm text-muted-foreground">Convert between km/h and mph for international driving, compare vehicle speed specifications, calculate travel times, and understand speed limits worldwide. Essential for road trips, vehicle imports, and transportation planning across different measurement systems.</p>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="space-y-3">
+                      <h3 className="font-semibold text-foreground">km/h and mph: The Road Warriors</h3>
+                      <p className="text-sm text-muted-foreground">
+                        Kilometers per hour and miles per hour are what most people think about when they hear "speed." They're road-focused units. km/h dominates globally because it's metric - simple decimal math. 100 km/h is easy: 1/10 of that is 10 km/h, double is 200 km/h. The system makes sense.
+                      </p>
+                      <p className="text-sm text-muted-foreground">
+                        mph persists in the US and UK largely because changing highway signs and speedometers nationwide is expensive and confusing. Ever notice how 60 mph feels like a nice round number? That's because imperial units evolved from human-scale measurements. A mile was originally 1,000 paces. These units feel intuitive because they were born from walking and horse travel.
+                      </p>
                     </div>
-                    <div className="bg-green-500/10 p-4 rounded-lg border border-green-500/20">
-                      <div className="flex items-center gap-2 mb-2">
-                        <Gauge size={18} className="text-green-600" />
-                        <h3 className="font-semibold text-foreground">Aviation & Maritime</h3>
-                      </div>
-                      <p className="text-sm text-muted-foreground">Accurately convert between knots, km/h, and mph for aircraft and ship speed calculations. Includes Mach conversions for high-altitude jet operations. Perfect for pilots, sailors, aviation enthusiasts, and maritime professionals working with international speed standards.</p>
+                    
+                    <div className="space-y-3">
+                      <h3 className="font-semibold text-foreground">Knots and Mach: Specialists' Tools</h3>
+                      <p className="text-sm text-muted-foreground">
+                        Knots come from sailors throwing a log overboard with a rope tied to it. The rope had knots at regular intervals. They'd count how many knots passed through their hands in 30 seconds to calculate speed. Today, 1 knot = 1 nautical mile per hour, and a nautical mile is 1 minute of latitude. This makes navigation math clean.
+                      </p>
+                      <p className="text-sm text-muted-foreground">
+                        Mach numbers are different - they're ratios, not fixed speeds. Mach 1 means "traveling at the speed of sound in this particular air." At sea level, that's about 1225 km/h. At 35,000 feet where air is thinner and colder, it's about 1062 km/h. Pilots use Mach because aircraft performance relates to the speed of sound, not ground speed.
+                      </p>
                     </div>
-                    <div className="bg-purple-500/10 p-4 rounded-lg border border-purple-500/20">
-                      <div className="flex items-center gap-2 mb-2">
-                        <Car size={18} className="text-purple-600" />
-                        <h3 className="font-semibold text-foreground">Sports & Athletics</h3>
-                      </div>
-                      <p className="text-sm text-muted-foreground">Convert running speeds, cycling velocities, and athletic performance metrics between different measurement units. Compare world records, calculate pace conversions, and analyze sports performance data using consistent speed measurements across international competitions.</p>
+                    
+                    <div className="space-y-3">
+                      <h3 className="font-semibold text-foreground">m/s and ft/s: The Precision Instruments</h3>
+                      <p className="text-sm text-muted-foreground">
+                        Meters per second is the scientist's choice. It's the SI unit for velocity. When physicists calculate forces or energies, they work in m/s because the math stays clean. 10 m/s is a nice number to work with in equations. 36 km/h is messier. Scientists prefer elegance in their calculations.
+                      </p>
+                      <p className="text-sm text-muted-foreground">
+                        Feet per second hangs on in American engineering. If you're designing machinery in the US, blueprints might show speeds in ft/s. It connects to other imperial measurements like pounds-force and horsepower. The system is coherent within itself, even if converting to metric feels awkward.
+                      </p>
                     </div>
-                    <div className="bg-amber-500/10 p-4 rounded-lg border border-amber-500/20">
-                      <div className="flex items-center gap-2 mb-2">
-                        <Plane size={18} className="text-amber-600" />
-                        <h3 className="font-semibold text-foreground">Science & Engineering</h3>
+                    
+                    <div className="space-y-3">
+                      <h3 className="font-semibold text-foreground">Why So Many Systems?</h3>
+                      <p className="text-sm text-muted-foreground">
+                        Different fields developed their own tools for measuring speed because they had different needs. Sailors needed navigation-friendly units. Pilots needed altitude-aware measurements. Drivers needed practical road speeds. Scientists needed mathematically pure units. Engineers needed compatibility with existing systems.
+                      </p>
+                      <p className="text-sm text-muted-foreground">
+                        The result is today's messy but functional collection of speed units. Rather than fighting it, learn which unit to reach for in each situation. Our converter bridges these worlds so you don't have to memorize everything.
+                      </p>
+                    </div>
+                  </div>
+                  
+                  <div className="mt-6 p-4 bg-blue-500/10 rounded-lg border border-blue-500/20">
+                    <h4 className="font-semibold text-foreground mb-2">Quick Recognition Guide</h4>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
+                      <div>
+                        <div className="font-medium text-foreground mb-1">If you see:</div>
+                        <ul className="text-muted-foreground space-y-1">
+                          <li>• Numbers like 60, 100, 120 → Probably km/h or mph</li>
+                          <li>• Numbers like 200, 300, 500 → Probably knots (aviation/nautical)</li>
+                          <li>• Numbers like 0.8, 1.2, 2.0 → Definitely Mach (supersonic)</li>
+                          <li>• Numbers like 10, 20, 30 → Could be m/s (science)</li>
+                        </ul>
                       </div>
-                      <p className="text-sm text-muted-foreground">Handle precise speed conversions for physics experiments, engineering calculations, fluid dynamics, and meteorological applications. Convert between m/s, ft/s, and other scientific units for accurate technical calculations and research documentation.</p>
+                      <div>
+                        <div className="font-medium text-foreground mb-1">Context clues:</div>
+                        <ul className="text-muted-foreground space-y-1">
+                          <li>• Road sign → km/h (most places) or mph (US/UK)</li>
+                          <li>• Weather report → knots (professional) or km/h/mph (public)</li>
+                          <li>• Aircraft display → knots (speed) or Mach (high altitude)</li>
+                          <li>• Physics textbook → m/s (always)</li>
+                        </ul>
+                      </div>
                     </div>
                   </div>
                 </div>
               )}
             </article>
 
-            {/* Use Cases Section - Dropdown */}
+            {/* Transport & Engineering Uses */}
             <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
               <button
-                onClick={() => toggleSection('useCases')}
+                onClick={() => toggleSection('transportEngineering')}
                 className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
               >
                 <div className="flex items-center gap-3">
                   <div className="bg-green-500/10 p-2 rounded-lg">
                     <Zap size={20} className="text-green-600" />
                   </div>
-                  <h2 className="text-xl font-bold text-foreground">Speed Conversion Applications</h2>
+                  <h2 className="text-xl font-bold text-foreground">Where Different Speed Units Actually Get Used</h2>
                 </div>
-                {openSections.useCases ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                {openSections.transportEngineering ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
               </button>
               
-              {openSections.useCases && (
+              {openSections.transportEngineering && (
                 <div className="px-6 pb-6">
+                  <p className="text-muted-foreground mb-4">
+                    You don't choose speed units randomly - each industry has its preferred measurements for good reasons. Here's where you'll encounter each unit in the real world.
+                  </p>
+                  
                   <div className="space-y-4">
                     <div>
-                      <h3 className="font-semibold text-foreground mb-2">🚗 Automotive & Transportation</h3>
-                      <ul className="space-y-1 text-muted-foreground text-sm">
-                        <li className="flex items-start gap-2">
-                          <div className="w-1 h-1 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
-                          <span><strong>International Driving:</strong> Convert speed limits between km/h and mph for cross-border travel, calculate fuel efficiency at different speed units, and compare vehicle performance specifications from different markets</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <div className="w-1 h-1 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
-                          <span><strong>Vehicle Import/Export:</strong> Convert speedometer readings between measurement systems, calculate technical specifications for international compliance, and understand performance metrics in different units for vehicle documentation</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <div className="w-1 h-1 bg-purple-500 rounded-full mt-2 flex-shrink-0"></div>
-                          <span><strong>Fleet Management:</strong> Convert speed data between different measurement systems for international logistics, calculate delivery times using various speed units, and optimize routing based on speed limit conversions</span>
-                        </li>
-                      </ul>
+                      <h3 className="font-semibold text-foreground mb-2">On the Roads and Rails</h3>
+                      <p className="text-sm text-muted-foreground mb-3">
+                        Driving is the most common place people encounter speed conversions. If you rent a car in Europe as an American, you'll see km/h on the speedometer but think in mph. The mental conversion becomes automatic after a few days. Most modern cars can switch displays, but rental agencies don't always enable this feature.
+                      </p>
+                      <p className="text-sm text-muted-foreground">
+                        For trucking companies operating internationally, speed conversion affects logistics. European trucks governed to 90 km/h (56 mph) would feel painfully slow on US highways with 70 mph (113 km/h) limits. The difference isn't just numbers - it changes trip planning, delivery schedules, and driver fatigue calculations.
+                      </p>
                     </div>
+                    
                     <div>
-                      <h3 className="font-semibold text-foreground mb-2">✈️ Aviation & Aerospace</h3>
-                      <ul className="space-y-1 text-muted-foreground text-sm">
-                        <li className="flex items-start gap-2">
-                          <div className="w-1 h-1 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
-                          <span><strong>Flight Planning:</strong> Convert airspeed between knots, km/h, and mph for flight operations, calculate ground speed conversions for navigation, and convert Mach numbers for high-altitude jet performance calculations</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <div className="w-1 h-1 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
-                          <span><strong>Aircraft Performance:</strong> Convert takeoff and landing speeds between different units, calculate climb/descent rates in various measurement systems, and analyze aircraft specifications using international speed standards</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <div className="w-1 h-1 bg-purple-500 rounded-full mt-2 flex-shrink-0"></div>
-                          <span><strong>Space Exploration:</strong> Convert orbital velocities between different measurement units, calculate re-entry speeds using various systems, and analyze spacecraft performance metrics with precise speed conversions</span>
-                        </li>
-                      </ul>
+                      <h3 className="font-semibold text-foreground mb-2">In the Air and at Sea</h3>
+                      <p className="text-sm text-muted-foreground mb-3">
+                        Aviation is strictly knots and Mach. I've worked with pilots who can instantly convert between systems, but they think in knots. Air traffic controllers in different countries might use different units, but the pilots' instruments show knots. The standardization prevents errors - imagine the disaster if one pilot thought "250" meant km/h while another thought mph during approach.
+                      </p>
+                      <p className="text-sm text-muted-foreground">
+                        Maritime navigation still uses knots for the same reason aviation does: it connects directly to chart measurements. A ship traveling at 20 knots covers 20 nautical miles per hour, and since charts are marked in nautical miles, course plotting becomes simple arithmetic. Converting to km/h would add an unnecessary calculation step.
+                      </p>
                     </div>
+                    
                     <div>
-                      <h3 className="font-semibold text-foreground mb-2">🏃 Sports & Athletics</h3>
-                      <ul className="space-y-1 text-muted-foreground text-sm">
-                        <li className="flex items-start gap-2">
-                          <div className="w-1 h-1 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
-                          <span><strong>Running & Cycling:</strong> Convert pace between minutes per km and minutes per mile for race planning, calculate speed conversions for training zones, and compare athletic performance across international competitions</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <div className="w-1 h-1 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
-                          <span><strong>Motor Sports:</strong> Convert lap speeds between different measurement systems for international racing, calculate acceleration rates in various units, and analyze vehicle performance using consistent speed metrics</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <div className="w-1 h-1 bg-purple-500 rounded-full mt-2 flex-shrink-0"></div>
-                          <span><strong>Water Sports:</strong> Convert sailing speeds between knots and km/h for competition planning, calculate rowing/paddling velocities in different units, and analyze watercraft performance across measurement systems</span>
-                        </li>
-                      </ul>
+                      <h3 className="font-semibold text-foreground mb-2">Engineering and Manufacturing</h3>
+                      <p className="text-sm text-muted-foreground mb-3">
+                        In factories, conveyor belts might run at speeds measured in feet per minute in the US, or meters per minute elsewhere. Machine tools spin at RPM (revolutions per minute), which converts to surface speed in m/s or ft/s depending on tool diameter. Get this conversion wrong, and you wreck expensive cutting tools or produce defective parts.
+                      </p>
+                      <p className="text-sm text-muted-foreground">
+                        Civil engineers designing roads use different units in different countries, but the physics remains the same. A curve safe at 100 km/h is also safe at 62 mph - it's the same speed with different labels. The challenge comes when importing vehicle designs or safety standards between markets.
+                      </p>
                     </div>
+                    
                     <div>
-                      <h3 className="font-semibold text-foreground mb-2">🔬 Science & Meteorology</h3>
-                      <ul className="space-y-1 text-muted-foreground text-sm">
-                        <li className="flex items-start gap-2">
-                          <div className="w-1 h-1 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
-                          <span><strong>Weather Forecasting:</strong> Convert wind speeds between km/h, mph, knots, and m/s for meteorological reports, calculate storm velocities using different measurement systems, and analyze climate data with standardized speed units</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <div className="w-1 h-1 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
-                          <span><strong>Physics Research:</strong> Convert velocity measurements between m/s, km/h, and other scientific units for experiments, calculate particle speeds in different measurement systems, and analyze motion data with precise conversions</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <div className="w-1 h-1 bg-purple-500 rounded-full mt-2 flex-shrink-0"></div>
-                          <span><strong>Engineering Applications:</strong> Convert fluid velocities between different units for pipeline design, calculate mechanical speeds for equipment specifications, and analyze technical data using consistent speed measurements</span>
-                        </li>
-                      </ul>
+                      <h3 className="font-semibold text-foreground mb-2">Sports and Recreation</h3>
+                      <p className="text-sm text-muted-foreground mb-3">
+                        Cyclists and runners face constant conversion challenges. European races list paces in minutes per kilometer, Americans in minutes per mile. Serious athletes learn both. I've seen marathoners from different countries comparing finish times, mentally converting between systems while catching their breath.
+                      </p>
+                      <p className="text-sm text-muted-foreground">
+                        In motorsports, teams might develop a car in Europe (km/h) but race it in the US (mph). The telemetry data needs consistent units for analysis. I've watched engineers spend hours converting datasets because someone forgot to specify units in a shared spreadsheet. Small conversion errors can lead to wrong setup decisions.
+                      </p>
+                    </div>
+                    
+                    <div className="p-4 bg-green-500/10 rounded-lg border border-green-500/20">
+                      <h4 className="font-semibold text-foreground mb-2">The Conversion Reality Check</h4>
+                      <p className="text-sm text-muted-foreground">
+                        In practice, most professionals develop intuition for their field's conversions. Pilots know 250 knots is about 460 km/h. Truckers know 100 km/h is about 62 mph. Cyclists know a 20 mph average is roughly 32 km/h. The exact numbers matter less than recognizing ballpark figures. Our converter handles the precision when you need it, but developing that intuition makes you faster in daily work.
+                      </p>
                     </div>
                   </div>
                 </div>
               )}
             </article>
 
-            {/* How to Use - Dropdown */}
+            {/* Conversion Formula */}
             <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
               <button
-                onClick={() => toggleSection('howToUse')}
-                className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
-              >
-                <div className="flex items-center gap-3">
-                  <div className="bg-amber-500/10 p-2 rounded-lg">
-                    <Zap size={20} className="text-amber-600" />
-                  </div>
-                  <h2 className="text-xl font-bold text-foreground">How to Use Speed Converter - Complete Guide</h2>
-                </div>
-                {openSections.howToUse ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
-              </button>
-              
-              {openSections.howToUse && (
-                <div className="px-6 pb-6">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="space-y-3">
-                      <h3 className="font-semibold text-foreground">Step-by-Step Instructions</h3>
-                      <div className="space-y-4">
-                        <div className="flex items-start gap-3">
-                          <div className="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0">1</div>
-                          <div>
-                            <div className="font-medium text-foreground">Enter Your Speed Value</div>
-                            <div className="text-sm text-muted-foreground">Type the numerical speed you want to convert in the "From" field. Enter whole numbers, decimals, or scientific notation for extremely fast or slow speeds.</div>
-                          </div>
-                        </div>
-                        <div className="flex items-start gap-3">
-                          <div className="bg-green-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0">2</div>
-                          <div>
-                            <div className="font-medium text-foreground">Select Source Unit</div>
-                            <div className="text-sm text-muted-foreground">Choose the current speed unit from the dropdown menu next to your input. Options include km/h, mph, m/s, knots, Mach, and ft/s for comprehensive speed conversion coverage.</div>
-                          </div>
-                        </div>
-                        <div className="flex items-start gap-3">
-                          <div className="bg-purple-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0">3</div>
-                          <div>
-                            <div className="font-medium text-foreground">Select Target Unit</div>
-                            <div className="text-sm text-muted-foreground">Choose the speed unit you want to convert to from the "To" dropdown menu. The converter will automatically calculate and display the result in real-time as you make selections.</div>
-                          </div>
-                        </div>
-                        <div className="flex items-start gap-3">
-                          <div className="bg-amber-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0">4</div>
-                          <div>
-                            <div className="font-medium text-foreground">Use Conversion Results</div>
-                            <div className="text-sm text-muted-foreground">Copy the converted value using the copy button, or click any preset conversion for instant calculations of common speed scenarios like highway limits or aviation speeds.</div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="space-y-3">
-                      <h3 className="font-semibold text-foreground">Pro Conversion Tips</h3>
-                      <ul className="space-y-2 text-sm text-muted-foreground">
-                        <li className="flex items-start gap-2">
-                          <div className="bg-blue-500/20 p-1 rounded mt-0.5">
-                            <Zap size={12} className="text-blue-500" />
-                          </div>
-                          <span><strong>Quick Estimates:</strong> For approximate km/h to mph: multiply by 0.6. For mph to km/h: multiply by 1.6. For knots to km/h: multiply by 1.85. These approximations work well for mental calculations</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <div className="bg-green-500/20 p-1 rounded mt-0.5">
-                            <Gauge size={12} className="text-green-500" />
-                          </div>
-                          <span><strong>Swap Function:</strong> Use the swap button between units to quickly reverse your conversion direction without re-entering speed values - perfect for checking calculations or comparing units</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <div className="bg-purple-500/20 p-1 rounded mt-0.5">
-                            <Car size={12} className="text-purple-500" />
-                          </div>
-                          <span><strong>Common Conversions:</strong> Save time by using the preset conversion buttons for frequently needed calculations like speed limit conversions or aviation speed comparisons</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <div className="bg-amber-500/20 p-1 rounded mt-0.5">
-                            <Plane size={12} className="text-amber-500" />
-                          </div>
-                          <span><strong>Precision Control:</strong> Results show up to 6 decimal places. For driving applications, round to whole numbers; for scientific work, use full precision as needed for accuracy</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <div className="bg-red-500/20 p-1 rounded mt-0.5">
-                            <Copy size={12} className="text-red-500" />
-                          </div>
-                          <span><strong>Documentation Ready:</strong> Use the copy function to save conversion results for travel documents, technical reports, aviation logs, or scientific papers requiring accurate speed measurements</span>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </article>
-
-            {/* Example Input and Output Section */}
-            <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
-              <button
-                onClick={() => toggleSection('examples')}
+                onClick={() => toggleSection('conversionFormula')}
                 className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
               >
                 <div className="flex items-center gap-3">
                   <div className="bg-purple-500/10 p-2 rounded-lg">
                     <Zap size={20} className="text-purple-600" />
                   </div>
-                  <h2 className="text-xl font-bold text-foreground">Speed Conversion Examples</h2>
+                  <h2 className="text-xl font-bold text-foreground">The Math Behind Speed Conversion</h2>
+                </div>
+                {openSections.conversionFormula ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+              </button>
+              
+              {openSections.conversionFormula && (
+                <div className="px-6 pb-6">
+                  <p className="text-muted-foreground mb-4">
+                    Converting speed isn't just multiplying by a magic number - there's logic behind each factor. Understanding where these numbers come from makes them easier to remember and use correctly.
+                  </p>
+                  
+                  <div className="space-y-4">
+                    <div>
+                      <h3 className="font-semibold text-foreground mb-2">Why 1.609344 and 0.621371?</h3>
+                      <p className="text-sm text-muted-foreground">
+                        The exact conversion between miles and kilometers is 1 mile = 1.609344 kilometers. That .000344 matters for precision work but not for mental math. This number comes from the international agreement defining the mile as exactly 1609.344 meters. The reciprocal gives us 0.621371192 for converting km to miles.
+                      </p>
+                      <p className="text-sm text-muted-foreground">
+                        For quick estimates, 1.6 and 0.6 work fine. I use these approximations when driving internationally: 100 km/h × 0.6 = 60 mph (actual: 62.1). Close enough to avoid tickets. Going the other way: 60 mph × 1.6 = 96 km/h (actual: 96.56). The error is about 0.5%, which at highway speeds means less than 1 km/h difference.
+                      </p>
+                    </div>
+                    
+                    <div>
+                      <h3 className="font-semibold text-foreground mb-2">The 3.6 Factor for m/s to km/h</h3>
+                      <p className="text-sm text-muted-foreground">
+                        This one's beautifully simple: 1 meter per second = 3.6 kilometers per hour. Why? Because there are 1000 meters in a kilometer and 3600 seconds in an hour. 1000/3600 = 1/3.6, or looking at it the other way: 1 m/s × 3600 seconds/hour ÷ 1000 m/km = 3.6 km/h.
+                      </p>
+                      <p className="text-sm text-muted-foreground">
+                        This exact relationship makes m/s and km/h friendly for mental conversion. 10 m/s = 36 km/h (10 × 3.6). 25 m/s = 90 km/h. The pattern is easy to remember once you see it. Compare this to the messy mph conversions, and you understand why scientists prefer metric.
+                      </p>
+                    </div>
+                    
+                    <div>
+                      <h3 className="font-semibold text-foreground mb-2">Knots: The Nautical Connection</h3>
+                      <p className="text-sm text-muted-foreground">
+                        One knot = 1.852 km/h exactly. This comes from the nautical mile being 1852 meters (by international agreement since 1929). Before that, different countries had slightly different nautical miles, which must have been confusing for international shipping.
+                      </p>
+                      <p className="text-sm text-muted-foreground">
+                        The practical approximation: knots are about 15% more than mph (1 knot = 1.15078 mph) or about 85% more than km/h (actually 85.2%). For quick mental conversion from knots to km/h, I use "almost double" - 100 knots ≈ 185 km/h. The reverse: km/h to knots, divide by 1.85 or multiply by 0.54.
+                      </p>
+                    </div>
+                    
+                    <div className="p-4 bg-purple-500/10 rounded-lg border border-purple-500/20">
+                      <h4 className="font-semibold text-foreground mb-2">Hands-On Conversion Example</h4>
+                      <p className="text-sm text-muted-foreground mb-2">
+                        Let's convert 70 mph to various units step by step:
+                      </p>
+                      <div className="text-sm font-mono bg-background p-3 rounded border border-border space-y-1">
+                        <div>To km/h: 70 × 1.609344 = 112.65408 km/h</div>
+                        <div>To m/s: First get km/h (112.654), then ÷ 3.6 = 31.2928 m/s</div>
+                        <div>Or directly: 70 × 0.44704 = 31.2928 m/s (0.44704 = 1.609344 ÷ 3.6)</div>
+                        <div>To knots: 70 ÷ 1.15078 = 60.827 knots</div>
+                        <div>To ft/s: 70 × 1.46667 = 102.667 ft/s (1 mph = 1.46667 ft/s)</div>
+                      </div>
+                      <p className="text-sm text-muted-foreground mt-2">
+                        Notice how each conversion uses factors derived from fundamental relationships. Our converter handles these steps automatically, but knowing the relationships helps spot when a conversion looks wrong.
+                      </p>
+                    </div>
+                    
+                    <div>
+                      <h3 className="font-semibold text-foreground mb-2">Mach's Variable Nature</h3>
+                      <p className="text-sm text-muted-foreground">
+                        Mach conversion is trickiest because the speed of sound changes with air temperature. At sea level standard conditions (15°C), it's 340.3 m/s = 1225 km/h = 761 mph. But at -50°C (common at cruising altitude), it's 300 m/s = 1080 km/h = 671 mph.
+                      </p>
+                      <p className="text-sm text-muted-foreground">
+                        Our converter uses the sea level standard for simplicity. For aviation applications, pilots use flight computers that calculate true Mach based on actual temperature. That's why you'll see "Mach 0.85" on airliner displays but different ground speeds at different altitudes.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </article>
+
+            {/* Precision Rules */}
+            <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
+              <button
+                onClick={() => toggleSection('precisionRules')}
+                className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="bg-amber-500/10 p-2 rounded-lg">
+                    <Zap size={20} className="text-amber-600" />
+                  </div>
+                  <h2 className="text-xl font-bold text-foreground">How Precise Should Your Conversions Be?</h2>
+                </div>
+                {openSections.precisionRules ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+              </button>
+              
+              {openSections.precisionRules && (
+                <div className="px-6 pb-6">
+                  <p className="text-muted-foreground mb-4">
+                    More decimal places aren't always better. Knowing when to round and when to be exact separates practical conversions from mathematical exercises. Here's how professionals handle precision in different fields.
+                  </p>
+                  
+                  <div className="space-y-4">
+                    <div>
+                      <h3 className="font-semibold text-foreground mb-2">Everyday Driving: Keep It Simple</h3>
+                      <p className="text-sm text-muted-foreground">
+                        When converting speed limits for travel, round to the nearest 5 or 10. European speed limits are typically multiples of 10 km/h (50, 80, 100, 120, 130). US limits are multiples of 5 mph (25, 35, 45, 55, 65, 70, 75).
+                      </p>
+                      <p className="text-sm text-muted-foreground">
+                        So 100 km/h converts to 62.137 mph, but you'll think "about 60 mph" while driving. The 2 mph difference won't get you pulled over. Police radar guns have tolerance margins anyway. What matters is understanding the speed relative to road conditions, not the exact number.
+                      </p>
+                    </div>
+                    
+                    <div>
+                      <h3 className="font-semibold text-foreground mb-2">Aviation: Precision Matters</h3>
+                      <p className="text-sm text-muted-foreground">
+                        In aviation, a few knots can affect fuel calculations on long flights. Air traffic control might specify "maintain 250 knots" not "about 250." Fuel flow calculations use precise speeds because errors compound over hours.
+                      </p>
+                      <p className="text-sm text-muted-foreground">
+                        However, even pilots round in their heads. They know 250 knots is about 460 km/h or 288 mph. The exact numbers are in the flight computer, but mental approximations help with quick decisions. The key is knowing when approximation is safe (casual planning) versus when it's not (fuel calculations).
+                      </p>
+                    </div>
+                    
+                    <div>
+                      <h3 className="font-semibold text-foreground mb-2">Science and Engineering: Follow the Data</h3>
+                      <p className="text-sm text-muted-foreground">
+                        In scientific work, maintain the precision of your original measurement. If you measured 10.25 m/s with an instrument accurate to 0.01 m/s, convert to km/h as 36.90 km/h (10.25 × 3.6 = 36.90), not 37 km/h.
+                      </p>
+                      <p className="text-sm text-muted-foreground">
+                        The rule: don't add false precision. If your car speedometer shows 60 mph (probably accurate to ±1 mph), converting to 96.56064 km/h implies precision that doesn't exist. 97 km/h is more honest. This matters in technical reports where readers might assume precision from decimal places.
+                      </p>
+                    </div>
+                    
+                    <div className="p-4 bg-amber-500/10 rounded-lg border border-amber-500/20">
+                      <h4 className="font-semibold text-foreground mb-2">Practical Precision Guidelines</h4>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
+                        <div>
+                          <div className="font-medium text-foreground mb-1">Round to whole numbers:</div>
+                          <ul className="text-muted-foreground space-y-1">
+                            <li>• Speed limit conversions</li>
+                            <li>• Travel planning estimates</li>
+                            <li>• Casual conversations about speed</li>
+                            <li>• Vehicle brochure comparisons</li>
+                          </ul>
+                        </div>
+                        <div>
+                          <div className="font-medium text-foreground mb-1">Keep 1 decimal:</div>
+                          <ul className="text-muted-foreground space-y-1">
+                            <li>• Running/cycling pace calculations</li>
+                            <li>• Basic flight planning</li>
+                            <li>• Weather reporting (public)</li>
+                            <li>• Sports performance analysis</li>
+                          </ul>
+                        </div>
+                        <div>
+                          <div className="font-medium text-foreground mb-1">Use full precision:</div>
+                          <ul className="text-muted-foreground space-y-1">
+                            <li>• Scientific research data</li>
+                            <li>• Aviation fuel calculations</li>
+                            <li>• Engineering design specifications</li>
+                            <li>• Calibration work</li>
+                          </ul>
+                        </div>
+                        <div>
+                          <div className="font-medium text-foreground mb-1">Know your tool's accuracy:</div>
+                          <ul className="text-muted-foreground space-y-1">
+                            <li>• Car speedometer: ±2-3% typically</li>
+                            <li>• GPS speed: ±0.1 km/h good conditions</li>
+                            <li>• Radar gun: ±1 mph typically</li>
+                            <li>• Laboratory equipment: read the specs</li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <h3 className="font-semibold text-foreground mb-2">The Consistency Principle</h3>
+                      <p className="text-sm text-muted-foreground">
+                        Whatever precision level you choose, be consistent within a project. If you round 100 km/h to 62 mph, round all km/h to mph conversions similarly. Mixing precise and rounded conversions in the same document or calculation causes confusion and errors.
+                      </p>
+                      <p className="text-sm text-muted-foreground">
+                        I've reviewed engineering reports where some speeds were rounded and others weren't, making comparisons difficult. Establish a precision standard at the start of any project involving speed conversions. Document it so others understand your choices.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </article>
+
+            {/* Examples */}
+            <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
+              <button
+                onClick={() => toggleSection('examples')}
+                className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="bg-indigo-500/10 p-2 rounded-lg">
+                    <Zap size={20} className="text-indigo-600" />
+                  </div>
+                  <h2 className="text-xl font-bold text-foreground">Real-World Speed Conversion Scenarios</h2>
                 </div>
                 {openSections.examples ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
               </button>
@@ -765,62 +884,48 @@ const SpeedConverter = () => {
                 <div className="px-6 pb-6">
                   <div className="space-y-4">
                     <div>
-                      <h3 className="font-semibold text-foreground mb-3">Common Speed Conversion Examples</h3>
+                      <h3 className="font-semibold text-foreground mb-3">Common Speed Situations You'll Encounter</h3>
                       <div className="overflow-x-auto">
                         <div className="min-w-full inline-block align-middle">
                           <div className="overflow-hidden border border-border rounded-lg">
                             <table className="min-w-full divide-y divide-border">
                               <thead className="bg-secondary/20">
                                 <tr>
-                                  <th className="px-4 py-3 text-left text-xs font-medium text-foreground uppercase tracking-wider">From Value</th>
-                                  <th className="px-4 py-3 text-left text-xs font-medium text-foreground uppercase tracking-wider">From Unit</th>
-                                  <th className="px-4 py-3 text-left text-xs font-medium text-foreground uppercase tracking-wider">To Unit</th>
-                                  <th className="px-4 py-3 text-left text-xs font-medium text-foreground uppercase tracking-wider">Result</th>
-                                  <th className="px-4 py-3 text-left text-xs font-medium text-foreground uppercase tracking-wider">Application</th>
+                                  <th className="px-4 py-3 text-left text-xs font-medium text-foreground uppercase tracking-wider">Scenario</th>
+                                  <th className="px-4 py-3 text-left text-xs font-medium text-foreground uppercase tracking-wider">Typical Speed</th>
+                                  <th className="px-4 py-3 text-left text-xs font-medium text-foreground uppercase tracking-wider">Conversion You'll Need</th>
                                 </tr>
                               </thead>
                               <tbody className="divide-y divide-border">
                                 <tr>
-                                  <td className="px-4 py-3 text-sm font-mono text-blue-600">100</td>
-                                  <td className="px-4 py-3 text-sm text-foreground">km/h</td>
-                                  <td className="px-4 py-3 text-sm text-foreground">mph</td>
-                                  <td className="px-4 py-3 text-sm font-mono text-foreground">62.14</td>
-                                  <td className="px-4 py-3 text-sm text-muted-foreground">Highway speed</td>
+                                  <td className="px-4 py-3 text-sm text-foreground">German autobahn driving</td>
+                                  <td className="px-4 py-3 text-sm text-blue-600 font-mono">130 km/h recommended</td>
+                                  <td className="px-4 py-3 text-sm text-muted-foreground">→ 81 mph (for American visitors)</td>
                                 </tr>
                                 <tr>
-                                  <td className="px-4 py-3 text-sm font-mono text-blue-600">60</td>
-                                  <td className="px-4 py-3 text-sm text-foreground">mph</td>
-                                  <td className="px-4 py-3 text-sm text-foreground">km/h</td>
-                                  <td className="px-4 py-3 text-sm font-mono text-foreground">96.56</td>
-                                  <td className="px-4 py-3 text-sm text-muted-foreground">Urban driving</td>
+                                  <td className="px-4 py-3 text-sm text-foreground">Urban cycling commute</td>
+                                  <td className="px-4 py-3 text-sm text-blue-600 font-mono">20 km/h average</td>
+                                  <td className="px-4 py-3 text-sm text-muted-foreground">→ 12.4 mph (comparing to US cyclists)</td>
                                 </tr>
                                 <tr>
-                                  <td className="px-4 py-3 text-sm font-mono text-blue-600">500</td>
-                                  <td className="px-4 py-3 text-sm text-foreground">knots</td>
-                                  <td className="px-4 py-3 text-sm text-foreground">km/h</td>
-                                  <td className="px-4 py-3 text-sm font-mono text-foreground">926.00</td>
-                                  <td className="px-4 py-3 text-sm text-muted-foreground">Jet cruising</td>
+                                  <td className="px-4 py-3 text-sm text-foreground">Commercial jet cruise</td>
+                                  <td className="px-4 py-3 text-sm text-blue-600 font-mono">Mach 0.85 at altitude</td>
+                                  <td className="px-4 py-3 text-sm text-muted-foreground">→ 562 knots or 1040 km/h (for understanding)</td>
                                 </tr>
                                 <tr>
-                                  <td className="px-4 py-3 text-sm font-mono text-blue-600">10</td>
-                                  <td className="px-4 py-3 text-sm text-foreground">m/s</td>
-                                  <td className="px-4 py-3 text-sm text-foreground">km/h</td>
-                                  <td className="px-4 py-3 text-sm font-mono text-foreground">36.00</td>
-                                  <td className="px-4 py-3 text-sm text-muted-foreground">Sprinting speed</td>
+                                  <td className="px-4 py-3 text-sm text-foreground">Marathon running pace</td>
+                                  <td className="px-4 py-3 text-sm text-blue-600 font-mono">5 min/km pace</td>
+                                  <td className="px-4 py-3 text-sm text-muted-foreground">→ 12 km/h or 7.5 mph (comparing speeds)</td>
                                 </tr>
                                 <tr>
-                                  <td className="px-4 py-3 text-sm font-mono text-blue-600">2.5</td>
-                                  <td className="px-4 py-3 text-sm text-foreground">Mach</td>
-                                  <td className="px-4 py-3 text-sm text-foreground">km/h</td>
-                                  <td className="px-4 py-3 text-sm font-mono text-foreground">3087.00</td>
-                                  <td className="px-4 py-3 text-sm text-muted-foreground">Supersonic flight</td>
+                                  <td className="px-4 py-3 text-sm text-foreground">Severe storm winds</td>
+                                  <td className="px-4 py-3 text-sm text-blue-600 font-mono">50 m/s in tornado</td>
+                                  <td className="px-4 py-3 text-sm text-muted-foreground">→ 180 km/h or 112 mph (for public warnings)</td>
                                 </tr>
                                 <tr>
-                                  <td className="px-4 py-3 text-sm font-mono text-blue-600">88</td>
-                                  <td className="px-4 py-3 text-sm text-foreground">ft/s</td>
-                                  <td className="px-4 py-3 text-sm text-foreground">km/h</td>
-                                  <td className="px-4 py-3 text-sm font-mono text-foreground">96.56</td>
-                                  <td className="px-4 py-3 text-sm text-muted-foreground">Engineering speed</td>
+                                  <td className="px-4 py-3 text-sm text-foreground">Factory conveyor belt</td>
+                                  <td className="px-4 py-3 text-sm text-blue-600 font-mono">2 ft/s production line</td>
+                                  <td className="px-4 py-3 text-sm text-muted-foreground">→ 0.61 m/s or 2.2 km/h (for international teams)</td>
                                 </tr>
                               </tbody>
                             </table>
@@ -830,159 +935,58 @@ const SpeedConverter = () => {
                     </div>
                     
                     <div>
-                      <h3 className="font-semibold text-foreground mb-2">Detailed Example: International Aviation Operations</h3>
-                      <div className="bg-secondary/20 p-4 rounded-lg border border-border overflow-x-auto">
-                        <pre className="text-sm text-muted-foreground whitespace-pre-wrap">
-{`Example: Speed conversions for international flight operations
-
-Aircraft: Boeing 787 Dreamliner on transatlantic route
-Route: New York (JFK) to London (LHR)
-Operational requirements: Convert between speed units for different flight phases
-
-Step 1: Takeoff Speed Conversions
-Maximum takeoff weight: 228,000 kg
-Takeoff speeds:
-• V1 (Takeoff decision speed): 150 knots
-  Convert to km/h: 150 × 1.852 = 277.8 km/h
-  Convert to mph: 150 × 1.15078 = 172.6 mph
-  Convert to m/s: 277.8 ÷ 3.6 = 77.2 m/s
-
-• VR (Rotation speed): 155 knots
-  Convert to km/h: 155 × 1.852 = 287.1 km/h
-  Convert to mph: 155 × 1.15078 = 178.4 mph
-
-• V2 (Takeoff safety speed): 160 knots
-  Convert to km/h: 160 × 1.852 = 296.3 km/h
-  Convert to mph: 160 × 1.15078 = 184.1 mph
-
-Step 2: Climb Phase Conversions
-Climb speeds:
-• Initial climb: 250 knots (below 10,000 ft)
-  Convert to km/h: 250 × 1.852 = 463.0 km/h
-  Convert to mph: 250 × 1.15078 = 287.7 mph
-  Convert to Mach: 463 ÷ 1234.8 = 0.375 Mach
-
-• Accelerated climb: 300 knots
-  Convert to km/h: 300 × 1.852 = 555.6 km/h
-  Convert to mph: 300 × 1.15078 = 345.2 mph
-  Convert to Mach: 555.6 ÷ 1234.8 = 0.450 Mach
-
-Step 3: Cruise Phase Conversions
-Cruise altitude: 40,000 ft
-Cruise speeds:
-• Typical cruise: Mach 0.85
-  Convert to km/h: 0.85 × 1234.8 = 1049.6 km/h
-  Convert to mph: 1049.6 × 0.621371 = 652.3 mph
-  Convert to knots: 1049.6 ÷ 1.852 = 566.8 knots
-
-• Maximum cruise: Mach 0.90
-  Convert to km/h: 0.90 × 1234.8 = 1111.3 km/h
-  Convert to mph: 1111.3 × 0.621371 = 690.6 mph
-  Convert to knots: 1111.3 ÷ 1.852 = 600.0 knots
-
-• Long-range cruise: Mach 0.84
-  Convert to km/h: 0.84 × 1234.8 = 1037.2 km/h
-  Convert to mph: 1037.2 × 0.621371 = 644.6 mph
-  Convert to knots: 1037.2 ÷ 1.852 = 560.0 knots
-
-Step 4: Descent Phase Conversions
-Descent speeds:
-• Initial descent: Mach 0.82
-  Convert to km/h: 0.82 × 1234.8 = 1012.5 km/h
-  Convert to mph: 1012.5 × 0.621371 = 629.2 mph
-  Convert to knots: 1012.5 ÷ 1.852 = 546.7 knots
-
-• Approach descent: 250 knots
-  Convert to km/h: 250 × 1.852 = 463.0 km/h
-  Convert to mph: 250 × 1.15078 = 287.7 mph
-  Convert to Mach: 463 ÷ 1234.8 = 0.375 Mach
-
-Step 5: Approach and Landing Conversions
-Landing speeds:
-• Final approach: 140 knots
-  Convert to km/h: 140 × 1.852 = 259.3 km/h
-  Convert to mph: 140 × 1.15078 = 161.1 mph
-  Convert to m/s: 259.3 ÷ 3.6 = 72.0 m/s
-
-• Landing speed: 135 knots
-  Convert to km/h: 135 × 1.852 = 250.0 km/h
-  Convert to mph: 135 × 1.15078 = 155.4 mph
-  Convert to m/s: 250.0 ÷ 3.6 = 69.4 m/s
-
-Step 6: Ground Speed Calculations
-Flight planning calculations:
-• Headwind component: 50 knots
-  Convert to km/h: 50 × 1.852 = 92.6 km/h
-  Convert to mph: 50 × 1.15078 = 57.5 mph
-
-• True airspeed: Mach 0.85 at 40,000 ft = 1049.6 km/h
-• Ground speed with 50 knot headwind:
-  Ground speed = TAS - headwind
-  In knots: 566.8 - 50 = 516.8 knots
-  In km/h: 1049.6 - 92.6 = 957.0 km/h
-  In mph: 652.3 - 57.5 = 594.8 mph
-
-• Estimated flight time: Distance 5,500 km
-  Time in knots: 5,500 ÷ 957.0 × 1.852 = 10.65 hours
-  Time in km/h: 5,500 ÷ 957.0 = 5.75 hours (actually 5.75 × 1.852 conversion needed)
-  Correct calculation: Time = Distance ÷ Ground speed
-  Time = 5,500 km ÷ 957.0 km/h = 5.75 hours = 5h 45min
-
-Step 7: Fuel Calculations
-Fuel flow at cruise: 5,500 kg/hour
-• Speed in knots: 566.8 knots
-  Fuel per nautical mile: 5,500 ÷ 566.8 = 9.70 kg/NM
-• Speed in km/h: 1049.6 km/h
-  Fuel per kilometer: 5,500 ÷ 1049.6 = 5.24 kg/km
-• Speed in mph: 652.3 mph
-  Fuel per mile: 5,500 ÷ 652.3 = 8.43 kg/mile
-
-Total fuel for 5,500 km flight:
-• In km/h calculation: 5,500 km × 5.24 kg/km = 28,820 kg
-• In knots calculation: (5,500 ÷ 1.852) NM × 9.70 kg/NM = 28,820 kg
-• In mph calculation: (5,500 × 0.621371) miles × 8.43 kg/mile = 28,820 kg
-
-Step 8: International Regulations Compliance
-Speed limit conversions:
-• Below 10,000 ft: 250 knots maximum
-  ICAO standard: 250 knots
-  Convert to km/h for European pilots: 463 km/h
-  Convert to mph for US pilots: 288 mph
-
-• Terminal area: 200 knots maximum
-  Convert to km/h: 370 km/h
-  Convert to mph: 230 mph
-
-• Noise abatement: 220 knots maximum
-  Convert to km/h: 407 km/h
-  Convert to mph: 253 mph
-
-Step 9: Performance Monitoring
-Performance parameters:
-• Rate of climb: 3,000 ft/minute
-  Convert to m/s: 3,000 × 0.3048 ÷ 60 = 15.24 m/s
-  Convert to km/h vertical: 15.24 × 3.6 = 54.86 km/h vertical
-
-• Rate of descent: 2,000 ft/minute
-  Convert to m/s: 2,000 × 0.3048 ÷ 60 = 10.16 m/s
-  Convert to km/h vertical: 10.16 × 3.6 = 36.58 km/h vertical
-
-Step 10: International Communication
-ATC communications with different units:
-• US ATC: "Maintain 280 knots"
-  European pilot converts to km/h: 280 × 1.852 = 519 km/h
-• European ATC: "Maintain 500 km/h"
-  US pilot converts to knots: 500 ÷ 1.852 = 270 knots
-• Oceanic ATC: "Maintain Mach 0.85"
-  All pilots convert as needed:
-  - European: 0.85 × 1234.8 = 1049.6 km/h
-  - US: 0.85 × 767 = 652 mph
-  - All: 0.85 × 661.5 = 562 knots
-
-Conclusion:
-Using accurate speed conversions ensures safe flight operations, proper fuel planning, regulatory compliance, and effective international communication in aviation. The speed converter provides the precision needed for professional aviation calculations while maintaining accessibility for general transportation and sports applications.`}
-                        </pre>
+                      <h3 className="font-semibold text-foreground mb-2">Road Trip Across Europe: A Conversion Journey</h3>
+                      <div className="bg-secondary/20 p-4 rounded-lg border border-border">
+                        <p className="text-sm text-muted-foreground mb-3">
+                          Imagine driving from the UK to Italy, passing through countries with different speed units and limits. Here's what you'd need to convert:
+                        </p>
+                        
+                        <div className="space-y-3 text-sm">
+                          <div>
+                            <div className="font-medium text-foreground">UK (start): Motorway driving</div>
+                            <div className="text-muted-foreground ml-3">Speed limit: 70 mph. Your rental car shows km/h. Convert: 70 mph = 113 km/h. Set cruise control to 110 km/h to be safe.</div>
+                          </div>
+                          
+                          <div>
+                            <div className="font-medium text-foreground">Channel Tunnel: Train transport</div>
+                            <div className="text-muted-foreground ml-3">Shuttle speed: 160 km/h. As a Brit, you think: "That's 100 mph." Feels fast but smooth.</div>
+                          </div>
+                          
+                          <div>
+                            <div className="font-medium text-foreground">France: Autoroute</div>
+                            <div className="text-muted-foreground ml-3">Limit: 130 km/h dry, 110 km/h wet. Convert: 130 = 81 mph, 110 = 68 mph. Notice how French limits feel similar to UK despite different numbers.</div>
+                          </div>
+                          
+                          <div>
+                            <div className="font-medium text-foreground">Switzerland: Mountain passes</div>
+                            <div className="text-muted-foreground ml-3">Limit: 80 km/h on twisty roads. Convert: 50 mph. Much slower than UK motorways - adjusts driving style.</div>
+                          </div>
+                          
+                          <div>
+                            <div className="font-medium text-foreground">Italy: Autostrada</div>
+                            <div className="text-muted-foreground ml-3">Limit: 130 km/h (81 mph). Similar to France. But Italians often drive faster - you see 150 km/h on speedometers (93 mph).</div>
+                          </div>
+                          
+                          <div>
+                            <div className="font-medium text-foreground">City driving throughout</div>
+                            <div className="text-muted-foreground ml-3">Typically 50 km/h (31 mph) limits. Feels slow after highways. Pedestrian zones: 30 km/h (19 mph) - walking pace.</div>
+                          </div>
+                        </div>
+                        
+                        <p className="text-sm text-muted-foreground mt-3">
+                          After a week, your brain starts thinking in both systems. You glance at the km/h display and know instinctively what it means in mph. That's the goal - developing intuition through practice, not just calculator use.
+                        </p>
                       </div>
+                    </div>
+                    
+                    <div className="p-4 bg-indigo-500/10 rounded-lg border border-indigo-500/20">
+                      <h4 className="font-semibold text-foreground mb-2">The Learning Curve</h4>
+                      <p className="text-sm text-muted-foreground">
+                        When I first started driving in Europe as an American, I printed a cheat sheet: 30 km/h = 19 mph (school zones), 50 = 31 (towns), 80 = 50 (rural), 100 = 62 (highways), 130 = 81 (autobahn). After a few days, I didn't need it. The numbers became familiar. That's the real value of understanding conversions - not just getting the right answer, but developing fluency between measurement worlds.
+                      </p>
+                      <p className="text-sm text-muted-foreground mt-2">
+                        Use our converter for precision when you need it, but challenge yourself to estimate first. See how close you can get. That mental exercise builds the intuition that makes international travel, work, and communication smoother.
+                      </p>
                     </div>
                   </div>
                 </div>

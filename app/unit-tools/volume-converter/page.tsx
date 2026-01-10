@@ -15,9 +15,11 @@ const VolumeConverter = () => {
   const [result, setResult] = useState<string>('');
   const { toast } = useToast();
   const [openSections, setOpenSections] = useState({
-    whatItDoes: false,
-    useCases: false,
-    howToUse: false,
+    volumeUnitsExplained: false,
+    liquidVsSolid: false,
+    conversionFormula: false,
+    practicalUseCases: false,
+    accuracyNotes: false,
     examples: false,
     faqs: false,
     relatedTools: false
@@ -44,24 +46,24 @@ const VolumeConverter = () => {
   // FAQ Data
   const faqData = [
     {
-      question: "What's the difference between US gallons and imperial gallons?",
-      answer: "US gallons and imperial gallons are different units. A US gallon equals 3.78541 liters, while an imperial gallon equals 4.54609 liters. This calculator uses US gallons by default, which is the standard measurement system used in the United States for liquid volumes."
+      question: "Why are US gallons different from UK gallons?",
+      answer: "It's a historical quirk. The US kept the old British wine gallon (3.785 L) from colonial times, while Britain switched to a larger imperial gallon (4.546 L) in 1824. The difference matters when you're buying fuel or comparing recipes across countries. Always check which gallon you're working with - most modern tools (including ours) default to US gallons unless specified."
     },
     {
-      question: "Why are there so many different volume measurement systems?",
-      answer: "Different volume systems developed historically based on cultural practices and regional standards. The metric system (liters) is used internationally, while the US customary system (gallons, quarts) is used primarily in the United States. Cooking measurements (cups, tablespoons) evolved separately for practical kitchen use."
+      question: "When measuring flour or sugar, should I use cups or weight?",
+      answer: "For baking, always use weight if possible. A cup of flour can weigh anywhere from 120 to 150 grams depending on how you scoop it - sifted, spooned, or packed. That difference can ruin delicate baked goods. Cooks can get away with volume measurements for most things, but bakers need precision. If a recipe gives both, use the weight."
     },
     {
-      question: "How accurate is this volume conversion calculator?",
-      answer: "The calculator provides high-precision conversions using standard conversion factors accurate to six decimal places. For scientific applications requiring extreme precision, additional factors like temperature and pressure might be considered, but for everyday use, educational purposes, and most business applications, this tool provides accurate and reliable conversions."
+      question: "How do I convert between liquid and dry measurements?",
+      answer: "They're different systems, despite sharing names like 'cup' and 'tablespoon.' A liquid cup is 236.6 mL, while a dry cup varies by ingredient. For water, 1 cup liquid = 1 cup volume. For flour, 1 cup dry ≈ 120-150 grams, not directly convertible to milliliters. The rule: use liquid measures for liquids, dry measures for powders, and a kitchen scale when accuracy matters."
     },
     {
-      question: "Can I convert between metric and imperial volume units?",
-      answer: "Yes, this calculator seamlessly converts between all major volume measurement systems including metric (liters, milliliters), US customary (gallons, quarts, pints), cooking measurements (cups, fluid ounces), and cubic measurements (cubic meters, cubic feet). The conversion happens instantly as you change units or values."
+      question: "Why is a fluid ounce different from a weight ounce?",
+      answer: "Fluid ounces measure volume, weight ounces measure mass. They're completely different things that happen to share a name. One fluid ounce of water weighs about one avoirdupois ounce, but that's specific to water at a certain temperature. Olive oil is lighter, honey is heavier. This confusion causes countless recipe failures - always check whether you're dealing with fluid ounces (volume) or ounces (weight)."
     },
     {
-      question: "What's the most commonly used volume conversion?",
-      answer: "The most common volume conversions are liters to gallons (used in fuel and liquid measurements), milliliters to fluid ounces (used in cooking and medicine), and cups to milliliters (used in recipes). These conversions are frequently needed in daily life, cooking, international travel, and various professional fields."
+      question: "How precise do I need to be when converting cooking measurements?",
+      answer: "For soups and stews, approximate conversions work fine. If a recipe calls for 500 mL broth and you use 2 cups (473 mL), the 5% difference won't matter. For baking, especially with leavening agents, be precise. 5 mL baking powder instead of 4.5 mL can affect rising. When in doubt: savory cooking tolerates approximation, baking demands precision, and cocktails need exact measurements."
     }
   ];
 
@@ -332,12 +334,12 @@ const VolumeConverter = () => {
 
                   {/* Volume Tips */}
                   <div className="p-3 bg-gradient-to-r from-secondary/20 to-secondary/10 rounded-lg border border-border">
-                    <div className="text-xs font-medium text-foreground mb-1">Volume Measurement Tips:</div>
+                    <div className="text-xs font-medium text-foreground mb-1">Quick Volume Reference:</div>
                     <div className="text-xs text-muted-foreground space-y-1">
-                      <div>• 1 US gallon = 3.78541 liters (liquid volume)</div>
-                      <div>• 1 cup = 236.588 milliliters (standard cooking measurement)</div>
-                      <div>• 1 fluid ounce = 29.5735 milliliters (US standard)</div>
-                      <div>• 1 cubic meter = 1000 liters (metric system)</div>
+                      <div>• 1 US gallon = about 3.8 liters (think: a milk jug)</div>
+                      <div>• 1 liter = about 4.2 cups (think: a large soda bottle)</div>
+                      <div>• 1 cup = about 240 mL (think: a coffee mug)</div>
+                      <div>• 1 fluid ounce = about 30 mL (think: a shot glass)</div>
                     </div>
                   </div>
 
@@ -370,85 +372,85 @@ const VolumeConverter = () => {
               >
                 <h3 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
                   <Droplets size={18} className="text-blue-600" />
-                  Volume Conversion Complete Guide
+                  Everyday Volume Comparisons
                 </h3>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
-                  {/* Metric System */}
+                  {/* Common Household Items */}
                   <div className="space-y-3">
                     <div className="flex items-center gap-2 mb-2">
                       <div className="bg-blue-500/10 p-2 rounded-lg">
-                        <Droplets size={16} className="text-blue-600" />
+                        <Home size={16} className="text-blue-600" />
                       </div>
-                      <h4 className="text-sm font-medium text-foreground">Metric Volume Units</h4>
+                      <h4 className="text-sm font-medium text-foreground">You Probably Have These:</h4>
                     </div>
                     <div className="space-y-2 text-sm text-muted-foreground">
                       <div className="flex items-center gap-2">
                         <div className="w-1 h-1 bg-accent rounded-full"></div>
-                        <span><strong>Liter (L):</strong> Base metric unit, used worldwide for liquids</span>
+                        <span><strong>Soda can:</strong> 12 fl oz = 355 mL (exactly, not rounded)</span>
                       </div>
                       <div className="flex items-center gap-2">
                         <div className="w-1 h-1 bg-accent rounded-full"></div>
-                        <span><strong>Milliliter (mL):</strong> 1/1000 of a liter, used for small quantities</span>
+                        <span><strong>Water bottle:</strong> 16.9 fl oz = 500 mL (common size)</span>
                       </div>
                       <div className="flex items-center gap-2">
                         <div className="w-1 h-1 bg-accent rounded-full"></div>
-                        <span><strong>Cubic Meter (m³):</strong> 1000 liters, used for large volumes</span>
+                        <span><strong>Milk jug:</strong> 1 gallon = 3.78 L (US standard)</span>
                       </div>
                       <div className="flex items-center gap-2">
                         <div className="w-1 h-1 bg-accent rounded-full"></div>
-                        <span><strong>Cubic Centimeter (cm³):</strong> Equal to 1 mL, used in science</span>
+                        <span><strong>Wine bottle:</strong> 750 mL = 25.4 fl oz (standard)</span>
                       </div>
                     </div>
                   </div>
 
-                  {/* US Customary Units */}
+                  {/* Cooking References */}
                   <div className="space-y-3">
                     <div className="flex items-center gap-2 mb-2">
                       <div className="bg-green-500/10 p-2 rounded-lg">
-                        <Factory size={16} className="text-green-600" />
+                        <Utensils size={16} className="text-green-600" />
                       </div>
-                      <h4 className="text-sm font-medium text-foreground">US Customary Units</h4>
+                      <h4 className="text-sm font-medium text-foreground">In Your Kitchen:</h4>
                     </div>
                     <div className="space-y-2 text-sm text-muted-foreground">
                       <div className="flex items-center gap-2">
                         <div className="w-1 h-1 bg-accent rounded-full"></div>
-                        <span><strong>Gallon (gal):</strong> 3.78541 L, used for fuel and large containers</span>
+                        <span><strong>Teaspoon:</strong> 5 mL (actually 4.93, but everyone rounds)</span>
                       </div>
                       <div className="flex items-center gap-2">
                         <div className="w-1 h-1 bg-accent rounded-full"></div>
-                        <span><strong>Quart (qt):</strong> 1/4 gallon, used for milk and juices</span>
+                        <span><strong>Tablespoon:</strong> 15 mL (3 teaspoons, easy math)</span>
                       </div>
                       <div className="flex items-center gap-2">
                         <div className="w-1 h-1 bg-accent rounded-full"></div>
-                        <span><strong>Pint (pt):</strong> 1/8 gallon, used for beer and cream</span>
+                        <span><strong>Cup:</strong> 240 mL (in practice, though 236.6 is exact)</span>
                       </div>
                       <div className="flex items-center gap-2">
                         <div className="w-1 h-1 bg-accent rounded-full"></div>
-                        <span><strong>Cup (c):</strong> 1/16 gallon, used in cooking recipes</span>
+                        <span><strong>Stick of butter:</strong> ½ cup = 113.4 grams weight</span>
                       </div>
                     </div>
                   </div>
                 </div>
 
                 <div className="p-4 bg-gradient-to-r from-blue-500/10 to-green-500/10 rounded-lg border border-blue-500/20">
-                  <h4 className="text-sm font-medium text-foreground mb-2">Common Volume Equivalents</h4>
+                  <h4 className="text-sm font-medium text-foreground mb-2">Mental Shortcuts That Work</h4>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs text-muted-foreground">
                     <div className="flex justify-between items-center p-2 bg-card/50 rounded">
-                      <span className="font-semibold text-foreground">1 Gallon</span>
-                      <span className="font-mono">3.785 L | 4 Quarts | 8 Pints</span>
+                      <span className="font-semibold text-foreground">Gallons to Liters:</span>
+                      <span className="font-mono">Multiply by 4 (close enough)</span>
                     </div>
                     <div className="flex justify-between items-center p-2 bg-card/50 rounded">
-                      <span className="font-semibold text-foreground">1 Liter</span>
-                      <span className="font-mono">1000 mL | 33.814 fl oz</span>
+                      <span className="font-semibold text-foreground">Cups to Milliliters:</span>
+                      <span className="font-mono">Multiply by 240 (easy math)</span>
                     </div>
                     <div className="flex justify-between items-center p-2 bg-card/50 rounded">
-                      <span className="font-semibold text-foreground">1 Cup</span>
-                      <span className="font-mono">236.588 mL | 8 fl oz</span>
+                      <span className="font-semibold text-foreground">Fluid Ounces to mL:</span>
+                      <span className="font-mono">Multiply by 30 (good estimate)</span>
                     </div>
                     <div className="flex justify-between items-center p-2 bg-card/50 rounded">
-                      <span className="font-semibold text-foreground">1 Cubic Meter</span>
-                      <span className="font-mono">1000 L | 264.172 gal</span>
+                      <span className="font-semibold text-foreground">Quarts to Liters:</span>
+                      <span className="font-mono">Almost the same (0.95 L)</span>
                     </div>
                   </div>
                 </div>
@@ -466,9 +468,7 @@ const VolumeConverter = () => {
                 <h3 className="text-base sm:text-lg font-semibold text-foreground mb-3">Volume Conversion Systems</h3>
                 <div className="space-y-2 text-muted-foreground text-sm">
                   <p>
-                    Volume measurement systems vary globally, with the metric system used internationally
-                    and US customary units primarily used in the United States. Cooking measurements form
-                    a separate practical system.
+                    Different cultures measure volume in ways that made sense for their daily lives. Understanding why these systems exist helps you convert between them more intuitively.
                   </p>
                   <div className="text-xs sm:text-sm space-y-1 pt-2">
                     <div className="flex items-center gap-2">
@@ -559,248 +559,415 @@ const VolumeConverter = () => {
 
           {/* SEO Content Section with Dropdowns */}
           <section className="space-y-4 mt-12">
-            {/* What This Tool Does - Dropdown */}
+            {/* Volume Units Explained */}
             <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
               <button
-                onClick={() => toggleSection('whatItDoes')}
+                onClick={() => toggleSection('volumeUnitsExplained')}
                 className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
               >
                 <div className="flex items-center gap-3">
                   <div className="bg-blue-500/10 p-2 rounded-lg">
                     <Droplets size={20} className="text-blue-600" />
                   </div>
-                  <h2 className="text-xl font-bold text-foreground">Volume Converter - Features & Conversion Systems</h2>
+                  <h2 className="text-xl font-bold text-foreground">Where Volume Measurements Come From</h2>
                 </div>
-                {openSections.whatItDoes ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                {openSections.volumeUnitsExplained ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
               </button>
               
-              {openSections.whatItDoes && (
+              {openSections.volumeUnitsExplained && (
                 <div className="px-6 pb-6">
                   <p className="text-muted-foreground mb-4">
-                    This Volume Converter is a comprehensive tool for converting between different volume measurement systems used worldwide. It handles conversions between metric units (liters, milliliters, cubic meters), US customary units (gallons, quarts, pints, fluid ounces), cooking measurements (cups), and specialized units (cubic feet). The calculator provides instant, accurate conversions essential for international travel, cooking with foreign recipes, scientific research, engineering projects, and everyday measurement needs. With real-time calculation and precision up to six decimal places, this tool eliminates the confusion of manual conversions and ensures accuracy across all volume measurement standards.
+                    Volume units didn't appear out of nowhere - they evolved from practical human needs. Understanding their origins makes them less arbitrary and easier to remember.
                   </p>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
-                    <div className="bg-blue-500/10 p-4 rounded-lg border border-blue-500/20">
-                      <div className="flex items-center gap-2 mb-2">
-                        <Droplets size={18} className="text-blue-600" />
-                        <h3 className="font-semibold text-foreground">Metric Conversions</h3>
-                      </div>
-                      <p className="text-sm text-muted-foreground">Convert between liters, milliliters, and cubic meters—the international standard volume units used in science, medicine, and most countries worldwide. Essential for international trade and scientific research.</p>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="space-y-3">
+                      <h3 className="font-semibold text-foreground">The Liter: A Cube of Water</h3>
+                      <p className="text-sm text-muted-foreground">
+                        The liter was originally defined in 1795 as the volume of one kilogram of water at its maximum density (4°C). Think about that: a cube 10 cm × 10 cm × 10 cm holds exactly one liter of water and weighs exactly one kilogram. That elegant connection between volume and weight only works with water, but it's why the metric system feels so logical.
+                      </p>
+                      <p className="text-sm text-muted-foreground">
+                        Today, the liter is defined as exactly 0.001 cubic meters, but the water connection remains useful for intuition. When you picture a liter, imagine a cube slightly smaller than a rubik's cube. That mental image helps estimate volumes without measuring tools.
+                      </p>
                     </div>
-                    <div className="bg-green-500/10 p-4 rounded-lg border border-green-500/20">
-                      <div className="flex items-center gap-2 mb-2">
-                        <Factory size={18} className="text-green-600" />
-                        <h3 className="font-semibold text-foreground">US Customary Units</h3>
-                      </div>
-                      <p className="text-sm text-muted-foreground">Convert gallons, quarts, pints, and fluid ounces—the primary volume measurements used in the United States for fuel, beverages, cooking, and industrial applications.</p>
+                    
+                    <div className="space-y-3">
+                      <h3 className="font-semibold text-foreground">Gallons: From Wine to Gasoline</h3>
+                      <p className="text-sm text-muted-foreground">
+                        The gallon has a messy history. The word comes from Old Northern French "galon" meaning "liquid measure." Different gallons existed for wine, beer, and grain. The US kept the old British wine gallon (231 cubic inches) while Britain switched to a larger imperial gallon in 1824.
+                      </p>
+                      <p className="text-sm text-muted-foreground">
+                        Why does this matter today? When you buy fuel in the US, you're using a measurement based on 18th century wine barrels. When you follow a British recipe calling for gallons, you need 20% more liquid than the US version. Historical accidents become modern headaches.
+                      </p>
                     </div>
-                    <div className="bg-purple-500/10 p-4 rounded-lg border border-purple-500/20">
-                      <div className="flex items-center gap-2 mb-2">
-                        <Utensils size={18} className="text-purple-600" />
-                        <h3 className="font-semibold text-foreground">Cooking Measurements</h3>
-                      </div>
-                      <p className="text-sm text-muted-foreground">Convert cups, tablespoons, and fluid ounces for recipe preparation. Essential for following international recipes and converting between measurement systems in the kitchen.</p>
+                    
+                    <div className="space-y-3">
+                      <h3 className="font-semibold text-foreground">Cups and Spoons: Kitchen Convenience</h3>
+                      <p className="text-sm text-muted-foreground">
+                        Cooking measurements developed separately from scientific ones. A "cup" wasn't standardized until Fannie Farmer published The Boston Cooking-School Cook Book in 1896. Before that, cooks used whatever cup was handy. Her insistence on level measurements transformed home baking.
+                      </p>
+                      <p className="text-sm text-muted-foreground">
+                        Tablespoons and teaspoons came from actual cutlery. A tablespoon was literally the amount a dining tablespoon would hold. The problem: spoons vary. Modern standardized spoons are smaller than most eating spoons, which explains why grandma's "tablespoon" of vanilla was probably closer to two modern tablespoons.
+                      </p>
                     </div>
-                    <div className="bg-amber-500/10 p-4 rounded-lg border border-amber-500/20">
-                      <div className="flex items-center gap-2 mb-2">
-                        <Beaker size={18} className="text-amber-600" />
-                        <h3 className="font-semibold text-foreground">Scientific & Industrial</h3>
-                      </div>
-                      <p className="text-sm text-muted-foreground">Convert cubic meters and cubic feet for engineering, construction, and scientific applications. Includes specialized volume units for professional and technical use.</p>
+                    
+                    <div className="space-y-3">
+                      <h3 className="font-semibold text-foreground">Cubic Measurements: Building and Shipping</h3>
+                      <p className="text-sm text-muted-foreground">
+                        Cubic meters and cubic feet exist because sometimes you need to measure space, not liquid. Construction materials, shipping containers, room volumes - these demand three-dimensional measurements. A cubic meter is a substantial amount: imagine a washing machine box. A cubic foot is about the size of a basketball.
+                      </p>
+                      <p className="text-sm text-muted-foreground">
+                        These units bridge the gap between linear measurements (meters, feet) and volume. If you know a room is 4m × 5m × 2.5m, you can calculate 50 cubic meters. That connection to length measurements makes them useful for planning and estimation.
+                      </p>
                     </div>
+                  </div>
+                  
+                  <div className="mt-6 p-4 bg-blue-500/10 rounded-lg border border-blue-500/20">
+                    <h4 className="font-semibold text-foreground mb-2">The Takeaway</h4>
+                    <p className="text-sm text-muted-foreground">
+                      Each volume unit solves a specific problem: liters for science and international trade, gallons for historical continuity, cups for cooking convenience, cubic units for spatial planning. Rather than memorizing conversion factors, understand what each unit is good for. Then use our converter when you need to translate between these different "languages" of measurement.
+                    </p>
                   </div>
                 </div>
               )}
             </article>
 
-            {/* Use Cases Section - Dropdown */}
+            {/* Liquid vs Solid Volume */}
             <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
               <button
-                onClick={() => toggleSection('useCases')}
+                onClick={() => toggleSection('liquidVsSolid')}
                 className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
               >
                 <div className="flex items-center gap-3">
                   <div className="bg-green-500/10 p-2 rounded-lg">
                     <Droplets size={20} className="text-green-600" />
                   </div>
-                  <h2 className="text-xl font-bold text-foreground">Volume Conversion Applications</h2>
+                  <h2 className="text-xl font-bold text-foreground">The Tricky Difference Between Liquid and Dry Measures</h2>
                 </div>
-                {openSections.useCases ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                {openSections.liquidVsSolid ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
               </button>
               
-              {openSections.useCases && (
+              {openSections.liquidVsSolid && (
                 <div className="px-6 pb-6">
+                  <p className="text-muted-foreground mb-4">
+                    This is where most volume conversion errors happen. Liquid ounces aren't weight ounces. A cup of flour isn't the same as a cup of water. Understanding these differences saves ruined recipes and incorrect calculations.
+                  </p>
+                  
                   <div className="space-y-4">
                     <div>
-                      <h3 className="font-semibold text-foreground mb-2">👨‍🍳 Cooking & Baking Applications</h3>
-                      <ul className="space-y-1 text-muted-foreground text-sm">
-                        <li className="flex items-start gap-2">
-                          <div className="w-1 h-1 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
-                          <span><strong>International Recipes:</strong> Convert European recipes (liters/milliliters) to US measurements (cups/fluid ounces) and vice versa for accurate ingredient measurements</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <div className="w-1 h-1 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
-                          <span><strong>Recipe Scaling:</strong> Convert measurements when doubling or halving recipes, ensuring precise proportions for successful cooking and baking results</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <div className="w-1 h-1 bg-purple-500 rounded-full mt-2 flex-shrink-0"></div>
-                          <span><strong>Ingredient Substitutions:</strong> Convert between different measurement systems when substituting ingredients or using alternative measuring tools</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <div className="w-1 h-1 bg-amber-500 rounded-full mt-2 flex-shrink-0"></div>
-                          <span><strong>Canning & Preserving:</strong> Convert volumes for jar filling, brine preparation, and preserving liquid measurements in home canning operations</span>
-                        </li>
-                      </ul>
+                      <h3 className="font-semibold text-foreground mb-2">Fluid Ounces vs Ounces: The Classic Confusion</h3>
+                      <p className="text-sm text-muted-foreground mb-3">
+                        In the US, we use "ounce" for both volume (fluid ounce) and weight (avoirdupois ounce). They're completely different. One fluid ounce of water weighs about one ounce, but that's specific to water at a certain temperature and pressure. Honey is denser - one fluid ounce weighs about 1.5 ounces. Olive oil is lighter - one fluid ounce weighs about 0.9 ounces.
+                      </p>
+                      <p className="text-sm text-muted-foreground">
+                        I've seen recipes fail because someone measured 8 ounces of flour by volume instead of weight. The difference is substantial: 8 fluid ounces of flour is about 1 cup, which weighs around 4.5 ounces. That's almost half what the recipe intended. Always check whether you're dealing with fluid ounces (volume) or ounces (weight).
+                      </p>
                     </div>
+                    
                     <div>
-                      <h3 className="font-semibold text-foreground mb-2">🚗 Automotive & Industrial Applications</h3>
-                      <ul className="space-y-1 text-muted-foreground text-sm">
-                        <li className="flex items-start gap-2">
-                          <div className="w-1 h-1 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
-                          <span><strong>Fuel Conversion:</strong> Convert between liters and gallons for fuel consumption calculations, trip planning, and understanding international fuel efficiency ratings</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <div className="w-1 h-1 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
-                          <span><strong>Fluid Capacity:</strong> Convert engine oil capacities, coolant volumes, and other automotive fluids between metric and US customary measurement systems</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <div className="w-1 h-1 bg-purple-500 rounded-full mt-2 flex-shrink-0"></div>
-                          <span><strong>Industrial Processing:</strong> Convert batch sizes, tank capacities, and production volumes in manufacturing, chemical processing, and food production facilities</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <div className="w-1 h-1 bg-amber-500 rounded-full mt-2 flex-shrink-0"></div>
-                          <span><strong>Construction Materials:</strong> Convert concrete volumes, paint quantities, and other construction material measurements between different unit systems</span>
-                        </li>
-                      </ul>
+                      <h3 className="font-semibold text-foreground mb-2">The Flour Problem: Why Volume Fails for Dry Goods</h3>
+                      <p className="text-sm text-muted-foreground mb-3">
+                        Flour is the perfect example of why dry volume measurements are problematic. How you fill the cup matters dramatically. Dip the cup into the flour bin and you might get 150 grams. Spoon flour into the cup and level it: 120 grams. Sift flour into the cup: even less. That's a 25% variation from the same "cup."
+                      </p>
+                      <p className="text-sm text-muted-foreground">
+                        Professional bakers weigh ingredients because it's precise. Home cooks use cups because it's convenient. The compromise: use the "spoon and level" method for consistency. And recognize that when a recipe says "1 cup flour," it probably means around 125 grams, though this varies by author and flour type.
+                      </p>
                     </div>
+                    
                     <div>
-                      <h3 className="font-semibold text-foreground mb-2">🔬 Science & Education Applications</h3>
-                      <ul className="space-y-1 text-muted-foreground text-sm">
-                        <li className="flex items-start gap-2">
-                          <div className="w-1 h-1 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
-                          <span><strong>Laboratory Work:</strong> Convert between milliliters, liters, and fluid ounces for precise chemical measurements, solution preparation, and experimental protocols</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <div className="w-1 h-1 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
-                          <span><strong>Medical Dosages:</strong> Convert medication volumes between milliliters and fluid ounces for accurate dosage calculations and international medical practice</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <div className="w-1 h-1 bg-purple-500 rounded-full mt-2 flex-shrink-0"></div>
-                          <span><strong>Educational Instruction:</strong> Teach students volume conversion principles, demonstrate real-world applications, and practice unit conversion skills</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <div className="w-1 h-1 bg-amber-500 rounded-full mt-2 flex-shrink-0"></div>
-                          <span><strong>Research Publications:</strong> Convert volume measurements for scientific papers, ensure consistency across international research standards, and prepare data for publication</span>
-                        </li>
-                      </ul>
+                      <h3 className="font-semibold text-foreground mb-2">When to Use Which Measurement</h3>
+                      <p className="text-sm text-muted-foreground mb-3">
+                        Liquids settle into a consistent volume. One cup of milk is always one cup, assuming you're using a liquid measuring cup (with a spout and space above the line). Dry ingredients need dry measuring cups (those that you level off at the top).
+                      </p>
+                      <p className="text-sm text-muted-foreground">
+                        Some ingredients bridge both worlds. Brown sugar is often measured packed into a cup, while granulated sugar is simply scooped. Chocolate chips are usually just poured into a cup. Each ingredient has its own convention that experienced cooks learn through practice and failed batches.
+                      </p>
                     </div>
-                  </div>
-                </div>
-              )}
-            </article>
-
-            {/* How to Use - Dropdown */}
-            <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
-              <button
-                onClick={() => toggleSection('howToUse')}
-                className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
-              >
-                <div className="flex items-center gap-3">
-                  <div className="bg-amber-500/10 p-2 rounded-lg">
-                    <Droplets size={20} className="text-amber-600" />
-                  </div>
-                  <h2 className="text-xl font-bold text-foreground">How to Use Volume Converter - Complete Guide</h2>
-                </div>
-                {openSections.howToUse ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
-              </button>
-              
-              {openSections.howToUse && (
-                <div className="px-6 pb-6">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="space-y-3">
-                      <h3 className="font-semibold text-foreground">Step-by-Step Instructions</h3>
-                      <div className="space-y-4">
-                        <div className="flex items-start gap-3">
-                          <div className="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0">1</div>
-                          <div>
-                            <div className="font-medium text-foreground">Enter Volume Value</div>
-                            <div className="text-sm text-muted-foreground">Input the numerical volume you want to convert. You can use decimal numbers for precise measurements.</div>
-                          </div>
+                    
+                    <div className="p-4 bg-green-500/10 rounded-lg border border-green-500/20">
+                      <h4 className="font-semibold text-foreground mb-2">Practical Rule of Thumb</h4>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
+                        <div>
+                          <div className="font-medium text-foreground mb-1">Use Volume For:</div>
+                          <ul className="text-muted-foreground space-y-1">
+                            <li>• Liquids (milk, water, oil)</li>
+                            <li>• Small amounts of powders (baking powder)</li>
+                            <li>• Recipes where precision isn't critical</li>
+                            <li>• Quick everyday cooking</li>
+                          </ul>
                         </div>
-                        <div className="flex items-start gap-3">
-                          <div className="bg-green-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0">2</div>
-                          <div>
-                            <div className="font-medium text-foreground">Select Source Unit</div>
-                            <div className="text-sm text-muted-foreground">Choose the unit of the volume you entered from the dropdown menu (e.g., liters, gallons, cups).</div>
-                          </div>
-                        </div>
-                        <div className="flex items-start gap-3">
-                          <div className="bg-purple-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0">3</div>
-                          <div>
-                            <div className="font-medium text-foreground">Select Target Unit</div>
-                            <div className="text-sm text-muted-foreground">Choose the unit you want to convert to from the second dropdown menu.</div>
-                          </div>
-                        </div>
-                        <div className="flex items-start gap-3">
-                          <div className="bg-amber-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0">4</div>
-                          <div>
-                            <div className="font-medium text-foreground">View & Use Results</div>
-                            <div className="text-sm text-muted-foreground">The converted volume appears instantly. Use the copy button to save results for recipes, calculations, or records.</div>
-                          </div>
+                        <div>
+                          <div className="font-medium text-foreground mb-1">Use Weight For:</div>
+                          <ul className="text-muted-foreground space-y-1">
+                            <li>• Baking (especially breads, pastries)</li>
+                            <li>• Dry ingredients in large quantities</li>
+                            <li>• Professional or precise cooking</li>
+                            <li>• Converting between systems accurately</li>
+                          </ul>
                         </div>
                       </div>
-                    </div>
-                    <div className="space-y-3">
-                      <h3 className="font-semibold text-foreground">Pro Conversion Tips</h3>
-                      <ul className="space-y-2 text-sm text-muted-foreground">
-                        <li className="flex items-start gap-2">
-                          <div className="bg-blue-500/20 p-1 rounded mt-0.5">
-                            <Droplets size={12} className="text-blue-500" />
-                          </div>
-                          <span><strong>Quick Conversions:</strong> Use the quick buttons for common conversions like 1 gallon to liters or 1 cup to milliliters</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <div className="bg-green-500/20 p-1 rounded mt-0.5">
-                            <ArrowLeftRight size={12} className="text-green-500" />
-                          </div>
-                          <span><strong>Reverse Conversion:</strong> Click the swap button to instantly reverse your conversion without re-entering values</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <div className="bg-purple-500/20 p-1 rounded mt-0.5">
-                            <Utensils size={12} className="text-purple-500" />
-                          </div>
-                          <span><strong>Cooking Accuracy:</strong> For baking, use precise conversions (cups to mL) as baking requires exact measurements</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <div className="bg-amber-500/20 p-1 rounded mt-0.5">
-                            <Factory size={12} className="text-amber-500" />
-                          </div>
-                          <span><strong>Large Volumes:</strong> For industrial applications, use cubic meters or cubic feet for more manageable numbers</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <div className="bg-red-500/20 p-1 rounded mt-0.5">
-                            <Copy size={12} className="text-red-500" />
-                          </div>
-                          <span><strong>Save Results:</strong> Use the copy function to save conversion results for recipes, shopping lists, or project documentation</span>
-                        </li>
-                      </ul>
+                      <p className="text-sm text-muted-foreground mt-2">
+                        Our converter handles liquid volume conversions. For dry ingredients, consider that 1 cup of most flours ≈ 125g, 1 cup granulated sugar ≈ 200g, 1 cup brown sugar (packed) ≈ 220g. These approximations work until you can get a kitchen scale.
+                      </p>
                     </div>
                   </div>
                 </div>
               )}
             </article>
 
-            {/* Example Input and Output Section */}
+            {/* Conversion Formula */}
             <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
               <button
-                onClick={() => toggleSection('examples')}
+                onClick={() => toggleSection('conversionFormula')}
                 className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
               >
                 <div className="flex items-center gap-3">
                   <div className="bg-purple-500/10 p-2 rounded-lg">
                     <Droplets size={20} className="text-purple-600" />
                   </div>
-                  <h2 className="text-xl font-bold text-foreground">Volume Conversion Examples</h2>
+                  <h2 className="text-xl font-bold text-foreground">How Volume Conversion Actually Works</h2>
+                </div>
+                {openSections.conversionFormula ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+              </button>
+              
+              {openSections.conversionFormula && (
+                <div className="px-6 pb-6">
+                  <p className="text-muted-foreground mb-4">
+                    Converting between volume units isn't magic - it's consistent math based on defined relationships. Understanding these relationships helps you estimate conversions and spot errors.
+                  </p>
+                  
+                  <div className="space-y-4">
+                    <div>
+                      <h3 className="font-semibold text-foreground mb-2">The Liter as the Common Denominator</h3>
+                      <p className="text-sm text-muted-foreground">
+                        Our converter uses liters as the middle ground. Every unit has a defined relationship to the liter. One gallon = 3.78541 liters. One cup = 0.236588 liters. One cubic meter = 1000 liters. So when you convert 2 gallons to cups, we:
+                      </p>
+                      <ol className="list-decimal pl-5 text-sm text-muted-foreground space-y-2 mt-2">
+                        <li>Convert gallons to liters: 2 gal × 3.78541 = 7.57082 L</li>
+                        <li>Convert liters to cups: 7.57082 L ÷ 0.236588 = 32 cups</li>
+                        <li>Display the result: 32 cups (which makes sense - 2 gallons should be 32 cups)</li>
+                      </ol>
+                      <p className="text-sm text-muted-foreground mt-3">
+                        This two-step approach ensures accuracy. Even converting between obscure units works because they both have defined liter relationships. The liter becomes the universal translator between volume "languages."
+                      </p>
+                    </div>
+                    
+                    <div>
+                      <h3 className="font-semibold text-foreground mb-2">Why Not Memorize Everything?</h3>
+                      <p className="text-sm text-muted-foreground">
+                        You could memorize that 1 gallon = 4 quarts = 8 pints = 16 cups = 128 fluid ounces. That works within the US system. But what about liters? Or cubic feet? Maintaining conversion factors between every possible pair becomes overwhelming quickly.
+                      </p>
+                      <p className="text-sm text-muted-foreground">
+                        Using liters as the reference point means we only need to know each unit's relationship to liters. That's simpler, more consistent, and mirrors how international standards organizations work. It also minimizes rounding errors in chain conversions.
+                      </p>
+                    </div>
+                    
+                    <div className="p-4 bg-purple-500/10 rounded-lg border border-purple-500/20">
+                      <h4 className="font-semibold text-foreground mb-2">Real Conversion Walkthrough</h4>
+                      <p className="text-sm text-muted-foreground mb-2">
+                        Let's trace through converting 5 cups to milliliters:
+                      </p>
+                      <div className="text-sm font-mono bg-background p-3 rounded border border-border space-y-1">
+                        <div>5 cups × 0.236588 L/cup = 1.18294 liters</div>
+                        <div>1.18294 L × 1000 mL/L = 1182.94 mL</div>
+                        <div>Displayed: 1182.94 mL (rounded to 2 decimals)</div>
+                      </div>
+                      <p className="text-sm text-muted-foreground mt-2">
+                        Notice how we convert to liters first, then to the target unit. This preserves precision through the calculation. If we used a direct cup-to-mL factor (236.588), we'd get the same result, but the liter method scales to any unit combination.
+                      </p>
+                    </div>
+                    
+                    <div>
+                      <h3 className="font-semibold text-foreground mb-2">The Beauty of Metric Simplicity</h3>
+                      <p className="text-sm text-muted-foreground">
+                        Within the metric system, conversions are beautifully simple: multiply or divide by powers of ten. 1 liter = 1000 milliliters = 0.001 cubic meters. No strange numbers, just decimal movement. This elegance is why most of the world uses metric.
+                      </p>
+                      <p className="text-sm text-muted-foreground">
+                        Contrast this with US customary: 1 gallon = 4 quarts = 8 pints = 16 cups = 128 fluid ounces. The factors are 4, 2, 2, 8 - historical artifacts rather than mathematical logic. Our converter handles these quirks so you don't have to.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </article>
+
+            {/* Practical Use Cases */}
+            <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
+              <button
+                onClick={() => toggleSection('practicalUseCases')}
+                className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="bg-amber-500/10 p-2 rounded-lg">
+                    <Droplets size={20} className="text-amber-600" />
+                  </div>
+                  <h2 className="text-xl font-bold text-foreground">When You'll Actually Need These Conversions</h2>
+                </div>
+                {openSections.practicalUseCases ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+              </button>
+              
+              {openSections.practicalUseCases && (
+                <div className="px-6 pb-6">
+                  <p className="text-muted-foreground mb-4">
+                    Volume conversion isn't academic - it's everyday practical. Different situations call for different approaches. Here's where these conversions matter in real life.
+                  </p>
+                  
+                  <div className="space-y-4">
+                    <div>
+                      <h3 className="font-semibold text-foreground mb-2">Cooking Across Borders</h3>
+                      <p className="text-sm text-muted-foreground">
+                        The most common need: following recipes from other countries. European recipes use grams and milliliters. American recipes use cups and tablespoons. Australian recipes might use both. I've cooked from all three, and conversion errors lead to failed dishes.
+                      </p>
+                      <p className="text-sm text-muted-foreground">
+                        My rule: for savory cooking, approximate conversions work. If a soup calls for 1 liter broth and I use 4 cups (946 mL), the 5% difference won't matter. For baking, be precise. That same 5% difference in flour or leavening agents can mean dense cakes or overflowing muffins.
+                      </p>
+                    </div>
+                    
+                    <div>
+                      <h3 className="font-semibold text-foreground mb-2">Travel and Fuel</h3>
+                      <p className="text-sm text-muted-foreground">
+                        Driving in Europe as an American means converting fuel consumption. European cars show liters per 100 km. American drivers think in miles per gallon. The mental math is tricky: 7 L/100km equals about 33.6 mpg. Getting this wrong affects trip planning and fuel budgeting.
+                      </p>
+                      <p className="text-sm text-muted-foreground">
+                        At the pump, you'll see prices in euros per liter but think in dollars per gallon. Quick conversion: multiply euros per liter by 3.8 to get approximate euros per gallon, then convert currency. Doing this in your head while jet-lagged is why our converter exists.
+                      </p>
+                    </div>
+                    
+                    <div>
+                      <h3 className="font-semibold text-foreground mb-2">Home Improvement and Gardening</h3>
+                      <p className="text-sm text-muted-foreground">
+                        Paint cans show coverage in square meters or square feet, but you buy paint in liters or gallons. Calculating how much you need requires volume conversions. Soil and mulch are sold by cubic feet or liters. Pool chemicals specify amounts per 10,000 gallons or cubic meters.
+                      </p>
+                      <p className="text-sm text-muted-foreground">
+                        I've seen people buy twice as much paint as needed because they converted liters to gallons incorrectly. Or worse, not enough, requiring a second trip to the store where the color batch might differ slightly. Accurate conversion saves time, money, and frustration.
+                      </p>
+                    </div>
+                    
+                    <div>
+                      <h3 className="font-semibold text-foreground mb-2">Medical and Scientific Applications</h3>
+                      <p className="text-sm text-muted-foreground">
+                        In healthcare, medication might be dosed in milliliters but measured in teaspoons for administration. That conversion needs to be precise - a teaspoon is 5 mL, not "about a spoonful." Parents giving children's medicine face this daily.
+                      </p>
+                      <p className="text-sm text-muted-foreground">
+                        In laboratories, reagents come with instructions in various units. A protocol might specify 50 µL (microliters) but your pipette shows mL. That's three orders of magnitude difference. Scientific work demands exact conversions, often involving very small or very large volumes.
+                      </p>
+                    </div>
+                    
+                    <div className="p-4 bg-amber-500/10 rounded-lg border border-amber-500/20">
+                      <h4 className="font-semibold text-foreground mb-2">Developing Volume Intuition</h4>
+                      <p className="text-sm text-muted-foreground">
+                        With experience, you develop a feel for volumes. You know that a 2-liter bottle is about half a gallon. A cup is about 240 mL. A tablespoon is about 15 mL. This intuition comes from repeated conversion and practical use.
+                      </p>
+                      <p className="text-sm text-muted-foreground">
+                        Our converter gives you exact numbers when precision matters, but challenge yourself to estimate first. How close can you get? That practice builds the intuition that makes you faster and more confident in the kitchen, workshop, or laboratory.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </article>
+
+            {/* Accuracy Notes */}
+            <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
+              <button
+                onClick={() => toggleSection('accuracyNotes')}
+                className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="bg-red-500/10 p-2 rounded-lg">
+                    <Droplets size={20} className="text-red-600" />
+                  </div>
+                  <h2 className="text-xl font-bold text-foreground">How Accurate Do You Really Need to Be?</h2>
+                </div>
+                {openSections.accuracyNotes ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+              </button>
+              
+              {openSections.accuracyNotes && (
+                <div className="px-6 pb-6">
+                  <p className="text-muted-foreground mb-4">
+                    More precision isn't always better. Knowing when to round and when to be exact separates practical cooking from mathematical exercise. Here's how different applications handle accuracy.
+                  </p>
+                  
+                  <div className="space-y-4">
+                    <div>
+                      <h3 className="font-semibold text-foreground mb-2">Everyday Cooking: Practical Rounding</h3>
+                      <p className="text-sm text-muted-foreground">
+                        For most cooking, ±5% accuracy is fine. If a recipe calls for 500 mL broth and you use 2 cups (473 mL), the 5% difference won't be noticeable. Your measuring tools probably aren't that accurate anyway - liquid measuring cups typically have ±10 mL markings.
+                      </p>
+                      <p className="text-sm text-muted-foreground">
+                        The exception: baking powder, baking soda, yeast, and salt in baking. These work in small amounts with big effects. 5 mL baking powder instead of 4.5 mL can affect rising. For these, use precise conversions and proper measuring spoons.
+                      </p>
+                    </div>
+                    
+                    <div>
+                      <h3 className="font-semibold text-foreground mb-2">Baking and Pastry: Precision Matters</h3>
+                      <p className="text-sm text-muted-foreground">
+                        Professional bakers use scales because volume measurements for dry ingredients are inherently imprecise. A "cup" of flour can vary by 20% depending on how it's measured. For delicate pastries, breads, and cakes, that variation affects texture and structure.
+                      </p>
+                      <p className="text-sm text-muted-foreground">
+                        If you must use volume for baking, be consistent. Always use the same method (spoon and level, not dip and sweep). Better yet, invest in a $20 kitchen scale. The improvement in consistency is worth it.
+                      </p>
+                    </div>
+                    
+                    <div>
+                      <h3 className="font-semibold text-foreground mb-2">Scientific and Medical: Exact Requirements</h3>
+                      <p className="text-sm text-muted-foreground">
+                        In laboratories and medicine, conversions must be exact. Medication dosages often convert between milliliters and teaspoons for patient instructions. A teaspoon is exactly 5 mL in medical contexts (though 4.93 mL technically).
+                      </p>
+                      <p className="text-sm text-muted-foreground">
+                        Scientific protocols specify volumes to multiple decimal places because reactions depend on exact proportions. Here, use full precision conversions and verify with calibrated equipment. Don't round unless the protocol specifies rounding rules.
+                      </p>
+                    </div>
+                    
+                    <div className="p-4 bg-red-500/10 rounded-lg border border-red-500/20">
+                      <h4 className="font-semibold text-foreground mb-2">Accuracy Guidelines by Application</h4>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
+                        <div>
+                          <div className="font-medium text-foreground mb-1">Round to nearest:</div>
+                          <ul className="text-muted-foreground space-y-1">
+                            <li>• 10 mL for soups, stews, sauces</li>
+                            <li>• ¼ cup for most cooking liquids</li>
+                            <li>• Whole cup for large volumes</li>
+                            <li>• Nearest teaspoon for casual baking</li>
+                          </ul>
+                        </div>
+                        <div>
+                          <div className="font-medium text-foreground mb-1">Be precise to:</div>
+                          <ul className="text-muted-foreground space-y-1">
+                            <li>• 1 mL for cocktails and pharmacy</li>
+                            <li>• 0.1 mL for laboratory work</li>
+                            <li>• Exact grams for professional baking</li>
+                            <li>• Manufacturer specs for chemicals</li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <h3 className="font-semibold text-foreground mb-2">The Measurement Reality Check</h3>
+                      <p className="text-sm text-muted-foreground">
+                        Remember that conversion accuracy depends on measurement accuracy. If you measure 1 cup of flour using a $2 plastic cup, converting that to 236.588 mL implies precision that doesn't exist. The cup probably holds anywhere from 220 to 250 mL depending on how you fill it.
+                      </p>
+                      <p className="text-sm text-muted-foreground">
+                        This is why professionals use calibrated equipment. For important work, consider the accuracy of your measuring tools before worrying about conversion precision. A perfectly converted wrong measurement is still wrong.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </article>
+
+            {/* Examples */}
+            <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
+              <button
+                onClick={() => toggleSection('examples')}
+                className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="bg-indigo-500/10 p-2 rounded-lg">
+                    <Droplets size={20} className="text-indigo-600" />
+                  </div>
+                  <h2 className="text-xl font-bold text-foreground">Real-World Volume Conversion Scenarios</h2>
                 </div>
                 {openSections.examples ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
               </button>
@@ -809,55 +976,48 @@ const VolumeConverter = () => {
                 <div className="px-6 pb-6">
                   <div className="space-y-4">
                     <div>
-                      <h3 className="font-semibold text-foreground mb-3">Common Volume Conversion Examples</h3>
+                      <h3 className="font-semibold text-foreground mb-3">Common Volume Situations</h3>
                       <div className="overflow-x-auto">
                         <div className="min-w-full inline-block align-middle">
                           <div className="overflow-hidden border border-border rounded-lg">
                             <table className="min-w-full divide-y divide-border">
                               <thead className="bg-secondary/20">
                                 <tr>
-                                  <th className="px-4 py-3 text-left text-xs font-medium text-foreground uppercase tracking-wider">From</th>
-                                  <th className="px-4 py-3 text-left text-xs font-medium text-foreground uppercase tracking-wider">To</th>
-                                  <th className="px-4 py-3 text-left text-xs font-medium text-foreground uppercase tracking-wider">Conversion Factor</th>
-                                  <th className="px-4 py-3 text-left text-xs font-medium text-foreground uppercase tracking-wider">Example</th>
-                                  <th className="px-4 py-3 text-left text-xs font-medium text-foreground uppercase tracking-wider">Result</th>
+                                  <th className="px-4 py-3 text-left text-xs font-medium text-foreground uppercase tracking-wider">Situation</th>
+                                  <th className="px-4 py-3 text-left text-xs font-medium text-foreground uppercase tracking-wider">Typical Measurement</th>
+                                  <th className="px-4 py-3 text-left text-xs font-medium text-foreground uppercase tracking-wider">Conversion Needed</th>
                                 </tr>
                               </thead>
                               <tbody className="divide-y divide-border">
                                 <tr>
-                                  <td className="px-4 py-3 text-sm font-mono text-blue-600">1 Gallon</td>
-                                  <td className="px-4 py-3 text-sm font-mono text-foreground">Liters</td>
-                                  <td className="px-4 py-3 text-sm font-mono text-foreground">× 3.78541</td>
-                                  <td className="px-4 py-3 text-sm font-mono text-foreground">5 gal</td>
-                                  <td className="px-4 py-3 text-sm font-mono text-foreground">18.9271 L</td>
+                                  <td className="px-4 py-3 text-sm text-foreground">European recipe for American kitchen</td>
+                                  <td className="px-4 py-3 text-sm text-blue-600 font-mono">500 mL milk</td>
+                                  <td className="px-4 py-3 text-sm text-muted-foreground">→ 2.1 cups (call it 2 cups + 1 tbsp)</td>
                                 </tr>
                                 <tr>
-                                  <td className="px-4 py-3 text-sm font-mono text-blue-600">1 Liter</td>
-                                  <td className="px-4 py-3 text-sm font-mono text-foreground">Milliliters</td>
-                                  <td className="px-4 py-3 text-sm font-mono text-foreground">× 1000</td>
-                                  <td className="px-4 py-3 text-sm font-mono text-foreground">2.5 L</td>
-                                  <td className="px-4 py-3 text-sm font-mono text-foreground">2500 mL</td>
+                                  <td className="px-4 py-3 text-sm text-foreground">Fuel efficiency comparison</td>
+                                  <td className="px-4 py-3 text-sm text-blue-600 font-mono">7 L/100km</td>
+                                  <td className="px-4 py-3 text-sm text-muted-foreground">→ 33.6 mpg (US gallons)</td>
                                 </tr>
                                 <tr>
-                                  <td className="px-4 py-3 text-sm font-mono text-blue-600">1 Cup</td>
-                                  <td className="px-4 py-3 text-sm font-mono text-foreground">Milliliters</td>
-                                  <td className="px-4 py-3 text-sm font-mono text-foreground">× 236.588</td>
-                                  <td className="px-4 py-3 text-sm font-mono text-foreground">3 cups</td>
-                                  <td className="px-4 py-3 text-sm font-mono text-foreground">709.764 mL</td>
+                                  <td className="px-4 py-3 text-sm text-foreground">Painting a room</td>
+                                  <td className="px-4 py-3 text-sm text-blue-600 font-mono">4 liters of paint</td>
+                                  <td className="px-4 py-3 text-sm text-muted-foreground">→ 1.06 gallons (buy 1 gallon + quart)</td>
                                 </tr>
                                 <tr>
-                                  <td className="px-4 py-3 text-sm font-mono text-blue-600">1 Fluid Ounce</td>
-                                  <td className="px-4 py-3 text-sm font-mono text-foreground">Milliliters</td>
-                                  <td className="px-4 py-3 text-sm font-mono text-foreground">× 29.5735</td>
-                                  <td className="px-4 py-3 text-sm font-mono text-foreground">8 fl oz</td>
-                                  <td className="px-4 py-3 text-sm font-mono text-foreground">236.588 mL</td>
+                                  <td className="px-4 py-3 text-sm text-foreground">Making cocktails</td>
+                                  <td className="px-4 py-3 text-sm text-blue-600 font-mono">50 mL spirit</td>
+                                  <td className="px-4 py-3 text-sm text-muted-foreground">→ 1.7 fl oz (standard shot is 1.5 oz)</td>
                                 </tr>
                                 <tr>
-                                  <td className="px-4 py-3 text-sm font-mono text-blue-600">1 Cubic Meter</td>
-                                  <td className="px-4 py-3 text-sm font-mono text-foreground">Liters</td>
-                                  <td className="px-4 py-3 text-sm font-mono text-foreground">× 1000</td>
-                                  <td className="px-4 py-3 text-sm font-mono text-foreground">0.5 m³</td>
-                                  <td className="px-4 py-3 text-sm font-mono text-foreground">500 L</td>
+                                  <td className="px-4 py-3 text-sm text-foreground">Filling a fish tank</td>
+                                  <td className="px-4 py-3 text-sm text-blue-600 font-mono">200 L tank</td>
+                                  <td className="px-4 py-3 text-sm text-muted-foreground">→ 52.8 gallons (needs water conditioner)</td>
+                                </tr>
+                                <tr>
+                                  <td className="px-4 py-3 text-sm text-foreground">Canning preserves</td>
+                                  <td className="px-4 py-3 text-sm text-blue-600 font-mono">8 oz jars</td>
+                                  <td className="px-4 py-3 text-sm text-muted-foreground">→ 237 mL each (standard canning size)</td>
                                 </tr>
                               </tbody>
                             </table>
@@ -867,74 +1027,53 @@ const VolumeConverter = () => {
                     </div>
                     
                     <div>
-                      <h3 className="font-semibold text-foreground mb-2">Detailed Example: Recipe Conversion</h3>
-                      <div className="bg-secondary/20 p-4 rounded-lg border border-border overflow-x-auto">
-                        <pre className="text-sm text-muted-foreground whitespace-pre-wrap">
-{`Example: Converting a European cake recipe to US measurements
-
-Original European Recipe (Metric System):
-• 500 mL milk
-• 250 mL vegetable oil
-• 3 eggs (approximately 150 mL)
-• 1 L water
-• 750 g flour (not volume, but included for context)
-
-Step 1: Convert Milk
-500 mL milk to US cups:
-500 mL ÷ 236.588 mL per cup = 2.11338 cups
-Rounded for cooking: 2⅛ cups or 2 cups + 2 tablespoons
-
-Step 2: Convert Vegetable Oil
-250 mL vegetable oil to US cups:
-250 mL ÷ 236.588 = 1.05669 cups
-Rounded: 1 cup + 1 tablespoon (since 1 tbsp = 14.79 mL)
-
-Step 3: Convert Eggs (approximate)
-3 large eggs ≈ 150 mL total volume
-150 mL ÷ 29.5735 = 5.07 fluid ounces
-US standard: 3 large eggs (no conversion needed)
-
-Step 4: Convert Water
-1 L water to US cups:
-1 L = 1000 mL
-1000 mL ÷ 236.588 = 4.22675 cups
-Rounded: 4¼ cups or 4 cups + 2 fluid ounces
-
-Step 5: Complete Converted Recipe
-US Customary Measurements:
-• 2⅛ cups milk (or 2 cups + 2 tbsp)
-• 1 cup + 1 tbsp vegetable oil
-• 3 large eggs
-• 4¼ cups water (or 4 cups + 2 fl oz)
-• 26.46 oz flour (750 g converted to ounces)
-
-Step 6: Practical Cooking Adjustments
-Since US measuring cups are standardized:
-• Milk: Use 2 cups + 2 tablespoons (measure 2 cups, then add 2 tbsp)
-• Oil: Use 1 cup + 1 tablespoon
-• Water: Use 4 cups + 2 fluid ounces (use liquid measuring cup)
-
-Step 7: Verification Check
-Total liquid volume in original recipe:
-500 + 250 + 150 + 1000 = 1900 mL
-Total in converted recipe:
-(2.125 × 236.588) + (1.0625 × 236.588) + 150 + (4.25 × 236.588) = 
-502.5 + 251.4 + 150 + 1005.5 = 1909.4 mL
-Difference: 9.4 mL (0.5% difference) - acceptable for cooking
-
-Step 8: Baking Notes
-• For baking, precision matters more than cooking
-• Consider weighing ingredients instead of volume for flour
-• Temperature and altitude may also need adjustment
-• Oven temperatures may need conversion (°C to °F)
-
-Final Tips:
-1. When converting recipes, round to nearest practical measurement
-2. Keep a conversion chart in your kitchen
-3. Test converted recipes before important occasions
-4. Adjust liquid slightly based on humidity and flour absorption`}
-                        </pre>
+                      <h3 className="font-semibold text-foreground mb-2">Weekly International Cooking Challenge</h3>
+                      <div className="bg-secondary/20 p-4 rounded-lg border border-border">
+                        <p className="text-sm text-muted-foreground mb-3">
+                          Imagine cooking dinner every night using recipes from different countries. Here's what you'd convert:
+                        </p>
+                        
+                        <div className="space-y-3 text-sm">
+                          <div>
+                            <div className="font-medium text-foreground">Monday: Italian pasta sauce</div>
+                            <div className="text-muted-foreground ml-3">Recipe says "800 mL crushed tomatoes." Your cans are 14.5 oz (411 mL). Need about 2 cans. Convert: 800 mL = 27 fl oz ≈ 1.9 US cans.</div>
+                          </div>
+                          
+                          <div>
+                            <div className="font-medium text-foreground">Tuesday: British scones</div>
+                            <div className="text-muted-foreground ml-3">"300 mL milk" → 1¼ cups (300 ÷ 240 = 1.25). "225 g flour" → about 1¾ cups (but better to weigh).</div>
+                          </div>
+                          
+                          <div>
+                            <div className="font-medium text-foreground">Wednesday: Indian curry</div>
+                            <div className="text-muted-foreground ml-3">"400 mL coconut milk" → about 1⅔ cups. Can sizes: 13.5 fl oz = 400 mL exactly. Perfect.</div>
+                          </div>
+                          
+                          <div>
+                            <div className="font-medium text-foreground">Thursday: Mexican rice</div>
+                            <div className="text-muted-foreground ml-3">"2 cups chicken broth" → 473 mL. Your bouillon makes 1 liter. Use half, save rest.</div>
+                          </div>
+                          
+                          <div>
+                            <div className="font-medium text-foreground">Friday: French vinaigrette</div>
+                            <div className="text-muted-foreground ml-3">"80 mL olive oil, 20 mL vinegar" → 80 mL = 5⅓ tbsp, 20 mL = 4 tsp. Precision matters for emulsion.</div>
+                          </div>
+                        </div>
+                        
+                        <p className="text-sm text-muted-foreground mt-3">
+                          After a month of this, you'll start thinking in both systems. You'll know that 500 mL is about 2 cups, 250 mL is about 1 cup, and 30 mL is 2 tablespoons. That intuition makes international cooking much smoother.
+                        </p>
                       </div>
+                    </div>
+                    
+                    <div className="p-4 bg-indigo-500/10 rounded-lg border border-indigo-500/20">
+                      <h4 className="font-semibold text-foreground mb-2">The Learning Process</h4>
+                      <p className="text-sm text-muted-foreground">
+                        When I started cooking from international recipes, I made mistakes. I once added 2 cups of flour instead of 2 cups worth of grams. The dough was unworkable. Another time, I used 1 US gallon of water in a British recipe calling for 1 imperial gallon - the stock was too concentrated.
+                      </p>
+                      <p className="text-sm text-muted-foreground mt-2">
+                        These mistakes taught me to pay attention to units. Now I glance at a recipe and immediately note what measurement system it uses. That awareness, combined with our converter for precision, means I rarely make conversion errors anymore. The goal isn't perfection on day one - it's developing awareness and using tools when needed.
+                      </p>
                     </div>
                   </div>
                 </div>

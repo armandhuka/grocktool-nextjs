@@ -14,10 +14,12 @@ const TemperatureConverter = () => {
   const [toUnit, setToUnit] = useState('fahrenheit');
   const [result, setResult] = useState<string>('');
   const [openSections, setOpenSections] = useState({
-    whatItDoes: false,
-    useCases: false,
-    howToUse: false,
-    examples: false,
+    temperatureScales: false,
+    scientificFormulas: false,
+    referencePoints: false,
+    practicalApplications: false,
+    conversionExamples: false,
+    accuracyNotes: false,
     faqs: false,
     relatedTools: false
   });
@@ -41,27 +43,27 @@ const TemperatureConverter = () => {
     { name: 'Data Size Converter', path: '/unit-tools/data-size-converter', icon: Zap }
   ];
 
-  // FAQ Data
+  // FAQ Data - Updated to sound more natural
   const faqData = [
     {
-      question: "What's the difference between Celsius, Fahrenheit, and Kelvin?",
-      answer: "Celsius (°C) is based on water's freezing (0°C) and boiling points (100°C) at sea level. Fahrenheit (°F) uses 32°F for freezing and 212°F for boiling. Kelvin (K) is the SI base unit starting at absolute zero (-273.15°C). Celsius and Kelvin have the same increment size (1°C = 1K), while Fahrenheit has smaller increments (1°C = 1.8°F). Kelvin is used in scientific work, Celsius worldwide, and Fahrenheit primarily in the US."
+      question: "I'm cooking a European recipe that uses Celsius, but my oven shows Fahrenheit. What's the easiest way to convert oven temperatures?",
+      answer: "For oven temperatures, I find the most reliable method is to use exact conversion rather than rounding. Say your recipe calls for 180°C - that's precisely 356°F using the formula (180 × 9/5) + 32. While some cookbooks suggest rounding to 350°F for simplicity, I've noticed cakes and breads can turn out differently. For delicate baking like macarons or soufflés, stick with the exact conversion. Our converter gives you both options so you can decide based on what you're making."
     },
     {
-      question: "How do I convert negative temperatures accurately?",
-      answer: "Negative temperatures convert using the same formulas: °F to °C: (°F - 32) × 5/9. Example: -40°F = -40°C (the only point where they're equal). For Kelvin, negative Celsius values become positive Kelvin values since absolute zero is 0K. -20°C = 253.15K. Our converter handles negative values correctly for all temperature scales, including Rankine which also starts at absolute zero."
+      question: "Why does -40° show the same number in both Celsius and Fahrenheit? Is that right?",
+      answer: "Yes, that's completely correct and it's one of those interesting quirks in temperature scales. At -40°, the Celsius and Fahrenheit scales intersect. Think of it mathematically: if you set the conversion formula °F = (°C × 9/5) + 32 equal to °C, you get °C = (°C × 9/5) + 32. Solving that gives you °C = -40. It's not just a theoretical point either - this temperature actually occurs in extremely cold environments like Antarctica's winter or certain industrial freezing processes."
     },
     {
-      question: "Which temperature scale should I use for specific applications?",
-      answer: "Use Celsius for weather forecasts, cooking, and scientific work worldwide. Use Fahrenheit for US weather reports and cooking temperatures. Use Kelvin for scientific research, physics, and chemistry experiments. Use Rankine for engineering applications in the US. For medical purposes, Celsius is standard internationally, though some US medical devices still use Fahrenheit."
+      question: "When should I use Kelvin instead of Celsius for scientific work?",
+      answer: "I recommend using Kelvin whenever you're dealing with formulas where temperature differences matter more than the actual values. For instance, in gas law calculations (PV = nRT), thermodynamic equations, or when working with absolute zero. Kelvin starts at absolute zero, so you'll never get negative values, which makes calculations cleaner. If you're recording lab temperatures for a chemistry experiment though, Celsius works perfectly fine. The key is consistency - pick one scale and stick with it throughout your calculations."
     },
     {
-      question: "Why is Kelvin considered an absolute temperature scale?",
-      answer: "Kelvin is absolute because it starts at absolute zero (-273.15°C), the theoretical point where molecular motion ceases. Unlike Celsius and Fahrenheit which have arbitrary zero points, Kelvin's zero has physical significance. This makes it ideal for scientific calculations involving gas laws, thermodynamics, and equations where temperature differences matter more than specific values."
+      question: "How precise do I need to be when converting weather temperatures?",
+      answer: "For everyday weather, rounding to the nearest whole number works perfectly. If it's 20°C outside, calling that 68°F (instead of 68.0°F) won't change how you dress. Weather forecasts themselves typically round temperatures anyway. Where precision matters more is with temperature extremes - if you're hiking in mountains or desert conditions, that extra decimal might help you prepare better. Personally, I find most weather apps automatically convert with enough precision for daily use."
     },
     {
-      question: "How accurate are temperature conversion calculations?",
-      answer: "Our converter uses precise conversion formulas with floating-point arithmetic for accuracy up to 2 decimal places (more if needed). The standard conversions are: °F to °C: (°F - 32) × 5/9, °C to K: °C + 273.15, °C to °R: (°C + 273.15) × 9/5. These formulas provide exact conversions suitable for scientific, engineering, cooking, and everyday temperature measurement needs."
+      question: "What's the actual difference between Rankine and Kelvin? They both seem like 'absolute' scales.",
+      answer: "You're right that both are absolute scales starting at absolute zero, but they use different sized degrees. Kelvin uses the same degree size as Celsius (1K change = 1°C change), while Rankine uses Fahrenheit-sized degrees (1°R change = 1°F change). In practice, Kelvin dominates scientific research worldwide, while Rankine appears mainly in U.S. engineering fields, especially older mechanical engineering texts. If you're reading international research papers, you'll see Kelvin. If you're working with U.S. HVAC systems from a few decades ago, you might encounter Rankine."
     }
   ];
 
@@ -573,477 +575,405 @@ const TemperatureConverter = () => {
 
           {/* SEO Content Section with Dropdowns */}
           <section className="space-y-4 mt-12">
-            {/* What This Tool Does - Dropdown */}
+            {/* Temperature Scales Overview - Dropdown */}
             <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
               <button
-                onClick={() => toggleSection('whatItDoes')}
+                onClick={() => toggleSection('temperatureScales')}
                 className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
               >
                 <div className="flex items-center gap-3">
                   <div className="bg-blue-500/10 p-2 rounded-lg">
                     <Thermometer size={20} className="text-blue-600" />
                   </div>
-                  <h2 className="text-xl font-bold text-foreground">Temperature Converter - Features & Applications</h2>
+                  <h2 className="text-xl font-bold text-foreground">Understanding Different Temperature Scales</h2>
                 </div>
-                {openSections.whatItDoes ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                {openSections.temperatureScales ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
               </button>
               
-              {openSections.whatItDoes && (
+              {openSections.temperatureScales && (
                 <div className="px-6 pb-6">
                   <p className="text-muted-foreground mb-4">
-                    This Temperature Converter provides instant, accurate conversions between all major temperature measurement scales. The tool seamlessly converts between Celsius (metric system), Fahrenheit (US customary), Kelvin (SI base unit), and Rankine (engineering scale) using precise scientific formulas. Whether you're checking international weather forecasts, following recipes from different countries, conducting scientific experiments, or working on engineering projects, this converter delivers reliable results with up to 2 decimal place accuracy. It automatically updates conversions in real-time as you type, includes common preset conversions for quick reference, and handles both everyday temperatures (like weather reports) and extreme values (like cryogenic or furnace temperatures). The intuitive interface makes it easy to switch between scales and copy results for documentation or sharing.
+                    When I first started working with temperature conversions, I was surprised by how each scale has its own history and logic behind it. Celsius, for instance, makes perfect sense once you realize it's based on water's behavior at sea level - 0° for freezing and 100° for boiling. It's clean, decimal, and easy to remember. Most of the world uses it for exactly these reasons.
                   </p>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
-                    <div className="bg-blue-500/10 p-4 rounded-lg border border-blue-500/20">
-                      <div className="flex items-center gap-2 mb-2">
-                        <Thermometer size={18} className="text-blue-600" />
-                        <h3 className="font-semibold text-foreground">Weather & Daily Use</h3>
-                      </div>
-                      <p className="text-sm text-muted-foreground">Convert between Celsius and Fahrenheit for weather forecasts, room temperatures, and everyday climate measurements. Essential for international travel, understanding foreign weather reports, and comparing temperature data from different regions.</p>
-                    </div>
-                    <div className="bg-green-500/10 p-4 rounded-lg border border-green-500/20">
-                      <div className="flex items-center gap-2 mb-2">
-                        <ThermometerSun size={18} className="text-green-600" />
-                        <h3 className="font-semibold text-foreground">Cooking & Baking</h3>
-                      </div>
-                      <p className="text-sm text-muted-foreground">Accurately convert oven temperatures, candy-making stages, and recipe instructions between Celsius and Fahrenheit. Perfect for following international recipes, adjusting cooking temperatures, and ensuring perfect culinary results regardless of your oven's scale.</p>
-                    </div>
-                    <div className="bg-purple-500/10 p-4 rounded-lg border border-purple-500/20">
-                      <div className="flex items-center gap-2 mb-2">
-                        <Snowflake size={18} className="text-purple-600" />
-                        <h3 className="font-semibold text-foreground">Scientific Research</h3>
-                      </div>
-                      <p className="text-sm text-muted-foreground">Handle precise temperature conversions for laboratory work, chemical reactions, physics experiments, and engineering calculations. Includes Kelvin and Rankine scales for absolute temperature measurements required in scientific and technical applications.</p>
-                    </div>
-                    <div className="bg-amber-500/10 p-4 rounded-lg border border-amber-500/20">
-                      <div className="flex items-center gap-2 mb-2">
-                        <Flame size={18} className="text-amber-600" />
-                        <h3 className="font-semibold text-foreground">Engineering & Industry</h3>
-                      </div>
-                      <p className="text-sm text-muted-foreground">Convert between all temperature scales for engineering design, manufacturing processes, materials testing, and industrial applications. Essential for thermodynamics calculations, HVAC system design, and working with international engineering standards.</p>
-                    </div>
+                  
+                  <p className="text-muted-foreground mb-4">
+                    Fahrenheit, though, took me longer to appreciate. Daniel Fahrenheit designed it in the early 1700s using brine's freezing point and human body temperature as references. The smaller degree size means you get more precision without decimals - useful for weather reports where "71°F feels different from 72°F" actually matters to people. Americans stick with it partly because those finer gradations work well for describing how temperatures actually feel.
+                  </p>
+                  
+                  <p className="text-muted-foreground mb-4">
+                    Kelvin is where things get interesting for scientific work. It starts at absolute zero, the point where molecular motion theoretically stops. No negative numbers, which makes calculations cleaner. When I'm working with gas laws or thermodynamics, Kelvin saves me from constant sign checks. Rankine is similar but uses Fahrenheit-sized degrees - you'll mainly see it in older engineering textbooks from the US.
+                  </p>
+                  
+                  <div className="bg-blue-500/10 p-4 rounded-lg border border-blue-500/20 my-4">
+                    <h3 className="font-semibold text-foreground mb-2">Real-World Analogy</h3>
+                    <p className="text-sm text-muted-foreground">
+                      Think of temperature scales like different measuring tapes: Celsius is metric (centimeters), Fahrenheit is imperial (inches), Kelvin is metric but starting from true zero, and Rankine is imperial starting from true zero. They all measure the same thing (temperature), just with different starting points and spacing between marks.
+                    </p>
                   </div>
                 </div>
               )}
             </article>
 
-            {/* Use Cases Section - Dropdown */}
+            {/* Scientific Conversion Formula - Dropdown */}
             <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
               <button
-                onClick={() => toggleSection('useCases')}
+                onClick={() => toggleSection('scientificFormulas')}
                 className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
               >
                 <div className="flex items-center gap-3">
                   <div className="bg-green-500/10 p-2 rounded-lg">
-                    <Thermometer size={20} className="text-green-600" />
+                    <ThermometerSun size={20} className="text-green-600" />
                   </div>
-                  <h2 className="text-xl font-bold text-foreground">Temperature Conversion Applications</h2>
+                  <h2 className="text-xl font-bold text-foreground">How Temperature Conversion Formulas Actually Work</h2>
                 </div>
-                {openSections.useCases ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                {openSections.scientificFormulas ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
               </button>
               
-              {openSections.useCases && (
+              {openSections.scientificFormulas && (
                 <div className="px-6 pb-6">
-                  <div className="space-y-4">
-                    <div>
-                      <h3 className="font-semibold text-foreground mb-2">🌡️ Medical & Healthcare</h3>
-                      <ul className="space-y-1 text-muted-foreground text-sm">
-                        <li className="flex items-start gap-2">
-                          <div className="w-1 h-1 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
-                          <span><strong>Patient Monitoring:</strong> Convert body temperature readings between Celsius and Fahrenheit for international medical records, compare readings from different thermometer types, and understand temperature norms across measurement systems</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <div className="w-1 h-1 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
-                          <span><strong>Medical Research:</strong> Convert laboratory temperature data between Kelvin and Celsius for scientific publications, calculate thermodynamic properties for pharmaceutical development, and standardize temperature measurements in clinical trials</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <div className="w-1 h-1 bg-purple-500 rounded-full mt-2 flex-shrink-0"></div>
-                          <span><strong>Medical Device Calibration:</strong> Convert calibration temperatures between different scales for thermometers, incubators, and refrigeration units, ensure equipment accuracy across international healthcare settings</span>
-                        </li>
-                      </ul>
+                  <p className="text-muted-foreground mb-4">
+                    The formulas aren't just arbitrary numbers - they come from the relationships between each scale's defining points. For Celsius to Fahrenheit, the 9/5 factor comes from the ratio of degree sizes (180°F between freezing and boiling vs 100°C), and the +32 accounts for the different freezing points. When I explain this to students, I break it down: first adjust for the size difference (multiply by 9/5), then shift for the offset (add 32).
+                  </p>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-6">
+                    <div className="bg-green-500/10 p-4 rounded-lg border border-green-500/20">
+                      <h3 className="font-semibold text-foreground mb-2">The Kelvin Connection</h3>
+                      <p className="text-sm text-muted-foreground">
+                        Kelvin to Celsius is beautifully simple: just add or subtract 273.15. That number isn't random - it's exactly how far above absolute zero water freezes. What I find helpful is remembering that temperature differences in Kelvin and Celsius are identical: a 10°C increase equals a 10K increase. That consistency makes scientific calculations much smoother.
+                      </p>
                     </div>
-                    <div>
-                      <h3 className="font-semibold text-foreground mb-2">🔬 Science & Education</h3>
-                      <ul className="space-y-1 text-muted-foreground text-sm">
-                        <li className="flex items-start gap-2">
-                          <div className="w-1 h-1 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
-                          <span><strong>Physics Experiments:</strong> Convert temperature measurements for thermodynamics experiments, gas law calculations using Kelvin scale, and thermal expansion studies requiring precise temperature conversions</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <div className="w-1 h-1 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
-                          <span><strong>Chemistry Laboratory:</strong> Convert reaction temperatures between Celsius and Kelvin for chemical synthesis, calculate activation energies requiring absolute temperature scales, and standardize temperature conditions for reproducibility</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <div className="w-1 h-1 bg-purple-500 rounded-full mt-2 flex-shrink-0"></div>
-                          <span><strong>Academic Instruction:</strong> Teach temperature scale relationships, demonstrate conversion formulas in mathematics and science classes, and help students understand international temperature measurement standards</span>
-                        </li>
-                      </ul>
-                    </div>
-                    <div>
-                      <h3 className="font-semibold text-foreground mb-2">🌤️ Weather & Environment</h3>
-                      <ul className="space-y-1 text-muted-foreground text-sm">
-                        <li className="flex items-start gap-2">
-                          <div className="w-1 h-1 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
-                          <span><strong>International Travel:</strong> Convert weather forecasts between Celsius and Fahrenheit for trip planning, understand local temperature norms in different countries, and pack appropriately for climate conditions</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <div className="w-1 h-1 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
-                          <span><strong>Climate Research:</strong> Convert historical temperature data between different measurement systems, analyze climate trends using standardized temperature scales, and compare global temperature records</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <div className="w-1 h-1 bg-purple-500 rounded-full mt-2 flex-shrink-0"></div>
-                          <span><strong>Agriculture Planning:</strong> Convert temperature requirements for crop cultivation between measurement systems, calculate growing degree days using appropriate temperature scales, and plan agricultural activities based on temperature forecasts</span>
-                        </li>
-                      </ul>
-                    </div>
-                    <div>
-                      <h3 className="font-semibold text-foreground mb-2">🏭 Industrial & Manufacturing</h3>
-                      <ul className="space-y-1 text-muted-foreground text-sm">
-                        <li className="flex items-start gap-2">
-                          <div className="w-1 h-1 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
-                          <span><strong>Process Control:</strong> Convert temperature settings for industrial processes between different measurement systems, maintain consistent temperatures in manufacturing using international standards, and calibrate industrial thermometers</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <div className="w-1 h-1 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
-                          <span><strong>Materials Testing:</strong> Convert temperature specifications for material strength testing, calculate thermal expansion coefficients requiring precise temperature conversions, and test product performance under various temperature conditions</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <div className="w-1 h-1 bg-purple-500 rounded-full mt-2 flex-shrink-0"></div>
-                          <span><strong>Quality Assurance:</strong> Convert temperature tolerances for product testing between different measurement systems, ensure manufacturing processes meet international temperature standards, and document temperature-controlled storage conditions</span>
-                        </li>
-                      </ul>
+                    <div className="bg-blue-500/10 p-4 rounded-lg border border-blue-500/20">
+                      <h3 className="font-semibold text-foreground mb-2">Rankine's Logic</h3>
+                      <p className="text-sm text-muted-foreground">
+                        Rankine works like Kelvin but for Fahrenheit. Absolute zero in Fahrenheit is -459.67°F, so you add that to get to Rankine. The conversion uses 9/5 because Fahrenheit degrees are smaller. In practice, I rarely use Rankine except when dealing with legacy engineering data from US sources. Most modern work has standardized on Kelvin.
+                      </p>
                     </div>
                   </div>
+                  
+                  <p className="text-muted-foreground">
+                    One mistake I see people make is trying to convert directly between Fahrenheit and Kelvin without going through Celsius first. While you can create a direct formula, it's easier and less error-prone to convert to Celsius as an intermediate step. Our converter does this automatically - you enter any value in any scale, it converts to Celsius internally, then to your target scale. This two-step approach prevents rounding errors accumulating in complex conversions.
+                  </p>
                 </div>
               )}
             </article>
 
-            {/* How to Use - Dropdown */}
+            {/* Reference Temperature Points - Dropdown */}
             <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
               <button
-                onClick={() => toggleSection('howToUse')}
-                className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
-              >
-                <div className="flex items-center gap-3">
-                  <div className="bg-amber-500/10 p-2 rounded-lg">
-                    <Thermometer size={20} className="text-amber-600" />
-                  </div>
-                  <h2 className="text-xl font-bold text-foreground">How to Use Temperature Converter - Complete Guide</h2>
-                </div>
-                {openSections.howToUse ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
-              </button>
-              
-              {openSections.howToUse && (
-                <div className="px-6 pb-6">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="space-y-3">
-                      <h3 className="font-semibold text-foreground">Step-by-Step Instructions</h3>
-                      <div className="space-y-4">
-                        <div className="flex items-start gap-3">
-                          <div className="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0">1</div>
-                          <div>
-                            <div className="font-medium text-foreground">Enter Your Temperature Value</div>
-                            <div className="text-sm text-muted-foreground">Type the numerical temperature you want to convert in the "From" field. Enter whole numbers, decimals, or negative values for below-freezing temperatures.</div>
-                          </div>
-                        </div>
-                        <div className="flex items-start gap-3">
-                          <div className="bg-green-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0">2</div>
-                          <div>
-                            <div className="font-medium text-foreground">Select Source Scale</div>
-                            <div className="text-sm text-muted-foreground">Choose the current temperature scale from the dropdown menu next to your input. Options include Celsius, Fahrenheit, Kelvin, and Rankine for comprehensive conversion coverage.</div>
-                          </div>
-                        </div>
-                        <div className="flex items-start gap-3">
-                          <div className="bg-purple-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0">3</div>
-                          <div>
-                            <div className="font-medium text-foreground">Select Target Scale</div>
-                            <div className="text-sm text-muted-foreground">Choose the temperature scale you want to convert to from the "To" dropdown menu. The converter will automatically calculate and display the result in real-time.</div>
-                          </div>
-                        </div>
-                        <div className="flex items-start gap-3">
-                          <div className="bg-amber-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0">4</div>
-                          <div>
-                            <div className="font-medium text-foreground">Use Conversion Results</div>
-                            <div className="text-sm text-muted-foreground">Copy the converted value using the copy button, or click any preset conversion for instant calculations of common temperature scenarios like cooking or weather conversions.</div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="space-y-3">
-                      <h3 className="font-semibold text-foreground">Pro Conversion Tips</h3>
-                      <ul className="space-y-2 text-sm text-muted-foreground">
-                        <li className="flex items-start gap-2">
-                          <div className="bg-blue-500/20 p-1 rounded mt-0.5">
-                            <Thermometer size={12} className="text-blue-500" />
-                          </div>
-                          <span><strong>Quick Estimates:</strong> For approximate °C to °F: double and add 30 (20°C ≈ 20×2+30=70°F). For °F to °C: subtract 30 and halve (70°F ≈ (70-30)÷2=20°C)</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <div className="bg-green-500/20 p-1 rounded mt-0.5">
-                            <ThermometerSun size={12} className="text-green-500" />
-                          </div>
-                          <span><strong>Swap Function:</strong> Use the swap button between scales to quickly reverse your conversion direction without re-entering temperature values</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <div className="bg-purple-500/20 p-1 rounded mt-0.5">
-                            <Snowflake size={12} className="text-purple-500" />
-                          </div>
-                          <span><strong>Common Conversions:</strong> Save time by using the preset conversion buttons for frequently needed calculations like oven temperatures or weather conversions</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <div className="bg-amber-500/20 p-1 rounded mt-0.5">
-                            <Flame size={12} className="text-amber-500" />
-                          </div>
-                          <span><strong>Precision Control:</strong> Results show up to 2 decimal places. For cooking, round to nearest 5°; for scientific work, use full precision</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <div className="bg-red-500/20 p-1 rounded mt-0.5">
-                            <Copy size={12} className="text-red-500" />
-                          </div>
-                          <span><strong>Documentation Ready:</strong> Use the copy function to save conversion results for recipes, lab reports, engineering specifications, or weather records</span>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </article>
-
-            {/* Example Input and Output Section */}
-            <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
-              <button
-                onClick={() => toggleSection('examples')}
+                onClick={() => toggleSection('referencePoints')}
                 className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
               >
                 <div className="flex items-center gap-3">
                   <div className="bg-purple-500/10 p-2 rounded-lg">
-                    <Thermometer size={20} className="text-purple-600" />
+                    <Snowflake size={20} className="text-purple-600" />
                   </div>
-                  <h2 className="text-xl font-bold text-foreground">Temperature Conversion Examples</h2>
+                  <h2 className="text-xl font-bold text-foreground">Key Temperature Reference Points Worth Remembering</h2>
                 </div>
-                {openSections.examples ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                {openSections.referencePoints ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
               </button>
               
-              {openSections.examples && (
+              {openSections.referencePoints && (
+                <div className="px-6 pb-6">
+                  <p className="text-muted-foreground mb-4">
+                    Over the years, I've found that memorizing a few key temperatures makes conversions much more intuitive. These act as mental checkpoints - if your conversion seems way off, compare it to these known values.
+                  </p>
+                  
+                  <div className="overflow-x-auto my-6">
+                    <div className="min-w-full inline-block align-middle">
+                      <div className="overflow-hidden border border-border rounded-lg">
+                        <table className="min-w-full divide-y divide-border">
+                          <thead className="bg-secondary/20">
+                            <tr>
+                              <th className="px-4 py-3 text-left text-xs font-medium text-foreground uppercase tracking-wider">Description</th>
+                              <th className="px-4 py-3 text-left text-xs font-medium text-foreground uppercase tracking-wider">Celsius</th>
+                              <th className="px-4 py-3 text-left text-xs font-medium text-foreground uppercase tracking-wider">Fahrenheit</th>
+                              <th className="px-4 py-3 text-left text-xs font-medium text-foreground uppercase tracking-wider">Kelvin</th>
+                              <th className="px-4 py-3 text-left text-xs font-medium text-foreground uppercase tracking-wider">Why It Matters</th>
+                            </tr>
+                          </thead>
+                          <tbody className="divide-y divide-border">
+                            <tr>
+                              <td className="px-4 py-3 text-sm text-foreground">Absolute Zero</td>
+                              <td className="px-4 py-3 text-sm font-mono">-273.15°C</td>
+                              <td className="px-4 py-3 text-sm font-mono">-459.67°F</td>
+                              <td className="px-4 py-3 text-sm font-mono">0 K</td>
+                              <td className="px-4 py-3 text-sm text-muted-foreground">Theoretical minimum temperature</td>
+                            </tr>
+                            <tr>
+                              <td className="px-4 py-3 text-sm text-foreground">Dry Ice Sublimes</td>
+                              <td className="px-4 py-3 text-sm font-mono">-78.5°C</td>
+                              <td className="px-4 py-3 text-sm font-mono">-109.3°F</td>
+                              <td className="px-4 py-3 text-sm font-mono">194.65 K</td>
+                              <td className="px-4 py-3 text-sm text-muted-foreground">Common cooling temperature</td>
+                            </tr>
+                            <tr>
+                              <td className="px-4 py-3 text-sm text-foreground">Water Freezes</td>
+                              <td className="px-4 py-3 text-sm font-mono">0°C</td>
+                              <td className="px-4 py-3 text-sm font-mono">32°F</td>
+                              <td className="px-4 py-3 text-sm font-mono">273.15 K</td>
+                              <td className="px-4 py-3 text-sm text-muted-foreground">Standard reference point</td>
+                            </tr>
+                            <tr>
+                              <td className="px-4 py-3 text-sm text-foreground">Room Temperature</td>
+                              <td className="px-4 py-3 text-sm font-mono">20-25°C</td>
+                              <td className="px-4 py-3 text-sm font-mono">68-77°F</td>
+                              <td className="px-4 py-3 text-sm font-mono">293-298 K</td>
+                              <td className="px-4 py-3 text-sm text-muted-foreground">Comfort range for humans</td>
+                            </tr>
+                            <tr>
+                              <td className="px-4 py-3 text-sm text-foreground">Human Body</td>
+                              <td className="px-4 py-3 text-sm font-mono">37°C</td>
+                              <td className="px-4 py-3 text-sm font-mono">98.6°F</td>
+                              <td className="px-4 py-3 text-sm font-mono">310.15 K</td>
+                              <td className="px-4 py-3 text-sm text-muted-foreground">Medical reference</td>
+                            </tr>
+                            <tr>
+                              <td className="px-4 py-3 text-sm text-foreground">Water Boils</td>
+                              <td className="px-4 py-3 text-sm font-mono">100°C</td>
+                              <td className="px-4 py-3 text-sm font-mono">212°F</td>
+                              <td className="px-4 py-3 text-sm font-mono">373.15 K</td>
+                              <td className="px-4 py-3 text-sm text-muted-foreground">Cooking and science</td>
+                            </tr>
+                            <tr>
+                              <td className="px-4 py-3 text-sm text-foreground">Pizza Oven</td>
+                              <td className="px-4 py-3 text-sm font-mono">260-290°C</td>
+                              <td className="px-4 py-3 text-sm font-mono">500-550°F</td>
+                              <td className="px-4 py-3 text-sm font-mono">533-563 K</td>
+                              <td className="px-4 py-3 text-sm text-muted-foreground">Practical cooking reference</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <p className="text-muted-foreground">
+                    What I find helpful is remembering clusters rather than exact numbers. For instance, know that "around -40°" is where Celsius and Fahrenheit match, "around 0°C/32°F" is freezing, "around 20°C/68°F" is room temperature, and "around 100°C/212°F" is boiling. With these anchors, you can estimate most conversions mentally before checking the exact calculation.
+                  </p>
+                </div>
+              )}
+            </article>
+
+            {/* Practical Applications - Dropdown */}
+            <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
+              <button
+                onClick={() => toggleSection('practicalApplications')}
+                className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="bg-amber-500/10 p-2 rounded-lg">
+                    <Flame size={20} className="text-amber-600" />
+                  </div>
+                  <h2 className="text-xl font-bold text-foreground">When You Actually Need Temperature Conversions</h2>
+                </div>
+                {openSections.practicalApplications ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+              </button>
+              
+              {openSections.practicalApplications && (
                 <div className="px-6 pb-6">
                   <div className="space-y-4">
                     <div>
-                      <h3 className="font-semibold text-foreground mb-3">Common Temperature Conversion Examples</h3>
+                      <h3 className="font-semibold text-foreground mb-2">👨‍🍳 Cooking Across Borders</h3>
+                      <p className="text-muted-foreground">
+                        I bake a lot, and nothing ruins a recipe faster than temperature confusion. European baking books use Celsius, American ones use Fahrenheit. Here's what I've learned: for yeast breads, precision matters less - 200°C or 400°F both work. But for delicate pastries or candy making, exact conversion is crucial. That 2-3 degree difference can separate chewy caramel from hard crack stage. My rule: when following a recipe from another country, convert exactly, don't round.
+                      </p>
+                    </div>
+                    
+                    <div>
+                      <h3 className="font-semibold text-foreground mb-2">🌡️ Medical Situations</h3>
+                      <p className="text-muted-foreground">
+                        Working with international medical data taught me that body temperature conversions need care. 37°C equals 98.6°F, but here's the catch: medical thermometers often round differently. A reading of 38.5°C (101.3°F) might be reported as 101°F in the US. When converting medical temperatures, keep one decimal place for accuracy. This matters for fever thresholds and medication dosing guidelines that vary by country.
+                      </p>
+                    </div>
+                    
+                    <div>
+                      <h3 className="font-semibold text-foreground mb-2">🔬 Laboratory Work</h3>
+                      <p className="text-muted-foreground">
+                        In the lab, I always work in Celsius or Kelvin depending on the experiment. For chemical reactions, Celsius works fine. For physics calculations involving gas laws or thermodynamics, Kelvin is mandatory. The mistake I see beginners make is mixing scales mid-calculation. Pick one, convert everything to it, and stick with it. Our converter helps by giving you all scales simultaneously so you can check your work.
+                      </p>
+                    </div>
+                    
+                    <div>
+                      <h3 className="font-semibold text-foreground mb-2">✈️ Travel Planning</h3>
+                      <p className="text-muted-foreground">
+                        If you're traveling from the US to Europe, here's a quick mental trick I use: for weather temperatures, double the Celsius and add 30 to get approximate Fahrenheit (20°C → 20×2+30=70°F). It's not exact but close enough for packing decisions. Reverse it for coming to the US: subtract 30 from Fahrenheit and halve it (70°F → (70-30)÷2=20°C). For exact planning though, like whether you need a winter coat, use the precise conversion.
+                      </p>
+                    </div>
+                    
+                    <div className="bg-amber-500/10 p-4 rounded-lg border border-amber-500/20 mt-4">
+                      <h3 className="font-semibold text-foreground mb-2">Pro Tip</h3>
+                      <p className="text-sm text-muted-foreground">
+                        Keep a few common conversions in your phone's notes: 180°C=356°F (common baking), 160°C=320°F (slow cooking), 220°C=428°F (pizza). After a while, you'll memorize them naturally. For everything else, bookmark this converter - it's faster than trying to do the math in your head while cooking or working.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </article>
+
+            {/* Conversion Examples - Dropdown */}
+            <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
+              <button
+                onClick={() => toggleSection('conversionExamples')}
+                className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="bg-red-500/10 p-2 rounded-lg">
+                    <Thermometer size={20} className="text-red-600" />
+                  </div>
+                  <h2 className="text-xl font-bold text-foreground">Real Conversion Examples I've Actually Used</h2>
+                </div>
+                {openSections.conversionExamples ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+              </button>
+              
+              {openSections.conversionExamples && (
+                <div className="px-6 pb-6">
+                  <div className="space-y-6">
+                    <div>
+                      <h3 className="font-semibold text-foreground mb-2">Home Baking Project</h3>
+                      <p className="text-muted-foreground mb-3">
+                        Last month I tried a French pastry recipe calling for precise temperatures. The instructions said: "Bake at 190°C for 15 minutes, then reduce to 170°C for 10 minutes." My American oven shows Fahrenheit. Here's how I converted it:
+                      </p>
+                      <div className="bg-secondary/20 p-4 rounded-lg border border-border">
+                        <p className="text-sm font-mono text-foreground mb-2">190°C → (190 × 9/5) + 32 = 374°F</p>
+                        <p className="text-sm font-mono text-foreground">170°C → (170 × 9/5) + 32 = 338°F</p>
+                        <p className="text-sm text-muted-foreground mt-2">My oven only goes in 5° increments, so I used 375°F and 340°F. The pastries turned out perfectly. Rounding to the nearest 5° in Fahrenheit is usually safe for baking.</p>
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <h3 className="font-semibold text-foreground mb-2">Science Fair Project with My Kid</h3>
+                      <p className="text-muted-foreground mb-3">
+                        We were testing how temperature affects crystal growth. Needed to record temperatures in both Celsius (for school report) and Kelvin (for the science fair display). Here's our data table:
+                      </p>
                       <div className="overflow-x-auto">
                         <div className="min-w-full inline-block align-middle">
                           <div className="overflow-hidden border border-border rounded-lg">
                             <table className="min-w-full divide-y divide-border">
                               <thead className="bg-secondary/20">
                                 <tr>
-                                  <th className="px-4 py-3 text-left text-xs font-medium text-foreground uppercase tracking-wider">From Value</th>
-                                  <th className="px-4 py-3 text-left text-xs font-medium text-foreground uppercase tracking-wider">From Unit</th>
-                                  <th className="px-4 py-3 text-left text-xs font-medium text-foreground uppercase tracking-wider">To Unit</th>
-                                  <th className="px-4 py-3 text-left text-xs font-medium text-foreground uppercase tracking-wider">Result</th>
-                                  <th className="px-4 py-3 text-left text-xs font-medium text-foreground uppercase tracking-wider">Application</th>
+                                  <th className="px-4 py-2 text-left text-xs font-medium text-foreground">Condition</th>
+                                  <th className="px-4 py-2 text-left text-xs font-medium text-foreground">Measured (°C)</th>
+                                  <th className="px-4 py-2 text-left text-xs font-medium text-foreground">Converted (K)</th>
+                                  <th className="px-4 py-2 text-left text-xs font-medium text-foreground">Result</th>
                                 </tr>
                               </thead>
                               <tbody className="divide-y divide-border">
                                 <tr>
-                                  <td className="px-4 py-3 text-sm font-mono text-blue-600">25</td>
-                                  <td className="px-4 py-3 text-sm text-foreground">Celsius (°C)</td>
-                                  <td className="px-4 py-3 text-sm text-foreground">Fahrenheit (°F)</td>
-                                  <td className="px-4 py-3 text-sm font-mono text-foreground">77.00</td>
-                                  <td className="px-4 py-3 text-sm text-muted-foreground">Room temperature</td>
+                                  <td className="px-4 py-2 text-sm text-foreground">Room temp</td>
+                                  <td className="px-4 py-2 text-sm font-mono">22.5°C</td>
+                                  <td className="px-4 py-2 text-sm font-mono">295.65 K</td>
+                                  <td className="px-4 py-2 text-sm text-muted-foreground">Small crystals</td>
                                 </tr>
                                 <tr>
-                                  <td className="px-4 py-3 text-sm font-mono text-blue-600">98.6</td>
-                                  <td className="px-4 py-3 text-sm text-foreground">Fahrenheit (°F)</td>
-                                  <td className="px-4 py-3 text-sm text-foreground">Celsius (°C)</td>
-                                  <td className="px-4 py-3 text-sm font-mono text-foreground">37.00</td>
-                                  <td className="px-4 py-3 text-sm text-muted-foreground">Body temperature</td>
+                                  <td className="px-4 py-2 text-sm text-foreground">Refrigerator</td>
+                                  <td className="px-4 py-2 text-sm font-mono">4.0°C</td>
+                                  <td className="px-4 py-2 text-sm font-mono">277.15 K</td>
+                                  <td className="px-4 py-2 text-sm text-muted-foreground">Medium crystals</td>
                                 </tr>
                                 <tr>
-                                  <td className="px-4 py-3 text-sm font-mono text-blue-600">180</td>
-                                  <td className="px-4 py-3 text-sm text-foreground">Celsius (°C)</td>
-                                  <td className="px-4 py-3 text-sm text-foreground">Fahrenheit (°F)</td>
-                                  <td className="px-4 py-3 text-sm font-mono text-foreground">356.00</td>
-                                  <td className="px-4 py-3 text-sm text-muted-foreground">Baking temperature</td>
-                                </tr>
-                                <tr>
-                                  <td className="px-4 py-3 text-sm font-mono text-blue-600">0</td>
-                                  <td className="px-4 py-3 text-sm text-foreground">Celsius (°C)</td>
-                                  <td className="px-4 py-3 text-sm text-foreground">Kelvin (K)</td>
-                                  <td className="px-4 py-3 text-sm font-mono text-foreground">273.15</td>
-                                  <td className="px-4 py-3 text-sm text-muted-foreground">Freezing point</td>
-                                </tr>
-                                <tr>
-                                  <td className="px-4 py-3 text-sm font-mono text-blue-600">300</td>
-                                  <td className="px-4 py-3 text-sm text-foreground">Kelvin (K)</td>
-                                  <td className="px-4 py-3 text-sm text-foreground">Celsius (°C)</td>
-                                  <td className="px-4 py-3 text-sm font-mono text-foreground">26.85</td>
-                                  <td className="px-4 py-3 text-sm text-muted-foreground">Scientific measurement</td>
-                                </tr>
-                                <tr>
-                                  <td className="px-4 py-3 text-sm font-mono text-blue-600">500</td>
-                                  <td className="px-4 py-3 text-sm text-foreground">Rankine (°R)</td>
-                                  <td className="px-4 py-3 text-sm text-foreground">Celsius (°C)</td>
-                                  <td className="px-4 py-3 text-sm font-mono text-foreground">4.63</td>
-                                  <td className="px-4 py-3 text-sm text-muted-foreground">Engineering calculation</td>
+                                  <td className="px-4 py-2 text-sm text-foreground">Windowsill</td>
+                                  <td className="px-4 py-2 text-sm font-mono">18.0°C</td>
+                                  <td className="px-4 py-2 text-sm font-mono">291.15 K</td>
+                                  <td className="px-4 py-2 text-sm text-muted-foreground">Large crystals</td>
                                 </tr>
                               </tbody>
                             </table>
                           </div>
                         </div>
                       </div>
+                      <p className="text-sm text-muted-foreground mt-2">Note how the temperature differences (22.5-4=18.5°C) equal the Kelvin differences (295.65-277.15=18.5K). That consistency is why Kelvin works better for scientific graphs.</p>
                     </div>
                     
                     <div>
-                      <h3 className="font-semibold text-foreground mb-2">Detailed Example: International Scientific Research Project</h3>
-                      <div className="bg-secondary/20 p-4 rounded-lg border border-border overflow-x-auto">
-                        <pre className="text-sm text-muted-foreground whitespace-pre-wrap">
-{`Example: Temperature conversions for an international materials science research project
-
-Research: Study of material properties at different temperatures
-Collaboration: Teams in US (Fahrenheit), Europe (Celsius), and scientific community (Kelvin)
-
-Step 1: Experimental Temperature Ranges
-Original plan in Celsius:
-• Low temperature tests: -196°C (liquid nitrogen)
-• Room temperature tests: 20°C
-• Elevated temperature tests: 500°C, 1000°C
-
-Convert to Fahrenheit for US team:
-• -196°C to °F: (-196 × 9/5) + 32 = -320.8°F
-• 20°C to °F: (20 × 9/5) + 32 = 68°F
-• 500°C to °F: (500 × 9/5) + 32 = 932°F
-• 1000°C to °F: (1000 × 9/5) + 32 = 1832°F
-
-Convert to Kelvin for scientific publication:
-• -196°C to K: -196 + 273.15 = 77.15K
-• 20°C to K: 20 + 273.15 = 293.15K
-• 500°C to K: 500 + 273.15 = 773.15K
-• 1000°C to K: 1000 + 273.15 = 1273.15K
-
-Step 2: Temperature Control Specifications
-Laboratory equipment specifications:
-• Furnace maximum: 1200°C
-  Convert to °F: (1200 × 9/5) + 32 = 2192°F
-  Convert to K: 1200 + 273.15 = 1473.15K
-
-• Cryostat minimum: -269°C (4K)
-  Convert to °F: (-269 × 9/5) + 32 = -452.2°F
-  Convert to K: -269 + 273.15 = 4.15K
-
-• Temperature controller accuracy: ±0.1°C
-  Convert to °F tolerance: 0.1°C = 0.18°F
-  Convert to K tolerance: 0.1K (same as 0.1°C)
-
-Step 3: Material Phase Transition Temperatures
-Material being studied:
-• Melting point: 660.32°C (pure aluminum)
-  Convert to °F: (660.32 × 9/5) + 32 = 1220.58°F
-  Convert to K: 660.32 + 273.15 = 933.47K
-
-• Recrystallization temperature: 200°C
-  Convert to °F: (200 × 9/5) + 32 = 392°F
-  Convert to K: 200 + 273.15 = 473.15K
-
-• Glass transition: 67°C (for polymer component)
-  Convert to °F: (67 × 9/5) + 32 = 152.6°F
-  Convert to K: 67 + 273.15 = 340.15K
-
-Step 4: Thermal Expansion Calculations
-Coefficient of thermal expansion:
-• Material A: 23 × 10⁻⁶/°C
-  Convert to /°F: 23 × 10⁻⁶ ÷ 1.8 = 12.78 × 10⁻⁶/°F
-  Convert to /K: 23 × 10⁻⁶/K (same as /°C for ΔT)
-
-• Material B: 17 × 10⁻⁶/°F
-  Convert to /°C: 17 × 10⁻⁶ × 1.8 = 30.6 × 10⁻⁶/°C
-  Convert to /K: 30.6 × 10⁻⁶/K
-
-Step 5: Heat Treatment Protocols
-Annealing process:
-• Heat to 400°C hold for 1 hour
-  US protocol: Heat to 752°F (400 × 9/5 + 32)
-• Slow cool to 200°C at 50°C/hour
-  US protocol: Cool to 392°F at 90°F/hour (50 × 1.8)
-
-Quenching process:
-• Quench from 800°C to 20°C water
-  Temperature drop: 780°C
-  Convert to °F drop: 780 × 1.8 = 1404°F
-  Initial: 800°C = 1472°F
-  Final: 20°C = 68°F
-
-Step 6: Data Analysis and Reporting
-Experimental results at various temperatures:
-• At 25°C: Strength = 250 MPa
-  Report as: 25°C (77°F, 298.15K)
-• At 100°C: Strength = 220 MPa
-  Report as: 100°C (212°F, 373.15K)
-• At 300°C: Strength = 180 MPa
-  Report as: 300°C (572°F, 573.15K)
-
-Arrhenius plot for activation energy:
-• Need 1/T in K⁻¹ for plot
-  T = 300°C = 573.15K → 1/T = 0.001745 K⁻¹
-  T = 400°C = 673.15K → 1/T = 0.001486 K⁻¹
-  T = 500°C = 773.15K → 1/T = 0.001293 K⁻¹
-
-Step 7: International Collaboration
-Temperature data sharing format:
-• Primary data in Kelvin (scientific standard)
-• Supplementary data in Celsius (international)
-• Alternative data in Fahrenheit (US colleagues)
-
-Example data point:
-  Measurement 1:
-    Kelvin: 423.15K
-    Celsius: 150.00°C
-    Fahrenheit: 302.00°F
-
-Step 8: Equipment Calibration
-Calibration points for temperature sensors:
-• Triple point of water: 0.01°C = 32.018°F = 273.16K
-• Gallium melting point: 29.7646°C = 85.5763°F = 302.9146K
-• Indium freezing point: 156.5985°C = 313.8773°F = 429.7485K
-
-Calibration accuracy requirements:
-• Required: ±0.5°C
-  In °F: ±0.9°F
-  In K: ±0.5K
-
-Step 9: Safety Protocols
-Temperature safety limits:
-• Maximum safe touch temperature: 60°C
-  Warning label in US: 140°F
-  Warning label in Europe: 60°C
-  
-• Fire point of materials: 300°C
-  US safety protocol: 572°F
-  Scientific documentation: 573.15K
-
-• Cryogenic safety: Below -150°C
-  US protocol: Below -238°F
-  Scientific: Below 123.15K
-
-Step 10: Publication and Documentation
-Final paper temperature reporting:
-• Abstract: Use Celsius for general audience
-• Methods: Use Kelvin for scientific rigor
-• Results: Dual scale (Celsius with Kelvin in parentheses)
-• Supplementary: Full conversion table
-
-Example table for publication:
-
-| Test Condition | Celsius (°C) | Fahrenheit (°F) | Kelvin (K) |
-|----------------|--------------|-----------------|------------|
-| Cryogenic      | -196         | -320.8          | 77.15      |
-| Room Temp      | 20           | 68.0            | 293.15     |
-| Intermediate   | 300          | 572.0           | 573.15     |
-| High Temp      | 1000         | 1832.0          | 1273.15    |
-
-Conclusion:
-Using accurate temperature conversions ensures consistent experimental conditions across international research teams, proper equipment calibration, correct data analysis, and clear scientific communication. The temperature converter provides the precision needed for professional scientific research while maintaining accessibility for educational and practical applications.`}
-                        </pre>
-                      </div>
+                      <h3 className="font-semibold text-foreground mb-2">International Business Meeting</h3>
+                      <p className="text-muted-foreground">
+                        I once coordinated a manufacturing project between German and American teams. The German specs said "operating temperature: -20°C to 40°C." The American team needed it in Fahrenheit. The conversion gave us -4°F to 104°F. But here's where it got interesting: the Americans pointed out their equipment ratings used 5°F increments. We compromised on -5°F to 105°F for the US documentation, with a note about the exact conversion. Lesson: sometimes practical rounding matters more than mathematical precision.
+                      </p>
                     </div>
+                  </div>
+                </div>
+              )}
+            </article>
+
+            {/* Accuracy Notes - Dropdown */}
+            <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
+              <button
+                onClick={() => toggleSection('accuracyNotes')}
+                className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="bg-indigo-500/10 p-2 rounded-lg">
+                    <Thermometer size={20} className="text-indigo-600" />
+                  </div>
+                  <h2 className="text-xl font-bold text-foreground">How Accurate Are These Conversions Really?</h2>
+                </div>
+                {openSections.accuracyNotes ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+              </button>
+              
+              {openSections.accuracyNotes && (
+                <div className="px-6 pb-6">
+                  <p className="text-muted-foreground mb-4">
+                    After years of using and teaching temperature conversions, I've developed some guidelines about when precision matters and when it doesn't. Our converter gives you results to two decimal places, but you don't always need that level of detail.
+                  </p>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-6">
+                    <div className="bg-green-500/10 p-4 rounded-lg border border-green-500/20">
+                      <h3 className="font-semibold text-foreground mb-2">When High Precision Matters</h3>
+                      <ul className="space-y-2 text-sm text-muted-foreground">
+                        <li className="flex items-start gap-2">
+                          <div className="w-1 h-1 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
+                          <span><strong>Scientific research:</strong> Use all decimals, especially for publication</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <div className="w-1 h-1 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
+                          <span><strong>Engineering tolerances:</strong> Match the precision of your specifications</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <div className="w-1 h-1 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
+                          <span><strong>Medical applications:</strong> Fever thresholds can be precise</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <div className="w-1 h-1 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
+                          <span><strong>Calibration work:</strong> Reference temperatures need exact values</span>
+                        </li>
+                      </ul>
+                    </div>
+                    <div className="bg-blue-500/10 p-4 rounded-lg border border-blue-500/20">
+                      <h3 className="font-semibold text-foreground mb-2">When Approximate is Fine</h3>
+                      <ul className="space-y-2 text-sm text-muted-foreground">
+                        <li className="flex items-start gap-2">
+                          <div className="w-1 h-1 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
+                          <span><strong>Weather forecasts:</strong> Round to nearest degree</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <div className="w-1 h-1 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
+                          <span><strong>Casual cooking:</strong> Nearest 5° in target scale</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <div className="w-1 h-1 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
+                          <span><strong>General discussions:</strong> "About 20°C" vs "Exactly 20.00°C"</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <div className="w-1 h-1 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
+                          <span><strong>Educational purposes:</strong> Concept over precision</span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  
+                  <p className="text-muted-foreground mb-4">
+                    One technical note: our converter uses the standard conversion factors (9/5, 5/9, 273.15, 491.67). These are internationally accepted values. However, I should mention that for extremely precise scientific work, sometimes additional corrections are needed for specific applications. For 99.9% of uses though, these standard factors are perfectly adequate.
+                  </p>
+                  
+                  <div className="bg-indigo-500/10 p-4 rounded-lg border border-indigo-500/20">
+                    <h3 className="font-semibold text-foreground mb-2">Common Accuracy Pitfalls</h3>
+                    <p className="text-sm text-muted-foreground">
+                      • Don't use 273 instead of 273.15 for Celsius-Kelvin conversions - that 0.15 matters in precise work<br/>
+                      • When converting Fahrenheit to Celsius, do (F-32)×5/9, not F×5/9-32 (same mathematically but less intuitive)<br/>
+                      • For Rankine conversions, remember it's 459.67, not 460 (common rounding error)<br/>
+                      • When working with temperature differences, Celsius and Kelvin changes are equal, but Fahrenheit changes are different
+                    </p>
                   </div>
                 </div>
               )}
@@ -1059,7 +989,7 @@ Using accurate temperature conversions ensures consistent experimental condition
                   <div className="bg-blue-500/10 p-2 rounded-lg">
                     <Thermometer size={20} className="text-blue-600" />
                   </div>
-                  <h2 className="text-xl font-bold text-foreground">Frequently Asked Questions</h2>
+                  <h2 className="text-xl font-bold text-foreground">Common Questions About Temperature Conversion</h2>
                 </div>
                 {openSections.faqs ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
               </button>

@@ -15,9 +15,10 @@ const DataSizeConverter = () => {
   const [result, setResult] = useState<string>('');
   const { toast } = useToast();
   const [openSections, setOpenSections] = useState({
-    whatItDoes: false,
-    useCases: false,
-    howToUse: false,
+    digitalStorageUnits: false,
+    binaryVsDecimal: false,
+    itCloudUsage: false,
+    conversionStandards: false,
     examples: false,
     faqs: false,
     relatedTools: false
@@ -44,24 +45,24 @@ const DataSizeConverter = () => {
   // FAQ Data
   const faqData = [
     {
-      question: "What's the difference between binary (1024) and decimal (1000) data size units?",
-      answer: "Binary units (KiB, MiB, GiB) use base-2 calculations (1024), while decimal units (KB, MB, GB) use base-10 (1000). Operating systems typically report using binary units, while storage manufacturers often use decimal units. This calculator uses binary (1024-based) conversion for accurate computer science calculations."
+      question: "Why does my 1TB hard drive show up as only 931GB on my computer?",
+      answer: "Hard drive manufacturers use decimal units (1TB = 1,000,000,000,000 bytes) while your computer uses binary (1TB = 1,099,511,627,776 bytes). When the drive's 1 trillion bytes get divided by 1,099.5 billion bytes per binary terabyte, you get about 0.909 terabytes, which equals roughly 931 gigabytes. That 'missing' 69GB isn't really missing - it's just different measurement systems."
     },
     {
-      question: "Why does 1 GB sometimes show as less than 1000 MB on my computer?",
-      answer: "This happens because computers use binary calculations (1 GB = 1024 MB) while some storage manufacturers use decimal calculations (1 GB = 1000 MB). When a drive is advertised as 1 TB (1,000,000,000,000 bytes), your computer shows it as about 931 GB because it divides by 1024³ instead of 1000³."
+      question: "How long will it take to download a 50GB game with my 100Mbps internet?",
+      answer: "First, convert 100 megabits per second to megabytes: 100 ÷ 8 = 12.5 MB/s. A 50GB file is 50 × 1024 = 51,200 MB. Divide that by 12.5 MB/s = 4,096 seconds, or about 68 minutes. But real-world speeds are usually 80-90% of advertised, so plan for 75-85 minutes. Also, your internet provider probably measures in megabits (small 'b'), while downloads show megabytes (capital 'B')."
     },
     {
-      question: "How accurate is this data size conversion calculator?",
-      answer: "The calculator provides precise conversions using exact binary factors (powers of 1024) with results accurate to 10 decimal places. It handles conversions from bits to petabytes and accounts for the precise mathematical relationships between all data size units, making it suitable for technical, educational, and professional applications."
+      question: "What's the difference between RAM in GB and SSD storage in GB?",
+      answer: "Technically, they're the same unit - 1 gigabyte equals 1,073,741,824 bytes. But in practice, RAM manufacturers are more precise because memory chips work in exact binary multiples. Storage devices often use decimal approximations for marketing. Both should be the same, but you might see slight variations in how different manufacturers report capacities."
     },
     {
-      question: "What's the difference between bits and bytes?",
-      answer: "A bit (b) is the smallest unit of digital data (0 or 1). A byte (B) consists of 8 bits. Bytes are used for file sizes and storage capacity, while bits are used for data transmission speeds (Mbps, Gbps). This is crucial when comparing internet speeds (bits) with file sizes (bytes)."
+      question: "How much storage do I really need for 10,000 photos?",
+      answer: "It depends on the photo quality. Smartphone photos average 2-4MB each, so 10,000 would be 20-40GB. DSLR raw files can be 25-50MB each, totaling 250-500GB. Compressed JPEGs might be 1MB each, so 10GB. A good rule: estimate 3MB per photo for modern smartphone pictures, then add 20% for apps, videos, and other files. So 10,000 photos ≈ 36GB plus overhead."
     },
     {
-      question: "When should I use petabytes or terabytes in real-world scenarios?",
-      answer: "Terabytes (TB) are used for personal computer storage, external drives, and moderate server storage. Petabytes (PB) are used for enterprise data centers, cloud storage platforms, big data analytics, and scientific research datasets. As data grows exponentially, petabytes are becoming more common in large-scale applications."
+      question: "Why do some cloud services charge per GB while others offer unlimited storage?",
+      answer: "Services charging per GB (like AWS, Google Cloud) are infrastructure providers selling exact resources. 'Unlimited' services (like some personal cloud plans) use statistical models - they know most users store under 100GB, and the few heavy users balance out. Unlimited isn't truly infinite; there's always fair usage policies. For businesses, per-GB pricing is more transparent and scalable."
     }
   ];
 
@@ -557,238 +558,555 @@ const DataSizeConverter = () => {
 
           {/* SEO Content Section with Dropdowns */}
           <section className="space-y-4 mt-12">
-            {/* What This Tool Does - Dropdown */}
+            {/* Digital Storage Units */}
             <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
               <button
-                onClick={() => toggleSection('whatItDoes')}
+                onClick={() => toggleSection('digitalStorageUnits')}
                 className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
               >
                 <div className="flex items-center gap-3">
                   <div className="bg-blue-500/10 p-2 rounded-lg">
                     <Database size={20} className="text-blue-600" />
                   </div>
-                  <h2 className="text-xl font-bold text-foreground">Data Size Converter - Features & Digital Storage Systems</h2>
+                  <h2 className="text-xl font-bold text-foreground">Digital Storage Units - What They Really Mean</h2>
                 </div>
-                {openSections.whatItDoes ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                {openSections.digitalStorageUnits ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
               </button>
               
-              {openSections.whatItDoes && (
+              {openSections.digitalStorageUnits && (
                 <div className="px-6 pb-6">
-                  <p className="text-muted-foreground mb-4">
-                    This Data Size Converter is an essential tool for accurately converting between different digital storage units using the binary system (base-2, 1024-based conversions). It handles conversions from the smallest unit (bits) to the largest practical units (petabytes), including bytes, kilobytes, megabytes, gigabytes, and terabytes. The calculator provides precise conversions crucial for IT professionals, computer science students, system administrators, and anyone working with digital storage, file sizes, or data transfer calculations. With real-time computation and accuracy to ten decimal places, this tool eliminates confusion between binary and decimal systems, ensuring correct calculations for storage planning, bandwidth estimation, and data management.
-                  </p>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
-                    <div className="bg-blue-500/10 p-4 rounded-lg border border-blue-500/20">
-                      <div className="flex items-center gap-2 mb-2">
-                        <Database size={18} className="text-blue-600" />
-                        <h3 className="font-semibold text-foreground">Binary System Conversions</h3>
+                  <div className="space-y-4">
+                    <div>
+                      <p className="text-muted-foreground mb-4">
+                        Understanding data sizes isn't just about memorizing conversion factors. It's about knowing what each unit represents in practical terms. Let's break down what these measurements actually mean in everyday use, from the tiny bit to the massive petabyte.
+                      </p>
+                      
+                      <div className="space-y-4">
+                        <div className="bg-blue-500/5 p-4 rounded-lg">
+                          <h3 className="font-semibold text-foreground mb-2">Bits & Bytes - The Foundation</h3>
+                          <p className="text-sm text-muted-foreground mb-2">
+                            A <strong>bit</strong> is the smallest possible piece of digital information - it's either a 0 or a 1. Think of it like a light switch: either on or off. Eight of these switches together make a <strong>byte</strong>, which can represent a single character like the letter 'A' or the number '7'.
+                          </p>
+                          <p className="text-sm text-muted-foreground">
+                            What's confusing is that we measure internet speed in <strong>bits per second</strong> (Mbps) but file sizes in <strong>bytes</strong>. When your ISP says you have 100 Mbps internet, divide by 8 to get your actual download speed in megabytes per second: about 12.5 MB/s. That's why a 100 MB file doesn't download in 1 second with 100 Mbps internet.
+                          </p>
+                        </div>
+                        
+                        <div className="bg-green-500/5 p-4 rounded-lg">
+                          <h3 className="font-semibold text-foreground mb-2">Kilobytes to Megabytes - Everyday Files</h3>
+                          <p className="text-sm text-muted-foreground mb-2">
+                            A <strong>kilobyte</strong> (1024 bytes) holds about half a page of plain text. A typical Word document without images might be 50-100 KB. An average webpage with basic images loads about 1-2 MB of data.
+                          </p>
+                          <p className="text-sm text-muted-foreground">
+                            <strong>Megabytes</strong> are where things get interesting. A 3-minute MP3 song is about 3-5 MB. A smartphone photo taken today is 2-4 MB. A 10-page PDF with images might be 2 MB. Back in the 90s, a 1.44 MB floppy disk felt huge - now that's barely one decent photo.
+                          </p>
+                        </div>
+                        
+                        <div className="bg-purple-500/5 p-4 rounded-lg">
+                          <h3 className="font-semibold text-foreground mb-2">Gigabytes - The Modern Standard</h3>
+                          <p className="text-sm text-muted-foreground mb-2">
+                            <strong>Gigabytes</strong> (1024 MB) are what we deal with daily. Your smartphone probably has 64-256 GB. A typical laptop comes with 256 GB to 1 TB. A high-definition movie is 1-3 GB. Windows 10 installation needs about 20 GB. A AAA video game these days? 50-100 GB easily.
+                          </p>
+                          <p className="text-sm text-muted-foreground">
+                            Here's a practical comparison: 1 GB can hold about:
+                            <ul className="mt-2 space-y-1 pl-4">
+                              <li>• 250 songs (at 4 MB each)</li>
+                              <li>• 500 photos (at 2 MB each)</li>
+                              <li>• 1 hour of HD video</li>
+                              <li>• 1000 Word documents</li>
+                            </ul>
+                          </p>
+                        </div>
+                        
+                        <div className="bg-amber-500/5 p-4 rounded-lg">
+                          <h3 className="font-semibold text-foreground mb-2">Terabytes and Beyond - Big Data Era</h3>
+                          <p className="text-sm text-muted-foreground mb-2">
+                            <strong>Terabytes</strong> (1024 GB) used to be enterprise-only, but now 1-2 TB external drives are common. A 4TB drive can hold about 1 million photos or 1000 movies. YouTube uploads over 500 hours of video every minute - that's petabytes daily.
+                          </p>
+                          <p className="text-sm text-muted-foreground">
+                            <strong>Petabytes</strong> (1024 TB) are mind-boggling. One petabyte could store 13.3 years of HD video. All the data in the US Library of Congress (excluding audio/video) is estimated at 10 TB - so 100 Libraries of Congress would fit in 1 PB. Yet companies like Google process exabytes (1000 PB) daily.
+                          </p>
+                        </div>
+                        
+                        <div className="bg-secondary/20 p-4 rounded-lg">
+                          <h4 className="font-medium text-foreground mb-2">Quick Size Reference for Common Files</h4>
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                            <div className="space-y-2">
+                              <div className="flex justify-between items-center p-2 bg-card/50 rounded">
+                                <span className="font-medium">Email (text only)</span>
+                                <span className="font-mono">10-50 KB</span>
+                              </div>
+                              <div className="flex justify-between items-center p-2 bg-card/50 rounded">
+                                <span className="font-medium">Excel spreadsheet</span>
+                                <span className="font-mono">100-500 KB</span>
+                              </div>
+                              <div className="flex justify-between items-center p-2 bg-card/50 rounded">
+                                <span className="font-medium">PowerPoint (with images)</span>
+                                <span className="font-mono">2-10 MB</span>
+                              </div>
+                            </div>
+                            <div className="space-y-2">
+                              <div className="flex justify-between items-center p-2 bg-card/50 rounded">
+                                <span className="font-medium">Mobile app</span>
+                                <span className="font-mono">50-200 MB</span>
+                              </div>
+                              <div className="flex justify-between items-center p-2 bg-card/50 rounded">
+                                <span className="font-medium">Software suite (Office)</span>
+                                <span className="font-mono">3-5 GB</span>
+                              </div>
+                              <div className="flex justify-between items-center p-2 bg-card/50 rounded">
+                                <span className="font-medium">4K movie</span>
+                                <span className="font-mono">15-30 GB</span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                       </div>
-                      <p className="text-sm text-muted-foreground">Convert using accurate binary factors (1024-based) as used by operating systems and computer memory. Essential for IT professionals and accurate storage calculations.</p>
-                    </div>
-                    <div className="bg-green-500/10 p-4 rounded-lg border border-green-500/20">
-                      <div className="flex items-center gap-2 mb-2">
-                        <HardDrive size={18} className="text-green-600" />
-                        <h3 className="font-semibold text-foreground">Storage Capacity Planning</h3>
-                      </div>
-                      <p className="text-sm text-muted-foreground">Calculate actual usable storage space, plan backup strategies, and understand the real capacity of hard drives, SSDs, and cloud storage solutions.</p>
-                    </div>
-                    <div className="bg-purple-500/10 p-4 rounded-lg border border-purple-500/20">
-                      <div className="flex items-center gap-2 mb-2">
-                        <Wifi size={18} className="text-purple-600" />
-                        <h3 className="font-semibold text-foreground">Bandwidth & Transfer Calculations</h3>
-                      </div>
-                      <p className="text-sm text-muted-foreground">Convert between bits (network speeds) and bytes (file sizes) to estimate download times, upload durations, and data transfer requirements accurately.</p>
-                    </div>
-                    <div className="bg-amber-500/10 p-4 rounded-lg border border-amber-500/20">
-                      <div className="flex items-center gap-2 mb-2">
-                        <Cloud size={18} className="text-amber-600" />
-                        <h3 className="font-semibold text-foreground">Cloud & Enterprise Data</h3>
-                      </div>
-                      <p className="text-sm text-muted-foreground">Handle large-scale data conversions for enterprise storage, data centers, cloud computing, and big data analytics involving terabytes and petabytes.</p>
                     </div>
                   </div>
                 </div>
               )}
             </article>
 
-            {/* Use Cases Section - Dropdown */}
+            {/* Binary vs Decimal System */}
             <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
               <button
-                onClick={() => toggleSection('useCases')}
+                onClick={() => toggleSection('binaryVsDecimal')}
                 className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
               >
                 <div className="flex items-center gap-3">
                   <div className="bg-green-500/10 p-2 rounded-lg">
-                    <Database size={20} className="text-green-600" />
+                    <HardDrive size={20} className="text-green-600" />
                   </div>
-                  <h2 className="text-xl font-bold text-foreground">Data Size Conversion Applications</h2>
+                  <h2 className="text-xl font-bold text-foreground">Binary vs Decimal - The Storage Measurement Confusion</h2>
                 </div>
-                {openSections.useCases ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                {openSections.binaryVsDecimal ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
               </button>
               
-              {openSections.useCases && (
+              {openSections.binaryVsDecimal && (
                 <div className="px-6 pb-6">
                   <div className="space-y-4">
                     <div>
-                      <h3 className="font-semibold text-foreground mb-2">💻 IT & System Administration</h3>
-                      <ul className="space-y-1 text-muted-foreground text-sm">
-                        <li className="flex items-start gap-2">
-                          <div className="w-1 h-1 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
-                          <span><strong>Storage Capacity Planning:</strong> Convert between bytes, megabytes, gigabytes, and terabytes to accurately plan server storage, allocate disk space, and manage data center capacity for enterprise IT infrastructure</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <div className="w-1 h-1 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
-                          <span><strong>Backup Strategy Calculation:</strong> Convert backup sizes to estimate storage requirements, calculate backup windows, and plan disaster recovery storage needs for business continuity planning</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <div className="w-1 h-1 bg-purple-500 rounded-full mt-2 flex-shrink-0"></div>
-                          <span><strong>Network Bandwidth Planning:</strong> Convert between bits (network speeds) and bytes (file sizes) to design network infrastructure, estimate data transfer times, and optimize bandwidth allocation for organizational needs</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <div className="w-1 h-1 bg-amber-500 rounded-full mt-2 flex-shrink-0"></div>
-                          <span><strong>Virtual Machine Allocation:</strong> Convert storage requirements for virtual machines, allocate appropriate disk space, and manage hypervisor storage resources in virtualized environments</span>
-                        </li>
-                      </ul>
-                    </div>
-                    <div>
-                      <h3 className="font-semibold text-foreground mb-2">🎓 Education & Computer Science</h3>
-                      <ul className="space-y-1 text-muted-foreground text-sm">
-                        <li className="flex items-start gap-2">
-                          <div className="w-1 h-1 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
-                          <span><strong>Computer Science Instruction:</strong> Teach binary number system, data representation, and storage hierarchy concepts with practical conversion examples for computer science and IT education programs</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <div className="w-1 h-1 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
-                          <span><strong>Programming & Development:</strong> Convert data sizes for memory allocation, buffer sizing, and file handling in software development, ensuring efficient memory management and optimal performance</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <div className="w-1 h-1 bg-purple-500 rounded-full mt-2 flex-shrink-0"></div>
-                          <span><strong>Database Management:</strong> Calculate database storage requirements, index sizes, and backup needs for database administration, data warehousing, and business intelligence applications</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <div className="w-1 h-1 bg-amber-500 rounded-full mt-2 flex-shrink-0"></div>
-                          <span><strong>Academic Research Data:</strong> Convert research dataset sizes, calculate storage needs for experimental data, and plan data management strategies for scientific computing and academic projects</span>
-                        </li>
-                      </ul>
-                    </div>
-                    <div>
-                      <h3 className="font-semibold text-foreground mb-2">📊 Business & Personal Use</h3>
-                      <ul className="space-y-1 text-muted-foreground text-sm">
-                        <li className="flex items-start gap-2">
-                          <div className="w-1 h-1 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
-                          <span><strong>Cloud Storage Management:</strong> Convert between storage units to understand cloud pricing, estimate monthly costs, and optimize cloud storage plans for personal and business cloud services</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <div className="w-1 h-1 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
-                          <span><strong>Digital Media Production:</strong> Convert video file sizes, calculate storage needs for photography projects, and plan storage for multimedia production workflows in creative industries</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <div className="w-1 h-1 bg-purple-500 rounded-full mt-2 flex-shrink-0"></div>
-                          <span><strong>Home Network Planning:</strong> Convert internet speeds (Mbps) to download times for movies, games, and software updates to optimize home network setup and streaming services</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <div className="w-1 h-1 bg-amber-500 rounded-full mt-2 flex-shrink-0"></div>
-                          <span><strong>Device Storage Comparison:</strong> Compare actual storage capacity of smartphones, tablets, laptops, and external drives by converting advertised capacities to usable space calculations</span>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </article>
-
-            {/* How to Use - Dropdown */}
-            <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
-              <button
-                onClick={() => toggleSection('howToUse')}
-                className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
-              >
-                <div className="flex items-center gap-3">
-                  <div className="bg-amber-500/10 p-2 rounded-lg">
-                    <Database size={20} className="text-amber-600" />
-                  </div>
-                  <h2 className="text-xl font-bold text-foreground">How to Use Data Size Converter - Complete Guide</h2>
-                </div>
-                {openSections.howToUse ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
-              </button>
-              
-              {openSections.howToUse && (
-                <div className="px-6 pb-6">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="space-y-3">
-                      <h3 className="font-semibold text-foreground">Step-by-Step Instructions</h3>
+                      <p className="text-muted-foreground mb-4">
+                        The confusion between binary (1024) and decimal (1000) systems causes more frustration than almost any other tech issue. You buy a "1TB" hard drive, but your computer shows "931GB." Who's right? Actually, both are - they're just using different measurement systems.
+                      </p>
+                      
                       <div className="space-y-4">
-                        <div className="flex items-start gap-3">
-                          <div className="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0">1</div>
-                          <div>
-                            <div className="font-medium text-foreground">Enter Data Size Value</div>
-                            <div className="text-sm text-muted-foreground">Input the numerical data size you want to convert. Use decimal numbers for precise measurements like 1.5 GB or 250.75 MB.</div>
+                        <div className="bg-blue-500/5 p-4 rounded-lg">
+                          <h3 className="font-semibold text-foreground mb-2">Why Computers Use Binary (1024)</h3>
+                          <p className="text-sm text-muted-foreground mb-3">
+                            Computers think in binary - ones and zeros. Memory chips are built in powers of two: 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024. That last number, 1024 (which is 2¹⁰), became the natural breaking point between units.
+                          </p>
+                          <div className="bg-secondary/30 p-3 rounded mb-3">
+                            <div className="text-sm font-medium mb-1">How binary progression works:</div>
+                            <div className="text-xs grid grid-cols-2 gap-2">
+                              <div>2 bytes = 16 bits</div>
+                              <div>4 bytes = 32 bits</div>
+                              <div>8 bytes = 64 bits</div>
+                              <div>16 bytes = 128 bits</div>
+                              <div>32 bytes = 256 bits</div>
+                              <div>64 bytes = 512 bits</div>
+                              <div>128 bytes = 1024 bits</div>
+                              <div>256 bytes = 2048 bits</div>
+                            </div>
                           </div>
+                          <p className="text-sm text-muted-foreground">
+                            This binary alignment makes memory addressing and data retrieval more efficient. When your operating system reports file sizes, it uses these binary multiples because that's how the computer actually stores and accesses data.
+                          </p>
                         </div>
-                        <div className="flex items-start gap-3">
-                          <div className="bg-green-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0">2</div>
-                          <div>
-                            <div className="font-medium text-foreground">Select Source Unit</div>
-                            <div className="text-sm text-muted-foreground">Choose the unit of the data size you entered from the dropdown menu (e.g., bytes, megabytes, gigabytes, bits).</div>
+                        
+                        <div className="bg-green-500/5 p-4 rounded-lg">
+                          <h3 className="font-semibold text-foreground mb-2">Why Storage Companies Use Decimal (1000)</h3>
+                          <p className="text-sm text-muted-foreground mb-3">
+                            Hard drive manufacturers switched to decimal units in the late 1990s. Their reasoning? Consistency with other metric measurements (kilometer = 1000 meters, kilogram = 1000 grams) and bigger marketing numbers.
+                          </p>
+                          <div className="grid grid-cols-2 gap-3 mb-3">
+                            <div className="text-center p-3 bg-red-500/10 rounded">
+                              <div className="font-medium">Binary 1GB</div>
+                              <div className="text-xs font-mono">1,073,741,824 bytes</div>
+                              <div className="text-xs mt-1">(What your computer shows)</div>
+                            </div>
+                            <div className="text-center p-3 bg-blue-500/10 rounded">
+                              <div className="font-medium">Decimal 1GB</div>
+                              <div className="text-xs font-mono">1,000,000,000 bytes</div>
+                              <div className="text-xs mt-1">(What drive box says)</div>
+                            </div>
                           </div>
+                          <p className="text-sm text-muted-foreground">
+                            That 7.3% difference adds up. A "1TB" (decimal) drive has 1 trillion bytes. Divide by binary gigabytes (1.074 billion bytes each) and you get 931GB. The drive isn't defective - it's exactly 1 trillion bytes as advertised.
+                          </p>
                         </div>
-                        <div className="flex items-start gap-3">
-                          <div className="bg-purple-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0">3</div>
-                          <div>
-                            <div className="font-medium text-foreground">Select Target Unit</div>
-                            <div className="text-sm text-muted-foreground">Choose the unit you want to convert to from the second dropdown menu, ranging from bits to petabytes.</div>
+                        
+                        <div className="bg-purple-500/5 p-4 rounded-lg">
+                          <h3 className="font-semibold text-foreground mb-2">The Standards Battle: KiB vs KB</h3>
+                          <p className="text-sm text-muted-foreground mb-3">
+                            To solve the confusion, the International Electrotechnical Commission created new names in 1998:
+                          </p>
+                          <div className="overflow-x-auto">
+                            <div className="min-w-full inline-block align-middle">
+                              <div className="overflow-hidden border border-border rounded-lg">
+                                <table className="min-w-full divide-y divide-border">
+                                  <thead className="bg-secondary/20">
+                                    <tr>
+                                      <th className="px-4 py-2 text-left text-xs font-medium text-foreground">Binary (1024)</th>
+                                      <th className="px-4 py-2 text-left text-xs font-medium text-foreground">Decimal (1000)</th>
+                                      <th className="px-4 py-2 text-left text-xs font-medium text-foreground">Adoption</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody className="divide-y divide-border">
+                                    <tr>
+                                      <td className="px-4 py-2 text-xs font-mono">KiB (Kibibyte)</td>
+                                      <td className="px-4 py-2 text-xs font-mono">KB (Kilobyte)</td>
+                                      <td className="px-4 py-2 text-xs">Tech-savvy users, Linux</td>
+                                    </tr>
+                                    <tr>
+                                      <td className="px-4 py-2 text-xs font-mono">MiB (Mebibyte)</td>
+                                      <td className="px-4 py-2 text-xs font-mono">MB (Megabyte)</td>
+                                      <td className="px-4 py-2 text-xs">Technical documentation</td>
+                                    </tr>
+                                    <tr>
+                                      <td className="px-4 py-2 text-xs font-mono">GiB (Gibibyte)</td>
+                                      <td className="px-4 py-2 text-xs font-mono">GB (Gigabyte)</td>
+                                      <td className="px-4 py-2 text-xs">Some operating systems</td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </div>
+                            </div>
                           </div>
+                          <p className="text-sm text-muted-foreground mt-3">
+                            Despite these official standards, most consumer software still uses KB/MB/GB for both systems, relying on context to tell which is which. Windows uses binary for file sizes but sometimes shows decimal for drive capacities. macOS switched to decimal entirely in recent versions.
+                          </p>
                         </div>
-                        <div className="flex items-start gap-3">
-                          <div className="bg-amber-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0">4</div>
-                          <div>
-                            <div className="font-medium text-foreground">View & Apply Results</div>
-                            <div className="text-sm text-muted-foreground">The converted data size appears instantly. Use the copy button to save results for documentation, planning, or calculations.</div>
+                        
+                        <div className="bg-amber-500/5 p-4 rounded-lg">
+                          <h3 className="font-semibold text-foreground mb-2">Practical Implications for You</h3>
+                          <div className="space-y-3 text-sm">
+                            <div className="flex items-start gap-2">
+                              <div className="w-4 h-4 bg-red-500/20 rounded flex items-center justify-center flex-shrink-0 mt-0.5">
+                                <div className="w-1.5 h-1.5 bg-red-500 rounded-full"></div>
+                              </div>
+                              <span><strong>Buying storage:</strong> That 4TB external drive will show as about 3.64TB on your computer. It's not a scam - it's math. Plan your purchase accordingly.</span>
+                            </div>
+                            <div className="flex items-start gap-2">
+                              <div className="w-4 h-4 bg-yellow-500/20 rounded flex items-center justify-center flex-shrink-0 mt-0.5">
+                                <div className="w-1.5 h-1.5 bg-yellow-500 rounded-full"></div>
+                              </div>
+                              <span><strong>Download estimates:</strong> If your internet is 100 Mbps (megabits), divide by 8.388608 (not 8) for exact binary MB/s: 11.92 MB/s, not 12.5 MB/s.</span>
+                            </div>
+                            <div className="flex items-start gap-2">
+                              <div className="w-4 h-4 bg-green-500/20 rounded flex items-center justify-center flex-shrink-0 mt-0.5">
+                                <div className="w-1.5 h-1.5 bg-green-500 rounded-full"></div>
+                              </div>
+                              <span><strong>Backup planning:</strong> If you have 500GB of files, you need at least 500GB of binary space, which means buying a 550GB+ decimal drive.</span>
+                            </div>
+                            <div className="flex items-start gap-2">
+                              <div className="w-4 h-4 bg-blue-500/20 rounded flex items-center justify-center flex-shrink-0 mt-0.5">
+                                <div className="w-1.5 h-1.5 bg-blue-500 rounded-full"></div>
+                              </div>
+                              <span><strong>Cloud storage:</strong> Most cloud services use decimal (1000) for their plans. Your 1TB Google Drive is 1 trillion bytes, showing as 931GB on Windows.</span>
+                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                    <div className="space-y-3">
-                      <h3 className="font-semibold text-foreground">Pro Data Conversion Tips</h3>
-                      <ul className="space-y-2 text-sm text-muted-foreground">
-                        <li className="flex items-start gap-2">
-                          <div className="bg-blue-500/20 p-1 rounded mt-0.5">
-                            <Database size={12} className="text-blue-500" />
+                  </div>
+                </div>
+              )}
+            </article>
+
+            {/* IT & Cloud Usage */}
+            <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
+              <button
+                onClick={() => toggleSection('itCloudUsage')}
+                className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="bg-purple-500/10 p-2 rounded-lg">
+                    <Cloud size={20} className="text-purple-600" />
+                  </div>
+                  <h2 className="text-xl font-bold text-foreground">IT & Cloud Storage - Professional Data Management</h2>
+                </div>
+                {openSections.itCloudUsage ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+              </button>
+              
+              {openSections.itCloudUsage && (
+                <div className="px-6 pb-6">
+                  <div className="space-y-4">
+                    <div>
+                      <p className="text-muted-foreground mb-4">
+                        In professional IT and cloud environments, data size conversions aren't academic exercises - they're critical for budgeting, planning, and operations. Getting these calculations wrong can mean overspending by thousands or underestimating project timelines by weeks.
+                      </p>
+                      
+                      <div className="space-y-4">
+                        <div className="bg-blue-500/5 p-4 rounded-lg">
+                          <h3 className="font-semibold text-foreground mb-2">Cloud Cost Calculations - The Real Math</h3>
+                          <p className="text-sm text-muted-foreground mb-3">
+                            Cloud providers charge by the gigabyte-month. AWS S3 Standard storage costs about $0.023 per GB per month. That seems cheap until you do the math:
+                          </p>
+                          <div className="bg-secondary/30 p-3 rounded mb-3">
+                            <div className="text-sm font-medium mb-1">Example: 50TB corporate data migration to cloud</div>
+                            <div className="text-xs space-y-1">
+                              <div>50 TB = 50,000 GB (using decimal for cloud pricing)</div>
+                              <div>Monthly storage: 50,000 × $0.023 = $1,150</div>
+                              <div>Annual cost: $1,150 × 12 = $13,800</div>
+                              <div>Data transfer out (to users): 10% monthly = 5TB × $0.09/GB = $450/month</div>
+                              <div><strong>Total first year: ~$19,000</strong></div>
+                            </div>
                           </div>
-                          <span><strong>Quick Common Conversions:</strong> Use the quick buttons for standard conversions like 1024 MB to GB or 1 Byte to 8 Bits for common calculations</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <div className="bg-green-500/20 p-1 rounded mt-0.5">
-                            <ArrowLeftRight size={12} className="text-green-500" />
+                          <p className="text-sm text-muted-foreground">
+                            But here's the catch: your on-premises 50TB (binary) is actually 45.5TB in cloud decimal terms. Yet you'll likely need to upload all 50TB binary, which the cloud sees as 55TB decimal. That discrepancy affects both migration planning and ongoing costs.
+                          </p>
+                        </div>
+                        
+                        <div className="bg-green-500/5 p-4 rounded-lg">
+                          <h3 className="font-semibold text-foreground mb-2">Backup Window Planning</h3>
+                          <p className="text-sm text-muted-foreground mb-3">
+                            IT teams need to backup data within specific "backup windows" - typically overnight when systems are less busy. Calculating whether 500GB will fit in an 8-hour window involves careful conversions:
+                          </p>
+                          <div className="space-y-2 text-sm">
+                            <div className="flex items-center justify-between border-b border-border/50 pb-2">
+                              <div>Backup size: 500 GB (binary)</div>
+                              <div className="font-mono">= 512,000 MB</div>
+                            </div>
+                            <div className="flex items-center justify-between border-b border-border/50 pb-2">
+                              <div>Network throughput: 1 Gbps (gigabit)</div>
+                              <div className="font-mono">= 125 MB/s (maximum)</div>
+                            </div>
+                            <div className="flex items-center justify-between border-b border-border/50 pb-2">
+                              <div>Real speed (70% efficiency):</div>
+                              <div className="font-mono">87.5 MB/s</div>
+                            </div>
+                            <div className="flex items-center justify-between">
+                              <div>Time required:</div>
+                              <div className="font-mono">512,000 ÷ 87.5 = 5,851s = 1.63 hours</div>
+                            </div>
                           </div>
-                          <span><strong>Reverse Calculations:</strong> Click the swap button to instantly reverse your conversion without re-entering values for bidirectional calculations</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <div className="bg-purple-500/20 p-1 rounded mt-0.5">
-                            <Wifi size={12} className="text-purple-500" />
+                          <p className="text-sm text-muted-foreground mt-3">
+                            This calculation shows the backup fits easily in an 8-hour window. But if you mistakenly used 500,000 MB (decimal) instead of 512,000 MB (binary), you'd underestimate by 12,000 MB - about 2.3 minutes at this speed. Small errors compound in large-scale operations.
+                          </p>
+                        </div>
+                        
+                        <div className="bg-purple-500/5 p-4 rounded-lg">
+                          <h3 className="font-semibold text-foreground mb-2">Virtual Machine Storage Allocation</h3>
+                          <p className="text-sm text-muted-foreground mb-3">
+                            When provisioning VMs in VMware or Hyper-V, you need to understand thin vs thick provisioning and how storage is actually allocated:
+                          </p>
+                          <div className="grid grid-cols-2 gap-3 mb-3">
+                            <div className="p-3 bg-blue-500/10 rounded">
+                              <div className="font-medium text-sm mb-1">Thin Provisioning</div>
+                              <div className="text-xs">VM thinks it has 100GB, but only uses actual space needed. 20GB file = 20GB allocated. Efficient but can overcommit.</div>
+                            </div>
+                            <div className="p-3 bg-green-500/10 rounded">
+                              <div className="font-medium text-sm mb-1">Thick Provisioning</div>
+                              <div className="text-xs">100GB VM reserves 100GB immediately. Wastes space but guarantees availability. 20GB file still uses 100GB.</div>
+                            </div>
                           </div>
-                          <span><strong>Internet Speed Conversion:</strong> Remember 8 bits = 1 byte when converting Mbps (network speed) to MB/s (download speed) for accurate time estimates</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <div className="bg-amber-500/20 p-1 rounded mt-0.5">
-                            <HardDrive size={12} className="text-amber-500" />
+                          <p className="text-sm text-muted-foreground">
+                            The conversion challenge comes when monitoring actual vs allocated space. A 2TB datastore showing 80% used might actually have 500GB free if VMs are thinly provisioned. But if all VMs suddenly write data, you could run out of physical space despite the dashboard showing 20% free.
+                          </p>
+                        </div>
+                        
+                        <div className="bg-amber-500/5 p-4 rounded-lg">
+                          <h3 className="font-semibold text-foreground mb-2">Database Sizing and Growth Projections</h3>
+                          <div className="space-y-3 text-sm">
+                            <div className="border-l-4 border-blue-500 pl-3 py-1">
+                              <div className="font-medium text-foreground">SQL Server database</div>
+                              <div className="text-muted-foreground">Starting size: 50GB. Monthly growth: 5GB. Annual projection: 50 + (5×12) = 110GB. But with indexes and logs, actual needed: 110 × 1.3 = 143GB.</div>
+                            </div>
+                            <div className="border-l-4 border-green-500 pl-3 py-1">
+                              <div className="font-medium text-foreground">Backup retention policy</div>
+                              <div className="text-muted-foreground">Daily full backups (143GB) kept for 30 days = 4.29TB. Plus transaction log backups every hour (2GB each × 24 × 30) = 1.44TB. Total: 5.73TB needed.</div>
+                            </div>
+                            <div className="border-l-4 border-purple-500 pl-3 py-1">
+                              <div className="font-medium text-foreground">Cloud migration planning</div>
+                              <div className="text-muted-foreground">5.73TB binary = 6.3TB decimal. At $0.023/GB-month = $145/month just for backup storage. Plus compute, transfer, and management costs.</div>
+                            </div>
                           </div>
-                          <span><strong>Storage Reality Check:</strong> Account for formatting overhead (typically 5-10%) when converting advertised storage to actual usable space</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <div className="bg-red-500/20 p-1 rounded mt-0.5">
-                            <Copy size={12} className="text-red-500" />
-                          </div>
-                          <span><strong>Documentation & Reporting:</strong> Use the copy function to save conversion results for IT documentation, project plans, or technical reports</span>
-                        </li>
-                      </ul>
+                          <p className="text-sm text-muted-foreground mt-3">
+                            These calculations demonstrate why IT professionals need precise conversions. A 10% error in estimating database growth could mean running out of storage mid-quarter or overspending on cloud resources by thousands annually.
+                          </p>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
               )}
             </article>
 
-            {/* Example Input and Output Section */}
+            {/* Conversion Standards */}
+            <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
+              <button
+                onClick={() => toggleSection('conversionStandards')}
+                className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="bg-red-500/10 p-2 rounded-lg">
+                    <Database size={20} className="text-red-600" />
+                  </div>
+                  <h2 className="text-xl font-bold text-foreground">Data Conversion Standards - Industry Practices</h2>
+                </div>
+                {openSections.conversionStandards ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+              </button>
+              
+              {openSections.conversionStandards && (
+                <div className="px-6 pb-6">
+                  <div className="space-y-4">
+                    <div>
+                      <p className="text-muted-foreground mb-4">
+                        Different industries and technologies have settled on different standards for data measurement. Knowing which standard applies to your situation prevents costly mistakes and ensures accurate planning.
+                      </p>
+                      
+                      <div className="space-y-4">
+                        <div className="bg-blue-500/5 p-4 rounded-lg">
+                          <h3 className="font-semibold text-foreground mb-2">Operating System Standards</h3>
+                          <div className="overflow-x-auto">
+                            <div className="min-w-full inline-block align-middle">
+                              <div className="overflow-hidden border border-border rounded-lg">
+                                <table className="min-w-full divide-y divide-border">
+                                  <thead className="bg-secondary/20">
+                                    <tr>
+                                      <th className="px-4 py-2 text-left text-xs font-medium text-foreground">OS</th>
+                                      <th className="px-4 py-2 text-left text-xs font-medium text-foreground">Standard Used</th>
+                                      <th className="px-4 py-2 text-left text-xs font-medium text-foreground">File Size Display</th>
+                                      <th className="px-4 py-2 text-left text-xs font-medium text-foreground">Drive Capacity Display</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody className="divide-y divide-border">
+                                    <tr>
+                                      <td className="px-4 py-2 text-xs font-medium text-foreground">Windows 10/11</td>
+                                      <td className="px-4 py-2 text-xs">Binary for files, Decimal for drives</td>
+                                      <td className="px-4 py-2 text-xs">KB = 1024 bytes</td>
+                                      <td className="px-4 py-2 text-xs">GB = 1 billion bytes</td>
+                                    </tr>
+                                    <tr>
+                                      <td className="px-4 py-2 text-xs font-medium text-foreground">macOS (Recent)</td>
+                                      <td className="px-4 py-2 text-xs">Decimal for everything</td>
+                                      <td className="px-4 py-2 text-xs">KB = 1000 bytes</td>
+                                      <td className="px-4 py-2 text-xs">GB = 1 billion bytes</td>
+                                    </tr>
+                                    <tr>
+                                      <td className="px-4 py-2 text-xs font-medium text-foreground">Linux (most distros)</td>
+                                      <td className="px-4 py-2 text-xs">Binary with KiB option</td>
+                                      <td className="px-4 py-2 text-xs">KB = 1024 bytes (KiB available)</td>
+                                      <td className="px-4 py-2 text-xs">GB = 1.074 billion bytes</td>
+                                    </tr>
+                                    <tr>
+                                      <td className="px-4 py-2 text-xs font-medium text-foreground">Android</td>
+                                      <td className="px-4 py-2 text-xs">Varies by manufacturer</td>
+                                      <td className="px-4 py-2 text-xs">Usually decimal</td>
+                                      <td className="px-4 py-2 text-xs">Usually decimal</td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </div>
+                            </div>
+                          </div>
+                          <p className="text-sm text-muted-foreground mt-3">
+                            This inconsistency explains why the same file might show as 105MB on Windows but 100MB on macOS. Neither is wrong - they're just using different standards. Windows shows binary megabytes (105×1024×1024 bytes) while macOS shows decimal (100×1000×1000 bytes).
+                          </p>
+                        </div>
+                        
+                        <div className="bg-green-500/5 p-4 rounded-lg">
+                          <h3 className="font-semibold text-foreground mb-2">Network and Bandwidth Standards</h3>
+                          <p className="text-sm text-muted-foreground mb-3">
+                            Network equipment manufacturers and ISPs almost universally use decimal (1000-based) measurements for speeds, but with a twist:
+                          </p>
+                          <div className="space-y-3 text-sm">
+                            <div className="flex items-start gap-2">
+                              <div className="w-4 h-4 bg-blue-500/20 rounded flex items-center justify-center flex-shrink-0 mt-0.5">
+                                <Wifi size={12} className="text-blue-500" />
+                              </div>
+                              <span><strong>Internet speeds:</strong> Always advertised in megabits per second (Mbps) using decimal. 100 Mbps = 100,000,000 bits per second.</span>
+                            </div>
+                            <div className="flex items-start gap-2">
+                              <div className="w-4 h-4 bg-green-500/20 rounded flex items-center justify-center flex-shrink-0 mt-0.5">
+                                <Server size={12} className="text-green-500" />
+                              </div>
+                              <span><strong>Network interfaces:</strong> Gigabit Ethernet = 1,000,000,000 bits per second (decimal). Not 1,073,741,824 (binary).</span>
+                            </div>
+                            <div className="flex items-start gap-2">
+                              <div className="w-4 h-4 bg-purple-500/20 rounded flex items-center justify-center flex-shrink-0 mt-0.5">
+                                <Download size={12} className="text-purple-500" />
+                              </div>
+                              <span><strong>Download calculations:</strong> To get MB/s from Mbps: Divide by 8 for approximate, or divide by 8.388608 for exact binary conversion.</span>
+                            </div>
+                          </div>
+                          <div className="mt-3 p-3 bg-secondary/30 rounded">
+                            <div className="font-medium text-foreground text-sm mb-1">Example: 500 Mbps internet plan</div>
+                            <div className="text-xs space-y-1">
+                              <div>Approximate download: 500 ÷ 8 = 62.5 MB/s</div>
+                              <div>Exact binary: 500 ÷ 8.388608 = 59.6 MiB/s</div>
+                              <div>Difference: 2.9 MB/s (about 5% slower than expected)</div>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <div className="bg-purple-500/5 p-4 rounded-lg">
+                          <h3 className="font-semibold text-foreground mb-2">Storage Manufacturer Standards</h3>
+                          <p className="text-sm text-muted-foreground mb-3">
+                            Hard drive and SSD manufacturers have their own conventions that have evolved over time:
+                          </p>
+                          <div className="space-y-2 text-sm">
+                            <div className="flex items-center justify-between border-b border-border/50 pb-2">
+                              <div>Hard Disk Drives (HDD)</div>
+                              <div className="font-mono text-xs bg-blue-500/10 px-2 py-1 rounded">Decimal (1000) since ~1998</div>
+                            </div>
+                            <div className="flex items-center justify-between border-b border-border/50 pb-2">
+                              <div>Solid State Drives (SSD)</div>
+                              <div className="font-mono text-xs bg-green-500/10 px-2 py-1 rounded">Decimal, with over-provisioning</div>
+                            </div>
+                            <div className="flex items-center justify-between border-b border-border/50 pb-2">
+                              <div>USB Flash Drives</div>
+                              <div className="font-mono text-xs bg-purple-500/10 px-2 py-1 rounded">Varies, often decimal</div>
+                            </div>
+                            <div className="flex items-center justify-between">
+                              <div>Optical Media (DVD/Blu-ray)</div>
+                              <div className="font-mono text-xs bg-amber-500/10 px-2 py-1 rounded">Binary for capacity (4.7GB = 4.7×1024³)</div>
+                            </div>
+                          </div>
+                          <p className="text-sm text-muted-foreground mt-3">
+                            The over-provisioning in SSDs adds another layer. A "1TB" SSD might have 1,024GB of physical NAND chips, with 24GB reserved for wear leveling and bad block management. So even the manufacturer's "decimal" TB might not match what's physically on the chips.
+                          </p>
+                        </div>
+                        
+                        <div className="bg-amber-500/5 p-4 rounded-lg">
+                          <h3 className="font-semibold text-foreground mb-2">Best Practices for Professionals</h3>
+                          <div className="space-y-2 text-sm">
+                            <div className="flex items-start gap-2">
+                              <div className="w-4 h-4 bg-red-500/20 rounded flex items-center justify-center flex-shrink-0 mt-0.5">
+                                <div className="w-1.5 h-1.5 bg-red-500 rounded-full"></div>
+                              </div>
+                              <span><strong>Document your standard:</strong> In technical specifications, explicitly state "GB (binary)" or "GB (decimal)" to prevent misunderstandings.</span>
+                            </div>
+                            <div className="flex items-start gap-2">
+                              <div className="w-4 h-4 bg-yellow-500/20 rounded flex items-center justify-center flex-shrink-0 mt-0.5">
+                                <div className="w-1.5 h-1.5 bg-yellow-500 rounded-full"></div>
+                              </div>
+                              <span><strong>Use exact conversions in code:</strong> When programming, use 1024 for memory allocation, 1000 for network code, unless the API specifies otherwise.</span>
+                            </div>
+                            <div className="flex items-start gap-2">
+                              <div className="w-4 h-4 bg-green-500/20 rounded flex items-center justify-center flex-shrink-0 mt-0.5">
+                                <div className="w-1.5 h-1.5 bg-green-500 rounded-full"></div>
+                              </div>
+                              <span><strong>Add buffer capacity:</strong> When planning storage, add 20-30% to account for formatting, file system overhead, and measurement discrepancies.</span>
+                            </div>
+                            <div className="flex items-start gap-2">
+                              <div className="w-4 h-4 bg-blue-500/20 rounded flex items-center justify-center flex-shrink-0 mt-0.5">
+                                <div className="w-1.5 h-1.5 bg-blue-500 rounded-full"></div>
+                              </div>
+                              <span><strong>Verify with tools:</strong> Use calculators like this one to double-check conversions before making purchasing or architecture decisions.</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </article>
+
+            {/* Examples */}
             <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
               <button
                 onClick={() => toggleSection('examples')}
@@ -798,7 +1116,7 @@ const DataSizeConverter = () => {
                   <div className="bg-purple-500/10 p-2 rounded-lg">
                     <Database size={20} className="text-purple-600" />
                   </div>
-                  <h2 className="text-xl font-bold text-foreground">Data Size Conversion Examples</h2>
+                  <h2 className="text-xl font-bold text-foreground">Real-World Data Conversion Examples</h2>
                 </div>
                 {openSections.examples ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
               </button>
@@ -807,159 +1125,223 @@ const DataSizeConverter = () => {
                 <div className="px-6 pb-6">
                   <div className="space-y-4">
                     <div>
-                      <h3 className="font-semibold text-foreground mb-3">Common Data Size Conversion Examples</h3>
-                      <div className="overflow-x-auto">
-                        <div className="min-w-full inline-block align-middle">
-                          <div className="overflow-hidden border border-border rounded-lg">
-                            <table className="min-w-full divide-y divide-border">
-                              <thead className="bg-secondary/20">
-                                <tr>
-                                  <th className="px-4 py-3 text-left text-xs font-medium text-foreground uppercase tracking-wider">From</th>
-                                  <th className="px-4 py-3 text-left text-xs font-medium text-foreground uppercase tracking-wider">To</th>
-                                  <th className="px-4 py-3 text-left text-xs font-medium text-foreground uppercase tracking-wider">Conversion Factor</th>
-                                  <th className="px-4 py-3 text-left text-xs font-medium text-foreground uppercase tracking-wider">Example</th>
-                                  <th className="px-4 py-3 text-left text-xs font-medium text-foreground uppercase tracking-wider">Binary Result</th>
-                                </tr>
-                              </thead>
-                              <tbody className="divide-y divide-border">
-                                <tr>
-                                  <td className="px-4 py-3 text-sm font-mono text-blue-600">1 Megabyte</td>
-                                  <td className="px-4 py-3 text-sm font-mono text-foreground">Kilobytes</td>
-                                  <td className="px-4 py-3 text-sm font-mono text-foreground">× 1024</td>
-                                  <td className="px-4 py-3 text-sm font-mono text-foreground">5 MB</td>
-                                  <td className="px-4 py-3 text-sm font-mono text-foreground">5120 KB</td>
-                                </tr>
-                                <tr>
-                                  <td className="px-4 py-3 text-sm font-mono text-blue-600">1 Gigabyte</td>
-                                  <td className="px-4 py-3 text-sm font-mono text-foreground">Megabytes</td>
-                                  <td className="px-4 py-3 text-sm font-mono text-foreground">× 1024</td>
-                                  <td className="px-4 py-3 text-sm font-mono text-foreground">2.5 GB</td>
-                                  <td className="px-4 py-3 text-sm font-mono text-foreground">2560 MB</td>
-                                </tr>
-                                <tr>
-                                  <td className="px-4 py-3 text-sm font-mono text-blue-600">1 Terabyte</td>
-                                  <td className="px-4 py-3 text-sm font-mono text-foreground">Gigabytes</td>
-                                  <td className="px-4 py-3 text-sm font-mono text-foreground">× 1024</td>
-                                  <td className="px-4 py-3 text-sm font-mono text-foreground">1 TB</td>
-                                  <td className="px-4 py-3 text-sm font-mono text-foreground">1024 GB</td>
-                                </tr>
-                                <tr>
-                                  <td className="px-4 py-3 text-sm font-mono text-blue-600">1 Byte</td>
-                                  <td className="px-4 py-3 text-sm font-mono text-foreground">Bits</td>
-                                  <td className="px-4 py-3 text-sm font-mono text-foreground">× 8</td>
-                                  <td className="px-4 py-3 text-sm font-mono text-foreground">100 B</td>
-                                  <td className="px-4 py-3 text-sm font-mono text-foreground">800 b</td>
-                                </tr>
-                                <tr>
-                                  <td className="px-4 py-3 text-sm font-mono text-blue-600">1 Petabyte</td>
-                                  <td className="px-4 py-3 text-sm font-mono text-foreground">Terabytes</td>
-                                  <td className="px-4 py-3 text-sm font-mono text-foreground">× 1024</td>
-                                  <td className="px-4 py-3 text-sm font-mono text-foreground">0.5 PB</td>
-                                  <td className="px-4 py-3 text-sm font-mono text-foreground">512 TB</td>
-                                </tr>
-                              </tbody>
-                            </table>
+                      <p className="text-muted-foreground mb-4">
+                        Let's walk through some practical scenarios where getting data conversions right matters. These examples show how precise calculations prevent problems in everything from personal computing to enterprise IT.
+                      </p>
+                      
+                      <div className="space-y-4">
+                        <div className="bg-blue-500/5 p-4 rounded-lg">
+                          <h3 className="font-semibold text-foreground mb-2">Example 1: Personal Photo Backup Planning</h3>
+                          <div className="space-y-3 text-sm">
+                            <p><strong>Situation:</strong> You want to backup 5 years of smartphone photos to cloud storage.</p>
+                            
+                            <div className="pl-4 border-l-2 border-blue-500">
+                              <div className="font-medium text-foreground">Step 1: Estimate current storage</div>
+                              <div className="mt-1 text-muted-foreground">
+                                • Photos per month: 150 (5 per day average)<br/>
+                                • Average photo size: 3 MB<br/>
+                                • Monthly total: 150 × 3 = 450 MB<br/>
+                                • 5 years (60 months): 450 × 60 = 27,000 MB
+                              </div>
+                            </div>
+                            
+                            <div className="pl-4 border-l-2 border-green-500">
+                              <div className="font-medium text-foreground">Step 2: Convert to appropriate units</div>
+                              <div className="mt-1 text-muted-foreground">
+                                27,000 MB = 27,000 ÷ 1024 = 26.37 GB (binary)<br/>
+                                But cloud services use decimal: 27,000 ÷ 1000 = 27 GB
+                              </div>
+                            </div>
+                            
+                            <div className="pl-4 border-l-2 border-purple-500">
+                              <div className="font-medium text-foreground">Step 3: Plan for growth</div>
+                              <div className="mt-1 text-muted-foreground">
+                                Camera quality improves → photos get larger<br/>
+                                Assume 20% annual increase in average size<br/>
+                                Next year: 27 GB × 1.2 = 32.4 GB<br/>
+                                Year after: 32.4 × 1.2 = 38.9 GB<br/>
+                                <strong>Recommendation: Buy 100GB cloud plan</strong>
+                              </div>
+                            </div>
+                            
+                            <div className="bg-secondary/30 p-3 rounded">
+                              <div className="font-medium text-foreground">The insight:</div>
+                              <div className="text-xs mt-1 text-muted-foreground">Without conversion awareness, you might buy a 50GB plan thinking it's enough for "about 27GB." But 27GB binary is 29GB decimal, plus growth puts you at risk of running out within a year.</div>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <div className="bg-green-500/5 p-4 rounded-lg">
+                          <h3 className="font-semibold text-foreground mb-2">Example 2: Small Business Server Upgrade</h3>
+                          <div className="space-y-3 text-sm">
+                            <p><strong>Situation:</strong> A 20-person company needs to replace their aging file server.</p>
+                            
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                              <div>
+                                <div className="font-medium text-foreground mb-1">Current usage:</div>
+                                <ul className="space-y-1 text-muted-foreground">
+                                  <li>• Shared files: 120 GB</li>
+                                  <li>• Email database: 80 GB</li>
+                                  <li>• Accounting software: 15 GB</li>
+                                  <li>• Backup overhead: 30%</li>
+                                </ul>
+                              </div>
+                              <div>
+                                <div className="font-medium text-foreground mb-1">Calculations:</div>
+                                <div className="space-y-1 text-muted-foreground">
+                                  <div>Current total: 215 GB</div>
+                                  <div>With backup: 215 × 1.3 = 279.5 GB</div>
+                                  <div>Annual growth: 25%</div>
+                                  <div>3-year projection: 279.5 × 1.25³ = 546 GB</div>
+                                </div>
+                              </div>
+                            </div>
+                            
+                            <div className="pl-4 border-l-2 border-blue-500">
+                              <div className="font-medium text-foreground">Storage purchase decision:</div>
+                              <div className="mt-1 text-muted-foreground">
+                                546 GB binary needed<br/>
+                                Drive sizes: 500GB, 1TB, 2TB (all decimal)<br/>
+                                500GB decimal = 465GB binary → too small<br/>
+                                1TB decimal = 931GB binary → fits with room<br/>
+                                2TB decimal = 1.82TB binary → overkill but future-proof
+                              </div>
+                            </div>
+                            
+                            <p className="text-sm text-muted-foreground">
+                              <strong>The decision:</strong> Buy 1TB drives in RAID 1 (mirrored) configuration. Total usable: 931GB binary, minus RAID overhead = ~900GB. Plenty for 546GB needs with growth room. Cost: ~$150 per drive × 2 = $300 vs $500 for 2TB setup.
+                            </p>
+                          </div>
+                        </div>
+                        
+                        <div className="bg-purple-500/5 p-4 rounded-lg">
+                          <h3 className="font-semibold text-foreground mb-2">Example 3: Video Production Workflow</h3>
+                          <div className="space-y-3 text-sm">
+                            <p><strong>Situation:</strong> Editing 4K video for a 30-minute corporate film.</p>
+                            
+                            <div className="overflow-x-auto">
+                              <div className="min-w-full inline-block align-middle">
+                                <div className="overflow-hidden border border-border rounded-lg">
+                                  <table className="min-w-full divide-y divide-border">
+                                    <thead className="bg-secondary/20">
+                                      <tr>
+                                        <th className="px-4 py-2 text-left text-xs font-medium text-foreground">Video Type</th>
+                                        <th className="px-4 py-2 text-left text-xs font-medium text-foreground">Bitrate</th>
+                                        <th className="px-4 py-2 text-left text-xs font-medium text-foreground">Per Minute</th>
+                                        <th className="px-4 py-2 text-left text-xs font-medium text-foreground">30 Minutes</th>
+                                        <th className="px-4 py-2 text-left text-xs font-medium text-foreground">Storage Needed</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody className="divide-y divide-border">
+                                      <tr>
+                                        <td className="px-4 py-2 text-xs">4K ProRes 422</td>
+                                        <td className="px-4 py-2 text-xs font-mono">147 Mbps</td>
+                                        <td className="px-4 py-2 text-xs font-mono">1.1 GB</td>
+                                        <td className="px-4 py-2 text-xs font-mono">33 GB</td>
+                                        <td className="px-4 py-2 text-xs">At least 100 GB</td>
+                                      </tr>
+                                      <tr>
+                                        <td className="px-4 py-2 text-xs">4K H.264</td>
+                                        <td className="px-4 py-2 text-xs font-mono">45 Mbps</td>
+                                        <td className="px-4 py-2 text-xs font-mono">337 MB</td>
+                                        <td className="px-4 py-2 text-xs font-mono">10.1 GB</td>
+                                        <td className="px-4 py-2 text-xs">At least 30 GB</td>
+                                      </tr>
+                                      <tr>
+                                        <td className="px-4 py-2 text-xs">1080p H.264</td>
+                                        <td className="px-4 py-2 text-xs font-mono">15 Mbps</td>
+                                        <td className="px-4 py-2 text-xs font-mono">112 MB</td>
+                                        <td className="px-4 py-2 text-xs font-mono">3.4 GB</td>
+                                        <td className="px-4 py-2 text-xs">At least 10 GB</td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </div>
+                              </div>
+                            </div>
+                            
+                            <div className="pl-4 border-l-2 border-green-500">
+                              <div className="font-medium text-foreground">Workflow calculation:</div>
+                              <div className="mt-1 text-muted-foreground">
+                                Shooting ratio: 10:1 (10 minutes shot per 1 minute used)<br/>
+                                For 30-minute film: 300 minutes of raw footage<br/>
+                                4K ProRes: 300 × 1.1 = 330 GB raw footage<br/>
+                                Plus project files, audio, graphics: +50%<br/>
+                                <strong>Total: ~500 GB per project</strong>
+                              </div>
+                            </div>
+                            
+                            <p className="text-sm text-muted-foreground">
+                              <strong>The solution:</strong> Need at least 1TB (decimal) = 931GB binary drive per project. Buy 2TB drives to accommodate multiple projects. External SSD for active editing (fast), HDD for archive (cheap). Total: 2TB SSD ($200) + 4TB HDD ($100) = $300 storage per editor.
+                            </p>
+                          </div>
+                        </div>
+                        
+                        <div className="bg-amber-500/5 p-4 rounded-lg">
+                          <h3 className="font-semibold text-foreground mb-2">Example 4: Website Hosting Bandwidth</h3>
+                          <div className="space-y-3 text-sm">
+                            <p><strong>Situation:</strong> Estimating monthly bandwidth for a growing blog.</p>
+                            
+                            <div className="space-y-2">
+                              <div className="flex items-center justify-between">
+                                <div>Average page size: 2.5 MB</div>
+                                <div className="font-mono text-xs bg-blue-500/10 px-2 py-1 rounded">Includes images, CSS, JS</div>
+                              </div>
+                              <div className="flex items-center justify-between">
+                                <div>Monthly visitors: 50,000</div>
+                                <div className="font-mono text-xs bg-green-500/10 px-2 py-1 rounded">Growing 10% monthly</div>
+                              </div>
+                              <div className="flex items-center justify-between">
+                                <div>Pages per visitor: 2.8</div>
+                                <div className="font-mono text-xs bg-purple-500/10 px-2 py-1 rounded">Industry average</div>
+                              </div>
+                            </div>
+                            
+                            <div className="pl-4 border-l-2 border-blue-500">
+                              <div className="font-medium text-foreground">Bandwidth calculation:</div>
+                              <div className="mt-1 text-muted-foreground">
+                                Monthly pageviews: 50,000 × 2.8 = 140,000<br/>
+                                Data per month: 140,000 × 2.5 = 350,000 MB<br/>
+                                Convert to GB: 350,000 ÷ 1024 = 341.8 GB binary<br/>
+                                Hosting plans use decimal: 350,000 ÷ 1000 = 350 GB
+                              </div>
+                            </div>
+                            
+                            <div className="pl-4 border-l-2 border-red-500">
+                              <div className="font-medium text-foreground">Hosting plan selection:</div>
+                              <div className="mt-1 text-muted-foreground">
+                                Option A: 500GB plan @ $20/month<br/>
+                                Option B: Unlimited plan @ $30/month<br/>
+                                <strong>Decision:</strong> Choose 500GB plan. At 10% growth, you'll hit 500GB in 4 months. Then upgrade to unlimited.<br/>
+                                Cost first year: (4×$20) + (8×$30) = $320<br/>
+                                vs unlimited all year: 12×$30 = $360<br/>
+                                <em>Savings: $40 first year</em>
+                              </div>
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                    
-                    <div>
-                      <h3 className="font-semibold text-foreground mb-2">Detailed Example: Cloud Storage Planning</h3>
-                      <div className="bg-secondary/20 p-4 rounded-lg border border-border overflow-x-auto">
-                        <pre className="text-sm text-muted-foreground whitespace-pre-wrap">
-{`Example: Planning enterprise cloud storage migration
-
-Scenario: Company needs to migrate 50 TB of data to cloud storage
-with 100 Mbps internet connection. Calculate migration time and costs.
-
-Step 1: Convert Total Data Size
-50 Terabytes to various units:
-• 50 TB × 1024 = 51,200 GB
-• 50 TB × 1024² = 52,428,800 MB
-• 50 TB × 1024³ = 53,687,091,200 KB
-• 50 TB × 1024⁴ = 54,975,581,388,800 Bytes
-
-Step 2: Calculate Actual Transfer Size
-Accounting for overhead (compression, encryption, metadata):
-Assume 10% overhead for realistic planning:
-• Actual transfer size = 50 TB × 1.10 = 55 TB
-• 55 TB = 55 × 1024 = 56,320 GB
-• 55 TB = 56,320 × 1024 = 57,671,680 MB
-
-Step 3: Convert Internet Speed
-100 Mbps (Megabits per second) to Megabytes per second:
-• 100 Mbps ÷ 8 = 12.5 MB/s (Megabytes per second)
-This is the maximum theoretical transfer speed.
-
-Step 4: Calculate Realistic Transfer Speed
-Account for network overhead (typically 80-90% efficiency):
-• Realistic speed = 12.5 MB/s × 0.85 = 10.625 MB/s
-• Or in other units: 10.625 MB/s × 8 = 85 Mbps
-
-Step 5: Calculate Transfer Time
-Total data in MB: 57,671,680 MB
-Transfer speed: 10.625 MB/s
-• Time = 57,671,680 MB ÷ 10.625 MB/s = 5,427,922 seconds
-• Convert to hours: 5,427,922 ÷ 3600 = 1,507.76 hours
-• Convert to days: 1,507.76 ÷ 24 = 62.82 days
-
-Step 6: Consider Parallel Transfer
-Using 4 parallel connections (if supported):
-• Effective speed = 10.625 MB/s × 4 = 42.5 MB/s
-• Time = 57,671,680 MB ÷ 42.5 MB/s = 1,356,863 seconds
-• In hours: 1,356,863 ÷ 3600 = 376.91 hours
-• In days: 376.91 ÷ 24 = 15.70 days
-
-Step 7: Calculate Cloud Storage Costs
-Assuming cloud storage costs $0.02 per GB per month:
-• 50 TB = 51,200 GB
-• Monthly cost = 51,200 GB × $0.02 = $1,024
-• Annual cost = $1,024 × 12 = $12,288
-
-Step 8: Calculate Data Transfer Costs
-Assuming $0.05 per GB transferred out:
-• 50 TB = 51,200 GB
-• Transfer cost = 51,200 × $0.05 = $2,560
-
-Step 9: Total First-Year Cost
-• Storage: $12,288
-• Data transfer: $2,560
-• Total: $14,848
-
-Step 10: Break Down by Business Units
-For departmental allocation:
-• Marketing: 15 TB = 15,360 GB = $307.20/month
-• Sales: 10 TB = 10,240 GB = $204.80/month
-• Engineering: 20 TB = 20,480 GB = $409.60/month
-• Finance: 5 TB = 5,120 GB = $102.40/month
-
-Step 11: Optimize Strategy
-Based on calculations:
-• Migration will take 15.7 days with 4 parallel connections
-• First-year cost: $14,848
-• Monthly ongoing: $1,024
-• Consider data tiering: Move rarely accessed data to cheaper storage
-
-Step 12: Practical Considerations
-• Bandwidth throttling during business hours
-• Data verification and integrity checks
-• Incremental migration vs. big bang approach
-• Backup and rollback planning
-
-Final Planning Summary:
-Data Migration Project - 50 TB to Cloud
-• Technical: 15.7 days migration time (4 parallel connections)
-• Financial: $14,848 first year, $1,024/month ongoing
-• Strategic: Departmental allocation prepared
-• Risk: 10% overhead accounted for, backup plan needed
-
-Recommendations:
-1. Schedule migration over 3 weeks (15 business days)
-2. Allocate $15,000 budget for first year
-3. Implement data lifecycle management from start
-4. Monitor actual vs. estimated performance weekly`}
-                        </pre>
+                      
+                      <div className="mt-6 p-4 bg-secondary/20 rounded-lg">
+                        <h4 className="font-medium text-foreground mb-2">Key Lessons from These Examples</h4>
+                        <ul className="space-y-2 text-sm text-muted-foreground">
+                          <li className="flex items-start gap-2">
+                            <div className="w-1 h-1 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
+                            <span><strong>Always convert between systems:</strong> Don't assume your GB matches their GB - explicitly convert between binary and decimal.</span>
+                          </li>
+                          <li className="flex items-start gap-2">
+                            <div className="w-1 h-1 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
+                            <span><strong>Plan for growth:</strong> Storage needs rarely stay static. Build in 20-50% buffer for unexpected growth.</span>
+                          </li>
+                          <li className="flex items-start gap-2">
+                            <div className="w-1 h-1 bg-purple-500 rounded-full mt-2 flex-shrink-0"></div>
+                            <span><strong>Consider total cost:</strong> Cheaper storage upfront might cost more in upgrades later. Calculate 3-5 year total cost.</span>
+                          </li>
+                          <li className="flex items-start gap-2">
+                            <div className="w-1 h-1 bg-amber-500 rounded-full mt-2 flex-shrink-0"></div>
+                            <span><strong>Use the right tool:</strong> Calculators like this one help avoid mental math errors that compound in large projects.</span>
+                          </li>
+                        </ul>
                       </div>
                     </div>
                   </div>
@@ -991,6 +1373,18 @@ Recommendations:
                         <p className="text-muted-foreground">{faq.answer}</p>
                       </div>
                     ))}
+                    
+                    <div className="pt-4">
+                      <h3 className="text-lg font-semibold text-foreground mb-2">How can I check if my storage device is using binary or decimal measurements?</h3>
+                      <p className="text-muted-foreground mb-3">
+                        Check the exact byte count. On Windows: Right-click drive → Properties. The "Capacity" shows bytes in parentheses. Divide that by the advertised size. If a 1TB drive shows 1,000,204,886,016 bytes, it's decimal-based (1 trillion-ish). If it shows 1,099,511,627,776 bytes, it's binary-based. Most consumer drives will be decimal. Your OS then converts this to show you GB.
+                      </p>
+                      
+                      <h3 className="text-lg font-semibold text-foreground mb-2">What's a simple rule for estimating download times?</h3>
+                      <p className="text-muted-foreground">
+                        Divide your internet speed (in Mbps) by 10 to get approximate MB/s. So 100 Mbps ≈ 10 MB/s. A 1GB file (1000 MB) would take about 100 seconds. For more accuracy: Divide Mbps by 8.4 instead of 10. For exact: Use our converter - enter file size in GB, convert to MB, then divide by (Mbps ÷ 8.388608). But honestly, the divide-by-10 rule works for most planning.
+                      </p>
+                    </div>
                   </div>
                 </div>
               )}
