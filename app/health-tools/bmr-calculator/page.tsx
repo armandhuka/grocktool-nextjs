@@ -26,8 +26,8 @@ export default function BMRCalculator() {
 
   // SEO Section Dropdown States
   const [openSections, setOpenSections] = useState({
-    whatItDoes: true,
-    howToUse: false,
+    metabolism: true,
+    formulas: false,
     examples: false,
     faqs: false,
     relatedTools: false
@@ -104,27 +104,27 @@ export default function BMRCalculator() {
     }
   ];
 
-  // FAQ Data
+  // FAQ Data - UPDATED
   const faqData = [
     {
-      question: "What is the difference between BMR and TDEE?",
-      answer: "BMR (Basal Metabolic Rate) represents the calories your body burns at complete rest for basic functions like breathing and circulation. TDEE (Total Daily Energy Expenditure) is your BMR multiplied by an activity factor, representing your total daily calorie burn including all physical activity and exercise."
+      question: "Why does my friend eat more than me but doesn't gain weight?",
+      answer: "Metabolism varies significantly between individuals due to factors like muscle mass (muscle burns more calories than fat), genetics, age, and even gut bacteria composition. Your friend might have more lean muscle, better genetics for fat burning, or higher NEAT (Non-Exercise Activity Thermogenesis) - those unconscious movements like fidgeting that burn extra calories. Comparing metabolisms is like comparing fingerprints - everyone's is unique."
     },
     {
-      question: "Which BMR formula is the most accurate?",
-      answer: "The Mifflin-St Jeor formula is generally considered the most accurate for the general population (90% accuracy rate). The Harris-Benedict formula tends to overestimate by about 5%, while Katch-McArdle is most accurate if you know your exact body fat percentage. Our calculator defaults to Mifflin-St Jeor for optimal accuracy."
+      question: "I calculated my TDEE but the scale isn't moving - what's wrong?",
+      answer: "Several things could be happening. You might be underestimating your calorie intake (most people do by 20-30%). Water retention from salt, carbs, or hormones can mask fat loss. You could be gaining muscle while losing fat (body recomposition). Or your metabolism has adapted to your new calorie level. Try tracking accurately for 2-3 weeks, adjust by 100-200 calories if needed, and focus on measurements and how clothes fit rather than just scale weight."
     },
     {
-      question: "Why does my BMR decrease with age?",
-      answer: "As you age, muscle mass naturally decreases (about 3-8% per decade after 30) while body fat percentage increases. Muscle tissue burns more calories at rest than fat tissue, so reduced muscle mass leads to a lower metabolic rate. This is why the calculator includes age as a key variable in all formulas."
+      question: "Does eating more frequently really boost metabolism?",
+      answer: "Not significantly for most people. The thermic effect of food (calories burned digesting) stays about the same whether you eat 2 meals or 6. However, some people find frequent meals help control hunger and maintain energy. What matters most is total daily calories and nutrients, not meal timing. If you're not hungry between meals and can stick to your calories with fewer meals, that works too."
     },
     {
-      question: "How often should I recalculate my BMR?",
-      answer: "Recalculate your BMR every 3-6 months, or whenever your weight changes by more than 10 pounds (4.5 kg), your activity level changes significantly, or you reach a weight loss/gain plateau. As you lose weight, your BMR decreases, requiring calorie adjustments for continued progress."
+      question: "I'm over 40 and my metabolism feels broken. Can I fix it?",
+      answer: "Your metabolism isn't broken - it's just changed. After 40, we typically lose 3-8% of muscle per decade, and muscle burns more calories than fat. The fix? Strength training is crucial. Building muscle through resistance exercise can offset age-related metabolic decline. Also, protein becomes more important for muscle maintenance. Focus on whole foods, strength training 2-3 times weekly, and staying active throughout the day."
     },
     {
-      question: "Is it safe to eat below my BMR for weight loss?",
-      answer: "Consistently eating below your BMR is not recommended, as it can lead to muscle loss, nutrient deficiencies, metabolic adaptation, and other health issues. For safe and sustainable weight loss, aim for a calorie deficit of 300-500 calories below your TDEE while ensuring you still meet or exceed your BMR."
+      question: "Are these formulas accurate for very muscular or overweight people?",
+      answer: "They're estimates that work well for average bodies. Very muscular individuals will have higher BMRs than the formulas predict because muscle is metabolically active. Overweight individuals might have slightly lower BMRs per pound than predicted due to different body composition. Katch-McArdle formula works better if you know your body fat percentage. For extreme body types, these numbers are starting points - adjust based on real-world results."
     }
   ];
 
@@ -614,202 +614,326 @@ export default function BMRCalculator() {
               </>
             )}
 
-            {/* Information Cards */}
+            {/* Information Cards - UPDATED */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.4 }}
               className="space-y-6 mb-8"
             >
-              {/* BMR Explanation Card */}
+              {/* Metabolism Explanation Card - UPDATED */}
               <div className="bg-card rounded-xl sm:rounded-2xl border border-border p-4 sm:p-6 shadow-sm">
-                <h2 className="text-lg font-semibold text-foreground mb-4">Understanding BMR & TDEE</h2>
+                <h2 className="text-lg font-semibold text-foreground mb-4">What Metabolism Actually Means in Real Life</h2>
                 <div className="space-y-4">
-                  <div className="bg-blue-500/10 p-3 rounded-lg border border-blue-500/20">
-                    <div className="text-sm font-medium text-foreground mb-1">⚡ Basal Metabolic Rate (BMR)</div>
-                    <div className="text-sm text-muted-foreground">
-                      The minimum calories your body needs to maintain basic functions while at complete rest. 
-                      This includes breathing, circulation, cell production, and nutrient processing.
-                    </div>
+                  <div className="bg-blue-500/10 p-4 rounded-lg border border-blue-500/20">
+                    <div className="text-sm font-medium text-foreground mb-2">⚡ Your Body's Energy Budget</div>
+                    <p className="text-sm text-muted-foreground mb-2">
+                      Think of your metabolism as your body's daily energy budget. Your BMR is the fixed overhead - the calories needed just to keep the lights on: heart beating, lungs breathing, brain thinking. Even if you stayed in bed all day, this cost would still be there.
+                    </p>
+                    <p className="text-sm text-muted-foreground">
+                      TDEE is your total daily spending. It includes that fixed overhead plus everything else: walking to the kitchen, typing emails, your evening workout. Some people have naturally higher "overhead" costs (more muscle, larger bodies), while others move more throughout the day without realizing it.
+                    </p>
                   </div>
                   
-                  <div className="bg-green-500/10 p-3 rounded-lg border border-green-500/20">
-                    <div className="text-sm font-medium text-foreground mb-1">🔥 Total Daily Energy Expenditure (TDEE)</div>
-                    <div className="text-sm text-muted-foreground">
-                      Your BMR multiplied by an activity factor. This represents the total calories you burn 
-                      in a day, including physical activity and exercise.
+                  <div className="bg-green-500/10 p-4 rounded-lg border border-green-500/20">
+                    <div className="text-sm font-medium text-foreground mb-2">🔥 Where Those Calories Actually Go</div>
+                    <div className="text-sm text-muted-foreground space-y-2">
+                      <p><strong>Basal Functions (60-75%):</strong> Your organs are calorie-hungry. Your brain alone uses about 20% of your BMR. Liver, kidneys, heart - they're always working, even when you're not.</p>
+                      <p><strong>Digestion (10%):</strong> Breaking down food burns calories (thermic effect). Protein costs the most to digest, fats and carbs less.</p>
+                      <p><strong>Physical Activity (15-30%):</strong> This includes both exercise and NEAT (Non-Exercise Activity Thermogenesis) - fidgeting, pacing, household chores.</p>
                     </div>
                   </div>
 
-                  <div className="bg-orange-500/10 p-3 rounded-lg border border-orange-500/20">
-                    <div className="text-sm font-medium text-foreground mb-1">🎯 How to Use These Numbers</div>
-                    <div className="text-sm text-muted-foreground space-y-1">
-                      <div>• <strong>Maintain weight:</strong> Eat at your TDEE level</div>
-                      <div>• <strong>Lose weight:</strong> Eat 300-500 calories below TDEE</div>
-                      <div>• <strong>Gain weight:</strong> Eat 300-500 calories above TDEE</div>
-                      <div>• <strong>Important:</strong> Never eat below your BMR for extended periods</div>
+                  <div className="bg-orange-500/10 p-4 rounded-lg border border-orange-500/20">
+                    <div className="text-sm font-medium text-foreground mb-2">🎯 Why These Numbers Matter for Real Results</div>
+                    <div className="text-sm text-muted-foreground space-y-2">
+                      <p>Knowing your BMR tells you the absolute minimum your body needs. Eating below this consistently can backfire - your metabolism might slow down to conserve energy.</p>
+                      <p>Your TDEE gives you a realistic target. If you want to lose weight, aim for 300-500 calories below this number. Want to maintain? Match it. Trying to gain? Go 300-500 above.</p>
+                      <p>The most common mistake? People pick "moderately active" when they're really sedentary, then wonder why they're not losing weight despite "eating right."</p>
                     </div>
                   </div>
                 </div>
               </div>
 
-              {/* Formula Comparison Card */}
+              {/* Formula Reference Card - UPDATED */}
               <div className="bg-card rounded-xl sm:rounded-2xl border border-border p-4 sm:p-6 shadow-sm">
-                <h2 className="text-lg font-semibold text-foreground mb-4">BMR Formula Comparison</h2>
-                <div className="space-y-3">
-                  <div className="flex justify-between items-center p-3 bg-accent/10 rounded-lg">
-                    <div className="text-sm font-medium text-foreground">Mifflin-St Jeor</div>
-                    <div className="text-xs text-muted-foreground">Most accurate for general population</div>
+                <h2 className="text-lg font-semibold text-foreground mb-4">How These Metabolic Formulas Actually Work</h2>
+                <div className="space-y-4">
+                  <div className="bg-purple-500/10 p-4 rounded-lg border border-purple-500/20">
+                    <div className="text-sm font-medium text-foreground mb-2">📊 The Math Behind the Magic</div>
+                    <p className="text-sm text-muted-foreground mb-2">
+                      These formulas aren't just random numbers - they're based on decades of metabolic research. Scientists measured calorie burn in thousands of people under controlled conditions, then created equations that predict metabolism based on easy-to-measure factors like weight, height, age, and gender.
+                    </p>
+                    <p className="text-sm text-muted-foreground">
+                      The Mifflin-St Jeor formula (the default here) came out in 1990 and is considered the gold standard. It's about 90% accurate for most people. The numbers 10 (weight coefficient), 6.25 (height), and 5 (age) weren't chosen arbitrarily - they're statistical weights from actual metabolic data.
+                    </p>
                   </div>
-                  <div className="flex justify-between items-center p-3 bg-secondary/20 rounded-lg">
-                    <div className="text-sm font-medium text-foreground">Harris-Benedict</div>
-                    <div className="text-xs text-muted-foreground">Original formula, slightly overestimates</div>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="bg-blue-500/10 p-3 rounded-lg border border-blue-500/20">
+                      <h4 className="font-semibold text-foreground mb-2">Why Men and Women Get Different Numbers</h4>
+                      <p className="text-sm text-muted-foreground">
+                        Men typically have more muscle mass and less body fat at the same weight. Since muscle burns more calories than fat, men's formulas start with higher base numbers and add more per kilogram of weight.
+                      </p>
+                    </div>
+                    <div className="bg-green-500/10 p-3 rounded-lg border border-green-500/20">
+                      <h4 className="font-semibold text-foreground mb-2">The Age Factor Reality</h4>
+                      <p className="text-sm text-muted-foreground">
+                        As we age, we lose about 3-8% of muscle per decade after 30. Less muscle means lower calorie burn. The formulas subtract calories based on age to account for this natural metabolic slowdown.
+                      </p>
+                    </div>
                   </div>
-                  <div className="flex justify-between items-center p-3 bg-secondary/20 rounded-lg">
-                    <div className="text-sm font-medium text-foreground">Katch-McArdle</div>
-                    <div className="text-xs text-muted-foreground">Most accurate with body fat percentage</div>
+
+                  <div className="bg-yellow-500/10 p-4 rounded-lg border border-yellow-500/20">
+                    <div className="text-sm font-medium text-foreground mb-2">⚖️ Formula Limitations to Keep in Mind</div>
+                    <p className="text-sm text-muted-foreground">
+                      These are population averages, not personal guarantees. They don't account for genetics, thyroid function, recent dieting history, or medications. Very muscular people will burn more than predicted; those with higher body fat percentages might burn less. Use these as starting points, then adjust based on your actual results over 2-3 weeks.
+                    </p>
                   </div>
                 </div>
               </div>
             </motion.div>
 
-            {/* SEO Content Section with Dropdowns */}
+            {/* SEO Content Section with Dropdowns - UPDATED */}
             <section className="space-y-4">
-              {/* What This Tool Does - Dropdown */}
+              {/* Metabolism Explanation - Dropdown */}
               <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
                 <button
-                  onClick={() => toggleSection('whatItDoes')}
+                  onClick={() => toggleSection('metabolism')}
                   className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
                 >
-                  <h2 className="text-xl font-bold text-foreground">BMR & TDEE Calculator - What It Does</h2>
-                  {openSections.whatItDoes ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                  <h2 className="text-xl font-bold text-foreground">Your Metabolism Decoded: More Than Just "Fast" or "Slow"</h2>
+                  {openSections.metabolism ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
                 </button>
                 
-                {openSections.whatItDoes && (
+                {openSections.metabolism && (
                   <div className="px-6 pb-6">
-                    <p className="text-muted-foreground mb-4">
-                      This free tool helps you calculate your Basal Metabolic Rate (BMR) - the calories your body burns at complete rest - and your Total Daily Energy Expenditure (TDEE) - your total daily calorie burn including all activity. Understanding these numbers is essential for effective weight management, fitness planning, and nutrition strategy development.
-                    </p>
-                    <p className="text-muted-foreground">
-                      The calculator uses three scientifically validated formulas (Mifflin-St Jeor, Harris-Benedict, and Katch-McArdle) to provide accurate metabolic rate estimates. It then calculates your TDEE across five activity levels and provides specific calorie targets for weight loss, maintenance, and weight gain goals. This comprehensive approach gives you the data needed to make informed decisions about your nutrition and fitness.
-                    </p>
+                    <div className="space-y-4 text-muted-foreground">
+                      <p>
+                        When people talk about metabolism, they usually mean whether they burn calories quickly or slowly. But it's more nuanced than that. Your metabolism isn't a single thing—it's the sum of countless chemical reactions happening every second in your body. Each organ has its own metabolic rate, and they all add up to your total daily burn.
+                      </p>
+                      
+                      <div className="bg-blue-500/10 p-4 rounded-lg border border-blue-500/20">
+                        <h3 className="text-lg font-semibold text-foreground mb-2">The Three Components of Daily Calorie Burn</h3>
+                        <div className="space-y-3">
+                          <div>
+                            <h4 className="font-medium text-foreground mb-1">1. Basal Metabolic Rate (BMR) - Your Body's Housekeeping</h4>
+                            <p className="text-sm">
+                              This is what the calculator measures. It's not just "resting"—it's the energy needed for survival functions. Your brain alone uses about 300-400 calories daily just thinking. Your liver processes nutrients, your kidneys filter blood, your heart beats 100,000 times daily. All this happens whether you're awake or asleep.
+                            </p>
+                          </div>
+                          <div>
+                            <h4 className="font-medium text-foreground mb-1">2. Thermic Effect of Food (TEF) - The Cost of Eating</h4>
+                            <p className="text-sm">
+                              Digesting, absorbing, and storing nutrients burns calories too. Protein has the highest thermic effect (20-30% of its calories are burned during digestion), followed by carbs (5-10%), then fats (0-3%). This is why high-protein diets can help with weight management—you burn more just processing your food.
+                            </p>
+                          </div>
+                          <div>
+                            <h4 className="font-medium text-foreground mb-1">3. Physical Activity - Both Intentional and Unconscious</h4>
+                            <p className="text-sm">
+                              This includes your workouts, but also NEAT (Non-Exercise Activity Thermogenesis)—all the movement you don't think about. Tapping your foot, pacing while on the phone, shifting in your chair, household chores. Some people naturally move more, burning hundreds of extra calories daily without "exercising."
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <p>
+                        What's fascinating is how these components interact. When you eat less, your BMR can dip slightly as your body conserves energy. When you're more active, you might unconsciously move less later (compensatory behavior). Your metabolism isn't static—it responds to your environment, diet, and activity patterns.
+                      </p>
+                      
+                      <div className="bg-green-500/10 p-4 rounded-lg border border-green-500/20">
+                        <h3 className="text-lg font-semibold text-foreground mb-2">Metabolic Adaptation: Why Diets Sometimes Stop Working</h3>
+                        <p className="mb-2">
+                          When you consistently eat less than you burn, your body adapts. It becomes more efficient, doing the same work with fewer calories. This isn't "starvation mode" (a myth for most people), but rather metabolic adaptation. Your NEAT decreases—you might fidget less, choose to sit instead of stand. Your BMR might drop slightly as you lose weight (smaller bodies need less energy).
+                        </p>
+                        <p>
+                          This adaptation explains why weight loss often plateaus. The calorie deficit that worked initially becomes smaller as your metabolism adjusts. The solution isn't eating less and less, but periodically "resetting" with maintenance phases or adjusting your activity level.
+                        </p>
+                      </div>
+                      
+                      <p>
+                        Understanding these concepts helps you work with your metabolism rather than against it. Instead of blaming a "slow metabolism," you can identify which components you can influence (activity, muscle mass, NEAT) and which you can't (organ size, genetics). This calculator gives you the numbers, but the real value comes from understanding what they mean for your daily life.
+                      </p>
+                    </div>
                   </div>
                 )}
               </article>
 
-              {/* How to Use This Tool - Dropdown */}
+              {/* Formula Reference - Dropdown */}
               <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
                 <button
-                  onClick={() => toggleSection('howToUse')}
+                  onClick={() => toggleSection('formulas')}
                   className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
                 >
-                  <h2 className="text-xl font-bold text-foreground">How to Use This BMR Calculator</h2>
-                  {openSections.howToUse ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                  <h2 className="text-xl font-bold text-foreground">The Science Behind BMR Formulas: Why We Use Multiple Methods</h2>
+                  {openSections.formulas ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
                 </button>
                 
-                {openSections.howToUse && (
+                {openSections.formulas && (
                   <div className="px-6 pb-6">
-                    <ol className="space-y-4 text-muted-foreground pl-5">
-                      <li className="pl-2">
-                        <strong className="text-foreground">Enter Your Personal Information</strong>
-                        <p className="mt-1">Input your age, select your gender, and provide your current body weight and height using the unit selectors for kg/lbs/st and cm/ft/inches.</p>
-                      </li>
-                      <li className="pl-2">
-                        <strong className="text-foreground">Choose Your BMR Formula</strong>
-                        <p className="mt-1">Select from Mifflin-St Jeor (most accurate), Harris-Benedict (original), or Katch-McArdle (best with body fat percentage). The calculator defaults to Mifflin-St Jeor for optimal accuracy.</p>
-                      </li>
-                      <li className="pl-2">
-                        <strong className="text-foreground">Calculate Your Metabolic Rate</strong>
-                        <p className="mt-1">Click "Calculate BMR & TDEE" to get your Basal Metabolic Rate and Total Daily Energy Expenditure across five activity levels from Sedentary to Extra Active.</p>
-                      </li>
-                      <li className="pl-2">
-                        <strong className="text-foreground">Review Calorie Targets</strong>
-                        <p className="mt-1">Examine the specific calorie goals for different objectives: extreme weight loss (-1000 calories), weight loss (-500), maintenance, weight gain (+500), and extreme gain (+1000).</p>
-                      </li>
-                      <li className="pl-2">
-                        <strong className="text-foreground">Apply to Your Nutrition Plan</strong>
-                        <p className="mt-1">Use your TDEE (based on your actual activity level) as a starting point for calorie intake, adjusting based on your specific weight management goals and monitoring progress over time.</p>
-                      </li>
-                    </ol>
+                    <div className="space-y-4 text-muted-foreground">
+                      <p>
+                        You might wonder why we offer three different formulas instead of just giving you one "correct" answer. The truth is, each formula was developed during different eras using different methods and populations. By understanding their history and limitations, you can better interpret your results.
+                      </p>
+                      
+                      <div className="bg-purple-500/10 p-4 rounded-lg border border-purple-500/20">
+                        <h3 className="text-lg font-semibold text-foreground mb-2">Historical Context: How These Formulas Evolved</h3>
+                        <p className="mb-2">
+                          The Harris-Benedict equation dates back to 1919. Researchers J. Arthur Harris and Francis G. Benedict studied 136 men and 103 women, measuring their metabolism in controlled laboratory conditions. Their formula became the standard for decades, but it has a flaw: it tends to overestimate BMR by about 5%, especially for overweight individuals.
+                        </p>
+                        <p>
+                          Fast forward to 1990: researchers Mifflin, St Jeor, Hill, Scott, Daugherty, and Koh published an updated formula based on more diverse and modern population data. Their Mifflin-St Jeor equation is now considered the gold standard, with about 90% accuracy for the general population. It's the default in most clinical settings today.
+                        </p>
+                      </div>
+                      
+                      <div className="bg-blue-500/10 p-4 rounded-lg border border-blue-500/20">
+                        <h3 className="text-lg font-semibold text-foreground mb-2">Breaking Down the Mifflin-St Jeor Math</h3>
+                        <div className="space-y-2">
+                          <p>
+                            For men: <strong>BMR = (10 × weight in kg) + (6.25 × height in cm) - (5 × age) + 5</strong>
+                          </p>
+                          <p>
+                            For women: <strong>BMR = (10 × weight in kg) + (6.25 × height in cm) - (5 × age) - 161</strong>
+                          </p>
+                          <p className="text-sm">
+                            These coefficients (10, 6.25, 5) come from statistical regression analysis. They represent how much each factor (weight, height, age) contributes to metabolic rate. The gender constants (+5 for men, -161 for women) account for average differences in body composition between sexes.
+                          </p>
+                        </div>
+                      </div>
+                      
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="bg-green-500/10 p-4 rounded-lg border border-green-500/20">
+                          <h4 className="font-semibold text-foreground mb-2">When to Use Katch-McArdle</h4>
+                          <p className="text-sm">
+                            The Katch-McArdle formula is different—it requires lean body mass instead of total weight. If you know your body fat percentage, this formula can be more accurate because it focuses on metabolically active tissue (muscle) rather than total mass. The formula: <strong>BMR = 370 + (21.6 × lean body mass in kg)</strong>
+                          </p>
+                        </div>
+                        <div className="bg-orange-500/10 p-4 rounded-lg border border-orange-500/20">
+                          <h4 className="font-semibold text-foreground mb-2">Activity Multipliers: More Than Guesswork</h4>
+                          <p className="text-sm">
+                            The activity multipliers (1.2 to 1.9) come from research on energy expenditure. Sedentary (1.2) assumes almost no movement beyond basic activities of daily living. Each step up represents approximately 30-60 minutes of moderate exercise daily. These are estimates—your actual multiplier depends on both structured exercise and spontaneous movement.
+                          </p>
+                        </div>
+                      </div>
+                      
+                      <p>
+                        No formula is perfect. They work best for people within average body composition ranges. If you're extremely muscular, very lean, or have significant weight to lose, the formulas might be less accurate. That's why we recommend using them as starting points, then adjusting based on real-world results over several weeks of consistent tracking.
+                      </p>
+                    </div>
                   </div>
                 )}
               </article>
 
-              {/* Example Input and Output - Dropdown */}
+              {/* Examples - Dropdown */}
               <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
                 <button
                   onClick={() => toggleSection('examples')}
                   className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
                 >
-                  <h2 className="text-xl font-bold text-foreground">BMR & TDEE Calculation Examples</h2>
+                  <h2 className="text-xl font-bold text-foreground">Real Metabolic Stories: How BMR Plays Out in Daily Life</h2>
                   {openSections.examples ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
                 </button>
                 
                 {openSections.examples && (
                   <div className="px-6 pb-6">
-                    <p className="text-muted-foreground text-sm mb-4">
-                      Below are practical examples showing how BMR and TDEE calculations work for different individuals with varying characteristics.
-                    </p>
                     <div className="space-y-6">
                       <div>
-                        <h3 className="text-lg font-semibold text-foreground mb-2">Example 1: Moderately Active Female</h3>
-                        <div className="bg-muted p-4 rounded-lg overflow-x-auto">
-                          <pre className="text-sm text-muted-foreground font-mono">
-{`Input:
-Age: 32 years
-Gender: Female
-Weight: 65 kg (143 lbs)
-Height: 165 cm (5'5")
-Formula: Mifflin-St Jeor
-
-Calculations:
-BMR (Mifflin-St Jeor): 1,379 calories/day
-TDEE by Activity Level:
-• Sedentary: 1,655 calories/day
-• Light Activity: 1,896 calories/day
-• Moderate Activity: 2,137 calories/day (selected)
-• Very Active: 2,379 calories/day
-• Extra Active: 2,620 calories/day
-
-Goal Calorie Targets:
-• Extreme Weight Loss: 1,137 calories/day
-• Weight Loss: 1,637 calories/day
-• Maintenance: 2,137 calories/day
-• Weight Gain: 2,637 calories/day
-• Extreme Weight Gain: 3,137 calories/day`}
-                          </pre>
+                        <h3 className="text-lg font-semibold text-foreground mb-3">Case Study: The Desk Worker vs. The Restaurant Server</h3>
+                        <div className="bg-muted p-4 rounded-lg">
+                          <p className="text-muted-foreground mb-3">
+                            Sarah (32) works at a desk, while Maria (31) waits tables. Both women are 5'6" and weigh 140 lbs. They might assume they have similar calorie needs, but their daily energy expenditure tells a different story.
+                          </p>
+                          
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-3">
+                            <div className="bg-blue-500/10 p-3 rounded-lg">
+                              <h4 className="font-semibold text-foreground mb-2">Sarah: Software Developer</h4>
+                              <div className="text-sm text-muted-foreground space-y-1">
+                                <div>• <strong>BMR:</strong> 1,380 calories</div>
+                                <div>• <strong>Activity:</strong> Sedentary (sits 8+ hours)</div>
+                                <div>• <strong>Exercise:</strong> 3x/week gym sessions</div>
+                                <div>• <strong>NEAT:</strong> Low (minimal fidgeting)</div>
+                                <div>• <strong>TDEE:</strong> ~2,000 calories</div>
+                              </div>
+                            </div>
+                            <div className="bg-green-500/10 p-3 rounded-lg">
+                              <h4 className="font-semibold text-foreground mb-2">Maria: Restaurant Server</h4>
+                              <div className="text-sm text-muted-foreground space-y-1">
+                                <div>• <strong>BMR:</strong> 1,380 calories (same)</div>
+                                <div>• <strong>Activity:</strong> On feet 6-8 hours daily</div>
+                                <div>• <strong>Exercise:</strong> Occasional yoga</div>
+                                <div>• <strong>NEAT:</strong> High (constant movement)</div>
+                                <div>• <strong>TDEE:</strong> ~2,400 calories</div>
+                              </div>
+                            </div>
+                          </div>
+                          
+                          <p className="text-sm text-muted-foreground">
+                            Despite similar stats, Maria burns about 400 more calories daily through her job and natural movement patterns. If both ate 2,000 calories, Sarah would maintain while Maria would lose weight. This shows why activity level selection matters—Sarah would choose "light activity" while Maria might choose "moderate" or "very active."
+                          </p>
                         </div>
                       </div>
+                      
                       <div>
-                        <h3 className="text-lg font-semibold text-foreground mb-2">Example 2: Sedentary Male</h3>
-                        <div className="bg-muted p-4 rounded-lg overflow-x-auto">
-                          <pre className="text-sm text-muted-foreground font-mono">
-{`Input:
-Age: 45 years
-Gender: Male
-Weight: 85 kg (187 lbs)
-Height: 178 cm (5'10")
-Formula: Harris-Benedict
-
-Calculations:
-BMR (Harris-Benedict): 1,786 calories/day
-TDEE by Activity Level:
-• Sedentary: 2,143 calories/day (selected)
-• Light Activity: 2,456 calories/day
-• Moderate Activity: 2,768 calories/day
-• Very Active: 3,081 calories/day
-• Extra Active: 3,393 calories/day
-
-Goal Calorie Targets:
-• Extreme Weight Loss: 1,768 calories/day
-• Weight Loss: 2,268 calories/day
-• Maintenance: 2,768 calories/day
-• Weight Gain: 3,268 calories/day
-• Extreme Weight Gain: 3,768 calories/day
-
-Note: For sedentary lifestyle, maintenance calories
-are based on Sedentary TDEE rather than Moderate.`}
-                          </pre>
+                        <h3 className="text-lg font-semibold text-foreground mb-3">Metabolic Adaptation: The Post-Diet Experience</h3>
+                        <div className="bg-muted p-4 rounded-lg">
+                          <p className="text-muted-foreground mb-3">
+                            Mark lost 40 pounds over 6 months. He started at 220 lbs with a TDEE of 2,800 calories. At 180 lbs, his calculator shows a TDEE of 2,400 calories. But here's what actually happened:
+                          </p>
+                          
+                          <div className="space-y-2 text-sm text-muted-foreground pl-4">
+                            <div className="flex items-start">
+                              <span className="text-accent mr-2">•</span>
+                              <span><strong>Expected drop:</strong> 400 calories (2,800 → 2,400)</span>
+                            </div>
+                            <div className="flex items-start">
+                              <span className="text-accent mr-2">•</span>
+                              <span><strong>Actual drop:</strong> 550 calories (2,800 → 2,250)</span>
+                            </div>
+                            <div className="flex items-start">
+                              <span className="text-accent mr-2">•</span>
+                              <span><strong>Why the difference?</strong> Metabolic adaptation - his body became more efficient, his NEAT decreased (less fidgeting), and he had less mass to move around</span>
+                            </div>
+                            <div className="flex items-start">
+                              <span className="text-accent mr-2">•</span>
+                              <span><strong>The fix:</strong> He added resistance training to build muscle (increasing BMR) and consciously increased daily movement (boosting NEAT)</span>
+                            </div>
+                          </div>
+                          
+                          <p className="text-sm text-muted-foreground mt-3">
+                            This example shows why recalculating periodically is important, and why building muscle matters for long-term metabolic health. The formulas predict the change from weight loss, but they can't account for adaptive responses.
+                          </p>
+                        </div>
+                      </div>
+                      
+                      <div>
+                        <h3 className="text-lg font-semibold text-foreground mb-3">The Muscle Building Phase</h3>
+                        <div className="bg-muted p-4 rounded-lg">
+                          <p className="text-muted-foreground mb-3">
+                            Alex wants to build muscle. At 160 lbs with a TDEE of 2,500 calories, he starts eating 3,000 calories daily while strength training. After 3 months:
+                          </p>
+                          
+                          <div className="space-y-2 text-sm text-muted-foreground pl-4">
+                            <div className="flex items-start">
+                              <span className="text-accent mr-2">•</span>
+                              <span><strong>Weight gain:</strong> 8 pounds (160 → 168)</span>
+                            </div>
+                            <div className="flex items-start">
+                              <span className="text-accent mr-2">•</span>
+                              <span><strong>Body composition:</strong> Gained 6 pounds muscle, 2 pounds fat</span>
+                            </div>
+                            <div className="flex items-start">
+                              <span className="text-accent mr-2">•</span>
+                              <span><strong>New BMR:</strong> Increased by about 60 calories due to added muscle</span>
+                            </div>
+                            <div className="flex items-start">
+                              <span className="text-accent mr-2">•</span>
+                              <span><strong>Result:</strong> He can now eat slightly more (2,560 maintenance) without gaining fat</span>
+                            </div>
+                          </div>
+                          
+                          <p className="text-sm text-muted-foreground mt-3">
+                            This illustrates the metabolic benefit of muscle gain. Each pound of muscle burns about 6-10 calories daily at rest. While that seems small, over years it adds up. More importantly, muscle changes body composition, allowing you to eat more while maintaining leanness.
+                          </p>
                         </div>
                       </div>
                     </div>
@@ -817,59 +941,50 @@ are based on Sedentary TDEE rather than Moderate.`}
                 )}
               </article>
 
-              {/* Related Tools Section - Dropdown */}
+              {/* Health Disclaimer - Dropdown */}
               <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
                 <button
                   onClick={() => toggleSection('relatedTools')}
                   className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
                 >
-                  <h2 className="text-xl font-bold text-foreground">Related Health & Fitness Tools</h2>
+                  <h2 className="text-xl font-bold text-foreground">Important Health Considerations and Metabolic Limitations</h2>
                   {openSections.relatedTools ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
                 </button>
                 
                 {openSections.relatedTools && (
                   <div className="px-6 pb-6">
-                    <p className="text-muted-foreground mb-4">
-                      Explore other useful calculators from GrockTool.com that complement this BMR and TDEE calculator:
-                    </p>
-                    <ul className="space-y-3 text-muted-foreground">
-                      <li className="flex items-start">
-                        <span className="text-accent mr-2">•</span>
-                        <Link href="/health-tools/calorie-calculator" className="text-accent hover:underline">
-                          <strong>Calorie Calculator:</strong> Calculate your daily calorie needs and macronutrient targets
-                        </Link>
-                      </li>
-                      <li className="flex items-start">
-                        <span className="text-accent mr-2">•</span>
-                        <Link href="/health-tools/bmi-calculator" className="text-accent hover:underline">
-                          <strong>BMI Calculator:</strong> Calculate your Body Mass Index using any measurement units
-                        </Link>
-                      </li>
-                      <li className="flex items-start">
-                        <span className="text-accent mr-2">•</span>
-                        <Link href="/health-tools/body-fat" className="text-accent hover:underline">
-                          <strong>Body Fat Calculator:</strong> Estimate your body fat percentage using multiple methods
-                        </Link>
-                      </li>
-                      <li className="flex items-start">
-                        <span className="text-accent mr-2">•</span>
-                        <Link href="/health-tools/ideal-weight" className="text-accent hover:underline">
-                          <strong>Ideal Weight Calculator:</strong> Determine your healthy weight range based on height
-                        </Link>
-                      </li>
-                      <li className="flex items-start">
-                        <span className="text-accent mr-2">•</span>
-                        <Link href="/health-tools/macro-splitter" className="text-accent hover:underline">
-                          <strong>Macro Split Calculator:</strong> Calculate optimal macronutrient ratios for your goals
-                        </Link>
-                      </li>
-                      <li className="flex items-start">
-                        <span className="text-accent mr-2">•</span>
-                        <Link href="/health-tools/water-intake" className="text-accent hover:underline">
-                          <strong>Water Intake Calculator:</strong> Calculate your optimal daily hydration needs
-                        </Link>
-                      </li>
-                    </ul>
+                    <div className="space-y-4 text-muted-foreground">
+                      <div className="bg-yellow-500/10 p-4 rounded-lg border border-yellow-500/20 mb-4">
+                        <h3 className="text-lg font-semibold text-foreground mb-2">What These Calculations Can't Tell You</h3>
+                        <p>
+                          These formulas provide population averages, not personal guarantees. They don't account for individual variations in genetics, hormone levels, medical conditions, or medication effects. If you have thyroid issues, PCOS, diabetes, or take certain medications, your actual metabolic rate might differ significantly from these estimates.
+                        </p>
+                      </div>
+                      
+                      <p>
+                        Metabolic health exists on a spectrum. Two people with identical calculations might respond differently to the same calorie intake due to factors like insulin sensitivity, gut microbiome composition, or stress levels. These formulas focus on quantity (calories burned) but not quality (how efficiently your body uses those calories).
+                      </p>
+                      
+                      <div className="bg-red-500/10 p-4 rounded-lg border border-red-500/20">
+                        <h4 className="font-semibold text-foreground mb-2">When Metabolic Calculations Need Professional Context</h4>
+                        <ul className="space-y-1 text-sm">
+                          <li>• If you have a history of eating disorders or disordered eating patterns</li>
+                          <li>• If you're taking medications that affect metabolism (thyroid meds, steroids, antidepressants)</li>
+                          <li>• If you have metabolic conditions like diabetes, PCOS, or thyroid disorders</li>
+                          <li>• If you're pregnant, breastfeeding, or trying to conceive</li>
+                          <li>• If you experience extreme fatigue, temperature intolerance, or unexplained weight changes</li>
+                          <li>• If you've undergone significant weight loss surgery or have digestive issues</li>
+                        </ul>
+                      </div>
+                      
+                      <p>
+                        Remember that sustainable health comes from balanced habits, not just calorie counting. Sleep quality, stress management, nutrient timing, food quality, and hydration all influence how your body uses energy. These calculations give you a numerical starting point, but they're just one piece of the health puzzle.
+                      </p>
+                      
+                      <p>
+                        If you use these numbers to guide dietary changes, prioritize nutrient density. Eating 1,800 calories of whole foods affects your body differently than 1,800 calories of processed foods, even if the calorie math is identical. Work with your body's signals of hunger and fullness rather than rigidly adhering to calculated numbers that might not match your individual needs.
+                      </p>
+                    </div>
                   </div>
                 )}
               </article>
@@ -880,7 +995,7 @@ are based on Sedentary TDEE rather than Moderate.`}
                   onClick={() => toggleSection('faqs')}
                   className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
                 >
-                  <h2 className="text-xl font-bold text-foreground">Frequently Asked Questions About BMR & TDEE</h2>
+                  <h2 className="text-xl font-bold text-foreground">Common Questions About Metabolism and Calorie Needs</h2>
                   {openSections.faqs ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
                 </button>
                 
@@ -893,13 +1008,34 @@ are based on Sedentary TDEE rather than Moderate.`}
                           <p className="text-muted-foreground">{faq.answer}</p>
                         </div>
                       ))}
+                      
+                      <div>
+                        <h3 className="text-lg font-semibold text-foreground mb-2">Can I really "boost" my metabolism with certain foods or supplements?</h3>
+                        <p className="text-muted-foreground">
+                          Some foods have minor metabolic effects. Protein has the highest thermic effect (20-30% of its calories burned in digestion). Spicy foods might temporarily increase metabolism by 8% for an hour or two. Caffeine can boost metabolism by 3-11%. But these effects are small and temporary. The most effective ways to increase metabolism long-term are building muscle through strength training and increasing daily movement. Beware of supplements claiming dramatic metabolic boosts—most are ineffective or unsafe.
+                        </p>
+                      </div>
+                      
+                      <div>
+                        <h3 className="text-lg font-semibold text-foreground mb-2">Why do I burn fewer calories on the treadmill than it says?</h3>
+                        <p className="text-muted-foreground">
+                          Exercise machines often overestimate calorie burn by 20-40%. They don't account for your individual efficiency, fitness level, or how much you're leaning on the handles. Heart rate monitors are somewhat better but still imperfect. The most accurate method for exercise calories is using a percentage of your BMR based on intensity and duration. For example, moderate exercise might burn 5-8 calories per minute. Focus on consistency and effort rather than exact calorie counts from equipment.
+                        </p>
+                      </div>
+                      
+                      <div>
+                        <h3 className="text-lg font-semibold text-foreground mb-2">Does eating late at night slow metabolism or cause weight gain?</h3>
+                        <p className="text-muted-foreground">
+                          Meal timing has minimal effect on metabolism or weight gain compared to total daily calories. Your body doesn't have an internal clock that says "store fat after 7 PM." However, late-night eating can lead to weight gain indirectly: people often make poorer food choices when tired, eat out of boredom rather than hunger, or consume more calories than needed. If you're hitting your calorie targets, when you eat matters less than what and how much you eat.
+                        </p>
+                      </div>
                     </div>
                     
                     {/* Medical Disclaimer */}
                     <div className="mt-8 p-4 bg-yellow-500/10 rounded-lg border border-yellow-500/20">
-                      <h3 className="text-lg font-semibold text-foreground mb-2">Important Health Disclaimer</h3>
+                      <h3 className="text-lg font-semibold text-foreground mb-2">Professional Medical Disclaimer</h3>
                       <p className="text-sm text-muted-foreground">
-                        This BMR and TDEE calculator provides estimates based on statistical formulas and should be used for informational purposes only. Individual metabolic rates can vary based on genetics, medical conditions (like thyroid disorders), medications, hormonal factors, and other variables not accounted for in these calculations. The results from this calculator are not a substitute for professional medical advice, diagnosis, or treatment. Always consult with a qualified healthcare provider, registered dietitian, or certified nutritionist for personalized medical advice regarding your metabolic health and nutrition planning, especially if you have underlying health conditions or take medications that affect metabolism.
+                        This BMR and TDEE calculator provides estimates based on statistical formulas and should be used for informational purposes only. Individual metabolic rates vary based on genetics, medical conditions, medications, hormonal factors, lifestyle, and other variables not accounted for in these calculations. These formulas do not constitute medical advice, diagnosis, or treatment recommendations. Always consult with qualified healthcare providers, registered dietitians, or certified nutritionists for personalized guidance regarding metabolic health, nutrition planning, and weight management, especially if you have underlying health conditions, take medications, or have a history of eating disorders. Sustainable health comes from balanced approaches that consider nutrition, activity, sleep, stress management, and individual needs beyond calorie calculations alone.
                       </p>
                     </div>
                   </div>

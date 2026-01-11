@@ -24,11 +24,12 @@ export default function MacroSplitter() {
 
   // SEO Section Dropdown States
   const [openSections, setOpenSections] = useState({
-    whatItDoes: true,
-    howToUse: false,
+    macronutrientConcept: true,
+    calculationLogic: false,
+    fitnessUses: false,
     examples: false,
-    faqs: false,
-    relatedTools: false
+    faq: false,
+    disclaimer: false
   });
 
   const toggleSection = (section: keyof typeof openSections) => {
@@ -41,24 +42,24 @@ export default function MacroSplitter() {
   // FAQ Data
   const faqData = [
     {
-      question: "What are the best macro ratios for weight loss?",
-      answer: "For sustainable weight loss, a split of 30-40% protein, 30-40% carbohydrates, and 20-30% fat works well for most people. The higher protein percentage helps preserve muscle mass while in a calorie deficit, reduces hunger, and boosts metabolism. Adjust carbs based on activity level—higher on workout days, lower on rest days."
+      question: "What happens if I don't hit my macros exactly every day?",
+      answer: "Don't stress about perfect numbers daily—consistency over weeks matters more than daily precision. Your body adapts to averages. If you're within 10-15% of your targets most days, you're doing fine. Focus more on protein and calorie totals, and let carbs and fats have some natural fluctuation based on your energy needs and food preferences."
     },
     {
-      question: "How do I calculate macros without knowing my exact calories?",
-      answer: "Use our built-in calorie estimator by entering your weight and activity level. The calculator uses established metabolic formulas to estimate your maintenance calories. For more accuracy, track your food intake for a week and adjust based on whether you're gaining, losing, or maintaining weight."
+      question: "Should I change my macro split on rest days versus workout days?",
+      answer: "Many people find better results by slightly adjusting macros on different days. On training days, consider shifting 5-10% from fats to carbs for workout energy. On rest days, you might reduce carbs slightly and increase protein or fats. Listen to your body—some feel better with consistent ratios, while others thrive with variation."
     },
     {
-      question: "What macro split should I use for muscle building?",
-      answer: "For muscle gain, aim for 25-30% protein, 45-55% carbohydrates, and 15-25% fat. Carbohydrates are crucial for training energy and recovery. Protein should be 1.6-2.2g per kg of body weight. The exact ratio depends on your training intensity, recovery needs, and personal tolerance to different macronutrients."
+      question: "How do I track macros when eating out or having meals I didn't prepare?",
+      answer: "Restaurant meals are tricky but manageable. Estimate portions visually—a palm-sized piece of protein, a fist of carbs, a thumb of fats. Most chain restaurants provide nutrition info online. When in doubt, prioritize hitting your protein target and don't worry too much about the rest for that meal. One imperfect meal won't derail weeks of consistency."
     },
     {
-      question: "Are keto macro ratios (very low carb) safe long-term?",
-      answer: "Ketogenic diets (5-10% carbs, 70-75% fat, 20-25% protein) can be effective for short-term weight loss and certain medical conditions. However, long-term sustainability varies by individual. Consult a healthcare professional before starting keto, especially if you have metabolic conditions, and consider cycling carbohydrates periodically."
+      question: "What if I'm always hungry on my current macro split?",
+      answer: "Hunger is a signal worth listening to. Try increasing protein by 5-10% and fiber-rich carbs like vegetables and whole grains. Sometimes adding 100-200 calories of healthy fats can increase satisfaction. If you're in a calorie deficit for weight loss, hunger is normal, but it shouldn't be debilitating. Consider a smaller deficit or refeed days if hunger becomes overwhelming."
     },
     {
-      question: "How often should I adjust my macro percentages?",
-      answer: "Reassess your macros every 4-8 weeks, or when your goals change. As you lose weight, your calorie needs decrease. If you hit a plateau, adjust calories by 10-15% and/or modify your macro split. Listen to your body—if you're constantly fatigued, hungry, or not recovering well, your ratios may need adjustment."
+      question: "How long until I see results from following a macro-based approach?",
+      answer: "Physical changes take time—expect 4-8 weeks to notice body composition changes. Energy levels and workout performance often improve within 2-3 weeks. Take weekly progress photos and measurements rather than relying on daily scale weight, which fluctuates based on hydration, sodium, and other factors unrelated to fat loss or muscle gain."
     }
   ];
 
@@ -591,240 +592,137 @@ export default function MacroSplitter() {
 
             {/* SEO Content Section with Dropdowns */}
             <section className="space-y-4">
-              {/* What This Tool Does - Dropdown */}
+              {/* Macronutrient Concept */}
               <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
                 <button
-                  onClick={() => toggleSection('whatItDoes')}
+                  onClick={() => toggleSection('macronutrientConcept')}
                   className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
                 >
-                  <h2 className="text-xl font-bold text-foreground">Macro Split Calculator - What It Does</h2>
-                  {openSections.whatItDoes ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                  <h2 className="text-xl font-bold text-foreground">What Exactly Are Macronutrients?</h2>
+                  {openSections.macronutrientConcept ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
                 </button>
                 
-                {openSections.whatItDoes && (
+                {openSections.macronutrientConcept && (
                   <div className="px-6 pb-6">
                     <p className="text-muted-foreground mb-4">
-                      This macro split calculator helps you determine the optimal distribution of protein, carbohydrates, and fats for your daily calorie intake. Whether your goal is weight loss, muscle gain, or weight maintenance, getting the right macronutrient ratios is essential for achieving results while maintaining energy, health, and satisfaction.
+                      When people talk about "macros," they're referring to the three categories of nutrients that provide calories: protein, carbohydrates, and fats. Think of them as the fuel types your body runs on. Each plays distinct roles—protein builds and repairs, carbs provide quick energy, and fats support hormone function and nutrient absorption.
+                    </p>
+                    <p className="text-muted-foreground mb-4">
+                      Here's something most calculators don't tell you: macronutrient quality matters just as much as quantity. A hundred grams of protein from chicken breast affects your body differently than the same amount from processed protein bars. The same goes for carbohydrates—slow-digesting whole grains versus refined sugars—and fats—avocado versus trans fats. Your body responds not just to how much you eat, but what forms those nutrients take.
                     </p>
                     <p className="text-muted-foreground">
-                      The calculator uses scientifically-backed macronutrient ratios and provides presets for common goals like ketogenic diets, muscle building, and weight loss. It converts percentages into actual grams and calories, making meal planning straightforward. By understanding your ideal macro split, you can create a nutrition plan that supports your specific fitness objectives and lifestyle preferences.
+                      The ratios between these three macronutrients create different physiological environments in your body. Higher protein tends to increase satiety and metabolic rate. Carbohydrate levels influence insulin response and workout performance. Fat intake affects hormone production and vitamin absorption. Finding your ideal balance depends on your individual metabolism, activity patterns, health goals, and even genetic predispositions.
                     </p>
                   </div>
                 )}
               </article>
 
-              {/* How to Use This Tool - Dropdown */}
+              {/* Calculation Logic */}
               <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
                 <button
-                  onClick={() => toggleSection('howToUse')}
+                  onClick={() => toggleSection('calculationLogic')}
                   className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
                 >
-                  <h2 className="text-xl font-bold text-foreground">How to Use This Macro Split Calculator</h2>
-                  {openSections.howToUse ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                  <h2 className="text-xl font-bold text-foreground">How the Math Works Behind Macro Splits</h2>
+                  {openSections.calculationLogic ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
                 </button>
                 
-                {openSections.howToUse && (
+                {openSections.calculationLogic && (
                   <div className="px-6 pb-6">
-                    <ol className="space-y-4 text-muted-foreground pl-5">
-                      <li className="pl-2">
-                        <strong className="text-foreground">Enter Your Calorie Target</strong>
-                        <p className="mt-1">Input your total daily calories. If unsure, use the built-in estimator by entering your weight and activity level.</p>
-                      </li>
-                      <li className="pl-2">
-                        <strong className="text-foreground">Choose a Goal Preset</strong>
-                        <p className="mt-1">Select from presets like Weight Loss, Muscle Gain, Ketogenic, or Balanced based on your primary objective.</p>
-                      </li>
-                      <li className="pl-2">
-                        <strong className="text-foreground">Customize Your Ratios</strong>
-                        <p className="mt-1">Adjust the percentage sliders for protein, carbs, and fats. Ensure they total exactly 100%.</p>
-                      </li>
-                      <li className="pl-2">
-                        <strong className="text-foreground">Calculate Your Macros</strong>
-                        <p className="mt-1">Click "Calculate Macros" to see your daily gram targets for each macronutrient.</p>
-                      </li>
-                      <li className="pl-2">
-                        <strong className="text-foreground">Plan Your Meals</strong>
-                        <p className="mt-1">Use the gram targets to plan meals throughout the day, distributing macros evenly across 3-5 meals.</p>
-                      </li>
-                    </ol>
+                    <p className="text-muted-foreground mb-4">
+                      The calculation process might seem straightforward—percentages to grams using calorie conversions—but there's interesting science behind those numbers. Protein and carbohydrates contain about 4 calories per gram, while fat provides 9 calories per gram. This difference in energy density explains why fat percentages appear lower than protein or carb percentages even when they contribute similar calories.
+                    </p>
+                    <p className="text-muted-foreground mb-4">
+                      Here's a practical example: If you choose a 30/40/30 split (protein/carbs/fat) on 2000 calories, protein gets 600 calories (150g), carbs get 800 calories (200g), and fat gets 600 calories (67g). Notice how fat grams are fewer despite equal calorie allocation? That's the 9-calorie-per-gram factor at work.
+                    </p>
+                    <p className="text-muted-foreground">
+                      When you use our calculator, we're doing more than simple math. We're applying research-backed ratios that have shown effectiveness for specific goals. The weight loss preset, for instance, uses slightly higher protein (30%) than maintenance (25%) because multiple studies show increased protein preserves lean mass during calorie restriction. The muscle gain preset emphasizes carbohydrates because research demonstrates adequate carb intake supports training volume and muscle glycogen replenishment.
+                    </p>
                   </div>
                 )}
               </article>
 
-              {/* Use Cases Section - Dropdown */}
+              {/* Fitness Uses */}
+              <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
+                <button
+                  onClick={() => toggleSection('fitnessUses')}
+                  className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
+                >
+                  <h2 className="text-xl font-bold text-foreground">Real-World Fitness Applications</h2>
+                  {openSections.fitnessUses ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                </button>
+                
+                {openSections.fitnessUses && (
+                  <div className="px-6 pb-6">
+                    <p className="text-muted-foreground mb-4">
+                      Beyond just hitting numbers, macro splitting becomes truly useful when applied to real training scenarios. Consider a typical week: Monday heavy leg day, Tuesday upper body, Wednesday active recovery, Thursday intense conditioning, Friday strength work, weekend rest. Each day places different demands on your body.
+                    </p>
+                    <p className="text-muted-foreground mb-4">
+                      On heavy training days, you might deliberately consume more carbohydrates—especially around your workout—to fuel performance and kickstart recovery. On lighter or rest days, you could reduce carbs slightly and emphasize protein and healthy fats. This approach, sometimes called "carb cycling," matches fuel availability to actual energy expenditure.
+                    </p>
+                    <p className="text-muted-foreground">
+                      Another practical application involves managing hunger and energy throughout the day. Many people find that front-loading protein at breakfast and lunch helps control appetite and provides steady energy. Distributing carbohydrates based on activity—more in meals before and after exercise, less in other meals—can prevent energy crashes. Fats, being slowly digested, often work well in meals where you need sustained fullness, like dinner.
+                    </p>
+                  </div>
+                )}
+              </article>
+
+              {/* Examples */}
               <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
                 <button
                   onClick={() => toggleSection('examples')}
                   className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
                 >
-                  <h2 className="text-xl font-bold text-foreground">Practical Use Cases for Macro Splitting</h2>
+                  <h2 className="text-xl font-bold text-foreground">How Different People Use Macro Splits</h2>
                   {openSections.examples ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
                 </button>
                 
                 {openSections.examples && (
                   <div className="px-6 pb-6">
-                    <p className="text-muted-foreground mb-4">
-                      Understanding macronutrient ratios can help in various fitness and health scenarios:
-                    </p>
-                    <ul className="space-y-3 text-muted-foreground pl-5">
-                      <li className="pl-2">
-                        <strong className="text-foreground">Weight Loss with Muscle Preservation</strong>
-                        <p className="mt-1">Using a 40/30/30 split (protein/carbs/fats) to maintain muscle while losing fat.</p>
-                      </li>
-                      <li className="pl-2">
-                        <strong className="text-foreground">Endurance Training Preparation</strong>
-                        <p className="mt-1">Higher carb ratios (55-60%) for marathon runners and cyclists needing sustained energy.</p>
-                      </li>
-                      <li className="pl-2">
-                        <strong className="text-foreground">Bodybuilding and Muscle Gain</strong>
-                        <p className="mt-1">Moderate protein (25-30%) with higher carbs (50%) to fuel intense workouts and recovery.</p>
-                      </li>
-                      <li className="pl-2">
-                        <strong className="text-foreground">Metabolic Health Improvement</strong>
-                        <p className="mt-1">Lower carb approaches for managing insulin sensitivity and blood sugar levels.</p>
-                      </li>
-                      <li className="pl-2">
-                        <strong className="text-foreground">Athletic Performance Optimization</strong>
-                        <p className="mt-1">Periodized nutrition with different splits for training vs. recovery days.</p>
-                      </li>
-                      <li className="pl-2">
-                        <strong className="text-foreground">Vegetarian/Vegan Nutrition Planning</strong>
-                        <p className="mt-1">Ensuring adequate protein intake through plant-based sources while meeting energy needs.</p>
-                      </li>
-                    </ul>
-                  </div>
-                )}
-              </article>
-
-              {/* Example Input and Output - Dropdown */}
-              <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
-                <button
-                  onClick={() => toggleSection('faqs')}
-                  className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
-                >
-                  <h2 className="text-xl font-bold text-foreground">Macro Split Calculation Examples</h2>
-                  {openSections.faqs ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
-                </button>
-                
-                {openSections.faqs && (
-                  <div className="px-6 pb-6">
-                    <p className="text-muted-foreground text-sm mb-4">
-                      Here are practical examples showing how different calorie targets and goals affect macro calculations:
-                    </p>
                     <div className="space-y-6">
                       <div>
-                        <h3 className="text-lg font-semibold text-foreground mb-2">Example 1: Weight Loss for Active Individual</h3>
-                        <div className="bg-muted p-4 rounded-lg overflow-x-auto">
-                          <pre className="text-sm text-muted-foreground font-mono">
-{`Input:
-Total Calories: 1,800
-Goal: Weight Loss (30/35/35 split)
-Weight: 75 kg
-Activity Level: Moderate
-
-Calculation Results:
-• Protein: 135g (30% of calories = 540 calories)
-• Carbohydrates: 158g (35% of calories = 630 calories)
-• Fats: 70g (35% of calories = 630 calories)
-• Protein per kg: 1.8g/kg (within optimal range)
-
-Interpretation:
-This split provides adequate protein for muscle preservation while creating 
-a moderate calorie deficit. Carbs support training energy, and fats support 
-hormone function during weight loss.`}
-                          </pre>
-                        </div>
+                        <h3 className="text-lg font-semibold text-foreground mb-2">Maya: Marathon Runner in Training</h3>
+                        <p className="text-muted-foreground mb-3">
+                          Maya runs 50-70km weekly. Her maintenance calories are around 2800. She uses a 20/60/20 split during peak training—higher carbs for glycogen stores, moderate protein for recovery, controlled fats to avoid excess calories. On lighter weeks, she switches to 25/50/25. She times most carbs around runs and emphasizes protein post-workout.
+                        </p>
+                        <p className="text-muted-foreground text-sm">
+                          <strong>Key takeaway:</strong> Endurance athletes often benefit from higher carb ratios, adjusted based on weekly mileage.
+                        </p>
                       </div>
                       <div>
-                        <h3 className="text-lg font-semibold text-foreground mb-2">Example 2: Muscle Gain for Strength Athlete</h3>
-                        <div className="bg-muted p-4 rounded-lg overflow-x-auto">
-                          <pre className="text-sm text-muted-foreground font-mono">
-{`Input:
-Total Calories: 3,200
-Goal: Muscle Gain (25/50/25 split)
-Weight: 85 kg
-Activity Level: Very Active
-
-Calculation Results:
-• Protein: 200g (25% of calories = 800 calories)
-• Carbohydrates: 400g (50% of calories = 1,600 calories)
-• Fats: 89g (25% of calories = 800 calories)
-• Protein per kg: 2.35g/kg (optimal for muscle building)
-
-Interpretation:
-Higher carbs fuel intense training sessions and recovery. 
-Protein is sufficient for maximum muscle protein synthesis. 
-The calorie surplus supports gradual muscle gain without excessive fat storage.`}
-                          </pre>
-                        </div>
+                        <h3 className="text-lg font-semibold text-foreground mb-2">David: Office Worker Losing Weight</h3>
+                        <p className="text-muted-foreground mb-3">
+                          David sits most of the day but strength trains 3x weekly. At 90kg targeting 80kg, he uses 2200 calories with 35/35/30 split. The higher protein helps preserve muscle during deficit. He front-loads carbs around workouts (pre-workout banana, post-workout rice) and keeps other meals lower carb. This approach maintains energy for training while creating deficit.
+                        </p>
+                        <p className="text-muted-foreground text-sm">
+                          <strong>Key takeaway:</strong> For weight loss with strength training, prioritize protein and time carbs around workouts.
+                        </p>
+                      </div>
+                      <div>
+                        <h3 className="text-lg font-semibold text-foreground mb-2">Sarah: Maintaining After Weight Loss</h3>
+                        <p className="text-muted-foreground mb-3">
+                          Sarah lost 15kg and now maintains at 65kg. She uses 2100 calories with 30/40/30 split. She found through trial that slightly higher protein (30% vs 25%) helps her feel fuller and prevents regain. She doesn't stress about daily perfection—if she goes over on carbs one day, she naturally eats less the next. Her focus is weekly averages, not daily perfection.
+                        </p>
+                        <p className="text-muted-foreground text-sm">
+                          <strong>Key takeaway:</strong> Maintenance often requires individual adjustment—what worked for loss might need tweaking for long-term sustainability.
+                        </p>
                       </div>
                     </div>
                   </div>
                 )}
               </article>
 
-              {/* Related Tools Section - Dropdown */}
+              {/* FAQ */}
               <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
                 <button
-                  onClick={() => toggleSection('relatedTools')}
+                  onClick={() => toggleSection('faq')}
                   className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
                 >
-                  <h2 className="text-xl font-bold text-foreground">Related Health & Fitness Tools</h2>
-                  {openSections.relatedTools ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                  <h2 className="text-xl font-bold text-foreground">Common Macro Questions Answered</h2>
+                  {openSections.faq ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
                 </button>
                 
-                {openSections.relatedTools && (
-                  <div className="px-6 pb-6">
-                    <p className="text-muted-foreground mb-4">
-                      Explore other useful calculators from GrockTool.com that complement macro planning:
-                    </p>
-                    <ul className="space-y-3 text-muted-foreground">
-                      <li className="flex items-start">
-                        <span className="text-accent mr-2">•</span>
-                        <Link href="/health-tools/calorie-calculator" className="text-accent hover:underline">
-                          <strong>Calorie Calculator:</strong> Calculate your total daily energy expenditure (TDEE)
-                        </Link>
-                      </li>
-                      <li className="flex items-start">
-                        <span className="text-accent mr-2">•</span>
-                        <Link href="/health-tools/ideal-weight" className="text-accent hover:underline">
-                          <strong>Ideal Weight Calculator:</strong> Find your healthy weight range based on multiple formulas
-                        </Link>
-                      </li>
-                      <li className="flex items-start">
-                        <span className="text-accent mr-2">•</span>
-                        <Link href="/health-tools/bmi-calculator" className="text-accent hover:underline">
-                          <strong>BMI Calculator:</strong> Calculate your Body Mass Index and understand weight categories
-                        </Link>
-                      </li>
-                      <li className="flex items-start">
-                        <span className="text-accent mr-2">•</span>
-                        <Link href="/health-tools/bmr-calculator" className="text-accent hover:underline">
-                          <strong>BMR Calculator:</strong> Calculate your Basal Metabolic Rate for accurate calorie planning
-                        </Link>
-                      </li>
-                      <li className="flex items-start">
-                        <span className="text-accent mr-2">•</span>
-                        <Link href="/health-tools/body-fat" className="text-accent hover:underline">
-                          <strong>Body Fat Calculator:</strong> Estimate body fat percentage using multiple measurement methods
-                        </Link>
-                      </li>
-                    </ul>
-                  </div>
-                )}
-              </article>
-
-              {/* Frequently Asked Questions - Dropdown */}
-              <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
-                <button
-                  onClick={() => toggleSection('faqs')}
-                  className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
-                >
-                  <h2 className="text-xl font-bold text-foreground">Frequently Asked Questions About Macro Splits</h2>
-                  {openSections.faqs ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
-                </button>
-                
-                {openSections.faqs && (
+                {openSections.faq && (
                   <div className="px-6 pb-6">
                     <div className="space-y-6">
                       {faqData.map((faq, index) => (
@@ -834,14 +732,51 @@ The calorie surplus supports gradual muscle gain without excessive fat storage.`
                         </div>
                       ))}
                     </div>
-                    
-                    {/* Medical Disclaimer */}
-                    <div className="mt-8 p-4 bg-yellow-500/10 rounded-lg border border-yellow-500/20">
-                      <h3 className="text-lg font-semibold text-foreground mb-2">Important Nutrition Disclaimer</h3>
-                      <p className="text-sm text-muted-foreground">
-                        This macro split calculator provides general guidance based on standard nutritional principles. Individual needs vary based on genetics, metabolism, medical conditions, medications, lifestyle, and personal preferences. The results are not medical advice and should not replace consultation with qualified healthcare professionals. Always work with a registered dietitian or nutritionist for personalized dietary planning, especially if you have underlying health conditions, are pregnant or breastfeeding, or take medications that affect metabolism or nutrient absorption.
+                  </div>
+                )}
+              </article>
+
+              {/* Disclaimer */}
+              <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
+                <button
+                  onClick={() => toggleSection('disclaimer')}
+                  className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
+                >
+                  <h2 className="text-xl font-bold text-foreground">Important Considerations</h2>
+                  {openSections.disclaimer ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                </button>
+                
+                {openSections.disclaimer && (
+                  <div className="px-6 pb-6">
+                    <div className="p-4 bg-yellow-500/10 rounded-lg border border-yellow-500/20 mb-4">
+                      <p className="text-muted-foreground">
+                        This calculator provides general nutritional guidance based on population averages. Individual requirements vary significantly based on genetics, metabolic health, medical conditions, medications, lifestyle factors, and personal preferences.
                       </p>
                     </div>
+                    <p className="text-muted-foreground mb-4">
+                      Several important limitations apply to macro-based approaches:
+                    </p>
+                    <ul className="space-y-3 text-muted-foreground mb-4">
+                      <li className="flex items-start">
+                        <span className="text-accent mr-2">•</span>
+                        <span><strong>Micronutrients matter:</strong> Hitting macro targets doesn't guarantee adequate vitamins, minerals, or fiber intake</span>
+                      </li>
+                      <li className="flex items-start">
+                        <span className="text-accent mr-2">•</span>
+                        <span><strong>Food quality affects results:</strong> 100g of protein from whole foods differs physiologically from processed protein isolates</span>
+                      </li>
+                      <li className="flex items-start">
+                        <span className="text-accent mr-2">•</span>
+                        <span><strong>Timing can be relevant:</strong> Nutrient distribution throughout the day affects energy, performance, and recovery</span>
+                      </li>
+                      <li className="flex items-start">
+                        <span className="text-accent mr-2">•</span>
+                        <span><strong>Individual tolerance varies:</strong> Some thrive on higher fat, others on higher carbs—there's no universal best ratio</span>
+                      </li>
+                    </ul>
+                    <p className="text-muted-foreground">
+                      If you have underlying health conditions (diabetes, thyroid disorders, kidney issues, etc.), are pregnant or breastfeeding, take medications that affect metabolism or appetite, or have a history of disordered eating, please consult healthcare professionals before making significant dietary changes. Registered dietitians can provide personalized guidance that accounts for your complete health picture.
+                    </p>
                   </div>
                 )}
               </article>

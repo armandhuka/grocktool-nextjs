@@ -469,297 +469,262 @@ export default function WaterIntake() {
               </div>
             </motion.div>
 
-            {/* Info Section */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.4 }}
-              className="bg-card rounded-xl sm:rounded-2xl border border-border p-4 sm:p-6 mb-8 shadow-sm"
-            >
-              <h2 className="text-base sm:text-lg font-semibold text-foreground mb-3">How Water Intake Calculation Works</h2>
-              <div className="space-y-2 text-muted-foreground text-sm">
-                <p>
-                  This calculator estimates your daily water needs using scientifically-backed formulas that 
-                  consider your body weight, activity level, climate conditions, and age for personalized hydration guidance.
-                </p>
-                <div className="text-xs sm:text-sm space-y-1 pt-2">
-                  <div className="flex items-center gap-2">
-                    <div className="w-1 h-1 bg-muted-foreground rounded-full"></div>
-                    <span>Enter your age, gender, weight, and daily exercise duration</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <div className="w-1 h-1 bg-muted-foreground rounded-full"></div>
-                    <span>Select your climate conditions for accurate adjustment</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <div className="w-1 h-1 bg-muted-foreground rounded-full"></div>
-                    <span>Click "Calculate Water Intake" to get personalized recommendations</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <div className="w-1 h-1 bg-muted-foreground rounded-full"></div>
-                    <span>View results in multiple measurements and get hydration schedule</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <div className="w-1 h-1 bg-muted-foreground rounded-full"></div>
-                    <span>Follow hydration tips for optimal health benefits</span>
-                  </div>
-                </div>
-                <div className="text-xs sm:text-sm space-y-2 pt-3">
-                  <div className="font-medium text-foreground">Calculation Formula:</div>
-                  <div className="flex items-center gap-2">
-                    <div className="w-1 h-1 bg-accent rounded-full"></div>
-                    <span><strong>Base Intake:</strong> 35ml per kg of body weight</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <div className="w-1 h-1 bg-accent rounded-full"></div>
-                    <span><strong>Exercise Adjustment:</strong> +355ml per 30 minutes of exercise</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <div className="w-1 h-1 bg-accent rounded-full"></div>
-                    <span><strong>Climate Multiplier:</strong> Cold (0.9x), Normal (1.0x), Hot (1.2x)</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <div className="w-1 h-1 bg-accent rounded-full"></div>
-                    <span><strong>Age Adjustment:</strong> 10% reduction for seniors (65+)</span>
-                  </div>
-                </div>
-                <div className="text-xs sm:text-sm space-y-2 pt-3">
-                  <div className="font-medium text-foreground">Health Benefits of Proper Hydration:</div>
-                  <div className="flex items-center gap-2">
-                    <div className="w-1 h-1 bg-green-500 rounded-full"></div>
-                    <span>Improved physical performance and energy levels</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <div className="w-1 h-1 bg-green-500 rounded-full"></div>
-                    <span>Better cognitive function and concentration</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <div className="w-1 h-1 bg-green-500 rounded-full"></div>
-                    <span>Enhanced digestion and nutrient absorption</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <div className="w-1 h-1 bg-green-500 rounded-full"></div>
-                    <span>Healthy skin and detoxification support</span>
-                  </div>
-                </div>
-                <div className="text-xs sm:text-sm space-y-2 pt-3">
-                  <div className="font-medium text-foreground">Important Notes:</div>
-                  <div className="flex items-center gap-2">
-                    <div className="w-1 h-1 bg-orange-500 rounded-full"></div>
-                    <span>Individual needs may vary based on health conditions and medications</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <div className="w-1 h-1 bg-orange-500 rounded-full"></div>
-                    <span>Consult healthcare professionals for personalized medical advice</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <div className="w-1 h-1 bg-orange-500 rounded-full"></div>
-                    <span>Water from food and other beverages also contributes to hydration</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <div className="w-1 h-1 bg-orange-500 rounded-full"></div>
-                    <span>Adjust intake based on your body's signals and activity levels</span>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* SEO Content Section */}
+            {/* Updated Content Sections */}
             <section className="space-y-8">
-              {/* What This Tool Does */}
+              {/* Hydration Logic Section */}
               <article className="bg-card rounded-xl border border-border p-6 shadow-sm">
-                <h2 className="text-xl font-bold text-foreground mb-4">Daily Water Intake Calculator - What It Does</h2>
-                <p className="text-muted-foreground mb-4">
-                  This free water intake calculator helps you determine your optimal daily hydration needs based on multiple factors. It calculates how much water your body requires to function at its best, taking into account your unique circumstances for accurate, personalized recommendations.
-                </p>
-                <p className="text-muted-foreground">
-                  The tool uses established hydration guidelines and scientific principles to estimate your water needs in liters, glasses, ounces, and standard water bottles. Whether you're an athlete, someone in a hot climate, or simply want to improve your daily hydration habits, this calculator provides clear, actionable guidance without complex manual calculations.
-                </p>
-              </article>
-
-              {/* Use Cases */}
-              <article className="bg-card rounded-xl border border-border p-6 shadow-sm">
-                <h2 className="text-xl font-bold text-foreground mb-4">Practical Applications of Water Intake Calculation</h2>
-                <ul className="space-y-3 text-muted-foreground">
-                  <li className="flex items-start">
-                    <span className="text-accent mr-2">•</span>
-                    <span><strong>Fitness & Athletic Training:</strong> Determine optimal hydration for workouts, endurance sports, and athletic performance to prevent dehydration during intense physical activity</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-accent mr-2">•</span>
-                    <span><strong>Health & Wellness Planning:</strong> Establish proper hydration habits for weight management, detoxification, and overall health maintenance based on your specific needs</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-accent mr-2">•</span>
-                    <span><strong>Climate Adaptation:</strong> Adjust water intake for hot weather conditions, humid environments, or high-altitude locations where hydration needs increase significantly</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-accent mr-2">•</span>
-                    <span><strong>Workplace Hydration:</strong> Plan water intake for physically demanding jobs, outdoor work, or office environments to maintain energy and focus throughout the day</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-accent mr-2">•</span>
-                    <span><strong>Travel Planning:</strong> Calculate hydration needs for travel, especially to different climates or during long flights where dehydration is common</span>
-                  </li>
-                </ul>
-              </article>
-
-              {/* How to Use This Tool */}
-              <article className="bg-card rounded-xl border border-border p-6 shadow-sm">
-                <h2 className="text-xl font-bold text-foreground mb-4">How to Use This Water Intake Calculator</h2>
-                <ol className="space-y-4 text-muted-foreground pl-5">
-                  <li className="pl-2">
-                    <strong className="text-foreground">Enter Your Basic Information</strong>
-                    <p className="mt-1">Input your age, select your gender, and enter your current body weight in either kilograms or pounds using the unit selector.</p>
-                  </li>
-                  <li className="pl-2">
-                    <strong className="text-foreground">Specify Activity Level</strong>
-                    <p className="mt-1">Enter your typical daily exercise duration in minutes. Use the quick presets for common workout lengths or enter your exact number.</p>
-                  </li>
-                  <li className="pl-2">
-                    <strong className="text-foreground">Select Climate Conditions</strong>
-                    <p className="mt-1">Choose your current climate - Cold, Normal, or Hot - based on your environment's temperature and humidity levels.</p>
-                  </li>
-                  <li className="pl-2">
-                    <strong className="text-foreground">Calculate Your Results</strong>
-                    <p className="mt-1">Click "Calculate Water Intake" to instantly get your personalized daily water requirement in multiple measurements.</p>
-                  </li>
-                  <li className="pl-2">
-                    <strong className="text-foreground">Implement Your Hydration Plan</strong>
-                    <p className="mt-1">Use the recommended hydration schedule, measurement breakdown, and practical tips to improve your daily water consumption habits.</p>
-                  </li>
-                </ol>
-              </article>
-
-              {/* Example Input and Output */}
-              <article className="bg-card rounded-xl border border-border p-6 shadow-sm">
-                <h2 className="text-xl font-bold text-foreground mb-4">Water Intake Calculation Examples</h2>
-                <p className="text-muted-foreground text-sm mb-4">
-                  Below are realistic examples to help you understand how water needs vary based on different lifestyles and conditions.
-                </p>
-                <div className="space-y-6">
-                  <div>
-                    <h3 className="text-lg font-semibold text-foreground mb-2">Example 1: Active Lifestyle in Normal Climate</h3>
-                    <div className="bg-muted p-4 rounded-lg overflow-x-auto">
-                      <pre className="text-sm text-muted-foreground font-mono">
-{`Input:
-Age: 30 years
-Gender: Male
-Weight: 75 kg (165 lbs)
-Exercise: 60 minutes daily
-Climate: Normal
-
-Calculation:
-Base Intake: 75 kg × 35ml = 2,625ml
-Exercise Adjustment: 60 min ÷ 30 × 355ml = 710ml
-Total Before Climate: 2,625ml + 710ml = 3,335ml
-Climate Multiplier: ×1.0 = 3,335ml
-Final Daily Intake: 3.34 liters
-
-Results:
-• 3.34 liters per day
-• 13 glasses (250ml each)
-• 113 fluid ounces
-• 6.7 standard water bottles (500ml)`}
-                      </pre>
-                    </div>
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-semibold text-foreground mb-2">Example 2: Sedentary Senior in Hot Climate</h3>
-                    <div className="bg-muted p-4 rounded-lg overflow-x-auto">
-                      <pre className="text-sm text-muted-foreground font-mono">
-{`Input:
-Age: 70 years
-Gender: Female
-Weight: 65 kg (143 lbs)
-Exercise: 0 minutes daily
-Climate: Hot
-
-Calculation:
-Base Intake: 65 kg × 35ml = 2,275ml
-Exercise Adjustment: 0 ml
-Total Before Climate: 2,275ml
-Climate Multiplier: ×1.2 = 2,730ml
-Age Adjustment: ×0.9 = 2,457ml
-Final Daily Intake: 2.46 liters
-
-Results:
-• 2.46 liters per day
-• 10 glasses (250ml each)
-• 83 fluid ounces
-• 4.9 standard water bottles (500ml)`}
-                      </pre>
-                    </div>
-                  </div>
-                </div>
-              </article>
-
-              {/* Related Tools Section */}
-              <article className="bg-card rounded-xl border border-border p-6 shadow-sm">
-                <h2 className="text-xl font-bold text-foreground mb-4">Related Health & Wellness Tools</h2>
-                <p className="text-muted-foreground mb-4">
-                  Explore other useful calculators from GrockTool.com that complement this water intake calculator:
-                </p>
-                <ul className="space-y-3 text-muted-foreground">
-                  <li className="flex items-start">
-                    <span className="text-accent mr-2">•</span>
-                    <Link href="/health-tools/bmi-calculator" className="text-accent hover:underline">
-                      <strong>BMI Calculator:</strong> Calculate your Body Mass Index using any measurement units
-                    </Link>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-accent mr-2">•</span>
-                    <Link href="/health-tools/calorie-calculator" className="text-accent hover:underline">
-                      <strong>Calorie Calculator:</strong> Calculate your daily calorie needs and macronutrient targets
-                    </Link>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-accent mr-2">•</span>
-                    <Link href="/health-tools/body-fat" className="text-accent hover:underline">
-                      <strong>Body Fat Calculator:</strong> Estimate body fat percentage using multiple methods
-                    </Link>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-accent mr-2">•</span>
-                    <Link href="/unit-tools/weight-converter" className="text-accent hover:underline">
-                      <strong>Weight Converter:</strong> Convert between kg, lbs, stone, and other weight units
-                    </Link>
-                  </li>
-                </ul>
-              </article>
-
-              {/* Frequently Asked Questions */}
-              <article className="bg-card rounded-xl border border-border p-6 shadow-sm">
-                <h2 className="text-xl font-bold text-foreground mb-4">Frequently Asked Questions About Water Intake</h2>
-                <div className="space-y-6">
-                  <div>
-                    <h3 className="text-lg font-semibold text-foreground mb-2">Why is water intake calculation important for health?</h3>
-                    <p className="text-muted-foreground">Proper hydration is essential for nearly every bodily function, including temperature regulation, joint lubrication, nutrient transport, and waste removal. Our water intake calculator helps you determine the right amount of water for your specific needs, preventing both dehydration and overhydration while supporting optimal physical and cognitive performance.</p>
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-semibold text-foreground mb-2">How accurate is this water intake calculator compared to the "8 glasses a day" rule?</h3>
-                    <p className="text-muted-foreground">This calculator is significantly more accurate than the generic "8 glasses a day" recommendation because it personalizes your water needs based on your actual body weight, activity level, climate, and age. The "8 glasses" rule is a rough average that doesn't account for individual differences, while our calculator provides tailored recommendations specific to your unique circumstances.</p>
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-semibold text-foreground mb-2">Should I drink more water if I'm trying to lose weight?</h3>
-                    <p className="text-muted-foreground">Yes, adequate hydration can support weight loss efforts by helping with appetite control, improving metabolism, and replacing high-calorie beverages. However, our calculator already accounts for your current body weight, so follow the recommended amount. Drinking excessive water beyond your calculated needs won't accelerate weight loss and could potentially be harmful.</p>
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-semibold text-foreground mb-2">How does climate affect my water intake needs?</h3>
-                    <p className="text-muted-foreground">Climate significantly impacts hydration requirements. In hot or humid conditions, your body loses more water through sweat to cool itself, increasing your needs. Cold climates can also be dehydrating due to dry indoor air and increased respiratory water loss. Our calculator applies climate multipliers (0.9x for cold, 1.0x for normal, 1.2x for hot) to adjust your base water requirement accordingly.</p>
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-semibold text-foreground mb-2">What if I drink other beverages like coffee, tea, or juice?</h3>
-                    <p className="text-muted-foreground">While other beverages do contribute to your total fluid intake, water is the optimal choice for hydration without added calories, sugar, or caffeine. Our calculator assumes pure water intake. If you consume significant amounts of other beverages, you may need slightly less water, but be mindful of their sugar, caffeine, and calorie content. Water should remain your primary hydration source.</p>
-                  </div>
-                </div>
-                
-                {/* Medical Disclaimer */}
-                <div className="mt-8 p-4 bg-yellow-500/10 rounded-lg border border-yellow-500/20">
-                  <h3 className="text-lg font-semibold text-foreground mb-2">Important Hydration Disclaimer</h3>
-                  <p className="text-sm text-muted-foreground">
-                    This water intake calculator provides estimates based on general guidelines and should be used for informational purposes only. Individual hydration needs can vary based on specific medical conditions, medications, pregnancy, breastfeeding, and other factors not accounted for in these calculations. Certain health conditions (like kidney disease, heart conditions, or adrenal issues) require specialized hydration guidance from medical professionals. Always consult with a qualified healthcare provider for personalized medical advice regarding your hydration needs, especially if you have underlying health conditions or take medications that affect fluid balance.
+                <h2 className="text-xl font-bold text-foreground mb-4">How Your Body Uses Water and Why It Matters</h2>
+                <div className="space-y-4 text-muted-foreground">
+                  <p>
+                    Most people know they should drink water, but few understand exactly what happens inside their body when they do. It's not just about quenching thirst—every sip supports complex biological processes. Your body uses water as a transport system, carrying nutrients to cells and removing waste products. It acts as a temperature regulator through sweating, a joint lubricant to prevent friction, and even helps maintain blood pressure at healthy levels.
                   </p>
+                  <p>
+                    What's interesting is how your daily water needs fluctuate. They're not static numbers but shift with your activities, environment, and even the foods you eat. On days when you're mostly indoors with light activity, your requirements differ significantly from days spent outdoors in summer heat. This calculator accounts for those variables because drinking the same amount every day doesn't match how your body actually works.
+                  </p>
+                  <p>
+                    The "drink eight glasses" advice oversimplifies things. A construction worker in Arizona needs different hydration than an office worker in Seattle, even if they weigh the same. That's why we consider climate and activity—two factors that dramatically change how much water your body loses through sweat and respiration.
+                  </p>
+                  <div className="bg-blue-500/10 p-4 rounded-lg border border-blue-500/20 mt-4">
+                    <h3 className="text-lg font-semibold text-foreground mb-2">Why Timing Matters</h3>
+                    <p className="text-sm">
+                      Drinking all your water at once doesn't work well. Your body can only absorb about 800-1000ml per hour effectively. The rest gets excreted without proper hydration benefits. That's why we suggest spreading intake throughout the day—it matches your body's absorption capacity and maintains steady hydration levels.
+                    </p>
+                  </div>
+                </div>
+              </article>
+
+              {/* Weight-Based Formula Section */}
+              <article className="bg-card rounded-xl border border-border p-6 shadow-sm">
+                <h2 className="text-xl font-bold text-foreground mb-4">How Your Weight Determines Your Base Hydration Needs</h2>
+                <div className="space-y-4 text-muted-foreground">
+                  <p>
+                    The 35ml-per-kg formula might seem arbitrary, but it's grounded in physiological reality. Larger bodies have more cells that need hydration, greater blood volume to maintain, and typically more muscle mass that requires water for optimal function. Think of it this way: every kilogram of your body needs water to function properly, so it makes sense that hydration scales with your size.
+                  </p>
+                  <p>
+                    Here's what that 35ml per kg actually covers: approximately 20ml goes toward basic metabolic processes in your cells, 8ml supports kidney function and waste removal, 4ml maintains digestive processes, and the remaining 3ml accounts for minimal daily water loss through breathing and skin evaporation under normal conditions.
+                  </p>
+                  <p>
+                    This base calculation assumes you're at rest in a comfortable environment. It's your starting point—the water you'd need if you spent the day lounging around at 22°C (72°F) with minimal movement. From there, we add adjustments for everything else you do.
+                  </p>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+                    <div className="bg-green-500/10 p-4 rounded-lg border border-green-500/20">
+                      <h4 className="font-semibold text-foreground mb-2">Muscle vs. Fat</h4>
+                      <p className="text-sm">
+                        Muscle tissue contains about 75-80% water, while fat tissue is only 10-15% water. This means two people at the same weight can have different hydration needs based on their body composition. Our calculator uses weight as a practical measure since most people don't know their exact muscle percentage.
+                      </p>
+                    </div>
+                    <div className="bg-purple-500/10 p-4 rounded-lg border border-purple-500/20">
+                      <h4 className="font-semibold text-foreground mb-2">The Age Factor</h4>
+                      <p className="text-sm">
+                        As we get older, our kidneys become slightly less efficient at conserving water, and thirst signals can weaken. However, total body water percentage also decreases. The 10% reduction for those over 65 balances these factors—maintaining hydration without overburdening aging kidneys.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </article>
+
+              {/* Examples Section */}
+              <article className="bg-card rounded-xl border border-border p-6 shadow-sm">
+                <h2 className="text-xl font-bold text-foreground mb-4">Real-Life Scenarios: How Different Lifestyles Affect Water Needs</h2>
+                <div className="space-y-6">
+                  <div>
+                    <h3 className="text-lg font-semibold text-foreground mb-3">The Weekend Hiker</h3>
+                    <div className="bg-muted p-4 rounded-lg">
+                      <p className="text-muted-foreground mb-3">
+                        Sarah, 32, plans a 4-hour mountain hike on a warm Saturday. She weighs 68kg and typically drinks about 2 liters on office days. During her hike, she'll need significantly more:
+                      </p>
+                      <ul className="space-y-2 text-sm text-muted-foreground pl-4">
+                        <li className="flex items-start">
+                          <span className="text-accent mr-2">•</span>
+                          <span><strong>Base needs:</strong> 68kg × 35ml = 2,380ml</span>
+                        </li>
+                        <li className="flex items-start">
+                          <span className="text-accent mr-2">•</span>
+                          <span><strong>Exercise:</strong> 240 minutes ÷ 30 × 355ml = 2,840ml additional</span>
+                        </li>
+                        <li className="flex items-start">
+                          <span className="text-accent mr-2">•</span>
+                          <span><strong>Climate:</strong> Warm weather multiplier (1.2×) applied</span>
+                        </li>
+                        <li className="flex items-start">
+                          <span className="text-accent mr-2">•</span>
+                          <span><strong>Total:</strong> Approximately 6.3 liters for that day</span>
+                        </li>
+                      </ul>
+                      <p className="text-sm text-muted-foreground mt-3">
+                        The key insight here? Sarah needs to drink about 500ml every hour during her hike, not just before and after. Spreading it out prevents dehydration while avoiding the discomfort of drinking too much at once.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div>
+                    <h3 className="text-lg font-semibold text-foreground mb-3">The Office Worker in Air Conditioning</h3>
+                    <div className="bg-muted p-4 rounded-lg">
+                      <p className="text-muted-foreground mb-3">
+                        Michael, 45, works in a climate-controlled office 9 hours a day. He walks 20 minutes to work but otherwise sits at his desk. His needs look different:
+                      </p>
+                      <ul className="space-y-2 text-sm text-muted-foreground pl-4">
+                        <li className="flex items-start">
+                          <span className="text-accent mr-2">•</span>
+                          <span><strong>Weight:</strong> 82kg gives base of 2,870ml</span>
+                        </li>
+                        <li className="flex items-start">
+                          <span className="text-accent mr-2">•</span>
+                          <span><strong>Activity:</strong> Just 20 minutes walking adds minimal exercise water</span>
+                        </li>
+                        <li className="flex items-start">
+                          <span className="text-accent mr-2">•</span>
+                          <span><strong>Climate twist:</strong> Air conditioning is dehydrating—we still use normal climate setting but with a note about dry air</span>
+                        </li>
+                        <li className="flex items-start">
+                          <span className="text-accent mr-2">•</span>
+                          <span><strong>Total:</strong> About 3.1 liters daily</span>
+                        </li>
+                      </ul>
+                      <p className="text-sm text-muted-foreground mt-3">
+                        Michael's challenge isn't quantity but remembering to drink while focused on work. Setting hourly reminders or keeping a visible water bottle helps more than trying to drink large amounts at lunch.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div>
+                    <h3 className="text-lg font-semibold text-foreground mb-3">The New Parent Up All Night</h3>
+                    <div className="bg-muted p-4 rounded-lg">
+                      <p className="text-muted-foreground mb-3">
+                        Jamal, 29, is getting broken sleep with a newborn. His activity consists of light housework and baby care, not traditional "exercise," but his needs still shift:
+                      </p>
+                      <ul className="space-y-2 text-sm text-muted-foreground pl-4">
+                        <li className="flex items-start">
+                          <span className="text-accent mr-2">•</span>
+                          <span><strong>Weight-based:</strong> 77kg = 2,695ml base</span>
+                        </li>
+                        <li className="flex items-start">
+                          <span className="text-accent mr-2">•</span>
+                          <span><strong>Activity adjustment:</strong> We count 2 hours of light activity throughout day/night</span>
+                        </li>
+                        <li className="flex items-start">
+                          <span className="text-accent mr-2">•</span>
+                          <span><strong>Sleep factor:</strong> Less sleep can increase mild dehydration risk</span>
+                        </li>
+                        <li className="flex items-start">
+                          <span className="text-accent mr-2">•</span>
+                          <span><strong>Total:</strong> Approximately 3.4 liters, spread across waking hours</span>
+                        </li>
+                      </ul>
+                      <p className="text-sm text-muted-foreground mt-3">
+                        For Jamal, keeping water by the nightstand for those late-night feedings makes more sense than trying to meet needs entirely during daytime hours. Small, frequent sips work better than large glasses.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </article>
+
+              {/* Health Disclaimer Section */}
+              <article className="bg-card rounded-xl border border-border p-6 shadow-sm">
+                <h2 className="text-xl font-bold text-foreground mb-4">Important Considerations About Your Health and Hydration</h2>
+                <div className="space-y-4 text-muted-foreground">
+                  <div className="bg-yellow-500/10 p-4 rounded-lg border border-yellow-500/20 mb-4">
+                    <h3 className="text-lg font-semibold text-foreground mb-2">When Our Calculator Is a Starting Point, Not a Prescription</h3>
+                    <p>
+                      This tool provides general recommendations for healthy adults. If you have specific medical conditions, your needs may differ significantly. For instance, people with heart failure or severe kidney disease often need to restrict fluids, while those with certain metabolic conditions might require more.
+                    </p>
+                  </div>
+                  
+                  <p>
+                    Medications dramatically affect hydration too. Diuretics (water pills) increase urine output, while some antidepressants and blood pressure medications can cause dry mouth that might feel like dehydration. If you're on regular medication, it's worth discussing hydration with your doctor rather than relying solely on calculators.
+                  </p>
+                  
+                  <p>
+                    Pregnancy and breastfeeding create unique hydration demands. During pregnancy, blood volume increases by about 50%, and amniotic fluid needs regular replenishment. Breastfeeding mothers produce milk that's about 90% water. In these cases, thirst is usually a reliable guide, but adding 750-1000ml to your calculated needs is a reasonable starting point.
+                  </p>
+                  
+                  <div className="bg-red-500/10 p-4 rounded-lg border border-red-500/20 mt-4">
+                    <h4 className="font-semibold text-foreground mb-2">Signs You Should Consult a Doctor</h4>
+                    <ul className="space-y-1 text-sm">
+                      <li>• Consistently producing very small amounts of dark urine despite adequate fluid intake</li>
+                      <li>• Sudden, extreme increases in thirst that don't correlate with activity or climate changes</li>
+                      <li>• Swelling in hands, feet, or ankles when increasing water intake</li>
+                      <li>• Difficulty balancing fluid intake with medical conditions like diabetes or hypertension</li>
+                    </ul>
+                  </div>
+                  
+                  <p className="pt-4">
+                    Remember that about 20% of our daily water comes from foods, especially fruits, vegetables, soups, and even coffee or tea. If your diet is rich in watermelon, cucumbers, oranges, or broth-based soups, you're getting hydration from sources beyond your water glass. This calculator focuses on drinking water, but your total fluid intake includes these dietary sources.
+                  </p>
+                </div>
+              </article>
+
+              {/* FAQs Section */}
+              <article className="bg-card rounded-xl border border-border p-6 shadow-sm">
+                <h2 className="text-xl font-bold text-foreground mb-4">Common Questions About Hydration</h2>
+                <div className="space-y-6">
+                  <div>
+                    <h3 className="text-lg font-semibold text-foreground mb-2">I often forget to drink water until I'm thirsty. Is that okay?</h3>
+                    <p className="text-muted-foreground">
+                      Thirst means you're already mildly dehydrated—about 1-2% below optimal hydration. At that point, you might notice reduced concentration or slight fatigue. It's better to drink regularly before thirst hits. Try linking water to daily habits: a glass after brushing teeth, one with each meal, and sips during natural breaks in your day. Your body will thank you with better energy levels.
+                    </p>
+                  </div>
+                  
+                  <div>
+                    <h3 className="text-lg font-semibold text-foreground mb-2">Can I drink too much water? What happens then?</h3>
+                    <p className="text-muted-foreground">
+                      Yes, though it's rare for healthy adults with normal kidney function. Water intoxication (hyponatremia) occurs when you drink so much that sodium levels in your blood become dangerously diluted. Symptoms include nausea, headache, confusion, and in severe cases, seizures. Most cases occur in endurance athletes who drink enormous quantities without electrolytes. For everyday hydration, your kidneys can handle up to about 15 liters per day, but sticking to your calculated needs eliminates this risk entirely.
+                    </p>
+                  </div>
+                  
+                  <div>
+                    <h3 className="text-lg font-semibold text-foreground mb-2">Does coffee and tea count toward my daily water intake, or do they dehydrate me?</h3>
+                    <p className="text-muted-foreground">
+                      This is a persistent myth. While caffeine has a mild diuretic effect, the water in coffee or tea more than compensates. A 2003 study in the Journal of Human Nutrition and Dietetics found no significant difference in hydration between those drinking caffeinated beverages and plain water. So yes, your morning coffee counts. Just be mindful of added sugar or cream, and remember that very large amounts of caffeine (more than 500mg daily) might have stronger diuretic effects.
+                    </p>
+                  </div>
+                  
+                  <div>
+                    <h3 className="text-lg font-semibold text-foreground mb-2">I'm trying to lose weight. Will drinking more water help?</h3>
+                    <p className="text-muted-foreground">
+                      It can support weight loss in several ways. First, drinking water before meals can create a sense of fullness, potentially reducing calorie intake. Second, replacing sugary drinks with water eliminates empty calories. Third, adequate hydration supports metabolic processes. However, water alone won't cause weight loss—it works best as part of a balanced approach with healthy eating and activity. Don't expect miracles from excessive water consumption.
+                    </p>
+                  </div>
+                  
+                  <div>
+                    <h3 className="text-lg font-semibold text-foreground mb-2">My urine is always clear. Does that mean I'm perfectly hydrated?</h3>
+                    <p className="text-muted-foreground">
+                      Clear urine often means you're well-hydrated, but consistently crystal-clear urine might indicate you're drinking more than necessary. Pale straw color is the ideal target. If your urine is always clear and you're making frequent bathroom trips, you might be slightly overdoing it. Conversely, dark yellow or amber urine suggests you need more fluids. Remember that some medications and supplements (like B vitamins) can affect urine color independently of hydration.
+                    </p>
+                  </div>
+                  
+                  <div>
+                    <h3 className="text-lg font-semibold text-foreground mb-2">I exercise first thing in the morning. Should I drink before my workout if I haven't had water all night?</h3>
+                    <p className="text-muted-foreground">
+                      Absolutely. Overnight, you lose water through breathing and minimal sweating. Drinking 250-500ml of water 30 minutes before morning exercise helps offset this. During your workout, sip regularly (about 150-200ml every 15-20 minutes for moderate exercise). Afterward, replace what you've lost—a good rule is to drink 500ml for every pound of sweat loss, but since few people weigh themselves pre- and post-exercise, drinking until your urine returns to pale yellow works well.
+                    </p>
+                  </div>
+                  
+                  <div className="bg-blue-500/10 p-4 rounded-lg border border-blue-500/20">
+                    <h3 className="text-lg font-semibold text-foreground mb-2">Quick Hydration Checklist</h3>
+                    <ul className="space-y-2 text-sm text-muted-foreground">
+                      <li className="flex items-start">
+                        <span className="text-accent mr-2">•</span>
+                        <span><strong>Morning:</strong> Drink within an hour of waking to rehydrate after sleep</span>
+                      </li>
+                      <li className="flex items-start">
+                        <span className="text-accent mr-2">•</span>
+                        <span><strong>Meals:</strong> Have a glass with each meal to aid digestion</span>
+                      </li>
+                      <li className="flex items-start">
+                        <span className="text-accent mr-2">•</span>
+                        <span><strong>Activity:</strong> Sip during exercise, don't guzzle after</span>
+                      </li>
+                      <li className="flex items-start">
+                        <span className="text-accent mr-2">•</span>
+                        <span><strong>Evening:</strong> Reduce intake 2 hours before bed to avoid sleep disruptions</span>
+                      </li>
+                      <li className="flex items-start">
+                        <span className="text-accent mr-2">•</span>
+                        <span><strong>Monitor:</strong> Check urine color midday as a quick hydration check</span>
+                      </li>
+                    </ul>
+                  </div>
                 </div>
               </article>
             </section>

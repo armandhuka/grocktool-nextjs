@@ -59,27 +59,27 @@ export default function IdealWeight() {
     { value: 'large', label: 'Large Frame', description: 'Larger build, bigger bones' }
   ];
 
-  // FAQ Data
+  // FAQ Data - UPDATED
   const faqData = [
     {
-      question: "Which ideal weight formula is the most accurate?",
-      answer: "The Robinson formula (1983) is generally considered the most accurate for the general population as it was developed from more recent and comprehensive data. However, all formulas provide estimates - the average of all four formulas often gives the most balanced recommendation for most individuals."
+      question: "Why do I get four different ideal weight numbers?",
+      answer: "That's actually a good sign—it means the calculator is working properly! Each formula was developed at different times for different purposes. Robinson (1983) is considered most accurate today, while Hamwi (1964) reflects older standards. The variation between them accounts for differences in how researchers defined 'ideal' across decades. Taking the average gives you a balanced modern recommendation that considers all these perspectives."
     },
     {
-      question: "Why does body frame size affect ideal weight calculations?",
-      answer: "Body frame size accounts for bone structure variations. People with larger bone structures naturally weigh more than those with smaller frames at the same height. The adjustment (small: -10%, medium: no change, large: +10%) helps personalize the estimate based on your natural build."
+      question: "My actual weight is outside the healthy BMI range—should I be worried?",
+      answer: "Not necessarily. BMI has limitations—it doesn't distinguish between muscle and fat. If you're athletic with significant muscle mass, you might show as 'overweight' on BMI while being perfectly healthy. Conversely, some people fall in the 'normal' range but have poor body composition. Use these numbers as a starting point, not a verdict. If you're concerned, consider getting a body composition analysis or consult with a healthcare provider who can look at your overall health picture."
     },
     {
-      question: "Should athletes use these ideal weight calculations?",
-      answer: "Athletes and bodybuilders may find these formulas less accurate because they don't account for high muscle mass. Muscle weighs more than fat, so athletes often have higher healthy weights. Consider using body fat percentage measurements alongside ideal weight estimates for a more complete picture."
+      question: "How accurate is the body frame adjustment?",
+      answer: "The frame adjustment (+/- 10%) is a practical estimate based on clinical experience rather than precise science. People with larger bone structures naturally weigh more, but there's no universal measurement for 'large frame.' The adjustment helps personalize results, but it's still an approximation. If you're unsure about your frame size, medium is usually a safe default that works for most people."
     },
     {
-      question: "How does age affect ideal weight recommendations?",
-      answer: "As we age, muscle mass naturally decreases while body fat percentage tends to increase. The calculator applies a 5% reduction for individuals over 65 to account for these metabolic changes and ensure age-appropriate healthy weight recommendations."
+      question: "I'm trying to gain muscle—should I ignore these ideal weight numbers?",
+      answer: "Not ignore, but interpret them differently. If you're actively strength training, your healthy weight range will likely be higher than what these formulas suggest. Muscle tissue is denser than fat, so you can weigh more while looking leaner. Pay more attention to how your clothes fit, your energy levels, and your strength progress than chasing a specific number on the scale. Body composition matters more than total weight for athletes."
     },
     {
-      question: "Is it unhealthy to be below the ideal weight range?",
-      answer: "Being significantly below the ideal weight range can indicate insufficient body fat for normal physiological functions. Very low weight may lead to nutrient deficiencies, hormonal imbalances, and increased health risks. Consult a healthcare professional if you consistently fall below the healthy BMI range (18.5)."
+      question: "Why does the calculator reduce weight recommendations for people over 65?",
+      answer: "As we age, we typically lose muscle mass (about 3-8% per decade after 30) and our metabolism slows. The 5% reduction for seniors accounts for these natural changes while still maintaining healthy body function. However, maintaining muscle through strength training becomes increasingly important with age. The focus should shift from weight alone to preserving muscle mass and functional ability."
     }
   ];
 
@@ -559,222 +559,300 @@ export default function IdealWeight() {
               </motion.div>
             )}
 
-            {/* Formula Information Card */}
+            {/* Formula Information Card - UPDATED */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.3 }}
               className="bg-card rounded-xl sm:rounded-2xl border border-border p-4 sm:p-6 mb-6 shadow-sm"
             >
-              <h2 className="text-lg font-semibold text-foreground mb-4">About Ideal Weight Formulas</h2>
+              <h2 className="text-lg font-semibold text-foreground mb-4">How These Weight Formulas Actually Work</h2>
               <div className="space-y-4">
-                <div className="bg-blue-500/10 p-3 rounded-lg border border-blue-500/20">
-                  <div className="text-sm font-medium text-foreground mb-1">📊 Robinson Formula (1983)</div>
-                  <div className="text-sm text-muted-foreground">
-                    Most commonly used in clinical settings. Considered one of the most accurate formulas 
-                    for ideal body weight calculation.
-                  </div>
+                <div className="bg-blue-500/10 p-4 rounded-lg border border-blue-500/20">
+                  <div className="text-sm font-medium text-foreground mb-2">📊 Where These Numbers Come From</div>
+                  <p className="text-sm text-muted-foreground mb-3">
+                    You might wonder why we use four different formulas instead of just one. The truth is, each formula was developed during different eras with different medical philosophies about what "ideal" weight means. They're all based on statistical analysis of height-weight data from large populations, but they weight factors differently.
+                  </p>
+                  <p className="text-sm text-muted-foreground">
+                    The Robinson formula (1983) is generally considered the most accurate today because it used more recent and diverse population data. It starts with a base weight (52kg for men, 49kg for women) and adds a specific amount for each inch over 5 feet. The Miller formula from the same year uses slightly different coefficients, while Devine (1974) was developed for medication dosing. Hamwi (1964) is the oldest and tends to give the highest estimates, reflecting different historical standards.
+                  </p>
                 </div>
                 
-                <div className="bg-green-500/10 p-3 rounded-lg border border-green-500/20">
-                  <div className="text-sm font-medium text-foreground mb-1">⚖️ Miller Formula (1983)</div>
-                  <div className="text-sm text-muted-foreground">
-                    Similar to Robinson formula with slight modifications. Developed as an improvement 
-                    over earlier formulas.
-                  </div>
+                <div className="bg-green-500/10 p-4 rounded-lg border border-green-500/20">
+                  <div className="text-sm font-medium text-foreground mb-2">⚖️ Why Gender Matters in the Calculations</div>
+                  <p className="text-sm text-muted-foreground">
+                    Men and women have different body compositions—men typically have more muscle mass and less body fat at the same height. The formulas account for this through different starting points and growth rates. Men's formulas start about 2-6kg higher than women's at 5 feet tall. This isn't arbitrary; it reflects biological reality where muscle tissue weighs more than fat tissue, and men's bodies naturally carry more lean mass.
+                  </p>
                 </div>
 
-                <div className="bg-purple-500/10 p-3 rounded-lg border border-purple-500/20">
-                  <div className="text-sm font-medium text-foreground mb-1">💊 Devine Formula (1974)</div>
-                  <div className="text-sm text-muted-foreground">
-                    Originally developed for medication dosing calculations. Widely used in medical 
-                    practice for decades.
-                  </div>
-                </div>
-
-                <div className="bg-orange-500/10 p-3 rounded-lg border border-orange-500/20">
-                  <div className="text-sm font-medium text-foreground mb-1">🏥 Hamwi Formula (1964)</div>
-                  <div className="text-sm text-muted-foreground">
-                    Quick estimation method developed for clinical use. One of the earliest and 
-                    most referenced formulas.
-                  </div>
+                <div className="bg-purple-500/10 p-4 rounded-lg border border-purple-500/20">
+                  <div className="text-sm font-medium text-foreground mb-2">📐 The Height Conversion Behind the Scenes</div>
+                  <p className="text-sm text-muted-foreground">
+                    Internally, the calculator converts everything to centimeters and kilograms for precision, then converts back to your preferred units. This avoids rounding errors that can occur with imperial units. The inch-based formulas work because they were developed using imperial measurements, but modern implementations use metric conversions for accuracy. The height adjustment for each inch over 5 feet ranges from 1.36kg to 2.7kg depending on the formula and gender.
+                  </p>
                 </div>
               </div>
             </motion.div>
 
-            {/* Health Guidelines Card */}
+            {/* Health Guidelines Card - UPDATED */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.4 }}
               className="bg-card rounded-xl sm:rounded-2xl border border-border p-4 sm:p-6 mb-8 shadow-sm"
             >
-              <h2 className="text-lg font-semibold text-foreground mb-4">Health Guidelines & Considerations</h2>
-              <div className="space-y-3">
-                <div className="bg-green-500/10 p-3 rounded-lg border border-green-500/20">
-                  <div className="text-sm font-medium text-foreground mb-1">💪 Factors Affecting Ideal Weight</div>
-                  <div className="text-sm text-muted-foreground space-y-1">
-                    <div>• Muscle mass and body composition</div>
-                    <div>• Bone density and frame size</div>
-                    <div>• Age and metabolic changes</div>
-                    <div>• Physical activity level</div>
-                    <div>• Genetic factors and ethnicity</div>
-                  </div>
+              <h2 className="text-lg font-semibold text-foreground mb-4">What Your Results Actually Mean for Your Health</h2>
+              <div className="space-y-4">
+                <div className="bg-green-500/10 p-4 rounded-lg border border-green-500/20">
+                  <div className="text-sm font-medium text-foreground mb-2">🎯 Understanding the Range, Not Just the Number</div>
+                  <p className="text-sm text-muted-foreground mb-3">
+                    The most important result isn't the single average number, but the healthy BMI range shown below it. That range (typically about 20-30 pounds wide) represents where your weight could healthily fall. If you're within that range, you're in a good place regardless of which formula you look at. The average gives you a target, but the range shows flexibility based on your individual body composition.
+                  </p>
+                  <p className="text-sm text-muted-foreground">
+                    People often fixate on hitting the exact average number, but that's not necessary for health. Your weight naturally fluctuates by several pounds throughout the day based on hydration, digestion, and other factors. Being consistently within the healthy range matters more than hitting a specific target weight.
+                  </p>
                 </div>
                 
-                <div className="bg-blue-500/10 p-3 rounded-lg border border-blue-500/20">
-                  <div className="text-sm font-medium text-foreground mb-1">🎯 When to Consult a Professional</div>
-                  <div className="text-sm text-muted-foreground space-y-1">
-                    <div>• If you have significant muscle mass (athletes)</div>
-                    <div>• If you have underlying health conditions</div>
-                    <div>• For personalized diet and exercise plans</div>
-                    <div>• If you're pregnant or breastfeeding</div>
+                <div className="bg-blue-500/10 p-4 rounded-lg border border-blue-500/20">
+                  <div className="text-sm font-medium text-foreground mb-2">💪 When These Numbers Don't Tell the Whole Story</div>
+                  <p className="text-sm text-muted-foreground mb-3">
+                    These formulas work well for the average person, but they have limitations. If you're an athlete with significant muscle mass, you might weigh more than the "ideal" while being perfectly healthy. Conversely, someone could fall within the healthy BMI range but have poor body composition (too much fat, not enough muscle).
+                  </p>
+                  <div className="text-xs text-muted-foreground space-y-1">
+                    <div className="flex items-start">
+                      <span className="text-accent mr-2">•</span>
+                      <span><strong>Athletes:</strong> Muscle weighs more than fat—you might be "overweight" by these standards but healthy by body composition</span>
+                    </div>
+                    <div className="flex items-start">
+                      <span className="text-accent mr-2">•</span>
+                      <span><strong>Elderly:</strong> The 5% reduction accounts for age, but maintaining muscle becomes more important than weight alone</span>
+                    </div>
+                    <div className="flex items-start">
+                      <span className="text-accent mr-2">•</span>
+                      <span><strong>Medical conditions:</strong> Some conditions affect fluid retention or metabolism, making these formulas less applicable</span>
+                    </div>
                   </div>
                 </div>
 
-                <div className="bg-orange-500/10 p-3 rounded-lg border border-orange-500/20">
-                  <div className="text-sm font-medium text-foreground mb-1">⚠️ Important Notes</div>
-                  <div className="text-sm text-muted-foreground space-y-1">
-                    <div>• These are estimates based on statistical formulas</div>
-                    <div>• Individual needs may vary significantly</div>
-                    <div>• Focus on overall health, not just weight</div>
-                    <div>• Consult healthcare professionals for personalized advice</div>
-                  </div>
+                <div className="bg-orange-500/10 p-4 rounded-lg border border-orange-500/20">
+                  <div className="text-sm font-medium text-foreground mb-2">🎯 Practical Application: What to Do with Your Results</div>
+                  <p className="text-sm text-muted-foreground">
+                    Instead of obsessing over daily scale readings, use these numbers as long-term guides. If you're outside the healthy range, consider gradual changes rather than rapid weight loss or gain. Losing 1-2 pounds per week or gaining 0.5-1 pound per week is sustainable. Focus on habits—eating nutrient-dense foods, staying active, getting enough sleep—rather than just the number on the scale. Your weight is one health indicator among many, not the only one that matters.
+                  </p>
                 </div>
               </div>
             </motion.div>
 
-            {/* SEO Content Section with Dropdowns */}
+            {/* SEO Content Section with Dropdowns - UPDATED */}
             <section className="space-y-4">
-              {/* What This Tool Does - Dropdown */}
+              {/* Formula Used - Dropdown */}
               <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
                 <button
                   onClick={() => toggleSection('whatItDoes')}
                   className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
                 >
-                  <h2 className="text-xl font-bold text-foreground">Ideal Weight Calculator - What It Does</h2>
+                  <h2 className="text-xl font-bold text-foreground">The Formulas Behind Your Ideal Weight Calculation</h2>
                   {openSections.whatItDoes ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
                 </button>
                 
                 {openSections.whatItDoes && (
                   <div className="px-6 pb-6">
-                    <p className="text-muted-foreground mb-4">
-                      This free tool helps you determine your optimal healthy weight range using four scientifically validated formulas: Robinson, Miller, Devine, and Hamwi. Each formula provides a slightly different perspective based on extensive medical research and population studies.
-                    </p>
-                    <p className="text-muted-foreground">
-                      Unlike simple weight charts, this calculator personalizes results based on your unique body frame size, age, and gender. The average of all four formulas gives you a balanced recommendation, while the healthy BMI range shows where your weight should fall for optimal health outcomes. Understanding your ideal weight range helps set realistic fitness goals and maintain overall wellness.
-                    </p>
+                    <div className="space-y-4 text-muted-foreground">
+                      <p>
+                        When you use this calculator, you're actually getting insights from four different medical formulas developed over five decades. Each formula tells a slightly different story about what researchers considered "ideal" at different points in history. Understanding where these numbers come from helps you interpret your results more effectively.
+                      </p>
+                      
+                      <div className="bg-blue-500/10 p-4 rounded-lg border border-blue-500/20">
+                        <h3 className="text-lg font-semibold text-foreground mb-2">The Evolution of Ideal Weight Standards</h3>
+                        <p className="mb-2">
+                          Dr. G. J. Hamwi published his formula in 1964, creating a simple rule for clinicians: 106 pounds for men at 5 feet, plus 6 pounds per additional inch (100 pounds + 5 pounds per inch for women). This was designed as a quick mental calculation for doctors assessing patients.
+                        </p>
+                        <p className="mb-2">
+                          A decade later in 1974, Dr. B. J. Devine developed his formula specifically for medication dosing. He needed accurate estimates of lean body mass to calculate proper drug dosages. His formula became widely adopted in hospitals and remains in use today for certain clinical applications.
+                        </p>
+                        <p>
+                          By 1983, researchers J. D. Robinson and D. R. Miller independently published updated formulas based on newer, more comprehensive population data. These formulas generally produce lower "ideal" weights than their predecessors, reflecting changing understanding of health risks associated with weight.
+                        </p>
+                      </div>
+                      
+                      <p>
+                        The mathematical structure is similar across formulas: a base weight at 5 feet tall, plus a specific amount per additional inch. What changes are the coefficients. For men, Robinson adds 1.9kg per inch, Miller adds 1.41kg, Devine adds 2.3kg, and Hamwi adds 2.7kg. These differences might seem small, but they add up significantly for taller individuals.
+                      </p>
+                      
+                      <p>
+                        Why do we still use older formulas like Hamwi and Devine? Because they're embedded in medical literature and clinical practice. Some hospital protocols still reference these older standards. By showing you all four results, you get to see how medical thinking has evolved and where the consensus lies today.
+                      </p>
+                    </div>
                   </div>
                 )}
               </article>
 
-              {/* How to Use This Tool - Dropdown */}
+              {/* Result Interpretation - Dropdown */}
               <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
                 <button
                   onClick={() => toggleSection('howToUse')}
                   className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
                 >
-                  <h2 className="text-xl font-bold text-foreground">How to Use This Ideal Weight Calculator</h2>
+                  <h2 className="text-xl font-bold text-foreground">How to Make Sense of Your Ideal Weight Results</h2>
                   {openSections.howToUse ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
                 </button>
                 
                 {openSections.howToUse && (
                   <div className="px-6 pb-6">
-                    <ol className="space-y-4 text-muted-foreground pl-5">
-                      <li className="pl-2">
-                        <strong className="text-foreground">Enter Your Personal Details</strong>
-                        <p className="mt-1">Input your age, select your gender, and provide your height using the unit selector (cm, ft, or inches).</p>
-                      </li>
-                      <li className="pl-2">
-                        <strong className="text-foreground">Select Your Body Frame Size</strong>
-                        <p className="mt-1">Choose Small, Medium, or Large frame based on your natural bone structure. This adjusts the calculation by ±10%.</p>
-                      </li>
-                      <li className="pl-2">
-                        <strong className="text-foreground">Choose Display Units</strong>
-                        <p className="mt-1">Select your preferred weight units for results (kg, lbs, or stone). The calculator works internally with metric units.</p>
-                      </li>
-                      <li className="pl-2">
-                        <strong className="text-foreground">Calculate Your Ideal Weight</strong>
-                        <p className="mt-1">Click "Calculate Ideal Weight" to get results from all four formulas plus their average and healthy BMI range.</p>
-                      </li>
-                      <li className="pl-2">
-                        <strong className="text-foreground">Interpret Your Results</strong>
-                        <p className="mt-1">Use the average recommendation as a guideline, with the healthy BMI range showing acceptable variations. Consider your individual health factors when applying these numbers.</p>
-                      </li>
-                    </ol>
+                    <div className="space-y-4 text-muted-foreground">
+                      <p>
+                        Getting your results is just the beginning—interpreting them correctly matters more. Here's how to think about those numbers in practical, health-focused ways.
+                      </p>
+                      
+                      <div className="bg-green-500/10 p-4 rounded-lg border border-green-500/20">
+                        <h3 className="text-lg font-semibold text-foreground mb-2">The Healthy BMI Range: Your Most Important Result</h3>
+                        <p className="mb-2">
+                          The healthy BMI range (18.5-24.9) shown with your results isn't just an afterthought—it's actually more scientifically valid than the ideal weight formulas. This range comes from decades of epidemiological research linking weight to health outcomes.
+                        </p>
+                        <p>
+                          If your current weight falls within this range, you're in a statistically healthy zone regardless of what the individual formulas say. The range accounts for natural variations in body composition that the formulas can't capture. Someone at the lower end might have a smaller frame, while someone at the higher end might have more muscle mass—both can be equally healthy.
+                        </p>
+                      </div>
+                      
+                      <div className="bg-purple-500/10 p-4 rounded-lg border border-purple-500/20">
+                        <h3 className="text-lg font-semibold text-foreground mb-2">When Your Weight Doesn't Match the Formulas</h3>
+                        <p className="mb-2">
+                          If your actual weight differs significantly from the recommendations, don't panic. Consider these possibilities:
+                        </p>
+                        <ul className="space-y-2 text-sm pl-4">
+                          <li className="flex items-start">
+                            <span className="text-accent mr-2">•</span>
+                            <span><strong>Muscle vs. Fat:</strong> Are you strength training regularly? Muscle is denser than fat—you might weigh more but be leaner.</span>
+                          </li>
+                          <li className="flex items-start">
+                            <span className="text-accent mr-2">•</span>
+                            <span><strong>Frame Size:</strong> Did you select the right frame? People often underestimate their frame size—your wrists and ankles can give clues.</span>
+                          </li>
+                          <li className="flex items-start">
+                            <span className="text-accent mr-2">•</span>
+                            <span><strong>Recent Changes:</strong> Have you gained or lost weight recently? Your body might still be adjusting to a new normal.</span>
+                          </li>
+                          <li className="flex items-start">
+                            <span className="text-accent mr-2">•</span>
+                            <span><strong>Hydration:</strong> Your weight can fluctuate by 2-4 pounds daily based on water retention and digestion.</span>
+                          </li>
+                        </ul>
+                      </div>
+                      
+                      <p>
+                        Instead of focusing solely on weight, consider other health markers: How do your clothes fit? What's your energy level like? How's your sleep quality? Do you have strength for daily activities? These subjective measures often tell you more about your health than the scale alone.
+                      </p>
+                      
+                      <p>
+                        If you decide to make changes based on these results, aim for gradual progress. Trying to lose or gain weight too quickly usually backfires. Sustainable changes come from small, consistent adjustments to eating and activity patterns, not drastic diets or extreme exercise regimens.
+                      </p>
+                    </div>
                   </div>
                 )}
               </article>
 
-              {/* Example Input and Output - Dropdown */}
+              {/* Examples - Dropdown */}
               <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
                 <button
                   onClick={() => toggleSection('examples')}
                   className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
                 >
-                  <h2 className="text-xl font-bold text-foreground">Ideal Weight Calculation Examples</h2>
+                  <h2 className="text-xl font-bold text-foreground">Real People, Real Results: How Ideal Weight Varies</h2>
                   {openSections.examples ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
                 </button>
                 
                 {openSections.examples && (
                   <div className="px-6 pb-6">
-                    <p className="text-muted-foreground text-sm mb-4">
-                      Below are practical examples showing how ideal weight varies based on different heights, ages, and body frames.
-                    </p>
                     <div className="space-y-6">
                       <div>
-                        <h3 className="text-lg font-semibold text-foreground mb-2">Example 1: Average Male with Medium Frame</h3>
-                        <div className="bg-muted p-4 rounded-lg overflow-x-auto">
-                          <pre className="text-sm text-muted-foreground font-mono">
-{`Input:
-Age: 35 years
-Gender: Male
-Height: 180 cm (5'11")
-Body Frame: Medium
-Display Units: kg
-
-Calculation Results:
-• Robinson Formula: 72.5 kg
-• Miller Formula: 74.8 kg
-• Devine Formula: 76.0 kg
-• Hamwi Formula: 77.2 kg
-• Average Recommendation: 75.1 kg
-• Healthy BMI Range: 60.0 - 80.7 kg
-
-Interpretation:
-A healthy weight range for this individual is 60.0-80.7 kg,
-with the ideal target around 75.1 kg based on multiple formulas.`}
-                          </pre>
+                        <h3 className="text-lg font-semibold text-foreground mb-3">Case Study: The Office Worker vs. The Construction Worker</h3>
+                        <div className="bg-muted p-4 rounded-lg">
+                          <p className="text-muted-foreground mb-3">
+                            Take two men, both 35 years old and 6 feet tall (183 cm). One works in an office, the other in construction. They enter the same numbers into the calculator but get different real-world implications.
+                          </p>
+                          
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-3">
+                            <div className="bg-blue-500/10 p-3 rounded-lg">
+                              <h4 className="font-semibold text-foreground mb-2">Office Worker (Medium Frame)</h4>
+                              <p className="text-sm text-muted-foreground">
+                                Results show 76-81kg (167-179 lbs) as ideal. He currently weighs 85kg (187 lbs). The calculator suggests he's slightly above ideal, but his sedentary job means most excess weight is likely fat rather than muscle.
+                              </p>
+                            </div>
+                            <div className="bg-green-500/10 p-3 rounded-lg">
+                              <h4 className="font-semibold text-foreground mb-2">Construction Worker (Large Frame)</h4>
+                              <p className="text-sm text-muted-foreground">
+                                Results show 84-89kg (185-196 lbs) as ideal. He currently weighs 90kg (198 lbs). Though heavier, his job involves constant physical activity, so some excess weight could be muscle rather than fat.
+                              </p>
+                            </div>
+                          </div>
+                          
+                          <p className="text-sm text-muted-foreground">
+                            Same calculator, same numbers, but different interpretations based on lifestyle. The office worker might benefit from reducing calorie intake slightly, while the construction worker might focus more on body composition than weight alone.
+                          </p>
                         </div>
                       </div>
+                      
                       <div>
-                        <h3 className="text-lg font-semibold text-foreground mb-2">Example 2: Older Female with Small Frame</h3>
-                        <div className="bg-muted p-4 rounded-lg overflow-x-auto">
-                          <pre className="text-sm text-muted-foreground font-mono">
-{`Input:
-Age: 68 years
-Gender: Female
-Height: 162 cm (5'4")
-Body Frame: Small
-Display Units: lbs
-
-Calculation Results:
-• Robinson Formula: 113.2 lbs
-• Miller Formula: 115.4 lbs
-• Devine Formula: 112.6 lbs
-• Hamwi Formula: 114.8 lbs
-• Average Recommendation: 114.0 lbs
-• Healthy BMI Range: 98.7 - 133.0 lbs
-
-Adjustments Applied:
-• Frame size: -10% (small frame)
-• Age: -5% (senior adjustment)
-• Total adjustment: -14.5%
-
-Interpretation:
-With age and frame adjustments, the healthy range is 
-98.7-133.0 lbs, with ideal around 114.0 lbs.`}
-                          </pre>
+                        <h3 className="text-lg font-semibold text-foreground mb-3">The Postpartum Adjustment</h3>
+                        <div className="bg-muted p-4 rounded-lg">
+                          <p className="text-muted-foreground mb-3">
+                            Sarah is 28, 5'6" (168 cm), and 6 months postpartum. Before pregnancy she weighed 62kg (137 lbs). Now she's 68kg (150 lbs) and wondering about her ideal weight.
+                          </p>
+                          
+                          <div className="space-y-2 text-sm text-muted-foreground pl-4">
+                            <div className="flex items-start">
+                              <span className="text-accent mr-2">•</span>
+                              <span><strong>Calculator result:</strong> 59-66kg (130-145 lbs) ideal range</span>
+                            </div>
+                            <div className="flex items-start">
+                              <span className="text-accent mr-2">•</span>
+                              <span><strong>Current status:</strong> 2kg above the healthy range</span>
+                            </div>
+                            <div className="flex items-start">
+                              <span className="text-accent mr-2">•</span>
+                              <span><strong>Important context:</strong> She's still breastfeeding, which requires extra calories and affects hormone levels</span>
+                            </div>
+                            <div className="flex items-start">
+                              <span className="text-accent mr-2">•</span>
+                              <span><strong>Reasonable approach:</strong> Focus on nutrient-dense foods and gentle activity rather than aggressive weight loss while breastfeeding</span>
+                            </div>
+                          </div>
+                          
+                          <p className="text-sm text-muted-foreground mt-3">
+                            In this case, the calculator provides a target for eventual return to pre-pregnancy health, but the timeline should extend through the breastfeeding period rather than rushing immediately.
+                          </p>
+                        </div>
+                      </div>
+                      
+                      <div>
+                        <h3 className="text-lg font-semibold text-foreground mb-3">The Senior with Changing Body Composition</h3>
+                        <div className="bg-muted p-4 rounded-lg">
+                          <p className="text-muted-foreground mb-3">
+                            Robert is 72, 5'9" (175 cm), and has noticed gradual weight gain despite eating less. He's concerned about his 82kg (181 lbs) weight.
+                          </p>
+                          
+                          <div className="space-y-2 text-sm text-muted-foreground pl-4">
+                            <div className="flex items-start">
+                              <span className="text-accent mr-2">•</span>
+                              <span><strong>Calculator with age adjustment:</strong> 67-77kg (148-170 lbs) ideal range</span>
+                            </div>
+                            <div className="flex items-start">
+                              <span className="text-accent mr-2">•</span>
+                              <span><strong>Current status:</strong> 5kg above the healthy range</span>
+                            </div>
+                            <div className="flex items-start">
+                              <span className="text-accent mr-2">•</span>
+                              <span><strong>Age factor:</strong> The 5% reduction accounts for typical muscle loss, but Robert might have lost more muscle than average</span>
+                            </div>
+                            <div className="flex items-start">
+                              <span className="text-accent mr-2">•</span>
+                              <span><strong>Better approach:</strong> Strength training to preserve muscle, moderate calorie reduction, protein-focused nutrition</span>
+                            </div>
+                          </div>
+                          
+                          <p className="text-sm text-muted-foreground mt-3">
+                            For Robert, the weight number matters less than preserving muscle mass. Losing weight through muscle loss would be counterproductive—he needs to lose fat while maintaining or building muscle through resistance training.
+                          </p>
                         </div>
                       </div>
                     </div>
@@ -782,59 +860,50 @@ With age and frame adjustments, the healthy range is
                 )}
               </article>
 
-              {/* Related Tools Section - Dropdown */}
+              {/* Health Disclaimer - Dropdown */}
               <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
                 <button
                   onClick={() => toggleSection('relatedTools')}
                   className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
                 >
-                  <h2 className="text-xl font-bold text-foreground">Related Health & Fitness Tools</h2>
+                  <h2 className="text-xl font-bold text-foreground">Important Health Considerations and Limitations</h2>
                   {openSections.relatedTools ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
                 </button>
                 
                 {openSections.relatedTools && (
                   <div className="px-6 pb-6">
-                    <p className="text-muted-foreground mb-4">
-                      Explore other useful calculators from GrockTool.com that complement this ideal weight assessment:
-                    </p>
-                    <ul className="space-y-3 text-muted-foreground">
-                      <li className="flex items-start">
-                        <span className="text-accent mr-2">•</span>
-                        <Link href="/health-tools/bmi-calculator" className="text-accent hover:underline">
-                          <strong>BMI Calculator:</strong> Calculate your Body Mass Index using any measurement units
-                        </Link>
-                      </li>
-                      <li className="flex items-start">
-                        <span className="text-accent mr-2">•</span>
-                        <Link href="/health-tools/calorie-calculator" className="text-accent hover:underline">
-                          <strong>Calorie Calculator:</strong> Calculate your daily calorie needs and macronutrient targets
-                        </Link>
-                      </li>
-                      <li className="flex items-start">
-                        <span className="text-accent mr-2">•</span>
-                        <Link href="/health-tools/water-intake" className="text-accent hover:underline">
-                          <strong>Water Intake Calculator:</strong> Calculate your optimal daily hydration needs
-                        </Link>
-                      </li>
-                      <li className="flex items-start">
-                        <span className="text-accent mr-2">•</span>
-                        <Link href="/health-tools/body-fat" className="text-accent hover:underline">
-                          <strong>Body Fat Calculator:</strong> Estimate your body fat percentage using multiple methods
-                        </Link>
-                      </li>
-                      <li className="flex items-start">
-                        <span className="text-accent mr-2">•</span>
-                        <Link href="/health-tools/bmr-calculator" className="text-accent hover:underline">
-                          <strong>BMR Calculator:</strong> Calculate your Basal Metabolic Rate for weight management
-                        </Link>
-                      </li>
-                      <li className="flex items-start">
-                        <span className="text-accent mr-2">•</span>
-                        <Link href="/health-tools/macro-splitter" className="text-accent hover:underline">
-                          <strong>Macro Split Calculator:</strong> Calculate optimal macronutrient ratios for your goals
-                        </Link>
-                      </li>
-                    </ul>
+                    <div className="space-y-4 text-muted-foreground">
+                      <div className="bg-yellow-500/10 p-4 rounded-lg border border-yellow-500/20 mb-4">
+                        <h3 className="text-lg font-semibold text-foreground mb-2">What This Calculator Can and Cannot Tell You</h3>
+                        <p>
+                          This tool provides statistical estimates based on population data. It cannot account for your individual genetics, medical history, or unique body composition. The formulas assume "average" body proportions and composition, which might not match your particular situation.
+                        </p>
+                      </div>
+                      
+                      <p>
+                        Several important factors aren't captured in these calculations. Bone density varies significantly between individuals—some people naturally have denser bones that add weight without adding size. Hydration status affects scale weight temporarily. Medical conditions like hypothyroidism, PCOS, or certain medications can alter metabolism and weight distribution in ways these formulas don't consider.
+                      </p>
+                      
+                      <div className="bg-red-500/10 p-4 rounded-lg border border-red-500/20">
+                        <h4 className="font-semibold text-foreground mb-2">When to Seek Professional Guidance</h4>
+                        <ul className="space-y-1 text-sm">
+                          <li>• If you have a history of eating disorders or disordered eating patterns</li>
+                          <li>• If you're taking medications that affect weight or metabolism</li>
+                          <li>• If you have underlying health conditions like diabetes, heart disease, or thyroid disorders</li>
+                          <li>• If you're pregnant, trying to conceive, or breastfeeding</li>
+                          <li>• If you experience rapid, unexplained weight changes</li>
+                          <li>• If weight concerns are causing significant stress or anxiety</li>
+                        </ul>
+                      </div>
+                      
+                      <p>
+                        Remember that health exists on a spectrum. Being slightly outside the "ideal" range doesn't automatically mean you're unhealthy, just as being within it doesn't guarantee perfect health. Other factors—blood pressure, cholesterol levels, blood sugar control, fitness level, mental health—contribute significantly to overall wellbeing.
+                      </p>
+                      
+                      <p>
+                        If you use these results to guide lifestyle changes, prioritize sustainable habits over quick fixes. Gradual changes you can maintain long-term beat drastic diets you abandon after a month. Consider working with a registered dietitian or certified personal trainer who can create a personalized plan based on your specific needs and goals.
+                      </p>
+                    </div>
                   </div>
                 )}
               </article>
@@ -845,7 +914,7 @@ With age and frame adjustments, the healthy range is
                   onClick={() => toggleSection('faqs')}
                   className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
                 >
-                  <h2 className="text-xl font-bold text-foreground">Frequently Asked Questions About Ideal Weight</h2>
+                  <h2 className="text-xl font-bold text-foreground">Common Questions About Finding Your Healthy Weight</h2>
                   {openSections.faqs ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
                 </button>
                 
@@ -858,13 +927,34 @@ With age and frame adjustments, the healthy range is
                           <p className="text-muted-foreground">{faq.answer}</p>
                         </div>
                       ))}
+                      
+                      <div>
+                        <h3 className="text-lg font-semibold text-foreground mb-2">How often should I check my weight against these ideal ranges?</h3>
+                        <p className="text-muted-foreground">
+                          Daily weigh-ins often cause unnecessary stress due to normal fluctuations. Weekly checks at the same time of day (morning after bathroom, before eating) give a clearer trend. Monthly assessments work even better for seeing progress without getting bogged down in daily variations. Remember, the scale measures everything—water, food waste, muscle, fat. A 2-3 pound change from one day to the next usually reflects hydration or digestion, not actual fat loss or gain.
+                        </p>
+                      </div>
+                      
+                      <div>
+                        <h3 className="text-lg font-semibold text-foreground mb-2">I'm within the healthy BMI range but still have belly fat. What gives?</h3>
+                        <p className="text-muted-foreground">
+                          BMI measures total weight relative to height, not where fat is distributed. Some people store more fat viscerally (around organs) even at normal weights. This "normal weight obesity" carries health risks. If you're in this situation, focus on body composition rather than weight. Strength training builds muscle that boosts metabolism, while reducing processed foods and added sugars can help reduce visceral fat. Waist circumference (less than 40 inches for men, 35 inches for women) is actually a better predictor of certain health risks than BMI alone.
+                        </p>
+                      </div>
+                      
+                      <div>
+                        <h3 className="text-lg font-semibold text-foreground mb-2">Are these ideal weights different for different ethnicities?</h3>
+                        <p className="text-muted-foreground">
+                          The formulas were developed primarily using Western populations, so they might not perfectly match optimal weights for all ethnic groups. Research shows that some Asian populations have higher health risks at lower BMIs, while other groups might have different healthy ranges. However, the differences are relatively small for most people. The healthy BMI range (18.5-24.9) is internationally recognized, though some countries use modified ranges for specific populations. If you have concerns about ethnicity-specific standards, consult healthcare providers familiar with your background.
+                        </p>
+                      </div>
                     </div>
                     
                     {/* Medical Disclaimer */}
                     <div className="mt-8 p-4 bg-yellow-500/10 rounded-lg border border-yellow-500/20">
-                      <h3 className="text-lg font-semibold text-foreground mb-2">Important Health Disclaimer</h3>
+                      <h3 className="text-lg font-semibold text-foreground mb-2">Professional Medical Disclaimer</h3>
                       <p className="text-sm text-muted-foreground">
-                        This ideal weight calculator provides estimates based on statistical formulas and should be used for informational purposes only. Individual weight needs can vary significantly based on muscle mass, genetics, medical conditions, medications, and other factors not accounted for in these calculations. The results from this calculator are not a substitute for professional medical advice, diagnosis, or treatment. Always consult with a qualified healthcare provider or registered dietitian for personalized medical advice regarding your weight and health, especially if you have underlying health conditions or take medications that affect metabolism or body composition.
+                        This ideal weight calculator provides estimates based on statistical formulas and should be used for informational purposes only. The results are not medical advice, diagnosis, or treatment recommendations. Individual weight needs vary based on muscle mass, bone density, genetics, medical conditions, medications, lifestyle factors, and other variables not accounted for in these calculations. These formulas do not replace professional medical evaluation or personalized guidance from qualified healthcare providers. Always consult with your doctor, registered dietitian, or other qualified health professional before making significant changes to your diet, exercise routine, or weight management approach, especially if you have existing health conditions or take medications.
                       </p>
                     </div>
                   </div>

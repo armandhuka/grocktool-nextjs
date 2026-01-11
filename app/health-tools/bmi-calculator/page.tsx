@@ -367,259 +367,199 @@ export default function BMICalculator() {
               </motion.div>
             )}
 
-            {/* BMI Categories Card */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-              className="bg-card rounded-xl sm:rounded-2xl border border-border p-4 sm:p-6 mb-6 shadow-sm"
-            >
-              <h2 className="text-lg font-semibold text-foreground mb-4">BMI Categories (WHO Standards)</h2>
-              <div className="space-y-3">
-                <div className="flex justify-between items-center p-3 bg-blue-500/10 rounded-lg border border-blue-500/20">
-                  <span className="text-sm font-medium text-foreground">Underweight</span>
-                  <span className="text-sm font-bold text-blue-600">Below 18.5</span>
-                </div>
-                <div className="flex justify-between items-center p-3 bg-green-500/10 rounded-lg border border-green-500/20">
-                  <span className="text-sm font-medium text-foreground">Normal weight</span>
-                  <span className="text-sm font-bold text-green-600">18.5 - 24.9</span>
-                </div>
-                <div className="flex justify-between items-center p-3 bg-yellow-500/10 rounded-lg border border-yellow-500/20">
-                  <span className="text-sm font-medium text-foreground">Overweight</span>
-                  <span className="text-sm font-bold text-yellow-600">25 - 29.9</span>
-                </div>
-                <div className="flex justify-between items-center p-3 bg-red-500/10 rounded-lg border border-red-500/20">
-                  <span className="text-sm font-medium text-foreground">Obese</span>
-                  <span className="text-sm font-bold text-red-600">30 and above</span>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Unit Conversion Guide */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.4 }}
-              className="bg-card rounded-xl sm:rounded-2xl border border-border p-4 sm:p-6 mb-8 shadow-sm"
-            >
-              <h2 className="text-base sm:text-lg font-semibold text-foreground mb-3">Unit Conversion Guide</h2>
-              <div className="space-y-2 text-muted-foreground text-sm">
-                <div className="text-xs sm:text-sm space-y-2">
-                  <div className="font-medium text-foreground">Height Conversions:</div>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
-                    <div>1 foot = 30.48 cm = 0.3048 m</div>
-                    <div>1 inch = 2.54 cm = 0.0254 m</div>
-                    <div>1 cm = 0.3937 inches</div>
-                    <div>1 m = 3.2808 feet</div>
-                  </div>
-                </div>
-                <div className="text-xs sm:text-sm space-y-2 pt-3">
-                  <div className="font-medium text-foreground">Weight Conversions:</div>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
-                    <div>1 pound (lb) = 0.4536 kg</div>
-                    <div>1 stone = 14 lbs = 6.3503 kg</div>
-                    <div>1 kg = 2.2046 lbs</div>
-                    <div>1 kg = 0.1575 stone</div>
-                  </div>
-                </div>
-                <div className="text-xs sm:text-sm space-y-2 pt-3">
-                  <div className="font-medium text-foreground">Common Examples:</div>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
-                    <div>5'7" = 170 cm = 1.70 m</div>
-                    <div>150 lbs = 68 kg = 10.7 stone</div>
-                    <div>6 feet = 182.9 cm = 1.83 m</div>
-                    <div>180 lbs = 81.6 kg = 12.9 stone</div>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-
             {/* SEO Content Section */}
             <section className="space-y-8">
-              {/* What This Tool Does */}
+              {/* BMI Formula */}
               <article className="bg-card rounded-xl border border-border p-6 shadow-sm">
-                <h2 className="text-xl font-bold text-foreground mb-4">Free BMI Calculator - What It Does</h2>
+                <h2 className="text-xl font-bold text-foreground mb-4">BMI Formula - How It Actually Works</h2>
                 <p className="text-muted-foreground mb-4">
-                  This free online tool helps you calculate your Body Mass Index (BMI) using height and weight in multiple measurement systems.
-                  It supports both metric units (cm, m, kg) and imperial units (feet, inches, lbs, stone), making it suitable for users worldwide.
+                  At its core, BMI is a straightforward mathematical calculation. The formula is weight in kilograms divided by height in meters squared. But here's what many people don't realize: the simplicity of this calculation masks its scientific background.
+                </p>
+                <p className="text-muted-foreground mb-4">
+                  The BMI formula was originally developed in the 1830s by Belgian statistician Adolphe Quetelet, who was studying social physics. He noticed that weight tends to increase proportionally to the square of height in average adults - that's where the "squared" part comes from. It wasn't originally created as a medical tool, but researchers in the 1970s found it correlated surprisingly well with body fat percentage in population studies.
                 </p>
                 <p className="text-muted-foreground">
-                  The calculator automatically converts your inputs, applies the standard BMI formula recommended by the World Health Organization (WHO),
-                  and shows your result along with the correct weight category. You also get clear calculation details and unit conversions,
-                  so you understand exactly how your BMI is calculated.
+                  When you enter your measurements into our calculator, we're doing more than just plugging numbers into a formula. We're first converting whatever units you provide into the standard metric measurements required by the BMI equation. This conversion happens behind the scenes, so you get accurate results whether you're thinking in pounds and inches or kilograms and centimeters.
                 </p>
-
               </article>
 
-              {/* Use Cases */}
+              {/* Result Interpretation */}
               <article className="bg-card rounded-xl border border-border p-6 shadow-sm">
-                <h2 className="text-xl font-bold text-foreground mb-4">Practical Applications of BMI Calculation</h2>
-                <ul className="space-y-3 text-muted-foreground">
-                  <li className="flex items-start">
-                    <span className="text-accent mr-2">•</span>
-                    <span><strong>Health Screening:</strong> Use this <strong>free BMI calculator</strong> for preliminary health assessments before medical consultations</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-accent mr-2">•</span>
-                    <span><strong>Fitness Tracking:</strong> Monitor weight changes relative to height during fitness programs using our <strong>weight calculator</strong></span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-accent mr-2">•</span>
-                    <span><strong>Nutrition Planning:</strong> Determine appropriate calorie intake based on BMI categories from this <strong>body mass index calculator</strong></span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-accent mr-2">•</span>
-                    <span><strong>International Standards:</strong> Convert between measurement systems for global health comparisons with our unit conversion</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-accent mr-2">•</span>
-                    <span><strong>Educational Tool:</strong> Learn about body composition, health metrics, and the importance of maintaining healthy weight</span>
-                  </li>
-                </ul>
-              </article>
-
-              {/* How to Use This Tool */}
-              <article className="bg-card rounded-xl border border-border p-6 shadow-sm">
-                <h2 className="text-xl font-bold text-foreground mb-4">How to Calculate BMI Using This Tool</h2>
-                <ol className="space-y-4 text-muted-foreground pl-5">
-                  <li className="pl-2">
-                    <strong className="text-foreground">Enter Your Height</strong>
-                    <p className="mt-1">Type your height in the first field. Select your preferred unit: centimeters (cm), meters (m), feet (ft), or inches (in). For <strong>BMI calculator feet and inches</strong>, you can use decimal feet (5.7 for 5'7") or use the preset buttons.</p>
-                  </li>
-                  <li className="pl-2">
-                    <strong className="text-foreground">Enter Your Weight</strong>
-                    <p className="mt-1">Type your weight in the second field. Choose your unit: kilograms (kg), pounds (lbs), or stone (st). The <strong>BMI calculator kg and cm</strong> mode is automatic if you use metric units.</p>
-                  </li>
-                  <li className="pl-2">
-                    <strong className="text-foreground">Calculate Your BMI</strong>
-                    <p className="mt-1">Click "Calculate BMI" to get instant results. Our <strong>calculate BMI online</strong> tool will convert units automatically and apply the formula: BMI = weight(kg) / height(m)².</p>
-                  </li>
-                  <li className="pl-2">
-                    <strong className="text-foreground">Review Detailed Results</strong>
-                    <p className="mt-1">Examine your BMI score, category, conversion details, and health assessment. The tool shows exactly how your input was calculated.</p>
-                  </li>
-                  <li className="pl-2">
-                    <strong className="text-foreground">Take Appropriate Action</strong>
-                    <p className="mt-1">Based on your BMI category, consider the provided guidance. For personalized medical advice, always consult healthcare professionals.</p>
-                  </li>
-                </ol>
-              </article>
-
-              {/* Example Input and Output */}
-              <article className="bg-card rounded-xl border border-border p-6 shadow-sm">
-                <h2 className="text-xl font-bold text-foreground mb-4">BMI Calculator Examples (Metric & Imperial)</h2>
-                <div className="space-y-6">
-                  <div>
-                    <h3 className="text-lg font-semibold text-foreground mb-2">Example 1: BMI Calculator Using Metric Units</h3>
-                    <div className="bg-muted p-4 rounded-lg overflow-x-auto">
-                      <pre className="text-sm text-muted-foreground font-mono">
-                        {`Input (Metric System):
-Height: 175 centimeters (cm)
-Weight: 70 kilograms (kg)
-
-Calculation Process:
-Height converted to meters: 175 cm ÷ 100 = 1.75 m
-Weight in kg: 70 kg (no conversion needed)
-BMI Formula: 70 ÷ (1.75 × 1.75) = 70 ÷ 3.0625
-Result: BMI = 22.9
-
-Output:
-BMI Score: 22.9
-Category: Normal weight
-Health Assessment: This BMI indicates a healthy weight range according to WHO standards.`}
-                      </pre>
-                    </div>
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-semibold text-foreground mb-2">Example 2: BMI Calculator Using Imperial Units</h3>
-                    <div className="bg-muted p-4 rounded-lg overflow-x-auto">
-                      <pre className="text-sm text-muted-foreground font-mono">
-                        {`Input (Imperial System):
-Height: 5 feet 9 inches (5'9")
-Weight: 160 pounds (lbs)
-
-Calculation Process:
-Height conversion: 5'9" = 69 inches = 1.753 meters
-Weight conversion: 160 lbs × 0.453592 = 72.57 kg
-BMI Formula: 72.57 ÷ (1.753 × 1.753) = 72.57 ÷ 3.073
-Result: BMI = 23.6
-
-Output:
-BMI Score: 23.6
-Category: Normal weight
-Health Assessment: This falls within the healthy weight range.`}
-                      </pre>
-                    </div>
-                  </div>
-                </div>
-              </article>
-
-              {/* Related Tools Section - Internal Linking */}
-              <article className="bg-card rounded-xl border border-border p-6 shadow-sm">
-                <h2 className="text-xl font-bold text-foreground mb-4">Related Health Calculators</h2>
+                <h2 className="text-xl font-bold text-foreground mb-4">Making Sense of Your BMI Result</h2>
                 <p className="text-muted-foreground mb-4">
-                  Explore our other health and fitness tools that complement this BMI calculator:
+                  Getting your BMI number is one thing, but understanding what it means for you personally is another. The categories - underweight, normal, overweight, and obese - are based on epidemiological research that links these ranges to health outcomes in large population studies.
                 </p>
-                <ul className="space-y-3 text-muted-foreground">
-                  <li className="flex items-start">
-                    <span className="text-accent mr-2">•</span>
-                    <Link href="/unit-tools/weight-converter" className="text-accent hover:underline">
-                      <strong>Weight Converter:</strong> Convert between kg, lbs, stone, and other weight units
-                    </Link>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-accent mr-2">•</span>
-                    <Link href="/unit-tools/length-converter" className="text-accent hover:underline">
-                      <strong>Height Converter:</strong> Convert between cm, feet, inches, and meters
-                    </Link>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-accent mr-2">•</span>
-                    <Link href="/health-tools/calorie-calculator" className="text-accent hover:underline">
-                      <strong>Calorie Calculator:</strong> Calculate daily calorie needs based on activity level
-                    </Link>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-accent mr-2">•</span>
-                    <Link href="/health-tools/body-fat" className="text-accent hover:underline">
-                      <strong>Body Fat Calculator:</strong> Estimate body fat percentage using multiple methods
-                    </Link>
-                  </li>
-                </ul>
+                <p className="text-muted-foreground mb-4">
+                  For most adults, a BMI between 18.5 and 24.9 correlates with the lowest risk of weight-related health issues. But here's something important: BMI doesn't distinguish between fat, muscle, or bone mass. A professional athlete with substantial muscle might register as "overweight" even with very low body fat. Similarly, an older adult with muscle loss might show a "normal" BMI while carrying excess fat.
+                </p>
+                <p className="text-muted-foreground mb-4">
+                  Context matters tremendously. Your age, sex, ethnicity, and lifestyle all influence what your BMI number means for you. For instance, some ethnic groups have different health risks at the same BMI levels. That's why our calculator provides guidance but can't replace personalized medical advice.
+                </p>
+                <p className="text-muted-foreground">
+                  If your result surprises you, consider these factors. Have you recently gained muscle through strength training? Are you naturally more muscular or have a larger bone structure? These can all push your BMI higher without indicating excess body fat. Conversely, if you're elderly and less active than you used to be, you might want to pay attention to a normal BMI that could mask muscle loss.
+                </p>
               </article>
 
-              {/* Frequently Asked Questions */}
+              {/* Standard Ranges */}
               <article className="bg-card rounded-xl border border-border p-6 shadow-sm">
-                <h2 className="text-xl font-bold text-foreground mb-4">Frequently Asked Questions About BMI Calculation</h2>
-                <div className="space-y-6">
-                  <div>
-                    <h3 className="text-lg font-semibold text-foreground mb-2">What is BMI and why should I use a BMI calculator?</h3>
-                    <p className="text-muted-foreground">BMI (Body Mass Index) is a numerical value calculated from a person's weight and height. It's a widely used screening tool to identify potential weight-related health risks. Our <strong>free BMI calculator online</strong> makes this calculation instant and accurate, supporting all measurement units for global accessibility.</p>
+                <h2 className="text-xl font-bold text-foreground mb-4">Standard BMI Ranges and Their Meaning</h2>
+                <div className="space-y-4">
+                  <div className="p-4 bg-blue-500/10 rounded-lg border border-blue-500/20">
+                    <h3 className="text-lg font-semibold text-blue-600 mb-2">Underweight (Below 18.5)</h3>
+                    <p className="text-muted-foreground">
+                      Being underweight can indicate inadequate nutrition, which might affect immune function, bone health, and energy levels. Some people are naturally lean with a BMI in this range and experience no health issues. However, if you've unintentionally lost weight or struggle to maintain weight, it's worth discussing with a healthcare provider.
+                    </p>
                   </div>
-                  <div>
-                    <h3 className="text-lg font-semibold text-foreground mb-2">How accurate is this BMI calculator compared to others?</h3>
-                    <p className="text-muted-foreground">Our <strong>BMI calculator with height and weight</strong> uses precise conversion factors and follows WHO standards. Unlike simple calculators that only work with one unit system, our tool handles cm, m, feet, inches, kg, lbs, and stone with mathematical accuracy to 4 decimal places in conversions.</p>
+                  <div className="p-4 bg-green-500/10 rounded-lg border border-green-500/20">
+                    <h3 className="text-lg font-semibold text-green-600 mb-2">Normal Weight (18.5 - 24.9)</h3>
+                    <p className="text-muted-foreground">
+                      This range is associated with the lowest risk of weight-related health problems for most people. However, "normal" doesn't automatically mean "healthy" - your lifestyle, diet quality, activity level, and where you carry fat (waist measurement matters) all contribute to your actual health status.
+                    </p>
                   </div>
-                  <div>
-                    <h3 className="text-lg font-semibold text-foreground mb-2">Can I use this BMI calculator for children or athletes?</h3>
-                    <p className="text-muted-foreground">This calculator uses standard adult BMI categories. For children, growth charts are more appropriate. For athletes with high muscle mass, BMI may overestimate body fat. Consider using our <Link href="/tools/body-fat-calculator" className="text-accent hover:underline">Body Fat Calculator</Link> for more accurate body composition assessment.</p>
+                  <div className="p-4 bg-yellow-500/10 rounded-lg border border-yellow-500/20">
+                    <h3 className="text-lg font-semibold text-yellow-600 mb-2">Overweight (25 - 29.9)</h3>
+                    <p className="text-muted-foreground">
+                      The overweight category is nuanced. Some research suggests people in the lower end of this range (25-27) might have similar mortality risk to those in the normal range. The health implications often depend more on fitness level, blood markers, and fat distribution than the BMI number alone.
+                    </p>
                   </div>
-                  <div>
-                    <h3 className="text-lg font-semibold text-foreground mb-2">How often should I check my BMI for health monitoring?</h3>
-                    <p className="text-muted-foreground">For general health monitoring, checking your BMI once every 1-3 months is sufficient. If you're actively working on weight management, monthly checks can help track progress. Remember that <strong>calculate BMI online</strong> tools provide screening information, not diagnostic medical advice.</p>
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-semibold text-foreground mb-2">What should I do if my BMI is outside the normal range?</h3>
-                    <p className="text-muted-foreground">A single BMI reading outside normal range isn't necessarily cause for concern. However, consistent readings combined with other factors should prompt consultation with healthcare professionals. Our tool provides general guidance, but personalized medical advice should come from qualified providers.</p>
+                  <div className="p-4 bg-red-500/10 rounded-lg border border-red-500/20">
+                    <h3 className="text-lg font-semibold text-red-600 mb-2">Obese (30 and Above)</h3>
+                    <p className="text-muted-foreground">
+                      Obesity is medically defined as having excess body fat that may impair health. BMI categories further divide obesity into Class 1 (30-34.9), Class 2 (35-39.9), and Class 3 (40+). Higher categories generally correlate with increased health risks, but individual health can vary significantly.
+                    </p>
                   </div>
                 </div>
+                <p className="text-muted-foreground mt-4">
+                  Remember that these ranges apply to adults aged 20-65. Different standards exist for children, teens, and older adults. The cutoffs also vary slightly for some Asian populations, who may experience health risks at lower BMI levels.
+                </p>
+              </article>
 
-                {/* Medical Disclaimer */}
-                <div className="mt-8 p-4 bg-yellow-500/10 rounded-lg border border-yellow-500/20">
-                  <h3 className="text-lg font-semibold text-foreground mb-2">Important Medical Disclaimer</h3>
-                  <p className="text-sm text-muted-foreground">
-                    This BMI calculator is for informational purposes only. BMI is a general health indicator and does not account for muscle mass, bone density, overall body composition, or racial and sex differences. It is not a substitute for professional medical advice, diagnosis, or treatment. Always consult with qualified healthcare providers for health-related decisions.
+              {/* Examples */}
+              <article className="bg-card rounded-xl border border-border p-6 shadow-sm">
+                <h2 className="text-xl font-bold text-foreground mb-4">Real-World Examples That Illustrate BMI Nuances</h2>
+                <div className="space-y-6">
+                  <div>
+                    <h3 className="text-lg font-semibold text-foreground mb-2">Example 1: The Office Worker</h3>
+                    <p className="text-muted-foreground mb-3">
+                      Sarah is 35, works a desk job, and measures 5'6" (167.6 cm) tall. She weighs 155 lbs (70.3 kg). Her BMI calculates to 25.1, putting her just into the overweight category. However, Sarah walks daily and strength trains twice a week. Her waist measures 31 inches, well below the risk threshold. Her blood pressure and cholesterol are excellent.
+                    </p>
+                    <p className="text-muted-foreground">
+                      <strong>Takeaway:</strong> Sarah's slightly elevated BMI doesn't necessarily indicate poor health. Her fitness level, body composition, and metabolic markers tell a more complete story than BMI alone.
+                    </p>
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-semibold text-foreground mb-2">Example 2: The Retiree</h3>
+                    <p className="text-muted-foreground mb-3">
+                      Robert is 68 and retired. At 5'9" (175 cm) and 170 lbs (77 kg), his BMI is 25.2 - also technically overweight. But Robert has lost 15 pounds of muscle over the past decade while gaining some fat. His scale weight hasn't changed much, but his body composition has shifted significantly.
+                    </p>
+                    <p className="text-muted-foreground">
+                      <strong>Takeaway:</strong> For older adults, BMI can be misleading because it doesn't account for age-related muscle loss (sarcopenia). A "normal" or slightly "overweight" BMI might mask significant health concerns.
+                    </p>
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-semibold text-foreground mb-2">Example 3: The Construction Worker</h3>
+                    <p className="text-muted-foreground mb-3">
+                      Miguel works construction and lifts weights regularly. At 5'10" (178 cm) and 200 lbs (90.7 kg), his BMI is 28.6 - solidly in the overweight range. But his body fat percentage, measured by his doctor, is only 15%. Most of his weight comes from muscle developed through years of physical labor and training.
+                    </p>
+                    <p className="text-muted-foreground">
+                      <strong>Takeaway:</strong> For very muscular individuals, BMI often overestimates body fat. Other measurements like waist circumference or body fat percentage provide more accurate health assessments.
+                    </p>
+                  </div>
+                </div>
+                <p className="text-muted-foreground mt-4">
+                  These examples show why BMI should be just one piece of your health assessment puzzle. It's a useful screening tool for populations and a starting point for individuals, but it doesn't capture the whole picture of anyone's health.
+                </p>
+              </article>
+
+              {/* Medical Disclaimer */}
+              <article className="bg-card rounded-xl border border-border p-6 shadow-sm">
+                <h2 className="text-xl font-bold text-foreground mb-4">Important Medical Information You Should Know</h2>
+                <div className="p-4 bg-yellow-500/10 rounded-lg border border-yellow-500/20 mb-4">
+                  <p className="text-muted-foreground">
+                    This BMI calculator provides general information for educational purposes only. The results should not be considered medical advice, diagnosis, or treatment recommendations. BMI is a screening tool with known limitations, not a comprehensive health assessment.
                   </p>
+                </div>
+                <p className="text-muted-foreground mb-4">
+                  Several important factors that BMI doesn't account for include:
+                </p>
+                <ul className="space-y-3 text-muted-foreground mb-4">
+                  <li className="flex items-start">
+                    <span className="text-accent mr-2">•</span>
+                    <span><strong>Muscle mass vs. fat mass:</strong> Two people with identical BMI can have completely different body compositions</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-accent mr-2">•</span>
+                    <span><strong>Fat distribution:</strong> Abdominal fat carries different health risks than fat stored elsewhere</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-accent mr-2">•</span>
+                    <span><strong>Bone density:</strong> People with heavier bones may have higher BMI without excess fat</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-accent mr-2">•</span>
+                    <span><strong>Age-related changes:</strong> Muscle loss and fat redistribution occur naturally with aging</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-accent mr-2">•</span>
+                    <span><strong>Ethnic differences:</strong> Health risks vary among different ethnic groups at the same BMI</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-accent mr-2">•</span>
+                    <span><strong>Pregnancy status:</strong> BMI calculations are not appropriate during pregnancy</span>
+                  </li>
+                </ul>
+                <p className="text-muted-foreground">
+                  If you have concerns about your weight or health, please consult with a qualified healthcare professional. They can perform a comprehensive assessment that considers your medical history, family history, lifestyle, and specific health markers. Never make significant changes to your diet, exercise routine, or medications based solely on BMI calculations without professional guidance.
+                </p>
+              </article>
+
+              {/* FAQs */}
+              <article className="bg-card rounded-xl border border-border p-6 shadow-sm">
+                <h2 className="text-xl font-bold text-foreground mb-6">Common Questions About BMI</h2>
+                <div className="space-y-8">
+                  <div>
+                    <h3 className="text-lg font-semibold text-foreground mb-2">Why does my BMI say I'm overweight when I look and feel healthy?</h3>
+                    <p className="text-muted-foreground">
+                      This happens more often than you might think. BMI is a population-level screening tool that works reasonably well for groups but can miss the mark for individuals. If you're physically active, eat well, have good energy levels, and your doctor says your health markers are fine, your BMI category might not accurately reflect your health status. Many fit, muscular people fall into the "overweight" BMI category despite having low body fat percentages.
+                    </p>
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-semibold text-foreground mb-2">How often should I check my BMI?</h3>
+                    <p className="text-muted-foreground">
+                      For most people, checking every 1-3 months is sufficient unless you're actively trying to change your weight. More frequent checks aren't usually helpful because normal daily weight fluctuations (from hydration, food intake, etc.) can be misleading. Remember that slow, sustainable changes are generally healthier than rapid weight loss or gain. If you're monitoring for health reasons, consider tracking additional measures like waist circumference, how your clothes fit, or energy levels alongside BMI.
+                    </p>
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-semibold text-foreground mb-2">Is BMI accurate for athletes and bodybuilders?</h3>
+                    <p className="text-muted-foreground">
+                      Not particularly. BMI tends to overestimate body fat in very muscular individuals because it can't distinguish between muscle weight and fat weight. A bodybuilder with minimal body fat might have a BMI in the obese range due to their substantial muscle mass. For athletes, other measures like body fat percentage (via skinfold measurements, DEXA scans, or other methods) or performance metrics often provide more meaningful information about their fitness and health.
+                    </p>
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-semibold text-foreground mb-2">Why are there different BMI categories for Asian populations?</h3>
+                    <p className="text-muted-foreground">
+                      Studies have shown that people from many Asian backgrounds may face weight-related health risks at lower BMI levels compared to Western populations. This is largely due to differences in body composition, especially a higher tendency to store fat around the abdominal area, often called visceral fat. Because of this, the same BMI number can represent different health risks for different populations. As a result, some health organizations suggest adjusted BMI ranges for Asian individuals: underweight below 18.5, a healthy range between 18.5 and 23, overweight from 23 to 27.5, and obesity above 27.5.
+                    </p>
+
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-semibold text-foreground mb-2">Can children and teens use this calculator?</h3>
+                    <p className="text-muted-foreground">
+                      This calculator uses adult BMI categories, which aren't appropriate for anyone under 20. Children and teens need age- and sex-specific BMI percentiles because their bodies are still growing and developing. What's considered a healthy BMI changes dramatically throughout childhood and adolescence. Pediatricians use growth charts that compare a child's BMI to others of the same age and sex. If you need to calculate BMI for someone under 20, please use tools specifically designed for pediatric assessment.
+                    </p>
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-semibold text-foreground mb-2">What's more important - BMI or waist measurement?</h3>
+                    <p className="text-muted-foreground">
+                      Both provide useful but different information. BMI gives you a general weight-for-height ratio, while waist measurement helps assess abdominal fat, which is particularly linked to metabolic health risks. Many experts consider waist circumference a better predictor of health problems than BMI alone. For adults, a waist measurement over 40 inches (102 cm) for men or 35 inches (88 cm) for women indicates increased health risk regardless of BMI. Ideally, look at both measures together for a more complete picture.
+                    </p>
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-semibold text-foreground mb-2">I lost weight but my BMI barely changed. Why?</h3>
+                    <p className="text-muted-foreground">
+                      Small changes in weight can take time to show up in your BMI category because the ranges are fairly broad. For example, if you started at a BMI of 26.5 (overweight) and lost enough weight to reach 24.9, you'd move into the normal category - but that might represent 10-15 pounds of weight loss depending on your height. Also, remember that BMI is based on the square of your height, so shorter people need less absolute weight change to shift categories than taller people.
+                    </p>
+                  </div>
                 </div>
               </article>
             </section>

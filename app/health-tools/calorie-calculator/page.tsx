@@ -1,4 +1,4 @@
-'use client';
+`use client`;
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
@@ -507,244 +507,267 @@ export default function CalorieCalculator() {
             </motion.div>
 
             {/* ============================
-                ACTIVITY MULTIPLIERS CARD
+                ACTIVITY LEVEL LOGIC SECTION
             ============================ */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.3 }}
-              className="bg-card rounded-xl border border-border p-4 sm:p-6 mb-8 shadow-sm"
+              className="bg-card rounded-xl border border-border p-6 shadow-sm mb-6"
             >
-              <h2 className="text-lg font-semibold text-foreground mb-4">Activity Level Multipliers</h2>
-              <div className="space-y-3">
-                <div className="flex justify-between items-center p-3 bg-secondary/20 rounded-lg">
-                  <span className="text-sm font-medium text-foreground">Sedentary</span>
-                  <span className="text-sm font-bold">× 1.2</span>
-                </div>
-                <div className="flex justify-between items-center p-3 bg-secondary/20 rounded-lg">
-                  <span className="text-sm font-medium text-foreground">Lightly Active</span>
-                  <span className="text-sm font-bold">× 1.375</span>
-                </div>
-                <div className="flex justify-between items-center p-3 bg-secondary/20 rounded-lg">
-                  <span className="text-sm font-medium text-foreground">Moderately Active</span>
-                  <span className="text-sm font-bold">× 1.55</span>
-                </div>
-                <div className="flex justify-between items-center p-3 bg-secondary/20 rounded-lg">
-                  <span className="text-sm font-medium text-foreground">Very Active</span>
-                  <span className="text-sm font-bold">× 1.725</span>
-                </div>
-                <div className="flex justify-between items-center p-3 bg-secondary/20 rounded-lg">
-                  <span className="text-sm font-medium text-foreground">Extra Active</span>
-                  <span className="text-sm font-bold">× 1.9</span>
+              <h2 className="text-xl font-bold text-foreground mb-4">Activity Level Logic</h2>
+              <div className="space-y-4 text-muted-foreground">
+                <p>
+                  The activity multiplier is probably the most misunderstood part of calorie calculations. Many people overestimate their actual activity level, which leads to frustration when the scale doesn't move as expected. Let's break down what each category really means in practical terms.
+                </p>
+                
+                <p>
+                  <strong>Sedentary (×1.2):</strong> This isn't just "office workers." It includes anyone who gets fewer than 5,000 steps daily, doesn't exercise intentionally, and spends most of their day sitting. Think remote workers, students with minimal walking between classes, or people recovering from injuries. The 1.2 multiplier accounts for basic movement like getting dressed, light housekeeping, and walking to the car—not much else.
+                </p>
+                
+                <p>
+                  <strong>Lightly Active (×1.375):</strong> You hit this level if you walk 7,000-10,000 steps most days or do light exercise like gentle yoga, casual cycling, or 30 minutes of moderate activity 1-3 times weekly. Many retail workers, teachers who move around classrooms, and people with dogs they walk regularly fit here. It's movement that makes you breathe slightly harder but doesn't leave you sweaty.
+                </p>
+                
+                <p>
+                  <strong>Moderately Active (×1.55):</strong> This is where most regular exercisers land. You're doing 30-60 minutes of intentional exercise 3-5 days weekly—things like jogging, swimming laps, weight training with minimal rest, or playing recreational sports. Your daily steps likely exceed 10,000, and your job might involve some physical tasks like stocking shelves or walking between different work areas.
+                </p>
+                
+                <p>
+                  <strong>Very Active (×1.725):</strong> You train hard 6-7 days weekly, maybe doing doubles some days. Think marathon training, intense weightlifting programs, or physically demanding jobs like construction work combined with regular workouts. Your total weekly exercise exceeds 8 hours, and you're often sore from yesterday's session. Most people who think they're here actually aren't—be honest about recovery days.
+                </p>
+                
+                <p>
+                  <strong>Extra Active (×1.9):</strong> Reserved for professional athletes, military personnel in training, or people with extremely physical jobs (landscaping, roofing, moving furniture) who also train hard outside work. Energy expenditure here is substantial—we're talking 3,000+ calories burned through activity alone daily. Unless you're paid to move or train, you probably don't need this multiplier.
+                </p>
+                
+                <div className="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
+                  <p className="text-sm">
+                    <strong>Practical tip:</strong> If you're between categories, choose the lower one. It's better to underestimate activity and be pleasantly surprised by faster progress than to overestimate and wonder why you're not seeing results. You can always adjust up later if you're losing weight too quickly or feeling constantly drained.
+                  </p>
                 </div>
               </div>
             </motion.div>
 
             {/* ============================
-                SEO CONTENT SECTION
+                ESTIMATION METHOD SECTION
             ============================ */}
-            <section className="space-y-8">
-              {/* What This Tool Does */}
-              <article className="bg-card rounded-xl border border-border p-6 shadow-sm">
-                <h2 className="text-xl font-bold text-foreground mb-4">Free Calorie Calculator - What It Does</h2>
-                <p className="text-muted-foreground mb-4">
-                  This free tool helps you calculate your daily calorie needs using the
-                  scientifically validated Harris-Benedict equation. It estimates your
-                  Basal Metabolic Rate (BMR) and applies activity multipliers to determine
-                  how many calories your body needs each day.
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+              className="bg-card rounded-xl border border-border p-6 shadow-sm mb-6"
+            >
+              <h2 className="text-xl font-bold text-foreground mb-4">How We Estimate Your Numbers</h2>
+              <div className="space-y-4 text-muted-foreground">
+                <p>
+                  Our calculator uses the Harris-Benedict equation, which has been the gold standard for estimating basal metabolic rate since 1919. Unlike simpler formulas that only consider weight, this equation factors in your age, gender, height, and weight to give a more personalized starting point. Here's why that matters.
                 </p>
-
-                <p className="text-muted-foreground">
-                  Based on your goal—weight loss, maintenance, or muscle gain—the calculator
-                  also provides a clear macronutrient breakdown for protein, carbohydrates,
-                  and fats. You get accurate, personalized results without manual math,
-                  making it easy to plan meals and track progress.
+                
+                <p>
+                  <strong>BMR vs. TDEE:</strong> Your Basal Metabolic Rate (BMR) is what you'd burn if you stayed in bed all day—the energy needed just to keep your heart beating, lungs breathing, and brain functioning. Total Daily Energy Expenditure (TDEE) is your BMR multiplied by your activity level. This distinction is crucial because many calculators confuse the two, leading to inaccurate targets.
                 </p>
-
-              </article>
-
-              {/* Use Cases */}
-              <article className="bg-card rounded-xl border border-border p-6 shadow-sm">
-                <h2 className="text-xl font-bold text-foreground mb-4">Practical Applications of Calorie Calculation</h2>
-                <ul className="space-y-3 text-muted-foreground">
-                  <li className="flex items-start">
-                    <span className="text-accent mr-2">•</span>
-                    <span><strong>Weight Loss Planning:</strong> Use this <strong>calorie deficit calculator</strong> to determine how many calories to cut for safe, sustainable weight loss of 1-2 pounds per week</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-accent mr-2">•</span>
-                    <span><strong>Muscle Gain Programs:</strong> Calculate optimal <strong>calorie surplus</strong> for lean muscle growth without excessive fat gain using our <strong>calorie calculator for bulking</strong></span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-accent mr-2">•</span>
-                    <span><strong>Weight Maintenance:</strong> Find your exact <strong>maintenance calories</strong> to sustain your current weight with our <strong>TDEE calculator</strong></span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-accent mr-2">•</span>
-                    <span><strong>Meal Planning:</strong> Use the macronutrient breakdown from this <strong>macro calculator</strong> to create balanced meal plans that meet your protein, carb, and fat targets</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-accent mr-2">•</span>
-                    <span><strong>Fitness Program Design:</strong> Determine appropriate calorie intake for different training phases - cutting, maintenance, or bulking cycles</span>
-                  </li>
-                </ul>
-              </article>
-
-              {/* How to Use This Tool */}
-              <article className="bg-card rounded-xl border border-border p-6 shadow-sm">
-                <h2 className="text-xl font-bold text-foreground mb-4">How to Use This Calorie Calculator</h2>
-                <ol className="space-y-4 text-muted-foreground pl-5">
-                  <li className="pl-2">
-                    <strong className="text-foreground">Enter Personal Details</strong>
-                    <p className="mt-1">Input your age, gender, weight, and height. Our <strong>calorie calculator</strong> accepts both metric (kg, cm) and imperial (lbs, feet/inches) units automatically.</p>
-                  </li>
-                  <li className="pl-2">
-                    <strong className="text-foreground">Select Activity Level</strong>
-                    <p className="mt-1">Choose from Sedentary to Extra Active based on your weekly exercise and daily activity. This determines your activity multiplier in our <strong>TDEE calculator</strong>.</p>
-                  </li>
-                  <li className="pl-2">
-                    <strong className="text-foreground">Choose Weight Goal</strong>
-                    <p className="mt-1">Select Lose Weight (500-1000 calorie deficit), Maintain Weight, or Gain Weight (500-1000 calorie surplus) based on your objectives.</p>
-                  </li>
-                  <li className="pl-2">
-                    <strong className="text-foreground">Calculate Your Results</strong>
-                    <p className="mt-1">Click "Calculate Calories" to get your personalized BMR, maintenance calories, goal calories, and macronutrient breakdown from our <strong>macro calculator</strong>.</p>
-                  </li>
-                  <li className="pl-2">
-                    <strong className="text-foreground">Apply to Your Nutrition Plan</strong>
-                    <p className="mt-1">Use the calorie target and macro numbers to plan meals, track intake, and achieve your fitness goals effectively.</p>
-                  </li>
-                </ol>
-              </article>
-
-              {/* Example Input and Output */}
-              <article className="bg-card rounded-xl border border-border p-6 shadow-sm">
-                <h2 className="text-xl font-bold text-foreground mb-4">Calorie Calculator Examples</h2>
-                <div className="space-y-6">
-                  <div>
-                    <h3 className="text-lg font-semibold text-foreground mb-2">Example 1: Weight Loss Calculation</h3>
-                    <div className="bg-muted p-4 rounded-lg overflow-x-auto">
-                      <pre className="text-sm text-muted-foreground font-mono">
-                        {`Input:
-Age: 30 years
-Gender: Male
-Weight: 80 kg (176 lbs)
-Height: 180 cm (5'11")
-Activity Level: Moderately Active
-Goal: Lose Weight (500 calorie deficit)
-
-Calculation:
-BMR (Harris-Benedict): 1,826 calories
-TDEE (BMR × 1.55): 2,830 calories
-Goal Calories (TDEE - 500): 2,330 calories
-
-Macronutrient Breakdown:
-Protein: 175 grams (30% of calories)
-Carbs: 233 grams (40% of calories)
-Fat: 78 grams (30% of calories)
-
-This creates a sustainable weight loss of approximately 1 pound per week.`}
-                      </pre>
-                    </div>
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-semibold text-foreground mb-2">Example 2: Muscle Gain Calculation</h3>
-                    <div className="bg-muted p-4 rounded-lg overflow-x-auto">
-                      <pre className="text-sm text-muted-foreground font-mono">
-                        {`Input:
-Age: 25 years
-Gender: Female
-Weight: 60 kg (132 lbs)
-Height: 165 cm (5'5")
-Activity Level: Very Active
-Goal: Gain Weight (500 calorie surplus)
-
-Calculation:
-BMR (Harris-Benedict): 1,379 calories
-TDEE (BMR × 1.725): 2,379 calories
-Goal Calories (TDEE + 500): 2,879 calories
-
-Macronutrient Breakdown:
-Protein: 216 grams (30% of calories)
-Carbs: 288 grams (40% of calories)
-Fat: 96 grams (30% of calories)
-
-This provides adequate energy for intense training while supporting muscle growth.`}
-                      </pre>
-                    </div>
-                  </div>
-                </div>
-              </article>
-
-              {/* Related Tools Section */}
-              <article className="bg-card rounded-xl border border-border p-6 shadow-sm">
-                <h2 className="text-xl font-bold text-foreground mb-4">Related Health & Fitness Tools</h2>
-                <p className="text-muted-foreground mb-4">
-                  Explore other useful calculators from GrockTool.com that complement this calorie calculator:
+                
+                <p>
+                  <strong>The gender difference</strong> in the formula isn't arbitrary. Women typically have a higher percentage of body fat relative to lean mass, which burns fewer calories at rest. The equation adjusts for this biological reality, which is why a man and woman with identical stats get different BMR results. This becomes especially noticeable as people age—metabolism naturally slows by about 1-2% per decade after 20, which the formula accounts for.
                 </p>
-                <ul className="space-y-3 text-muted-foreground">
-                  <li className="flex items-start">
-                    <span className="text-accent mr-2">•</span>
-                    <Link href="/health-tools/bmi-calculator" className="text-accent hover:underline">
-                      <strong>BMI Calculator:</strong> Calculate your Body Mass Index using any measurement units
-                    </Link>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-accent mr-2">•</span>
-                    <Link href="/health-tools/body-fat" className="text-accent hover:underline">
-                      <strong>Body Fat Calculator:</strong> Estimate body fat percentage using multiple methods
-                    </Link>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-accent mr-2">•</span>
-                    <Link href="/unit-tools/weight-converter" className="text-accent hover:underline">
-                      <strong>Weight Converter:</strong> Convert between kg, lbs, stone, and other weight units
-                    </Link>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-accent mr-2">•</span>
-                    <Link href="/health-tools/ideal-weight" className="text-accent hover:underline">
-                      <strong>Ideal Weight Calculator:</strong> Determine your healthy weight range based on height and body frame
-                    </Link>
-                  </li>
-                </ul>
-              </article>
-
-              {/* Frequently Asked Questions */}
-              <article className="bg-card rounded-xl border border-border p-6 shadow-sm">
-                <h2 className="text-xl font-bold text-foreground mb-4">Frequently Asked Questions About Calorie Calculation</h2>
-                <div className="space-y-6">
-                  <div>
-                    <h3 className="text-lg font-semibold text-foreground mb-2">What is BMR and why is it important in calorie calculation?</h3>
-                    <p className="text-muted-foreground">BMR (Basal Metabolic Rate) represents the calories your body needs at complete rest to maintain vital functions like breathing and circulation. Our <strong>BMR calculator</strong> uses the Harris-Benedict equation, which is more accurate than simple formulas. BMR forms the foundation for all <strong>calorie calculator</strong> results, as it accounts for 60-75% of your total daily calorie expenditure.</p>
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-semibold text-foreground mb-2">How accurate is this calorie calculator compared to others?</h3>
-                    <p className="text-muted-foreground">This <strong>daily calorie calculator</strong> uses the scientifically validated Harris-Benedict equation, which is considered the gold standard for BMR calculation. Unlike simplified <strong>calorie intake calculators</strong>, our tool accounts for age, gender, weight, height, activity level, and specific goals. The <strong>macro calculator</strong> component uses optimal ratios (30% protein, 40% carbs, 30% fat) that can be adjusted based on individual preferences.</p>
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-semibold text-foreground mb-2">Should I use the "Lose Weight Fast" option for maximum weight loss?</h3>
-                    <p className="text-muted-foreground">The "Lose Weight Fast" option creates a 1000-calorie deficit, which may be too aggressive for some individuals. For sustainable weight loss, most experts recommend the standard "Lose Weight" option (500-calorie deficit) which results in about 1 pound of fat loss per week. Extreme deficits from <strong>calorie deficit calculators</strong> can lead to muscle loss, metabolic adaptation, and nutritional deficiencies.</p>
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-semibold text-foreground mb-2">How often should I recalculate my calorie needs?</h3>
-                    <p className="text-muted-foreground">Recalculate using this <strong>calorie calculator</strong> every 4-8 weeks or whenever your weight changes by 5-10 pounds, your activity level changes significantly, or you reach a weight loss/gain plateau. As you lose weight, your BMR decreases, requiring adjustment of your calorie intake to continue progress.</p>
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-semibold text-foreground mb-2">Can I adjust the macronutrient ratios from the standard 30/40/30 split?</h3>
-                    <p className="text-muted-foreground">The 30% protein, 40% carbs, 30% fat ratio provided by our <strong>macro calculator</strong> is an optimal starting point for most people. However, individual needs vary based on activity type, insulin sensitivity, and personal preferences. Athletes may need more carbs, while those on low-carb diets may adjust accordingly. The results from this <strong>free calorie calculator</strong> should be customized based on how your body responds.</p>
-                  </div>
-                </div>
-
-                {/* Medical Disclaimer */}
-                <div className="mt-8 p-4 bg-yellow-500/10 rounded-lg border border-yellow-500/20">
-                  <h3 className="text-lg font-semibold text-foreground mb-2">Important Nutrition Disclaimer</h3>
-                  <p className="text-sm text-muted-foreground">
-                    This calorie calculator provides estimates based on mathematical formulas and should be used for informational purposes only. Individual calorie needs can vary based on genetics, medical conditions, medications, and other factors not accounted for in these calculations. The results from this <strong>calorie calculator</strong> are not a substitute for professional medical advice, diagnosis, or treatment. Always consult with a qualified healthcare provider or registered dietitian before making significant changes to your diet or exercise routine, especially if you have underlying health conditions.
+                
+                <p>
+                  <strong>Why we use 30/40/30 macros:</strong> The 30% protein, 40% carb, 30% fat split is a balanced starting point that works well for most people. Protein supports muscle retention (especially important in a deficit), carbs fuel workouts and brain function, and fats support hormone production. Some calculators use extreme splits like 40% protein or 10% carbs, but those often aren't sustainable long-term or enjoyable to follow.
+                </p>
+                
+                <p>
+                  The deficit/surplus numbers (500 and 1000 calories) are based on the well-established fact that one pound of body fat contains approximately 3,500 calories. A 500-calorie daily deficit leads to about one pound of fat loss per week—a rate that minimizes muscle loss and metabolic adaptation. Similarly, a 500-calorie surplus supports steady muscle gain without excessive fat accumulation for most people.
+                </p>
+                
+                <div className="p-4 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-800">
+                  <p className="text-sm">
+                    <strong>Remember:</strong> All formulas are estimates. Individual variations like genetics, medication effects, thyroid function, and even gut microbiome composition can affect your actual energy needs. Use these numbers as a starting point, then adjust based on how your body responds over 2-3 weeks.
                   </p>
                 </div>
-              </article>
-            </section>
+              </div>
+            </motion.div>
+
+            {/* ============================
+                EXAMPLES SECTION
+            ============================ */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.5 }}
+              className="bg-card rounded-xl border border-border p-6 shadow-sm mb-6"
+            >
+              <h2 className="text-xl font-bold text-foreground mb-4">Real-World Examples</h2>
+              <div className="space-y-6">
+                <div>
+                  <h3 className="text-lg font-semibold text-foreground mb-3">Sarah's Weight Loss Journey</h3>
+                  <div className="bg-gray-50 dark:bg-gray-900 p-4 rounded-lg">
+                    <p className="text-muted-foreground mb-3">
+                      Sarah is 34, works an office job, and wants to lose 15 pounds for her upcoming wedding. She selected "Sedentary" despite walking her dog daily because those walks are leisurely. Here's what the calculator gave her:
+                    </p>
+                    <div className="space-y-2">
+                      <div className="flex justify-between">
+                        <span>BMR:</span>
+                        <span className="font-medium">1,420 calories</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Maintenance:</span>
+                        <span className="font-medium">1,704 calories</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Goal (500 deficit):</span>
+                        <span className="font-medium">1,204 calories</span>
+                      </div>
+                    </div>
+                    <p className="text-muted-foreground mt-3 text-sm">
+                      <strong>What she actually did:</strong> Sarah found 1,204 calories too restrictive, so she added two 30-minute brisk walks during her lunch breaks. This bumped her to "Lightly Active" (1,754 maintenance) and allowed a more comfortable 1,254 daily target. She lost the weight in 4 months without feeling deprived.
+                    </p>
+                  </div>
+                </div>
+
+                <div>
+                  <h3 className="text-lg font-semibold text-foreground mb-3">Mark's Muscle Building Phase</h3>
+                  <div className="bg-gray-50 dark:bg-gray-900 p-4 rounded-lg">
+                    <p className="text-muted-foreground mb-3">
+                      Mark is 28, lifts weights 5 days weekly, and wants to add lean muscle. He works as a teacher and is on his feet most of the day, so he selected "Moderately Active." His results:
+                    </p>
+                    <div className="space-y-2">
+                      <div className="flex justify-between">
+                        <span>BMR:</span>
+                        <span className="font-medium">1,780 calories</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Maintenance:</span>
+                        <span className="font-medium">2,759 calories</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Goal (500 surplus):</span>
+                        <span className="font-medium">3,259 calories</span>
+                      </div>
+                    </div>
+                    <p className="text-muted-foreground mt-3 text-sm">
+                      <strong>His adjustment:</strong> After two weeks at 3,259 calories, Mark noticed faster fat gain than expected. He realized he was overcounting activity—while he's on his feet, teaching isn't intense exercise. Switching to "Lightly Active" (2,448 maintenance) and a 300-calorie surplus (2,748 total) gave him better results with less unwanted fat.
+                    </p>
+                  </div>
+                </div>
+
+                <div>
+                  <h3 className="text-lg font-semibold text-foreground mb-3">Linda's Maintenance After Weight Loss</h3>
+                  <div className="bg-gray-50 dark:bg-gray-900 p-4 rounded-lg">
+                    <p className="text-muted-foreground mb-3">
+                      Linda lost 40 pounds over 8 months and wants to maintain. Her stats: 52 years old, walks 3 miles daily, does yoga twice weekly. She chose "Lightly Active":
+                    </p>
+                    <div className="space-y-2">
+                      <div className="flex justify-between">
+                        <span>BMR:</span>
+                        <span className="font-medium">1,310 calories</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Maintenance:</span>
+                        <span className="font-medium">1,801 calories</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Goal (maintain):</span>
+                        <span className="font-medium">1,801 calories</span>
+                      </div>
+                    </div>
+                    <p className="text-muted-foreground mt-3 text-sm">
+                      <strong>The reality check:</strong> Linda was surprised her maintenance was only 1,801 calories—much lower than during her 20s. This is normal: age reduces BMR, and significant weight loss can lower it further as the body adapts. She focuses on nutrient-dense foods and accepts that her calorie needs are simply lower now than before.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* ============================
+                HEALTH DISCLAIMER
+            ============================ */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.6 }}
+              className="bg-yellow-50 dark:bg-yellow-900/20 rounded-xl border border-yellow-200 dark:border-yellow-800 p-6 shadow-sm mb-6"
+            >
+              <h2 className="text-xl font-bold text-foreground mb-4">Important Health Considerations</h2>
+              <div className="space-y-4 text-muted-foreground">
+                <p>
+                  While calorie calculators provide helpful estimates, they can't account for individual medical conditions that significantly affect metabolism. If you have hypothyroidism, PCOS, diabetes, or are taking medications like beta-blockers, antidepressants, or steroids, your actual energy needs may differ substantially from these calculations.
+                </p>
+                
+                <p>
+                  <strong>Extreme deficits are problematic:</strong> Choosing the "Lose Weight Fast" option (1,000-calorie deficit) often backfires. Your body interprets this as starvation and responds by slowing your metabolism, increasing hunger hormones, and breaking down muscle for energy. The initial rapid weight loss is often water and muscle, not fat. Most registered dietitians recommend against deficits larger than 750 calories daily except under medical supervision.
+                </p>
+                
+                <p>
+                  <strong>When not to use these numbers:</strong> If you're pregnant, breastfeeding, under 18, over 75, have a history of eating disorders, or are significantly underweight (BMI below 18.5), please consult a healthcare professional instead of relying on calculator results. These life stages and conditions require specialized nutritional approaches that generic formulas can't provide.
+                </p>
+                
+                <p>
+                  <strong>The mental health aspect:</strong> Constantly tracking calories can become obsessive for some people. If you find yourself stressed about hitting exact numbers, anxious about going over by 50 calories, or avoiding social events because you can't track food there, it might be time to step back. Nutrition should support your life, not control it.
+                </p>
+                
+                <div className="p-4 bg-red-50 dark:bg-red-900/20 rounded-lg border border-red-200 dark:border-red-800">
+                  <p className="text-sm">
+                    <strong>Medical disclaimer:</strong> This tool provides general educational information only. It is not medical advice, diagnosis, or treatment. Always consult with a qualified healthcare provider before making significant dietary changes, especially if you have pre-existing health conditions. If you experience dizziness, fatigue, hair loss, or menstrual irregularities while following a calorie target, stop immediately and seek professional guidance.
+                  </p>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* ============================
+                FAQ SECTION
+            ============================ */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.7 }}
+              className="bg-card rounded-xl border border-border p-6 shadow-sm mb-8"
+            >
+              <h2 className="text-xl font-bold text-foreground mb-6">Common Questions About Calorie Calculation</h2>
+              <div className="space-y-8">
+                <div>
+                  <h3 className="text-lg font-semibold text-foreground mb-3">Why did my maintenance calories drop after losing weight?</h3>
+                  <p className="text-muted-foreground">
+                    This is completely normal and expected. When you lose weight, your body has less mass to move around and maintain. Think of it like driving a lighter car—it uses less fuel. Each pound of weight loss typically reduces your BMR by about 10 calories daily. So if you've lost 20 pounds, your maintenance calories might be 200 calories lower than before. This is why weight loss often plateaus, and you need to periodically recalculate your needs.
+                  </p>
+                </div>
+
+                <div>
+                  <h3 className="text-lg font-semibold text-foreground mb-3">I'm hitting my calorie target but not losing weight. What's wrong?</h3>
+                  <p className="text-muted-foreground">
+                    Several possibilities here. First, you might be underestimating food portions—studies show people typically underestimate intake by 20-50%. Second, your activity level might be lower than selected. Third, water retention from increased sodium, carbs, or exercise can mask fat loss for weeks. Fourth, metabolic adaptation might have occurred. Try weighing and measuring food precisely for a week, choosing a lower activity level, and giving it 3-4 weeks before adjusting.
+                  </p>
+                </div>
+
+                <div>
+                  <h3 className="text-lg font-semibold text-foreground mb-3">Do I need to eat back calories burned through exercise?</h3>
+                  <p className="text-muted-foreground">
+                    Generally no, unless you're doing extreme endurance training or feeling constantly drained. Fitness trackers notoriously overestimate exercise calories—sometimes by 40% or more. The activity multipliers in our calculator already account for regular exercise. If you do an extra-hard workout, listen to your body. A small post-workout snack might help recovery, but don't feel obligated to "eat back" every calorie your watch says you burned.
+                  </p>
+                </div>
+
+                <div>
+                  <h3 className="text-lg font-semibold text-foreground mb-3">How do menstrual cycles affect calorie needs?</h3>
+                  <p className="text-muted-foreground">
+                    Many women notice increased hunger and energy needs during the luteal phase (the week before their period). Research suggests BMR may increase by 5-10% during this time due to hormonal changes. Some women find it helpful to eat 100-200 more calories daily during this week rather than fighting intense cravings. The scale might also show temporary water weight gain of 2-5 pounds—this isn't fat, and it usually drops after menstruation begins.
+                  </p>
+                </div>
+
+                <div>
+                  <h3 className="text-lg font-semibold text-foreground mb-3">Is counting calories necessary for weight management?</h3>
+                  <p className="text-muted-foreground">
+                    For some people yes, for others no. If you're new to nutrition or have specific goals, tracking for 2-3 months teaches you about portion sizes and food composition. Many people eventually transition to intuitive eating while occasionally checking in with tracking. Others with busy schedules prefer simplified approaches like using hand portions (palm of protein, fist of veggies, etc.). The calculator gives you a target, but how you implement it can vary based on your lifestyle and preferences.
+                  </p>
+                </div>
+
+                <div>
+                  <h3 className="text-lg font-semibold text-foreground mb-3">Why do men usually get higher calorie targets than women with similar stats?</h3>
+                  <p className="text-muted-foreground">
+                    It comes down to body composition. Men naturally carry more muscle mass than women, even at the same weight and height. Muscle tissue is metabolically active—it burns calories just existing. Fat tissue burns far fewer calories. So a 160-pound man with 20% body fat has significantly more calorie-burning muscle than a 160-pound woman with 30% body fat. The formula accounts for this biological difference, which is why gender selection matters for accuracy.
+                  </p>
+                </div>
+              </div>
+            </motion.div>
 
           </div>
         </div>

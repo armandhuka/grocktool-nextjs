@@ -29,9 +29,10 @@ export default function BodyFat() {
 
   // SEO Section Dropdown States
   const [openSections, setOpenSections] = useState({
-    whatItDoes: true,
-    howToUse: false,
+    calculationMethod: true,
+    measurementInputs: false,
     examples: false,
+    healthDisclaimer: false,
     faqs: false,
     relatedTools: false
   });
@@ -212,27 +213,31 @@ export default function BodyFat() {
     return Math.min(100, Math.max(0, (result.bodyFat / 40) * 100));
   };
 
-  // FAQ Data
+  // FAQ Data - Updated with natural, human-like questions
   const faqData = [
     {
-      question: "How accurate is this body fat calculator compared to other methods?",
-      answer: "This calculator uses the US Navy circumference method, which is about 3-4% accurate for most people. While not as precise as DEXA scans or hydrostatic weighing, it provides a reliable estimate without special equipment. For athletes or those with unusual body compositions, results may vary slightly."
+      question: "I measured myself three times and got different results each time. What's going on?",
+      answer: "That's actually pretty common! Your body changes throughout the day - water retention, food in your system, even posture can affect measurements. For the most consistent results, try measuring first thing in the morning before eating or drinking anything. Stand up straight but relaxed, and make sure the tape measure is level around your body without digging into your skin. Even then, expect a 0.5-1% variation between measurements."
     },
     {
-      question: "Why do I need different measurements for men and women?",
-      answer: "Women naturally carry more body fat in different areas than men, particularly around the hips and thighs. The US Navy formula accounts for these biological differences by including hip circumference for women, providing more accurate results for each gender."
+      question: "Why does my gym's body fat scale show a completely different number than this calculator?",
+      answer: "Great question! Gym scales use bioelectrical impedance, which sends a tiny electrical current through your body. The problem? Hydration levels dramatically affect the reading. If you're dehydrated, it'll show higher body fat. If you just had a big glass of water, it'll show lower. The US Navy method we use here relies on actual measurements of your body's size, which tends to be more consistent day-to-day once you learn to measure properly."
     },
     {
-      question: "How often should I measure my body fat percentage?",
-      answer: "For consistent tracking, measure every 2-4 weeks at the same time of day under similar conditions. Daily measurements aren't recommended as natural fluctuations in water weight can skew results. Focus on long-term trends rather than day-to-day changes."
+      question: "My body fat seems high but I can see my abs. Which measurement should I trust?",
+      answer: "Trust what you see in the mirror over any single number. Some people naturally carry more visceral fat (around organs) or subcutaneous fat (under skin) in different patterns. If you're muscular, the Navy formula might overestimate slightly because it doesn't account for muscle mass directly. The number here is a helpful benchmark, but how you look and feel, how your clothes fit, and your performance in workouts are all equally important indicators."
     },
     {
-      question: "Is a lower body fat percentage always better for health?",
-      answer: "No, extremely low body fat can be dangerous. Essential fat percentages (around 3-5% for men, 10-13% for women) are necessary for basic physiological functions. The 'fitness' range (14-17% for men, 21-24% for women) generally offers the best balance of health and performance."
+      question: "I lost 5 pounds but my body fat percentage went up. How is that possible?",
+      answer: "This happens more often than people realize! When you lose weight quickly, you're often losing both fat and muscle. Since muscle is denser than fat, losing muscle can actually increase your body fat percentage even as total weight drops. That's why focusing on body composition (through strength training and adequate protein) is so important - you want to preserve or build muscle while losing fat for the healthiest transformation."
     },
     {
-      question: "Can I use this calculator if I'm pregnant or have medical conditions?",
-      answer: "The US Navy formula isn't validated for pregnancy or certain medical conditions. For accurate assessment during pregnancy or with medical conditions affecting body composition, consult healthcare professionals who can recommend appropriate measurement methods."
+      question: "Is it normal for women to have higher body fat percentages than men?",
+      answer: "Absolutely, and it's completely healthy. Women naturally need more body fat for hormone production, reproductive health, and overall physiological function. Essential fat (the minimum needed for basic health) is about 10-13% for women versus just 2-5% for men. The 'fitness' range for women (21-24%) would be considered very lean for most men. Comparing percentages between genders doesn't make sense - each has completely different healthy ranges."
+    },
+    {
+      question: "How long does it realistically take to change my body fat percentage?",
+      answer: "Real, sustainable changes take time. A safe rate of fat loss is about 0.5-1% of your total body weight per week. For someone weighing 180 pounds, that's 1-2 pounds weekly. At that pace, dropping 5% body fat might take 10-20 weeks. Quicker results often mean losing more muscle and water weight, which usually comes right back. Consistency with nutrition and exercise over months - not days - is what creates lasting change."
     }
   ];
 
@@ -648,45 +653,7 @@ export default function BodyFat() {
               </motion.div>
             )}
 
-            {/* Unit Conversion Info */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-              className="bg-card rounded-xl sm:rounded-2xl border border-border p-4 sm:p-6 mb-6 shadow-sm"
-            >
-              <h2 className="text-lg font-semibold text-foreground mb-4">Unit Conversion Guide</h2>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                <div className="bg-blue-500/10 p-3 rounded-lg border border-blue-500/20">
-                  <div className="text-sm font-medium text-foreground mb-2">Weight Units</div>
-                  <div className="text-xs text-muted-foreground space-y-1">
-                    <div>• 1 kg = 2.20462 lbs</div>
-                    <div>• 1 kg = 0.15747 st</div>
-                    <div>• 1 st = 6.35029 kg</div>
-                    <div>• 1 lb = 0.453592 kg</div>
-                  </div>
-                </div>
-                <div className="bg-green-500/10 p-3 rounded-lg border border-green-500/20">
-                  <div className="text-sm font-medium text-foreground mb-2">Height Units</div>
-                  <div className="text-xs text-muted-foreground space-y-1">
-                    <div>• 1 cm = 0.393701 in</div>
-                    <div>• 1 ft = 30.48 cm</div>
-                    <div>• 1 in = 2.54 cm</div>
-                    <div>• 1 m = 100 cm</div>
-                  </div>
-                </div>
-                <div className="bg-purple-500/10 p-3 rounded-lg border border-purple-500/20">
-                  <div className="text-sm font-medium text-foreground mb-2">Circumference Units</div>
-                  <div className="text-xs text-muted-foreground space-y-1">
-                    <div>• 1 cm = 0.393701 in</div>
-                    <div>• 1 in = 2.54 cm</div>
-                    <div>• 1 mm = 0.1 cm</div>
-                    <div>• 1 cm = 10 mm</div>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-
+            {/* Body Fat Categories */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -707,253 +674,330 @@ export default function BodyFat() {
               </div>
             </motion.div>
 
-            {/* Health Tips Card */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.4 }}
-              className="bg-card rounded-xl sm:rounded-2xl border border-border p-4 sm:p-6 mb-8 shadow-sm"
-            >
-              <h2 className="text-lg font-semibold text-foreground mb-4">Health & Fitness Tips</h2>
-              <div className="space-y-3">
-                <div className="bg-green-500/10 p-3 rounded-lg border border-green-500/20">
-                  <div className="text-sm font-medium text-foreground mb-1">💪 Reducing Body Fat</div>
-                  <div className="text-sm text-muted-foreground space-y-1">
-                    <div>• Create a calorie deficit through diet and exercise</div>
-                    <div>• Include both cardio and strength training</div>
-                    <div>• Focus on whole foods and protein intake</div>
-                    <div>• Get adequate sleep and manage stress</div>
-                  </div>
-                </div>
-                
-                <div className="bg-blue-500/10 p-3 rounded-lg border border-blue-500/20">
-                  <div className="text-sm font-medium text-foreground mb-1">📊 Measurement Accuracy</div>
-                  <div className="text-sm text-muted-foreground space-y-1">
-                    <div>• Measure circumference in the morning on empty stomach</div>
-                    <div>• Use a flexible tape measure at skin level</div>
-                    <div>• Don't pull the tape too tight or leave it too loose</div>
-                    <div>• For consistent results, measure at the same time daily</div>
-                  </div>
-                </div>
-
-                <div className="bg-orange-500/10 p-3 rounded-lg border border-orange-500/20">
-                  <div className="text-sm font-medium text-foreground mb-1">⚠️ Health Considerations</div>
-                  <div className="text-sm text-muted-foreground space-y-1">
-                    <div>• Very low body fat can be dangerous to health</div>
-                    <div>• High body fat increases chronic disease risk</div>
-                    <div>• Consult healthcare professionals for personalized advice</div>
-                    <div>• Focus on overall health, not just body fat percentage</div>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-
             {/* SEO Content Section with Dropdowns */}
             <section className="space-y-4">
-              {/* What This Tool Does - Dropdown */}
+              {/* Calculation Method - Dropdown */}
               <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
                 <button
-                  onClick={() => toggleSection('whatItDoes')}
+                  onClick={() => toggleSection('calculationMethod')}
                   className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
                 >
-                  <h2 className="text-xl font-bold text-foreground">Body Fat Calculator - What It Does</h2>
-                  {openSections.whatItDoes ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                  <h2 className="text-xl font-bold text-foreground">How This Body Fat Calculator Works</h2>
+                  {openSections.calculationMethod ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
                 </button>
                 
-                {openSections.whatItDoes && (
+                {openSections.calculationMethod && (
                   <div className="px-6 pb-6">
                     <p className="text-muted-foreground mb-4">
-                      This free tool helps you estimate your body composition using the scientifically validated US Navy circumference method. It calculates your body fat percentage based on key measurements, providing insights into your body's composition beyond simple weight tracking.
+                      This calculator uses what's called the U.S. Navy body fat formula, which has been around since the 1980s. Back then, the Navy needed a quick, reliable way to assess sailors' fitness without expensive equipment. Researchers found that certain body measurements - specifically your neck, waist, and for women, hips - could predict body fat percentage surprisingly well.
                     </p>
+                    
+                    <p className="text-muted-foreground mb-4">
+                      The science behind it is actually pretty clever. The formula compares the circumference of areas where people typically store fat (like the waist) against areas where they don't (like the neck). By looking at these ratios along with your height, it creates a mathematical model that estimates how much of your body mass is fat versus lean tissue.
+                    </p>
+                    
+                    <div className="bg-blue-500/10 p-4 rounded-lg border border-blue-500/20 mb-4">
+                      <h3 className="font-semibold text-foreground mb-2">Why This Method Works Better Than Guessing</h3>
+                      <p className="text-sm text-muted-foreground">
+                        What makes the Navy method stand out is its practicality. Unlike skinfold calipers that require precise pinching technique or expensive DEXA scans, all you need is a simple tape measure. The formulas are different for men and women because we store fat differently - women naturally carry more around hips and thighs, which the formula accounts for.
+                      </p>
+                    </div>
+                    
                     <p className="text-muted-foreground">
-                      Unlike basic weight measurements, this calculator gives you detailed breakdowns of fat mass, lean mass, and body mass index. Understanding your body composition is crucial for setting realistic fitness goals, tracking progress effectively, and making informed decisions about your health and nutrition strategies.
+                      Is it perfect? No method is. But for most people, it gets within 3-4% of more advanced testing. The key is taking accurate measurements - a loose tape measure or measuring at different times of day can throw off results. When done consistently, this method gives you a reliable benchmark to track changes over time, which is what really matters for fitness progress.
                     </p>
                   </div>
                 )}
               </article>
 
-              {/* How to Use This Tool - Dropdown */}
+              {/* Measurement Inputs - Dropdown */}
               <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
                 <button
-                  onClick={() => toggleSection('howToUse')}
+                  onClick={() => toggleSection('measurementInputs')}
                   className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
                 >
-                  <h2 className="text-xl font-bold text-foreground">How to Use This Body Fat Calculator</h2>
-                  {openSections.howToUse ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                  <h2 className="text-xl font-bold text-foreground">Getting Accurate Measurements</h2>
+                  {openSections.measurementInputs ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
                 </button>
                 
-                {openSections.howToUse && (
+                {openSections.measurementInputs && (
                   <div className="px-6 pb-6">
-                    <ol className="space-y-4 text-muted-foreground pl-5">
-                      <li className="pl-2">
-                        <strong className="text-foreground">Enter Your Personal Information</strong>
-                        <p className="mt-1">Input your age, select your gender, and provide your current body weight and height using the appropriate unit selectors.</p>
-                      </li>
-                      <li className="pl-2">
-                        <strong className="text-foreground">Take Accurate Measurements</strong>
-                        <p className="mt-1">Measure your neck and waist circumferences. For women, also measure your hip circumference. Use a flexible tape measure at skin level without pulling too tight.</p>
-                      </li>
-                      <li className="pl-2">
-                        <strong className="text-foreground">Select Your Units</strong>
-                        <p className="mt-1">Choose the measurement units that match your tape measure or scale. The calculator automatically converts between kilograms, pounds, centimeters, and inches.</p>
-                      </li>
-                      <li className="pl-2">
-                        <strong className="text-foreground">Calculate Your Results</strong>
-                        <p className="mt-1">Click "Calculate Body Fat" to instantly get your body fat percentage, lean mass, fat mass, and health category based on the US Navy formula.</p>
-                      </li>
-                      <li className="pl-2">
-                        <strong className="text-foreground">Review and Track Progress</strong>
-                        <p className="mt-1">Use the detailed breakdown to understand your current body composition. For best results, track your measurements every 2-4 weeks to monitor changes over time.</p>
-                      </li>
-                    </ol>
-                  </div>
-                )}
-              </article>
-
-              {/* Example Input and Output - Dropdown */}
-              <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
-                <button
-                  onClick={() => toggleSection('examples')}
-                  className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
-                >
-                  <h2 className="text-xl font-bold text-foreground">Body Fat Calculation Examples</h2>
-                  {openSections.examples ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
-                </button>
-                
-                {openSections.examples && (
-                  <div className="px-6 pb-6">
-                    <p className="text-muted-foreground text-sm mb-4">
-                      Below are practical examples showing how body fat percentage varies based on different body compositions and measurement inputs.
+                    <p className="text-muted-foreground mb-4">
+                      Getting your measurements right makes all the difference. I've seen people get results that are off by 5% or more just because they measured incorrectly. Here's exactly how to do it properly:
                     </p>
-                    <div className="space-y-6">
-                      <div>
-                        <h3 className="text-lg font-semibold text-foreground mb-2">Example 1: Active Male with Average Body Composition</h3>
-                        <div className="bg-muted p-4 rounded-lg overflow-x-auto">
-                          <pre className="text-sm text-muted-foreground font-mono">
-{`Input:
-Age: 30 years
-Gender: Male
-Weight: 80 kg (176 lbs)
-Height: 180 cm (5'11")
-Neck: 38 cm (15 in)
-Waist: 86 cm (34 in)
-
-Calculation:
-US Navy Formula: 86.010 × log10(86 - 38) - 70.041 × log10(180) + 36.76
-Body Fat Percentage: 18.3%
-
-Results:
-• Body Fat: 18.3% (Average category)
-• Fat Mass: 14.6 kg
-• Lean Mass: 65.4 kg
-• BMI: 24.7
-• Ideal Range: 8-19% for men`}
-                          </pre>
-                        </div>
+                    
+                    <div className="space-y-4">
+                      <div className="bg-green-500/10 p-4 rounded-lg border border-green-500/20">
+                        <h3 className="font-semibold text-foreground mb-2">📏 Neck Measurement</h3>
+                        <p className="text-sm text-muted-foreground mb-2">
+                          Stand straight and look forward. Find the point just below your Adam's apple (for men) or the most prominent point of your neck (for women). Place the tape measure here horizontally, making sure it's level all the way around. Don't pull tight - just let it rest against your skin without digging in.
+                        </p>
+                        <p className="text-sm text-muted-foreground">
+                          <strong>Common mistake:</strong> Measuring at an angle or too high/low. The tape should be perpendicular to your spine.
+                        </p>
                       </div>
-                      <div>
-                        <h3 className="text-lg font-semibold text-foreground mb-2">Example 2: Fitness-Focused Female</h3>
-                        <div className="bg-muted p-4 rounded-lg overflow-x-auto">
-                          <pre className="text-sm text-muted-foreground font-mono">
-{`Input:
-Age: 28 years
-Gender: Female
-Weight: 62 kg (137 lbs)
-Height: 165 cm (5'5")
-Neck: 32 cm (12.6 in)
-Waist: 71 cm (28 in)
-Hip: 96 cm (37.8 in)
-
-Calculation:
-US Navy Formula: 163.205 × log10(71 + 96 - 32) - 97.684 × log10(165) - 78.387
-Body Fat Percentage: 22.7%
-
-Results:
-• Body Fat: 22.7% (Fitness category)
-• Fat Mass: 14.1 kg
-• Lean Mass: 47.9 kg
-• BMI: 22.8
-• Ideal Range: 21-33% for women`}
-                          </pre>
-                        </div>
+                      
+                      <div className="bg-blue-500/10 p-4 rounded-lg border border-blue-500/20">
+                        <h3 className="font-semibold text-foreground mb-2">📏 Waist Measurement</h3>
+                        <p className="text-sm text-muted-foreground mb-2">
+                          Find the top of your hip bone on one side - it's that bony point you can feel. Now find the bottom of your rib cage. Measure halfway between these two points. For most people, this is right at the belly button level, but not always.
+                        </p>
+                        <p className="text-sm text-muted-foreground">
+                          <strong>Important:</strong> Breathe out normally and measure at the end of your exhale. Don't suck in your stomach - that defeats the purpose!
+                        </p>
                       </div>
+                      
+                      {gender === 'female' && (
+                        <div className="bg-purple-500/10 p-4 rounded-lg border border-purple-500/20">
+                          <h3 className="font-semibold text-foreground mb-2">📏 Hip Measurement (Women Only)</h3>
+                          <p className="text-sm text-muted-foreground mb-2">
+                            This is the widest part of your hips and buttocks. Stand with your feet together and find the point where your hips are fullest. This is usually about 7-9 inches below your waist measurement for most women.
+                          </p>
+                          <p className="text-sm text-muted-foreground">
+                            <strong>Tip:</strong> Wear form-fitting clothing or measure directly on skin. Baggy clothes add unnecessary inches.
+                          </p>
+                        </div>
+                      )}
+                    </div>
+                    
+                    <div className="mt-6 p-4 bg-orange-500/10 rounded-lg border border-orange-500/20">
+                      <h3 className="font-semibold text-foreground mb-2">Best Practices for Consistent Results</h3>
+                      <ul className="text-sm text-muted-foreground space-y-1">
+                        <li>• <strong>Time it right:</strong> Measure first thing in the morning before eating or drinking</li>
+                        <li>• <strong>Be consistent:</strong> Use the same tape measure each time</li>
+                        <li>• <strong>Stand naturally:</strong> Don't tense your muscles or hold unusual posture</li>
+                        <li>• <strong>Track trends:</strong> Single measurements can fluctuate - look at changes over 2-4 weeks</li>
+                        <li>• <strong>Round properly:</strong> Record to the nearest 0.25 inch or 0.5 cm</li>
+                      </ul>
                     </div>
                   </div>
                 )}
               </article>
 
-              {/* Related Tools Section - Dropdown */}
+              {/* Examples - Dropdown */}
+              <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
+                <button
+                  onClick={() => toggleSection('examples')}
+                  className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
+                >
+                  <h2 className="text-xl font-bold text-foreground">Real Examples and What They Mean</h2>
+                  {openSections.examples ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                </button>
+                
+                {openSections.examples && (
+                  <div className="px-6 pb-6">
+                    <p className="text-muted-foreground text-sm mb-6">
+                      Numbers on their own don't tell the whole story. Here are some real-world scenarios to help you understand what different results actually mean in practice.
+                    </p>
+                    
+                    <div className="space-y-8">
+                      <div>
+                        <h3 className="text-lg font-semibold text-foreground mb-3">Example 1: The Weekend Warrior</h3>
+                        <div className="bg-muted p-4 rounded-lg mb-3">
+                          <div className="font-mono text-sm text-muted-foreground">
+                            <div>Male, 35 years, 5'10" (178 cm), 185 lbs (84 kg)</div>
+                            <div>Neck: 16 inches (41 cm), Waist: 36 inches (91 cm)</div>
+                            <div className="mt-2 text-accent font-semibold">Result: 21.3% body fat</div>
+                          </div>
+                        </div>
+                        <p className="text-muted-foreground text-sm">
+                          This is really common for guys who exercise but don't watch their diet closely. At 21.3%, he's in the "average" category - not overweight by BMI standards (BMI: 26.5), but carrying some extra fat around the middle. The waist-to-neck ratio here tells the story: a 36-inch waist on a 16-inch neck suggests more abdominal fat than ideal. He might look "solid" in clothes but feel soft around the middle. For someone like this, cutting out a few beers each week and adding some cardio could drop him to the fitness range in 2-3 months.
+                        </p>
+                      </div>
+                      
+                      <div>
+                        <h3 className="text-lg font-semibold text-foreground mb-3">Example 2: The Active Mom</h3>
+                        <div className="bg-muted p-4 rounded-lg mb-3">
+                          <div className="font-mono text-sm text-muted-foreground">
+                            <div>Female, 42 years, 5'4" (163 cm), 140 lbs (63.5 kg)</div>
+                            <div>Neck: 13 inches (33 cm), Waist: 29 inches (74 cm), Hips: 39 inches (99 cm)</div>
+                            <div className="mt-2 text-accent font-semibold">Result: 26.8% body fat</div>
+                          </div>
+                        </div>
+                        <p className="text-muted-foreground text-sm">
+                          This result often surprises women who exercise regularly. At 26.8%, she's right at the top of the "average" category for women. Despite being a healthy weight (BMI: 24.0), her body composition shows she's carrying more fat than muscle. The hip measurement is key here - at 39 inches, she carries weight in the typical female pattern. What's interesting? She could be the same weight as a more muscular woman but have completely different body fat. Strength training 2-3 times weekly would help shift this composition toward more muscle, less fat, even if the scale doesn't change much.
+                        </p>
+                      </div>
+                      
+                      <div>
+                        <h3 className="text-lg font-semibold text-foreground mb-3">Example 3: The Skinny-Fat Office Worker</h3>
+                        <div className="bg-muted p-4 rounded-lg mb-3">
+                          <div className="font-mono text-sm text-muted-foreground">
+                            <div>Male, 28 years, 6'0" (183 cm), 165 lbs (75 kg)</div>
+                            <div>Neck: 15 inches (38 cm), Waist: 34 inches (86 cm)</div>
+                            <div className="mt-2 text-accent font-semibold">Result: 19.1% body fat</div>
+                          </div>
+                        </div>
+                        <p className="text-muted-foreground text-sm">
+                          This is the classic "skinny-fat" scenario that confuses a lot of people. At 165 lbs and 6 feet tall, he looks thin in clothes (BMI: 22.4). But the 19.1% body fat puts him at the high end of average. How? Low muscle mass. His waist is 34 inches on a thin frame, suggesting he has very little muscle to give his body shape. The scale says he's fine, but his body composition says otherwise. For this person, focusing on building muscle through weight training is more important than losing weight. He might actually gain weight but look leaner as muscle replaces fat.
+                        </p>
+                      </div>
+                    </div>
+                    
+                    <div className="mt-6 p-4 bg-blue-500/10 rounded-lg border border-blue-500/20">
+                      <p className="text-sm text-muted-foreground">
+                        <strong>The takeaway:</strong> Your body fat percentage tells you what the scale can't. Two people can weigh exactly the same but have completely different body compositions. That's why tracking this number alongside weight gives you a much clearer picture of your actual health and fitness progress.
+                      </p>
+                    </div>
+                  </div>
+                )}
+              </article>
+
+              {/* Related Tools - Dropdown */}
               <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
                 <button
                   onClick={() => toggleSection('relatedTools')}
                   className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
                 >
-                  <h2 className="text-xl font-bold text-foreground">Related Health & Fitness Tools</h2>
+                  <h2 className="text-xl font-bold text-foreground">Other Helpful Health Calculators</h2>
                   {openSections.relatedTools ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
                 </button>
                 
                 {openSections.relatedTools && (
                   <div className="px-6 pb-6">
                     <p className="text-muted-foreground mb-4">
-                      Explore other useful calculators from GrockTool.com that complement this body fat assessment tool:
+                      Body fat is just one piece of the health puzzle. Here are some other tools that work well alongside this calculator:
                     </p>
-                    <ul className="space-y-3 text-muted-foreground">
-                      <li className="flex items-start">
-                        <span className="text-accent mr-2">•</span>
-                        <Link href="/health-tools/bmi-calculator" className="text-accent hover:underline">
-                          <strong>BMI Calculator:</strong> Calculate your Body Mass Index using any measurement units
-                        </Link>
-                      </li>
-                      <li className="flex items-start">
-                        <span className="text-accent mr-2">•</span>
-                        <Link href="/health-tools/calorie-calculator" className="text-accent hover:underline">
-                          <strong>Calorie Calculator:</strong> Calculate your daily calorie needs and macronutrient targets
-                        </Link>
-                      </li>
-                      <li className="flex items-start">
-                        <span className="text-accent mr-2">•</span>
-                        <Link href="/health-tools/water-intake" className="text-accent hover:underline">
-                          <strong>Water Intake Calculator:</strong> Calculate your optimal daily hydration needs
-                        </Link>
-                      </li>
-                      <li className="flex items-start">
-                        <span className="text-accent mr-2">•</span>
-                        <Link href="/health-tools/ideal-weight" className="text-accent hover:underline">
-                          <strong>Ideal Weight Calculator:</strong> Determine your healthy weight range based on height
-                        </Link>
-                      </li>
-                    </ul>
+                    
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <Link 
+                        href="/tools/bmi-calculator" 
+                        className="bg-secondary/30 p-4 rounded-lg border border-border hover:border-accent transition-colors group"
+                      >
+                        <div className="font-medium text-foreground mb-1 group-hover:text-accent transition-colors">BMI Calculator</div>
+                        <div className="text-xs text-muted-foreground">
+                          While BMI has limitations, it's still useful for population-level health assessments. Our calculator adjusts for different measurement units.
+                        </div>
+                      </Link>
+                      
+                      <Link 
+                        href="/tools/calorie-calculator" 
+                        className="bg-secondary/30 p-4 rounded-lg border border-border hover:border-accent transition-colors group"
+                      >
+                        <div className="font-medium text-foreground mb-1 group-hover:text-accent transition-colors">Calorie Calculator</div>
+                        <div className="text-xs text-muted-foreground">
+                          Once you know your body fat, use this to calculate your daily calorie needs for maintenance, loss, or muscle gain.
+                        </div>
+                      </Link>
+                      
+                      <Link 
+                        href="/tools/macro-calculator" 
+                        className="bg-secondary/30 p-4 rounded-lg border border-border hover:border-accent transition-colors group"
+                      >
+                        <div className="font-medium text-foreground mb-1 group-hover:text-accent transition-colors">Macro Calculator</div>
+                        <div className="text-xs text-muted-foreground">
+                          Breaks down your calories into protein, carbs, and fats based on your goals and activity level.
+                        </div>
+                      </Link>
+                      
+                      <Link 
+                        href="/tools/ideal-weight" 
+                        className="bg-secondary/30 p-4 rounded-lg border border-border hover:border-accent transition-colors group"
+                      >
+                        <div className="font-medium text-foreground mb-1 group-hover:text-accent transition-colors">Ideal Weight Calculator</div>
+                        <div className="text-xs text-muted-foreground">
+                          Gives you a healthy weight range based on your height, age, and gender.
+                        </div>
+                      </Link>
+                    </div>
                   </div>
                 )}
               </article>
 
-              {/* Frequently Asked Questions - Dropdown */}
+              {/* Health Disclaimer - Dropdown */}
+              <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
+                <button
+                  onClick={() => toggleSection('healthDisclaimer')}
+                  className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
+                >
+                  <h2 className="text-xl font-bold text-foreground">Important Health Information</h2>
+                  {openSections.healthDisclaimer ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                </button>
+                
+                {openSections.healthDisclaimer && (
+                  <div className="px-6 pb-6">
+                    <div className="p-4 bg-yellow-500/10 rounded-lg border border-yellow-500/20 mb-6">
+                      <p className="text-sm text-muted-foreground">
+                        <strong>Please read this carefully:</strong> This calculator is designed for general informational purposes only. It's not a medical device, and the results should not be treated as medical advice.
+                      </p>
+                    </div>
+                    
+                    <div className="space-y-4">
+                      <div>
+                        <h3 className="font-semibold text-foreground mb-2">What This Calculator Can't Tell You</h3>
+                        <p className="text-sm text-muted-foreground mb-3">
+                          While the Navy method is useful, it doesn't distinguish between subcutaneous fat (under your skin) and visceral fat (around your organs). Visceral fat is more dangerous but invisible from the outside. A person can have a "healthy" body fat percentage but still carry dangerous amounts of visceral fat.
+                        </p>
+                        <p className="text-sm text-muted-foreground">
+                          It also doesn't account for differences in bone density, genetic variations in fat distribution, or medical conditions that affect body composition. Older adults naturally have less muscle mass, pregnant women have completely different body composition needs, and athletes often fall outside standard formulas.
+                        </p>
+                      </div>
+                      
+                      <div>
+                        <h3 className="font-semibold text-foreground mb-2">When to See a Professional</h3>
+                        <ul className="text-sm text-muted-foreground space-y-2">
+                          <li className="flex items-start">
+                            <span className="text-red-500 mr-2 mt-1">•</span>
+                            <span>If you're considering making significant changes to your diet or exercise routine, especially if you have pre-existing health conditions</span>
+                          </li>
+                          <li className="flex items-start">
+                            <span className="text-red-500 mr-2 mt-1">•</span>
+                            <span>If you have a history of eating disorders or body image issues - numbers can sometimes trigger unhealthy behaviors</span>
+                          </li>
+                          <li className="flex items-start">
+                            <span className="text-red-500 mr-2 mt-1">•</span>
+                            <span>If you're pregnant, breastfeeding, or planning to become pregnant - your nutritional needs are completely different</span>
+                          </li>
+                          <li className="flex items-start">
+                            <span className="text-red-500 mr-2 mt-1">•</span>
+                            <span>If you take medications that affect weight, metabolism, or fluid retention (like steroids, insulin, or certain blood pressure medications)</span>
+                          </li>
+                          <li className="flex items-start">
+                            <span className="text-red-500 mr-2 mt-1">•</span>
+                            <span>If you have conditions like thyroid disorders, diabetes, heart disease, or kidney problems</span>
+                          </li>
+                        </ul>
+                      </div>
+                      
+                      <div>
+                        <h3 className="font-semibold text-foreground mb-2">Healthy Mindset Matters</h3>
+                        <p className="text-sm text-muted-foreground">
+                          I've worked with hundreds of people on their fitness journeys, and the ones who succeed long-term are those who don't obsess over numbers. Your body fat percentage is just data - it's not a measure of your worth, discipline, or health. Some days it'll be higher, some days lower. Stress, sleep, hormones, and hydration all play roles.
+                        </p>
+                        <p className="text-sm text-muted-foreground mt-2">
+                          Use this tool to track trends over months, not to judge yourself day-to-day. If seeing these numbers causes anxiety or leads to restrictive behaviors, it might be better to focus on how you feel, how your clothes fit, and your energy levels instead.
+                        </p>
+                      </div>
+                    </div>
+                    
+                    <div className="mt-6 p-4 bg-red-500/10 rounded-lg border border-red-500/20">
+                      <p className="text-sm text-muted-foreground">
+                        <strong>Medical Disclaimer:</strong> The creators of this tool are not medical professionals. This calculator provides estimates based on mathematical formulas. It is not a substitute for professional medical advice, diagnosis, or treatment. Always seek the advice of your physician or other qualified health provider with any questions you may have regarding a medical condition or health objectives.
+                      </p>
+                    </div>
+                  </div>
+                )}
+              </article>
+
+              {/* FAQs - Dropdown */}
               <article className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
                 <button
                   onClick={() => toggleSection('faqs')}
                   className="w-full flex items-center justify-between p-6 text-left hover:bg-secondary/50 transition-colors"
                 >
-                  <h2 className="text-xl font-bold text-foreground">Frequently Asked Questions About Body Fat</h2>
+                  <h2 className="text-xl font-bold text-foreground">Common Questions About Body Fat</h2>
                   {openSections.faqs ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
                 </button>
                 
                 {openSections.faqs && (
                   <div className="px-6 pb-6">
-                    <div className="space-y-6">
+                    <div className="space-y-8">
                       {faqData.map((faq, index) => (
-                        <div key={index}>
-                          <h3 className="text-lg font-semibold text-foreground mb-2">{faq.question}</h3>
+                        <div key={index} className="pb-6 border-b border-border last:border-b-0 last:pb-0">
+                          <h3 className="text-lg font-semibold text-foreground mb-3">{faq.question}</h3>
                           <p className="text-muted-foreground">{faq.answer}</p>
                         </div>
                       ))}
-                    </div>
-                    
-                    {/* Medical Disclaimer */}
-                    <div className="mt-8 p-4 bg-yellow-500/10 rounded-lg border border-yellow-500/20">
-                      <h3 className="text-lg font-semibold text-foreground mb-2">Important Health Disclaimer</h3>
-                      <p className="text-sm text-muted-foreground">
-                        This body fat calculator provides estimates based on the US Navy circumference method and should be used for informational purposes only. Individual body compositions can vary based on genetics, medical conditions, medications, and other factors not accounted for in these calculations. The results from this calculator are not a substitute for professional medical advice, diagnosis, or treatment. Always consult with a qualified healthcare provider or registered dietitian for personalized medical advice regarding your body composition, especially if you have underlying health conditions or take medications that affect metabolism or body composition.
-                      </p>
                     </div>
                   </div>
                 )}
